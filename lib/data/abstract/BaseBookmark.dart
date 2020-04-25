@@ -1,64 +1,61 @@
 import 'package:json_annotation/json_annotation.dart';
-part 'user.g.dart';
+import 'IProgress.dart';
+import 'IPersistentBookmark.dart';
+import 'dart:math';
 
-	/// <summary>
-	///     Base readable implementation providing utility methods for UI.
-	/// </summary>
-  @JsonSerializable()
-class BaseBookmark implements IPersistentBookmark {
-		private IProgress? LastProgress => History.LastOrDefault();
+/// <summary>
+///     Base readable implementation providing utility methods for UI.
+/// </summary>
+@JsonSerializable()
+abstract class BaseBookmark implements IPersistentBookmark {
+  IProgress? LastProgress() => History.last;
 
-		[Ignore]
-		[JsonIgnore]
-		public abstract ObjectId? Id { get; set; }
+  @JsonKey(ignore: true)
+  String id;
 
-		[Optional]
-		public abstract string? LocalizedTitle { get; set; }
+  @JsonKey(required: false)
+  String? LocalizedTitle;
 
-		[Optional]
-		public abstract string? OriginalTitle { get; set; }
+  @JsonKey(required: false)
+  String? OriginalTitle;
 
-		[Optional]
-		public abstract double MaxProgress { get; set; }
+  @JsonKey(required: false)
+  double MaxProgress;
 
-		[Optional]
-		public abstract bool Ongoing { get; set; }
+  @JsonKey(required: false)
+  bool Ongoing;
 
-		[Optional]
-		public abstract bool Abandoned { get; set; }
+  @JsonKey(required: false)
+  bool Abandoned;
 
-		public abstract IList<IProgress> History { get; protected set; }
-		public abstract double ProgressIncrement { get; set; }
+// todo update so that it cannot be change from the outside
+  List<IProgress> History;
+  double ProgressIncrement;
 
-		[Optional]
-		[JsonIgnore]
-		[BsonIgnore]
-		public virtual double Progress {
-			get => LastProgress?.Value ?? 0.0;
-			set => LogProgress(value);
-		}
+  set progress(double value) => LogProgress(value);
 
-		public virtual void IncrementProgress() {
-			LogProgress(Progress + ProgressIncrement);
-		}
+  double get progress => LastProgress() ?? 0.0;
 
-		public virtual void LogProgress(double progress) {
-			if (!Ongoing && MaxProgress > 0) {
-				progress = Math.Min(MaxProgress, progress);
-			}
+  void IncrementProgress() {
+    LogProgress(Progress + ProgressIncrement);
+  }
 
-			if (Ongoing) {
-				MaxProgress = Math.Max(progress, MaxProgress);
-			}
+  void LogProgress(double progress) {
+    if (!Ongoing && MaxProgress > 0) {
+      progress = min(MaxProgress, progress);
+    }
 
-			var newProgress = CreateNewProgress(progress);
-			if (LastProgress?.Date != newProgress.Date) {
-				History.Add(newProgress);
-			} else {
-				History[^1] = newProgress;
-			}
-		}
+    if (Ongoing) {
+      MaxProgress = max(progress, MaxProgress);
+    }
 
-		protected abstract IProgress CreateNewProgress(double progress);
-	}
+    var newProgress = CreateNewProgress(progress);
+    if (LastProgress()?.date != newProgress.date) {
+      History.add(newProgress);
+    } else {
+      History.last = newProgress;
+    }
+  }
+
+  IProgress CreateNewProgress(double progress);
 }

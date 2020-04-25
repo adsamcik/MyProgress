@@ -5,10 +5,10 @@ abstract class IProgress {
   /// <summary>
   ///     Date of the progress update
   /// </summary>
-  DateTime Date;
+  DateTime date;
 
   /// <summary>
   ///     Progress value
   /// </summary>
-  double Value;
+  double value;
 }
