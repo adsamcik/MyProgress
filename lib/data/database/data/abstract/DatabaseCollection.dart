@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LiteDB;
-
-namespace LastIRead.data.database {
 	/// <summary>
 	///     Generic implementation of database collection providing basic methods to work with collection.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public abstract class DatabaseCollection<T> : IAsyncDisposable, IDisposable where T : IDatabaseItem {
+	abstract class DatabaseCollection<T> {
 		protected readonly ILiteCollection<T> Collection;
 		protected readonly LiteDatabase Database;
 

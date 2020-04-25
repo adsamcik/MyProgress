@@ -8,30 +8,30 @@ abstract class IUserBookmark implements IBookmark {
   /// <summary>
   ///     Title of the reading material either localized or original.
   /// </summary>
-  String Title;
+  String title;
 
   /// <summary>
   ///     Progress in a readable way. Default is Progress/MaxProgress.
   /// </summary>
-  String FormattedProgress;
+  String formattedProgress;
 
   /// <summary>
   ///     Increment value in more readable way.
   /// </summary>
-  String FormattedIncrement;
+  String formattedIncrement;
 
   /// <summary>
   ///     Returns last progress instance or default value if no progress is logged.
   /// </summary>
-  IProgress? LastProgress;
+  IProgress? lastProgress;
 
   /// <summary>
   ///     Date of the first progress entry.
   /// </summary>
-  DateTime StartedReading;
+  DateTime startedReading;
 
   /// <summary>
   ///     Date of last progress change.
   /// </summary>
-  DateTime LastProgressDate;
+  DateTime lastProgressDate;
 }

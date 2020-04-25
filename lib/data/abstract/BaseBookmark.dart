@@ -13,33 +13,43 @@ abstract class BaseBookmark implements IPersistentBookmark {
   @JsonKey(ignore: true)
   String id;
 
+  @override
   @JsonKey(required: false)
   String? LocalizedTitle;
 
+  @override
   @JsonKey(required: false)
   String? OriginalTitle;
 
+  @override
   @JsonKey(required: false)
   double MaxProgress;
 
+  @override
   @JsonKey(required: false)
   bool Ongoing;
 
+  @override
   @JsonKey(required: false)
   bool Abandoned;
 
 // todo update so that it cannot be change from the outside
+  @override
   List<IProgress> History;
+
+  @override
   double ProgressIncrement;
 
   set progress(double value) => LogProgress(value);
 
-  double get progress => LastProgress() ?? 0.0;
+  double get progress => LastProgress()?.value ?? 0.0;
 
+  @override
   void IncrementProgress() {
     LogProgress(Progress + ProgressIncrement);
   }
 
+  @override
   void LogProgress(double progress) {
     if (!Ongoing && MaxProgress > 0) {
       progress = min(MaxProgress, progress);
