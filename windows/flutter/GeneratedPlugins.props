@@ -3,6 +3,13 @@
   <ImportGroup Label="PropertySheets"/>
   <PropertyGroup Label="UserMacros"/>
   <PropertyGroup/>
-  <ItemDefinitionGroup/>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>flutter\ephemeral\.plugin_symlinks\file_chooser\windows;flutter\ephemeral\.plugin_symlinks\window_size\windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>file_chooser_plugin.lib;window_size_plugin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemGroup/>
 </Project>
