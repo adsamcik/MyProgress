@@ -23,7 +23,7 @@ abstract class IUserBookmark implements IBookmark {
   /// <summary>
   ///     Returns last progress instance or default value if no progress is logged.
   /// </summary>
-  IProgress? lastProgress;
+  IProgress lastProgress;
 
   /// <summary>
   ///     Date of the first progress entry.

@@ -1,4 +1,7 @@
+import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
 import 'package:flutter/material.dart';
+
+import 'data/instance/GenericBookmark.dart';
 
 void main() {
   runApp(MyApp());
@@ -50,16 +53,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  final DataStore _dataStore = DataStore();
 
-  void _incrementCounter() {
+  void _incrementCounter() async {
+    await _dataStore.open();
+    _dataStore.insertAll([GenericBookmark()]);
+    await _dataStore.close();
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+
     });
   }
 

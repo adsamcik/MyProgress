@@ -6,20 +6,23 @@ import 'dart:math';
 /// <summary>
 ///     Base readable implementation providing utility methods for UI.
 /// </summary>
-@JsonSerializable()
 abstract class BaseBookmark implements IPersistentBookmark {
-  IProgress? LastProgress() => History.last;
+  IProgress get LastProgress => History.last;
 
+  @override
   @JsonKey(ignore: true)
-  String id;
+  int id;
 
   @override
   @JsonKey(required: false)
-  String? LocalizedTitle;
+  String LocalizedTitle;
 
   @override
   @JsonKey(required: false)
-  String? OriginalTitle;
+  String OriginalTitle;
+
+  @override
+  String get Title => LocalizedTitle ?? OriginalTitle ?? '';
 
   @override
   @JsonKey(required: false)
@@ -33,20 +36,18 @@ abstract class BaseBookmark implements IPersistentBookmark {
   @JsonKey(required: false)
   bool Abandoned;
 
-// todo update so that it cannot be change from the outside
-  @override
-  List<IProgress> History;
-
   @override
   double ProgressIncrement;
 
+  @override
   set progress(double value) => LogProgress(value);
 
-  double get progress => LastProgress()?.value ?? 0.0;
+  @override
+  double get progress => LastProgress?.value ?? 0.0;
 
   @override
   void IncrementProgress() {
-    LogProgress(Progress + ProgressIncrement);
+    LogProgress(progress + ProgressIncrement);
   }
 
   @override
@@ -60,7 +61,7 @@ abstract class BaseBookmark implements IPersistentBookmark {
     }
 
     var newProgress = CreateNewProgress(progress);
-    if (LastProgress()?.date != newProgress.date) {
+    if (LastProgress?.date != newProgress.date) {
       History.add(newProgress);
     } else {
       History.last = newProgress;

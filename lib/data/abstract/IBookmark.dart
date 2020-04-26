@@ -5,12 +5,14 @@ abstract class IBookmark {
 		/// <summary>
 		///     Title of the reading material
 		/// </summary>
-		String? LocalizedTitle;
+		String LocalizedTitle;
 
 		/// <summary>
 		///     Title of the reading material in original language.
 		/// </summary>
-		String? OriginalTitle;
+		String OriginalTitle;
+
+		String get Title;
 
 		/// <summary>
 		///     Max progress indicates how long the reading material is.
@@ -31,7 +33,7 @@ abstract class IBookmark {
 		/// <summary>
 		///     Complete progress history of reading.
 		/// </summary>
-		List<IProgress> History;
+		List<IProgress> get History;
 
 		/// <summary>
 		///     Progress increment value.
@@ -41,7 +43,7 @@ abstract class IBookmark {
 		/// <summary>
 		///     Latest progress data.
 		/// </summary>
-		double Progress;
+		double progress;
 
 		/// <summary>
 		///     Increments progress by 1. If this is first time reading that day

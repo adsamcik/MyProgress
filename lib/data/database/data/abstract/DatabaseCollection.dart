@@ -1,88 +1,96 @@
-	/// <summary>
-	///     Generic implementation of database collection providing basic methods to work with collection.
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	abstract class DatabaseCollection<T> {
-		protected readonly ILiteCollection<T> Collection;
-		protected readonly LiteDatabase Database;
+import 'package:MarkMyProgress/data/database/data/abstract/IDatabaseItem.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sembast/sembast.dart';
+import 'package:sembast/sembast_io.dart';
 
-		protected DatabaseCollection(LiteDatabase database, ILiteCollection<T> collection) {
-			Database = database;
-			Collection = collection;
-		}
+/// <summary>
+///     Generic implementation of database collection providing basic methods to work with collection.
+/// </summary>
+/// <typeparam name="T"></typeparam>
+abstract class DatabaseCollection<T extends IDatabaseItem> {
+  Database _database;
 
-		public async ValueTask DisposeAsync() {
-			await Task.Run(Dispose);
-		}
+  void open() async {
+    /*var dir = await getApplicationDocumentsDirectory();
+    await dir.create(recursive: true);
+    var dbPath = join(dir.path, 'progress_data.db');*/
+    _database = await databaseFactoryIo.openDatabase('progress_data.db');
+  }
 
-		public void Dispose() {
-			Database.Dispose();
-		}
+  void close() async {
+    await _database.close();
+  }
 
-		/// <summary>
-		///     Updates single item.
-		/// </summary>
-		/// <param name="item">Item.</param>
-		public void Update(T item) {
-			Collection.Update(item);
-		}
+  StoreRef _store() => StoreRef<int, dynamic>.main();
 
-		/// <summary>
-		///     Updates all items in a collection.
-		/// </summary>
-		/// <param name="itemEnumerable">Item collection (Enumerable).</param>
-		public void Update(IEnumerable<T> itemEnumerable) {
-			Collection.Update(itemEnumerable);
-		}
+  Iterable<int> _mapKeys(Iterable<T> items) => items.map((e) => e.id);
 
-		/// <summary>
-		///     Inserts single item.
-		/// </summary>
-		/// <param name="item">Item.</param>
-		public void Insert(T item) {
-			Collection.Insert(item);
-		}
+  /// <summary>
+  ///     Updates single item.
+  /// </summary>
+  /// <param name="item">Item.</param>
+  void update(T item) {
+    _store().record(item.id).put(_database, item);
+  }
 
-		/// <summary>
-		///     Inserts item collection.
-		/// </summary>
-		/// <param name="itemEnumerable">Item collection (Enumerable).</param>
-		public void Insert(IEnumerable<T> itemEnumerable) {
-			Collection.Insert(itemEnumerable);
-		}
+  /// <summary>
+  ///     Updates all items in a collection.
+  /// </summary>
+  /// <param name="itemEnumerable">Item collection (Enumerable).</param>
+  void updateAll(Iterable<T> iterable) {
+    var keys = _mapKeys(iterable);
+    _store().records(keys).put(_database, iterable.toList(growable: false));
+  }
 
-		/// <summary>
-		///     Removes single item.
-		/// </summary>
-		/// <param name="item">Item.</param>
-		public void Delete(T item) {
-			Collection.Delete(item.Id);
-		}
+  /// <summary>
+  ///     Inserts single item.
+  /// </summary>
+  /// <param name="item">Item.</param>
+  void insert(T item) {
+    _store().record(item.id).add(_database, item);
+  }
 
-		/// <summary>
-		///     Removes all items from a collection.
-		/// </summary>
-		/// <param name="itemEnumerable">Item collection (Enumerable).</param>
-		public void Delete(IEnumerable<T> itemEnumerable) {
-			foreach (var item in itemEnumerable) {
-				Delete(item);
-			}
-		}
+  /// <summary>
+  ///     Inserts item collection.
+  /// </summary>
+  /// <param name="itemEnumerable">Item collection (Enumerable).</param>
+  void insertAll(Iterable<T> iterable) {
+    var keys = _mapKeys(iterable);
+    _store().records(keys).add(_database, iterable.toList());
+  }
 
-		/// <summary>
-		///     Returns all items in a database.
-		/// </summary>
-		/// <returns>Item collection (Enumerable).</returns>
-		public IEnumerable<T> GetAll() {
-			return Collection.FindAll().ToArray();
-		}
+  /// <summary>
+  ///     Removes single item.
+  /// </summary>
+  /// <param name="item">Item.</param>
+  void delete(T item) {
+    _store().record(item.id).delete(_database);
+  }
 
-		/// <summary>
-		///     Upserts an item.
-		/// </summary>
-		/// <param name="item">Item.</param>
-		public void Upsert(T item) {
-			Collection.Upsert(item);
-		}
-	}
+  /// <summary>
+  ///     Removes all items from a collection.
+  /// </summary>
+  /// <param name="itemEnumerable">Item collection (Enumerable).</param>
+  void deleteAll(Iterable<T> iterable) {
+    var keys = _mapKeys(iterable);
+    _store().records(keys).delete(_database);
+  }
+
+  /// <summary>
+  ///     Returns all items in a database.
+  /// </summary>
+  /// <returns>Item collection (Enumerable).</returns>
+  Future<Iterable<T>> GetAll() async {
+    var records = await _store().find(_database);
+    return records.map((e) => e.value as T);
+  }
+
+  /// <summary>
+  ///     Upserts an item.
+  /// </summary>
+  /// <param name="item">Item.</param>
+  void upsert(T item) {
+    update(item);
+  }
 }

@@ -5,5 +5,5 @@ abstract class IWebBookmark {
   /// <summary>
   ///     Web Address
   /// </summary>
-  String? WebAddress;
+  String WebAddress;
 }
