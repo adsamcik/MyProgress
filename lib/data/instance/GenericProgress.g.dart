@@ -18,3 +18,11 @@ Map<String, dynamic> _$GenericProgressToJson(GenericProgress instance) =>
       'date': instance.date?.toIso8601String(),
       'value': instance.value,
     };
+
+// **************************************************************************
+// ToStringGenerator
+// **************************************************************************
+
+String _$GenericProgressToString(GenericProgress o) {
+  return """GenericProgress{date: ${o.date}, value: ${o.value}}""";
+}

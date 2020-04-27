@@ -24,11 +24,13 @@ class GenericBookmark extends BaseBookmark implements IWebBookmark {
 
   factory GenericBookmark.fromJson(Map<String, dynamic> json) => _$GenericBookmarkFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$GenericBookmarkToJson(this);
 
   // todo update so that it cannot be change from the outside
-  List<GenericProgress> history = [];
+  @JsonKey(name: 'history')
+  List<GenericProgress> history_generic = [];
 
   @override
-  List<IProgress> get History => _history;
+  List<IProgress> get history => history_generic;
 }

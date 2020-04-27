@@ -16,10 +16,10 @@ GenericBookmark _$GenericBookmarkFromJson(Map<String, dynamic> json) {
     ..ProgressIncrement = (json['ProgressIncrement'] as num)?.toDouble()
     ..progress = (json['progress'] as num)?.toDouble()
     ..WebAddress = json['WebAddress'] as String
-    ..history = (json['history'] as List)
+    ..history_generic = (json['history'] as List)
         ?.map((e) => e == null
             ? null
-            : GenericProgress.fromJson(e as Map<String, dynamic>))?.cast<GenericProgress>()
+            : GenericProgress.fromJson(e as Map<String, dynamic>))
         ?.toList();
 }
 
@@ -33,5 +33,13 @@ Map<String, dynamic> _$GenericBookmarkToJson(GenericBookmark instance) =>
       'ProgressIncrement': instance.ProgressIncrement,
       'progress': instance.progress,
       'WebAddress': instance.WebAddress,
-      'history': instance.history,
+      'history': instance.history_generic,
     };
+
+// **************************************************************************
+// ToStringGenerator
+// **************************************************************************
+
+String _$GenericBookmarkToString(GenericBookmark o) {
+  return """GenericBookmark{WebAddress: ${o.WebAddress}, history_generic: ${o.history_generic}}""";
+}

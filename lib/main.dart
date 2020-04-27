@@ -1,3 +1,4 @@
+import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
 import 'package:flutter/material.dart';
 
@@ -54,13 +55,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final DataStore _dataStore = DataStore();
+  List<IPersistentBookmark> bookmarks = [];
 
   void _incrementCounter() async {
-    await _dataStore.open();
-    _dataStore.insertAll([GenericBookmark()]);
-    await _dataStore.close();
+    //await _dataStore.open();
+    //_dataStore.insert(GenericBookmark());
+    //_dataStore.insertAll([GenericBookmark()]);
+    //var bookmarks = (await _dataStore.GetAll()).toList();
+    //await _dataStore.close();
     setState(() {
-
+      this.bookmarks = bookmarks;
     });
   }
 

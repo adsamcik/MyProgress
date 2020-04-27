@@ -3,4 +3,5 @@
 /// </summary>
 abstract class IDatabaseItem {
   int id;
+  Map<String, dynamic> toJson();
 }

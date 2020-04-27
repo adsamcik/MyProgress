@@ -1,4 +1,5 @@
 import 'package:MarkMyProgress/data/database/data/abstract/IDatabaseItem.dart';
+import 'package:MarkMyProgress/data/instance/GenericBookmark.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
@@ -31,7 +32,7 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   /// </summary>
   /// <param name="item">Item.</param>
   void update(T item) {
-    _store().record(item.id).put(_database, item);
+    _store().record(item.id).put(_database, item.toJson());
   }
 
   /// <summary>
@@ -40,7 +41,8 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   /// <param name="itemEnumerable">Item collection (Enumerable).</param>
   void updateAll(Iterable<T> iterable) {
     var keys = _mapKeys(iterable);
-    _store().records(keys).put(_database, iterable.toList(growable: false));
+    var data = iterable.map((e) => e.toJson()).toList(growable: false);
+    _store().records(keys).put(_database, data);
   }
 
   /// <summary>
@@ -48,7 +50,7 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   /// </summary>
   /// <param name="item">Item.</param>
   void insert(T item) {
-    _store().record(item.id).add(_database, item);
+    _store().record(item.id).add(_database, item.toJson());
   }
 
   /// <summary>
@@ -57,7 +59,8 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   /// <param name="itemEnumerable">Item collection (Enumerable).</param>
   void insertAll(Iterable<T> iterable) {
     var keys = _mapKeys(iterable);
-    _store().records(keys).add(_database, iterable.toList());
+    var data = iterable.map((e) => e.toJson()).toList(growable: false);
+    _store().records(keys).add(_database, data);
   }
 
   /// <summary>
@@ -83,7 +86,7 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   /// <returns>Item collection (Enumerable).</returns>
   Future<Iterable<T>> GetAll() async {
     var records = await _store().find(_database);
-    return records.map((e) => e.value as T);
+    return records.map((e) => GenericBookmark.fromJson(e.value) as T);
   }
 
   /// <summary>

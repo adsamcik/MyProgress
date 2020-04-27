@@ -33,7 +33,7 @@ abstract class IBookmark {
 		/// <summary>
 		///     Complete progress history of reading.
 		/// </summary>
-		List<IProgress> get History;
+		List<IProgress> get history;
 
 		/// <summary>
 		///     Progress increment value.

@@ -7,7 +7,7 @@ import 'dart:math';
 ///     Base readable implementation providing utility methods for UI.
 /// </summary>
 abstract class BaseBookmark implements IPersistentBookmark {
-  IProgress get LastProgress => History.last;
+  IProgress get LastProgress => history.isNotEmpty ? history.last : null;
 
   @override
   @JsonKey(ignore: true)
@@ -62,9 +62,9 @@ abstract class BaseBookmark implements IPersistentBookmark {
 
     var newProgress = CreateNewProgress(progress);
     if (LastProgress?.date != newProgress.date) {
-      History.add(newProgress);
+      history.add(newProgress);
     } else {
-      History.last = newProgress;
+      history.last = newProgress;
     }
   }
 
