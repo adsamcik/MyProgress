@@ -31,53 +31,52 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   ///     Updates single item.
   /// </summary>
   /// <param name="item">Item.</param>
-  void update(T item) {
-    _store().record(item.id).put(_database, item.toJson());
+  Future<dynamic> update(T item) async {
+    return await _store().record(item.id).put(_database, item.toJson());
   }
 
   /// <summary>
   ///     Updates all items in a collection.
   /// </summary>
   /// <param name="itemEnumerable">Item collection (Enumerable).</param>
-  void updateAll(Iterable<T> iterable) {
+  Future<List<dynamic>> updateAll(Iterable<T> iterable) async {
     var keys = _mapKeys(iterable);
     var data = iterable.map((e) => e.toJson()).toList(growable: false);
-    _store().records(keys).put(_database, data);
+    return await _store().records(keys).put(_database, data);
   }
 
   /// <summary>
   ///     Inserts single item.
   /// </summary>
   /// <param name="item">Item.</param>
-  void insert(T item) {
-    _store().record(item.id).add(_database, item.toJson());
+  Future<dynamic> insert(T item) async {
+    return await _store().add(_database, item.toJson());
   }
 
   /// <summary>
   ///     Inserts item collection.
   /// </summary>
   /// <param name="itemEnumerable">Item collection (Enumerable).</param>
-  void insertAll(Iterable<T> iterable) {
-    var keys = _mapKeys(iterable);
+  Future<List<dynamic>> insertAll(Iterable<T> iterable) async {
     var data = iterable.map((e) => e.toJson()).toList(growable: false);
-    _store().records(keys).add(_database, data);
+    return await _store().addAll(_database, data);
   }
 
   /// <summary>
   ///     Removes single item.
   /// </summary>
   /// <param name="item">Item.</param>
-  void delete(T item) {
-    _store().record(item.id).delete(_database);
+  Future<dynamic> delete(T item) async {
+    return await _store().record(item.id).delete(_database);
   }
 
   /// <summary>
   ///     Removes all items from a collection.
   /// </summary>
   /// <param name="itemEnumerable">Item collection (Enumerable).</param>
-  void deleteAll(Iterable<T> iterable) {
+  Future<dynamic> deleteAll(Iterable<T> iterable) async {
     var keys = _mapKeys(iterable);
-    _store().records(keys).delete(_database);
+    return await _store().records(keys).delete(_database);
   }
 
   /// <summary>
@@ -86,14 +85,15 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   /// <returns>Item collection (Enumerable).</returns>
   Future<Iterable<T>> GetAll() async {
     var records = await _store().find(_database);
-    return records.map((e) => GenericBookmark.fromJson(e.value) as T);
+    return records.map(
+        (e) => GenericBookmark.fromJson(e.value as Map<String, dynamic>) as T);
   }
 
   /// <summary>
   ///     Upserts an item.
   /// </summary>
   /// <param name="item">Item.</param>
-  void upsert(T item) {
-    update(item);
+  Future<dynamic> upsert(T item) async {
+    return await update(item);
   }
 }

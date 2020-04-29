@@ -8,14 +8,13 @@ part of 'GenericBookmark.dart';
 
 GenericBookmark _$GenericBookmarkFromJson(Map<String, dynamic> json) {
   return GenericBookmark()
-    ..LocalizedTitle = json['LocalizedTitle'] as String
-    ..OriginalTitle = json['OriginalTitle'] as String
-    ..MaxProgress = (json['MaxProgress'] as num)?.toDouble()
-    ..Ongoing = json['Ongoing'] as bool
-    ..Abandoned = json['Abandoned'] as bool
-    ..ProgressIncrement = (json['ProgressIncrement'] as num)?.toDouble()
-    ..progress = (json['progress'] as num)?.toDouble()
-    ..WebAddress = json['WebAddress'] as String
+    ..localizedTitle = json['localizedTitle'] as String
+    ..originalTitle = json['originalTitle'] as String
+    ..maxProgress = (json['maxProgress'] as num)?.toDouble()
+    ..ongoing = json['ongoing'] as bool
+    ..abandoned = json['abandoned'] as bool
+    ..progressIncrement = (json['progressIncrement'] as num)?.toDouble()
+    ..webAddress = json['webAddress'] as String
     ..history_generic = (json['history'] as List)
         ?.map((e) => e == null
             ? null
@@ -25,21 +24,12 @@ GenericBookmark _$GenericBookmarkFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$GenericBookmarkToJson(GenericBookmark instance) =>
     <String, dynamic>{
-      'LocalizedTitle': instance.LocalizedTitle,
-      'OriginalTitle': instance.OriginalTitle,
-      'MaxProgress': instance.MaxProgress,
-      'Ongoing': instance.Ongoing,
-      'Abandoned': instance.Abandoned,
-      'ProgressIncrement': instance.ProgressIncrement,
-      'progress': instance.progress,
-      'WebAddress': instance.WebAddress,
+      'localizedTitle': instance.localizedTitle,
+      'originalTitle': instance.originalTitle,
+      'maxProgress': instance.maxProgress,
+      'ongoing': instance.ongoing,
+      'abandoned': instance.abandoned,
+      'progressIncrement': instance.progressIncrement,
+      'webAddress': instance.webAddress,
       'history': instance.history_generic,
     };
-
-// **************************************************************************
-// ToStringGenerator
-// **************************************************************************
-
-String _$GenericBookmarkToString(GenericBookmark o) {
-  return """GenericBookmark{WebAddress: ${o.WebAddress}, history_generic: ${o.history_generic}}""";
-}

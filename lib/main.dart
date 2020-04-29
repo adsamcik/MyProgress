@@ -2,7 +2,9 @@ import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
 import 'package:flutter/material.dart';
 
+import 'data/abstract/IBookmark.dart';
 import 'data/instance/GenericBookmark.dart';
+import 'data/extension/UserBookmark.dart';
 
 void main() {
   runApp(MyApp());
@@ -55,16 +57,29 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final DataStore _dataStore = DataStore();
-  List<IPersistentBookmark> bookmarks = [];
+  List<IPersistentBookmark> _bookmarks = [];
+  final List<DataRow> _rowList = [];
 
-  void _incrementCounter() async {
-    //await _dataStore.open();
-    //_dataStore.insert(GenericBookmark());
-    //_dataStore.insertAll([GenericBookmark()]);
-    //var bookmarks = (await _dataStore.GetAll()).toList();
-    //await _dataStore.close();
+  _MyHomePageState() {
+    _refreshBookmarks();
+  }
+
+  void _addNewItem() async {
+    await _dataStore.open();
+    var bookmark = GenericBookmark();
+    bookmark.originalTitle = 'Test';
+    await _dataStore.insert(bookmark);
+    await _dataStore.close();
+    _refreshBookmarks();
+  }
+
+  void _refreshBookmarks() async {
+    await _dataStore.open();
+    var bookmarks = (await _dataStore.GetAll()).toList();
+    await _dataStore.close();
     setState(() {
-      this.bookmarks = bookmarks;
+      _bookmarks = bookmarks;
+      _updateRows();
     });
   }
 
@@ -82,52 +97,41 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            CustomScrollView(
-              shrinkWrap: true,
-              slivers: <Widget>[
-                SliverPadding(
-                  padding: const EdgeInsets.all(20.0),
-                  sliver: SliverList(
-                    delegate: SliverChildListDelegate(
-                      <Widget>[
-                        const Text('I\'m dedicating every day to you'),
-                        const Text('Domestic life was never quite my style'),
-                        const Text('When you smile, you knock me out, I fall apart'),
-                        const Text('And I thought I was so smart'),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+      body: Container(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+        DataTable(
+          columns: [
+            DataColumn(label: Text('Title')),
+            DataColumn(label: Text('Progress'), numeric: true),
+            DataColumn(label: Text('Last progress')),
+            DataColumn(label: Text('Actions'))
           ],
+          rows: _rowList,
         ),
-      ),
+      ])),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _addNewItem,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  void _updateRows() {
+    _rowList.clear();
+    _bookmarks.forEach((element) {
+      _rowList.add(_buildRow(element));
+    });
+  }
+
+  DataRow _buildRow(IBookmark bookmark) {
+    return DataRow(
+      cells: [
+        DataCell(Text(bookmark.title)),
+        DataCell(Text(bookmark.progress.toString())),
+        DataCell(Text(bookmark.lastProgress.date.toIso8601String())),
+        DataCell(Text('Not yet implemented')),
+      ],
     );
   }
 }

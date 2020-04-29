@@ -1,6 +1,7 @@
 import '../../../abstract/IPersistentBookmark.dart';
 import '../abstract/DatabaseCollection.dart';
 import '../../../runtime/FilterData.dart';
+import '../../../extension/UserBookmark.dart';
 
 class DataStore extends DatabaseCollection<IPersistentBookmark> {
   Future<Iterable<IPersistentBookmark>> GetSelected(
@@ -11,35 +12,35 @@ class DataStore extends DatabaseCollection<IPersistentBookmark> {
 
     if (filter.isNotEmpty) {
       result = result.where((readable) =>
-          _contains(readable.LocalizedTitle, strippedFilter) ||
-          _contains(readable.OriginalTitle, strippedFilter));
+          _contains(readable.localizedTitle, strippedFilter) ||
+          _contains(readable.originalTitle, strippedFilter));
     }
 
     if (filterData.reading) {
       result = result.where((readable) =>
-          !readable.Abandoned &&
-          (readable.Ongoing || readable.progress < readable.MaxProgress));
+          !readable.abandoned &&
+          (readable.ongoing || readable.progress < readable.maxProgress));
     }
 
     if (filterData.abandoned) {
-      result = result.where((readable) => !readable.Abandoned);
+      result = result.where((readable) => !readable.abandoned);
     }
 
     if (filterData.ended) {
-      result = result.where((readable) => readable.Ongoing);
+      result = result.where((readable) => readable.ongoing);
     }
 
     if (filterData.finished) {
       result = result.where((readable) =>
-          readable.Ongoing || readable.progress < readable.MaxProgress);
+          readable.ongoing || readable.progress < readable.maxProgress);
     }
 
     if (filterData.ongoing) {
-      result = result.where((readable) => !readable.Ongoing);
+      result = result.where((readable) => !readable.ongoing);
     }
 
     var resultList = result.toList();
-    resultList.sort((a, b) => a.Title.compareTo(b.Title));
+    resultList.sort((a, b) => a.title.compareTo(b.title));
     return resultList;
   }
 

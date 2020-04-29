@@ -6,11 +6,6 @@ import 'IProgress.dart';
 /// </summary>
 abstract class IUserBookmark implements IBookmark {
   /// <summary>
-  ///     Title of the reading material either localized or original.
-  /// </summary>
-  String title;
-
-  /// <summary>
   ///     Progress in a readable way. Default is Progress/MaxProgress.
   /// </summary>
   String formattedProgress;

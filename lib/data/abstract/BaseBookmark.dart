@@ -2,71 +2,64 @@ import 'package:json_annotation/json_annotation.dart';
 import 'IProgress.dart';
 import 'IPersistentBookmark.dart';
 import 'dart:math';
+import '../extension/UserBookmark.dart';
 
 /// <summary>
 ///     Base readable implementation providing utility methods for UI.
 /// </summary>
 abstract class BaseBookmark implements IPersistentBookmark {
-  IProgress get LastProgress => history.isNotEmpty ? history.last : null;
-
   @override
   @JsonKey(ignore: true)
   int id;
 
   @override
   @JsonKey(required: false)
-  String LocalizedTitle;
+  String localizedTitle;
 
   @override
   @JsonKey(required: false)
-  String OriginalTitle;
+  String originalTitle;
 
   @override
-  String get Title => LocalizedTitle ?? OriginalTitle ?? '';
-
-  @override
-  @JsonKey(required: false)
-  double MaxProgress;
+  String get title => localizedTitle ?? originalTitle ?? '';
 
   @override
   @JsonKey(required: false)
-  bool Ongoing;
+  double maxProgress;
 
   @override
   @JsonKey(required: false)
-  bool Abandoned;
+  bool ongoing;
 
   @override
-  double ProgressIncrement;
+  @JsonKey(required: false)
+  bool abandoned;
 
   @override
-  set progress(double value) => LogProgress(value);
+  double progressIncrement;
 
   @override
-  double get progress => LastProgress?.value ?? 0.0;
-
-  @override
-  void IncrementProgress() {
-    LogProgress(progress + ProgressIncrement);
+  void incrementProgress() {
+    logProgress(progress + progressIncrement);
   }
 
   @override
-  void LogProgress(double progress) {
-    if (!Ongoing && MaxProgress > 0) {
-      progress = min(MaxProgress, progress);
+  void logProgress(double progress) {
+    if (!ongoing && maxProgress > 0) {
+      progress = min(maxProgress, progress);
     }
 
-    if (Ongoing) {
-      MaxProgress = max(progress, MaxProgress);
+    if (ongoing) {
+      maxProgress = max(progress, maxProgress);
     }
 
-    var newProgress = CreateNewProgress(progress);
-    if (LastProgress?.date != newProgress.date) {
+    var newProgress = createNewProgress(progress);
+    if (lastProgress?.date != newProgress.date) {
       history.add(newProgress);
     } else {
       history.last = newProgress;
     }
   }
 
-  IProgress CreateNewProgress(double progress);
+  IProgress createNewProgress(double progress);
 }

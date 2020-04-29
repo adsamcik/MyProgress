@@ -15,12 +15,12 @@ class GenericBookmark extends BaseBookmark implements IWebBookmark {
   GenericBookmark();
 
   @override
-  IProgress CreateNewProgress(double progress) {
+  IProgress createNewProgress(double progress) {
     return GenericProgress(DateTime.now(), progress);
   }
 
   @override
-  String WebAddress;
+  String webAddress;
 
   factory GenericBookmark.fromJson(Map<String, dynamic> json) => _$GenericBookmarkFromJson(json);
 
