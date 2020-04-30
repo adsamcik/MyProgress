@@ -11,7 +11,7 @@ extension BookmarkUi on IBookmark {
   /// </summary>
   set progress(double value) => logProgress(value);
 
-  double get progress => lastProgress.value ?? 0.0;
+  double get progress => lastProgress?.value ?? 0.0;
 
   IProgress get lastProgress =>
       history.isNotEmpty ? history.last : GenericProgress(DateTime.fromMillisecondsSinceEpoch(0), 0.0);

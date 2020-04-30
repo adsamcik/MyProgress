@@ -33,4 +33,7 @@ class GenericBookmark extends BaseBookmark implements IWebBookmark {
 
   @override
   List<IProgress> get history => history_generic;
+
+  @override
+  double get progressIncrement => super.progressIncrement ?? 1.0;
 }

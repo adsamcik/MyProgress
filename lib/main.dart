@@ -1,6 +1,8 @@
 import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
+import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'data/abstract/IBookmark.dart';
 import 'data/instance/GenericBookmark.dart';
@@ -68,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
     await _dataStore.open();
     var bookmark = GenericBookmark();
     bookmark.originalTitle = 'Test';
+    bookmark.webAddress = 'http://example.com/';
     await _dataStore.insert(bookmark);
     await _dataStore.close();
     _refreshBookmarks();
@@ -125,12 +128,32 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   DataRow _buildRow(IBookmark bookmark) {
+    var actions = <MaterialButton>[];
+
+    actions.add(
+        OutlineButton(child: Text('+ ${bookmark.progressIncrement}'), onPressed: () => bookmark.incrementProgress()));
+
+    if (bookmark is IWebBookmark) {
+      var web = (bookmark as IWebBookmark);
+      actions.add(OutlineButton(
+          child: Text('Web'),
+          onPressed: () {
+            canLaunch(web.webAddress).then((value) {
+              if (value) {
+                launch(web.webAddress);
+              }
+            });
+          }));
+    }
+
     return DataRow(
       cells: [
         DataCell(Text(bookmark.title)),
         DataCell(Text(bookmark.progress.toString())),
         DataCell(Text(bookmark.lastProgress.date.toIso8601String())),
-        DataCell(Text('Not yet implemented')),
+        DataCell(Row(
+          children: actions,
+        )),
       ],
     );
   }

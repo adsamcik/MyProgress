@@ -25,18 +25,18 @@ abstract class BaseBookmark implements IPersistentBookmark {
 
   @override
   @JsonKey(required: false)
-  double maxProgress;
+  double maxProgress = 0.0;
 
   @override
   @JsonKey(required: false)
-  bool ongoing;
+  bool ongoing = false;
 
   @override
   @JsonKey(required: false)
-  bool abandoned;
+  bool abandoned = false;
 
   @override
-  double progressIncrement;
+  double progressIncrement = 1.0;
 
   @override
   void incrementProgress() {
