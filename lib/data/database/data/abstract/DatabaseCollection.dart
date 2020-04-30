@@ -32,7 +32,7 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   /// </summary>
   /// <param name="item">Item.</param>
   Future<dynamic> update(T item) async {
-    return await _store().record(item.id).put(_database, item.toJson());
+    return await _store().record(item.id).update(_database, item.toJson());
   }
 
   /// <summary>
@@ -42,24 +42,30 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   Future<List<dynamic>> updateAll(Iterable<T> iterable) async {
     var keys = _mapKeys(iterable);
     var data = iterable.map((e) => e.toJson()).toList(growable: false);
-    return await _store().records(keys).put(_database, data);
+    return await _store().records(keys).update(_database, data);
   }
 
   /// <summary>
   ///     Inserts single item.
   /// </summary>
   /// <param name="item">Item.</param>
-  Future<dynamic> insert(T item) async {
-    return await _store().add(_database, item.toJson());
+  Future insert(T item) async {
+    dynamic key = await _store().add(_database, item.toJson());
+    item.id = key as int;
   }
 
   /// <summary>
   ///     Inserts item collection.
   /// </summary>
   /// <param name="itemEnumerable">Item collection (Enumerable).</param>
-  Future<List<dynamic>> insertAll(Iterable<T> iterable) async {
+  Future insertAll(Iterable<T> iterable) async {
     var data = iterable.map((e) => e.toJson()).toList(growable: false);
-    return await _store().addAll(_database, data);
+    var keyList = await _store().addAll(_database, data);
+    var i = 0;
+    iterable.forEach((element) {
+      element.id = keyList[i] as int;
+      i++;
+    });
   }
 
   /// <summary>
@@ -83,10 +89,13 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   ///     Returns all items in a database.
   /// </summary>
   /// <returns>Item collection (Enumerable).</returns>
-  Future<Iterable<T>> GetAll() async {
-    var records = await _store().find(_database);
-    return records.map(
-        (e) => GenericBookmark.fromJson(e.value as Map<String, dynamic>) as T);
+  Future<Iterable<T>> getAll({Finder finder}) async {
+    var records = await _store().find(_database, finder: finder);
+    return records.map((e) {
+      var bookmark = GenericBookmark.fromJson(e.value as Map<String, dynamic>) as T;
+      bookmark.id = e.key as int;
+      return bookmark;
+    });
   }
 
   /// <summary>

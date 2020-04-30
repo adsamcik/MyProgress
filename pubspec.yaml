@@ -62,7 +62,9 @@ dev_dependencies:
     sdk: flutter
 
   pedantic: ^1.9.0
+  intl: ^0.16.1
 
+  # flutter pub run build_runner build (or watch)
   build_runner: ^1.9.0
   json_serializable: ^3.3.0
 

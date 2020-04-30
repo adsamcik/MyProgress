@@ -8,7 +8,7 @@ class DataStore extends DatabaseCollection<IPersistentBookmark> {
       String filter, FilterData filterData) async {
     filter = filter.toLowerCase();
     var strippedFilter = _stripString(filter);
-    var result = await GetAll();
+    var result = await getAll();
 
     if (filter.isNotEmpty) {
       result = result.where((readable) =>

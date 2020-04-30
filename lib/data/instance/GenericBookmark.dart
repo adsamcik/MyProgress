@@ -2,6 +2,7 @@ import 'package:MarkMyProgress/data/abstract/BaseBookmark.dart';
 import 'package:MarkMyProgress/data/abstract/IProgress.dart';
 import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:json_annotation/json_annotation.dart';
+import '../extension/DateExtension.dart';
 
 import 'GenericProgress.dart';
 
@@ -10,13 +11,13 @@ part 'GenericBookmark.g.dart';
 /// <summary>
 ///     Generic readable implementation for most reading materials.
 /// </summary>
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class GenericBookmark extends BaseBookmark implements IWebBookmark {
   GenericBookmark();
 
   @override
   IProgress createNewProgress(double progress) {
-    return GenericProgress(DateTime.now(), progress);
+    return GenericProgress(Date.today(), progress);
   }
 
   @override

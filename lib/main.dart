@@ -1,6 +1,7 @@
 import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
+import 'package:MarkMyProgress/data/extension/DateExtension.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -78,12 +79,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _refreshBookmarks() async {
     await _dataStore.open();
-    var bookmarks = (await _dataStore.GetAll()).toList();
+    var bookmarks = (await _dataStore.getAll()).toList();
     await _dataStore.close();
     setState(() {
       _bookmarks = bookmarks;
       _updateRows();
     });
+  }
+
+  void _incrementProgress(IPersistentBookmark bookmark) async {
+    bookmark.incrementProgress();
+    _saveBookmark(bookmark);
+  }
+
+  void _saveBookmark(IPersistentBookmark bookmark) async {
+    await _dataStore.open();
+    await _dataStore.update(bookmark);
+    await _dataStore.close();
+    _refreshBookmarks();
   }
 
   @override
@@ -127,30 +140,33 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  DataRow _buildRow(IBookmark bookmark) {
+  DataRow _buildRow(IPersistentBookmark bookmark) {
     var actions = <MaterialButton>[];
 
     actions.add(
-        OutlineButton(child: Text('+ ${bookmark.progressIncrement}'), onPressed: () => bookmark.incrementProgress()));
+        OutlineButton(child: Text('+ ${bookmark.progressIncrement}'), onPressed: () => _incrementProgress(bookmark)));
 
     if (bookmark is IWebBookmark) {
-      var web = (bookmark as IWebBookmark);
-      actions.add(OutlineButton(
-          child: Text('Web'),
-          onPressed: () {
-            canLaunch(web.webAddress).then((value) {
-              if (value) {
-                launch(web.webAddress);
-              }
-            });
-          }));
+      var webBookmark = (bookmark as IWebBookmark);
+      if ((webBookmark.webAddress ?? '').isNotEmpty) {
+        var result = (webBookmark.webAddress ?? '').isNotEmpty;
+        actions.add(OutlineButton(
+            child: Text('Web'),
+            onPressed: () {
+              canLaunch(webBookmark.webAddress).then((value) {
+                if (value) {
+                  launch(webBookmark.webAddress);
+                }
+              });
+            }));
+      }
     }
 
     return DataRow(
       cells: [
         DataCell(Text(bookmark.title)),
         DataCell(Text(bookmark.progress.toString())),
-        DataCell(Text(bookmark.lastProgress.date.toIso8601String())),
+        DataCell(Text(bookmark.lastProgress.date.toDateString())),
         DataCell(Row(
           children: actions,
         )),
