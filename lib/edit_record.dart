@@ -72,7 +72,6 @@ class _EditRecordState extends State<EditRecord> {
                     bookmark.localizedTitle = value;
                   },
                 ),
-                // ToDo make this nicer
                 if(bookmark is IWebBookmark)
                   TextFormField(
                   initialValue: (bookmark as IWebBookmark).webAddress,

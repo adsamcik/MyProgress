@@ -127,21 +127,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final TextEditingController _searchQueryController = TextEditingController();
 
-  Widget _buildSearchField() {
-    return Padding(
-        padding: EdgeInsets.all(32),
-        child: TextField(
-          controller: _searchQueryController,
-          autofocus: true,
-          decoration: InputDecoration(
-              prefixIcon: Icon(Icons.search, color: Colors.white),
-              hintText: 'Search...',
-              hintStyle: TextStyle(color: Colors.white)),
-          style: TextStyle(color: Colors.white),
-          onChanged: (query) => _updateFilterQuery(query),
-        ));
-  }
-
   void _updateFilterQuery(String query) {
     _filterData.query = query.toLowerCase();
     _updateFilter();
@@ -195,7 +180,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: _buildSearchField(),
+        title: Padding(
+            padding: EdgeInsets.all(32),
+            child: TextField(
+              controller: _searchQueryController,
+              autofocus: true,
+              decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search, color: Colors.white),
+                  hintText: 'Search...',
+                  hintStyle: TextStyle(color: Colors.white)),
+              style: TextStyle(color: Colors.white),
+              onChanged: (query) => _updateFilterQuery(query),
+            )),
         actions: [
           FlatButton(onPressed: () {}, child: Icon(Icons.publish)),
           FlatButton(onPressed: () {}, child: Icon(Icons.save_alt)),
