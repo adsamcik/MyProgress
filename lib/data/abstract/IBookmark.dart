@@ -56,4 +56,8 @@ abstract class IBookmark {
 		/// </summary>
 		/// <param name="progress">Progress value</param>
 		void logProgress(double progress);
+
+		/// Returns true if query matches any meaningful parameter such as title.
+    /// Numerical values should be ignored.
+		bool contains(String query);
 }

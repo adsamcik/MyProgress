@@ -80,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
       MaterialPageRoute<IPersistentBookmark>(builder: (context) => EditRecord(bookmark: newItem)),
     );
 
-    if(item == null) {
+    if (item == null) {
       return;
     }
 
@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
       MaterialPageRoute<IPersistentBookmark>(builder: (context) => EditRecord(bookmark: bookmark)),
     );
 
-    if(item == null) {
+    if (item == null) {
       return;
     }
 
@@ -158,9 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var strippedFilter = StringExtensions.stripString(_filterData.query);
 
     if (strippedFilter.isNotEmpty) {
-      tmp = tmp.where((readable) =>
-          _contains(readable.data.localizedTitle, strippedFilter) ||
-          _contains(readable.data.originalTitle, strippedFilter));
+      tmp = tmp.where((readable) => readable.data.contains(strippedFilter));
     }
 
     if (_filterData.reading) {
@@ -192,20 +190,17 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  bool _contains(String title, String filter) {
-    if (title == null) return false;
-
-    var strippedTitle = StringExtensions.stripString(title);
-    return strippedTitle.contains(filter);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: _buildSearchField(),
-        actions: [FlatButton(onPressed: () {}, child: Icon(Icons.settings))],
+        actions: [
+          FlatButton(onPressed: () {}, child: Icon(Icons.publish)),
+          FlatButton(onPressed: () {}, child: Icon(Icons.save_alt)),
+          FlatButton(onPressed: () {}, child: Icon(Icons.settings)),
+        ],
       ),
       body: Container(
           child: Scrollbar(
@@ -228,7 +223,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ))),
       floatingActionButton: FloatingActionButton(
         onPressed: _addNewItem,
-        tooltip: 'Increment',
+        tooltip: 'Add new bookmark',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
