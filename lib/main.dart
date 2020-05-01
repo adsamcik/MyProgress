@@ -75,15 +75,32 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _addNewItem() async {
     var newItem = GenericBookmark();
-    var item = await Navigator.push<GenericBookmark>(
+    var item = await Navigator.push<IPersistentBookmark>(
       context,
-      MaterialPageRoute<GenericBookmark>(builder: (context) => EditRecord(bookmark: newItem)),
+      MaterialPageRoute<IPersistentBookmark>(builder: (context) => EditRecord(bookmark: newItem)),
     );
+
+    if(item == null) {
+      return;
+    }
 
     await _dataStore.open();
     await _dataStore.insert(item);
     await _dataStore.close();
     _refreshBookmarks();
+  }
+
+  void _viewDetail(IPersistentBookmark bookmark) async {
+    var item = await Navigator.push<IPersistentBookmark>(
+      context,
+      MaterialPageRoute<IPersistentBookmark>(builder: (context) => EditRecord(bookmark: bookmark)),
+    );
+
+    if(item == null) {
+      return;
+    }
+
+    _saveBookmark(item);
   }
 
   void _refreshBookmarks() async {
@@ -249,11 +266,13 @@ class _MyHomePageState extends State<MyHomePage> {
     var lastProgressDate =
         bookmark.lastProgress.date == Date.invalid() ? '' : bookmark.lastProgress.date.toDateString();
 
+    var tapFunction = () => _viewDetail(bookmark);
+
     return DataRow(
       cells: [
-        DataCell(Text(bookmark.title)),
-        DataCell(Text(bookmark.progress.toString())),
-        DataCell(Text(lastProgressDate)),
+        DataCell(Text(bookmark.title), onTap: tapFunction),
+        DataCell(Text(bookmark.progress.toString()), onTap: tapFunction),
+        DataCell(Text(lastProgressDate), onTap: tapFunction),
         DataCell(Row(
           children: actions,
         )),

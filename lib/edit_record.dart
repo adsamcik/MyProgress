@@ -1,13 +1,15 @@
+import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/instance/GenericBookmark.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:MarkMyProgress/data/extension/UserBookmark.dart';
 import 'package:MarkMyProgress/data/extension/StringExtensions.dart';
 
+import 'data/abstract/IPersistentBookmark.dart';
 import 'data/input/RegExInputFormatter.dart';
 
 class EditRecord extends StatefulWidget {
-  final GenericBookmark bookmark;
+  final IPersistentBookmark bookmark;
 
   EditRecord({@required this.bookmark});
 
@@ -18,7 +20,7 @@ class EditRecord extends StatefulWidget {
 }
 
 class _EditRecordState extends State<EditRecord> {
-  final GenericBookmark bookmark;
+  final IPersistentBookmark bookmark;
 
   final _formKey = GlobalKey<FormState>();
   final _originalTitleKey = GlobalKey<FormFieldState<String>>();
@@ -70,11 +72,13 @@ class _EditRecordState extends State<EditRecord> {
                     bookmark.localizedTitle = value;
                   },
                 ),
-                TextFormField(
-                  initialValue: bookmark.webAddress,
+                // ToDo make this nicer
+                if(bookmark is IWebBookmark)
+                  TextFormField(
+                  initialValue: (bookmark as IWebBookmark).webAddress,
                   decoration: InputDecoration(labelText: 'Web Address'),
                   onSaved: (String value) {
-                    bookmark.webAddress = value;
+                    (bookmark as IWebBookmark).webAddress = value;
                   },
                 ),
                 TextFormField(
