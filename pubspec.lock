@@ -394,36 +394,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
-  path_provider:
-    dependency: "direct main"
-    description:
-      name: path_provider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.6.7"
-  path_provider_fde:
-    dependency: "direct main"
-    description:
-      path: "plugins/flutter_plugins/path_provider_fde"
-      ref: "100bc306dd"
-      resolved-ref: "100bc306dd15532dbbb2b353170aea47e8173a13"
-      url: "https://github.com/google/flutter-desktop-embedding.git"
-    source: git
-    version: "0.0.1"
-  path_provider_macos:
-    dependency: transitive
-    description:
-      name: path_provider_macos
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.4+1"
-  path_provider_platform_interface:
-    dependency: transitive
-    description:
-      name: path_provider_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   pedantic:
     dependency: "direct dev"
     description:
@@ -431,13 +401,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.9.0"
-  platform:
-    dependency: transitive
-    description:
-      name: platform
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.2.1"
   plugin_platform_interface:
     dependency: transitive
     description:

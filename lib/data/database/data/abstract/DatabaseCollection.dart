@@ -1,7 +1,5 @@
 import 'package:MarkMyProgress/data/database/data/abstract/IDatabaseItem.dart';
 import 'package:MarkMyProgress/data/instance/GenericBookmark.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
@@ -13,9 +11,6 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   Database _database;
 
   void open() async {
-    /*var dir = await getApplicationDocumentsDirectory();
-    await dir.create(recursive: true);
-    var dbPath = join(dir.path, 'progress_data.db');*/
     _database = await databaseFactoryIo.openDatabase('progress_data.db');
   }
 

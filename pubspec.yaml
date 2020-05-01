@@ -32,13 +32,6 @@ dependencies:
   sembast: ^2.4.3
   flutter_bloc: ^4.0.0
 
-  path_provider: ^1.6.7
-  path_provider_fde:
-    git:
-      url: https://github.com/google/flutter-desktop-embedding.git
-      path: plugins/flutter_plugins/path_provider_fde
-      ref: 100bc306dd
-
   url_launcher: ^5.4.5
   url_launcher_fde:
     git:
