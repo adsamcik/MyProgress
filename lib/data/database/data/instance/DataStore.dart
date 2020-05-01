@@ -1,13 +1,15 @@
+import 'package:MarkMyProgress/data/extension/StringExtensions.dart';
+
 import '../../../abstract/IPersistentBookmark.dart';
 import '../abstract/DatabaseCollection.dart';
 import '../../../runtime/FilterData.dart';
 import '../../../extension/UserBookmark.dart';
 
 class DataStore extends DatabaseCollection<IPersistentBookmark> {
-  Future<Iterable<IPersistentBookmark>> GetSelected(
+  Future<Iterable<IPersistentBookmark>> getSelected(
       String filter, FilterData filterData) async {
     filter = filter.toLowerCase();
-    var strippedFilter = _stripString(filter);
+    var strippedFilter = StringExtensions.stripString(filter);
     var result = await getAll();
 
     if (filter.isNotEmpty) {
@@ -47,11 +49,7 @@ class DataStore extends DatabaseCollection<IPersistentBookmark> {
   static bool _contains(String title, String filter) {
     if (title == null) return false;
 
-    var strippedTitle = _stripString(title);
+    var strippedTitle = StringExtensions.stripString(title);
     return strippedTitle.contains(filter);
-  }
-
-  static String _stripString(String text) {
-    return text.replaceAll(RegExp('[\\p{IsPunctuation} ]'), text);
   }
 }

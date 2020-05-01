@@ -2,12 +2,16 @@ import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
 import 'package:MarkMyProgress/data/extension/DateExtension.dart';
+import 'package:MarkMyProgress/data/runtime/FilterData.dart';
+import 'package:MarkMyProgress/data/runtime/FilterItem.dart';
+import 'package:MarkMyProgress/edit_record.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'data/abstract/IBookmark.dart';
+import 'data/extension/StringExtensions.dart';
 import 'data/instance/GenericBookmark.dart';
 import 'data/extension/UserBookmark.dart';
+import 'data/extension/ListExtensions.dart';
 
 void main() {
   runApp(MyApp());
@@ -62,17 +66,22 @@ class _MyHomePageState extends State<MyHomePage> {
   final DataStore _dataStore = DataStore();
   List<IPersistentBookmark> _bookmarks = [];
   final List<DataRow> _rowList = [];
+  List<DataRow> _filteredRowList = [];
+  final FilterData _filterData = FilterData();
 
   _MyHomePageState() {
     _refreshBookmarks();
   }
 
   void _addNewItem() async {
+    var newItem = GenericBookmark();
+    var item = await Navigator.push<GenericBookmark>(
+      context,
+      MaterialPageRoute<GenericBookmark>(builder: (context) => EditRecord(bookmark: newItem)),
+    );
+
     await _dataStore.open();
-    var bookmark = GenericBookmark();
-    bookmark.originalTitle = 'Test';
-    bookmark.webAddress = 'http://example.com/';
-    await _dataStore.insert(bookmark);
+    await _dataStore.insert(item);
     await _dataStore.close();
     _refreshBookmarks();
   }
@@ -99,32 +108,107 @@ class _MyHomePageState extends State<MyHomePage> {
     _refreshBookmarks();
   }
 
+  final TextEditingController _searchQueryController = TextEditingController();
+
+  Widget _buildSearchField() {
+    return Padding(
+        padding: EdgeInsets.all(32),
+        child: TextField(
+          controller: _searchQueryController,
+          autofocus: true,
+          decoration: InputDecoration(
+              prefixIcon: Icon(Icons.search, color: Colors.white),
+              hintText: 'Search...',
+              hintStyle: TextStyle(color: Colors.white)),
+          style: TextStyle(color: Colors.white),
+          onChanged: (query) => _updateFilterQuery(query),
+        ));
+  }
+
+  void _updateFilterQuery(String query) {
+    _filterData.query = query.toLowerCase();
+    _updateFilter();
+  }
+
+  void _updateFilter() {
+    var filterList = List<FilterItem<IPersistentBookmark>>(_bookmarks.length);
+    for (var i = 0; i < filterList.length; i++) {
+      filterList[i] = FilterItem(data: _bookmarks[i], index: i);
+    }
+
+    Iterable<FilterItem<IPersistentBookmark>> tmp = filterList;
+
+    var strippedFilter = StringExtensions.stripString(_filterData.query);
+
+    if (strippedFilter.isNotEmpty) {
+      tmp = tmp.where((readable) =>
+          _contains(readable.data.localizedTitle, strippedFilter) ||
+          _contains(readable.data.originalTitle, strippedFilter));
+    }
+
+    if (_filterData.reading) {
+      tmp = tmp.where((readable) =>
+          !readable.data.abandoned && (readable.data.ongoing || readable.data.progress < readable.data.maxProgress));
+    }
+
+    if (_filterData.abandoned) {
+      tmp = tmp.where((readable) => !readable.data.abandoned);
+    }
+
+    if (_filterData.ended) {
+      tmp = tmp.where((readable) => readable.data.ongoing);
+    }
+
+    if (_filterData.finished) {
+      tmp = tmp.where((readable) => readable.data.ongoing || readable.data.progress < readable.data.maxProgress);
+    }
+
+    if (_filterData.ongoing) {
+      tmp = tmp.where((readable) => !readable.data.ongoing);
+    }
+
+    var filterRowIndexes = tmp.map((e) => e.index).toList(growable: false);
+    var filteredRowList = _rowList.filterWithIndexList(filterRowIndexes);
+
+    setState(() {
+      _filteredRowList = filteredRowList;
+    });
+  }
+
+  bool _contains(String title, String filter) {
+    if (title == null) return false;
+
+    var strippedTitle = StringExtensions.stripString(title);
+    return strippedTitle.contains(filter);
+  }
+
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        centerTitle: true,
+        title: _buildSearchField(),
       ),
       body: Container(
-          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-        DataTable(
-          columns: [
-            DataColumn(label: Text('Title')),
-            DataColumn(label: Text('Progress'), numeric: true),
-            DataColumn(label: Text('Last progress')),
-            DataColumn(label: Text('Actions'))
-          ],
-          rows: _rowList,
-        ),
-      ])),
+          child: Scrollbar(
+              isAlwaysShown: true,
+              controller: ScrollController(),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                  DataTable(
+                    sortAscending: true,
+                    sortColumnIndex: 0,
+                    columns: [
+                      DataColumn(label: Text('Title')),
+                      DataColumn(label: Text('Progress'), numeric: true),
+                      DataColumn(label: Text('Last progress')),
+                      DataColumn(label: Text('Actions'))
+                    ],
+                    rows: _filteredRowList,
+                  ),
+                ]),
+              ))),
       floatingActionButton: FloatingActionButton(
         onPressed: _addNewItem,
         tooltip: 'Increment',
@@ -138,6 +222,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _bookmarks.forEach((element) {
       _rowList.add(_buildRow(element));
     });
+    _updateFilter();
   }
 
   DataRow _buildRow(IPersistentBookmark bookmark) {
@@ -149,7 +234,6 @@ class _MyHomePageState extends State<MyHomePage> {
     if (bookmark is IWebBookmark) {
       var webBookmark = (bookmark as IWebBookmark);
       if ((webBookmark.webAddress ?? '').isNotEmpty) {
-        var result = (webBookmark.webAddress ?? '').isNotEmpty;
         actions.add(OutlineButton(
             child: Text('Web'),
             onPressed: () {
@@ -162,11 +246,14 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }
 
+    var lastProgressDate =
+        bookmark.lastProgress.date == Date.invalid() ? '' : bookmark.lastProgress.date.toDateString();
+
     return DataRow(
       cells: [
         DataCell(Text(bookmark.title)),
         DataCell(Text(bookmark.progress.toString())),
-        DataCell(Text(bookmark.lastProgress.date.toDateString())),
+        DataCell(Text(lastProgressDate)),
         DataCell(Row(
           children: actions,
         )),

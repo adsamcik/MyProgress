@@ -1,7 +1,8 @@
 class FilterData {
-  bool reading;
-  bool abandoned;
-  bool ongoing;
-  bool ended;
-  bool finished;
+  String query = '';
+  bool reading = false;
+  bool abandoned = false;
+  bool ongoing = false;
+  bool ended = false;
+  bool finished = false;
 }

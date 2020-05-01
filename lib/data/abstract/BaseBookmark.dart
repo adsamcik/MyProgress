@@ -3,6 +3,7 @@ import 'IProgress.dart';
 import 'IPersistentBookmark.dart';
 import 'dart:math';
 import '../extension/UserBookmark.dart';
+import '../extension/StringExtensions.dart';
 
 /// <summary>
 ///     Base readable implementation providing utility methods for UI.
@@ -21,7 +22,15 @@ abstract class BaseBookmark implements IPersistentBookmark {
   String originalTitle;
 
   @override
-  String get title => localizedTitle ?? originalTitle ?? '';
+  String get title {
+    if(localizedTitle.isNotNullOrEmpty) {
+      return localizedTitle;
+    } else if(originalTitle.isNotNullOrEmpty) {
+      return originalTitle;
+    } else {
+      return '';
+    }
+  }
 
   @override
   @JsonKey(required: false)
