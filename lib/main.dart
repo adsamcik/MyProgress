@@ -188,11 +188,11 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         centerTitle: true,
         title: _buildSearchField(),
+        actions: [FlatButton(onPressed: () {}, child: Icon(Icons.settings))],
       ),
       body: Container(
           child: Scrollbar(
-              isAlwaysShown: true,
-              controller: ScrollController(),
+              controller: ScrollController(initialScrollOffset: 0),
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
