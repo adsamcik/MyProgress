@@ -45,6 +45,7 @@ abstract class BaseBookmark implements IPersistentBookmark {
   bool abandoned = false;
 
   @override
+  @JsonKey(required: false)
   double progressIncrement = 1.0;
 
   @override
