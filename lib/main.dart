@@ -5,6 +5,7 @@ import 'package:MarkMyProgress/extensions/DateExtension.dart';
 import 'package:MarkMyProgress/data/runtime/FilterData.dart';
 import 'package:MarkMyProgress/data/runtime/FilterItem.dart';
 import 'package:MarkMyProgress/edit_record.dart';
+import 'package:MarkMyProgress/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -73,12 +74,16 @@ class _MyHomePageState extends State<MyHomePage> {
     _refreshBookmarks();
   }
 
+  Future<T> navigate<T>(WidgetBuilder builder) async {
+    return await Navigator.push<T>(
+      context,
+      MaterialPageRoute<T>(builder: builder),
+    );
+  }
+
   void _addNewItem() async {
     var newItem = GenericBookmark();
-    var item = await Navigator.push<IPersistentBookmark>(
-      context,
-      MaterialPageRoute<IPersistentBookmark>(builder: (context) => EditRecord(bookmark: newItem)),
-    );
+    var item = await navigate<IPersistentBookmark>((context) => EditRecord(bookmark: newItem));
 
     if (item == null) {
       return;
@@ -91,10 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _viewDetail(IPersistentBookmark bookmark) async {
-    var item = await Navigator.push<IPersistentBookmark>(
-      context,
-      MaterialPageRoute<IPersistentBookmark>(builder: (context) => EditRecord(bookmark: bookmark)),
-    );
+    var item = await navigate<IPersistentBookmark>((context) => EditRecord(bookmark: bookmark));
 
     if (item == null) {
       return;
@@ -195,7 +197,11 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           FlatButton(onPressed: () {}, child: Icon(Icons.publish)),
           FlatButton(onPressed: () {}, child: Icon(Icons.save_alt)),
-          FlatButton(onPressed: () {}, child: Icon(Icons.settings)),
+          FlatButton(
+              onPressed: () {
+                navigate<dynamic>((context) => Settings());
+              },
+              child: Icon(Icons.settings)),
         ],
       ),
       body: Container(
