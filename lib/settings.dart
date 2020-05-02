@@ -69,8 +69,8 @@ class _SettingsState extends State<Settings> {
 
   Future _loadFilter() async {
     await _store.open();
-    var futureData = _filterDataList.map(
-        (element) async => await _store.get((e) => e.value, finder: Finder(filter: Filter.byKey(element.key))) as bool);
+    var futureData = _filterDataList.map((element) async =>
+        await _store.get((e) => e?.value ?? false, finder: Finder(filter: Filter.byKey(element.key))) as bool);
     var data = await Future.wait(futureData);
     await _store.close();
 
@@ -78,7 +78,7 @@ class _SettingsState extends State<Settings> {
     setState(() {
       var index = 0;
       data.forEach((element) {
-        if (element){
+        if (element) {
           _filters.add(_filterDataList[index].key);
         }
         index++;
