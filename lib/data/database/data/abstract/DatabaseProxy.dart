@@ -22,7 +22,7 @@ class DatabaseProxy<Key, Value> {
     await _database.close();
   }
 
-  StoreRef _store() => StoreRef<int, dynamic>.main();
+  StoreRef _store() => StoreRef<Key, Value>.main();
 
   /// <summary>
   ///     Updates single item.
