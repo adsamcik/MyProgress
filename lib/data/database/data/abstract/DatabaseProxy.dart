@@ -1,5 +1,6 @@
 import 'package:MarkMyProgress/data/database/data/abstract/IDatabaseItem.dart';
 import 'package:MarkMyProgress/data/instance/GenericBookmark.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
@@ -7,11 +8,14 @@ import 'package:sembast/sembast_io.dart';
 ///     Generic implementation of database collection providing basic methods to work with collection.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-abstract class DatabaseProxy<Key, Value> {
+class DatabaseProxy<Key, Value> {
   Database _database;
+  final String databasePath;
+
+  DatabaseProxy({@required this.databasePath});
 
   void open() async {
-    _database = await databaseFactoryIo.openDatabase('progress_data.db');
+    _database = await databaseFactoryIo.openDatabase(databasePath);
   }
 
   void close() async {
