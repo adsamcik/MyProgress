@@ -3,7 +3,8 @@ import 'package:MarkMyProgress/extensions/StringExtensions.dart';
 import '../../../abstract/IPersistentBookmark.dart';
 import '../abstract/DatabaseCollection.dart';
 import '../../../runtime/FilterData.dart';
-import '../../../extension/UserBookmark.dart';
+import 'package:MarkMyProgress/extensions/UserBookmark.dart';
+
 
 class DataStore extends DatabaseCollection<IPersistentBookmark> {
   Future<Iterable<IPersistentBookmark>> getSelected(

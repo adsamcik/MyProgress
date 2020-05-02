@@ -3,7 +3,7 @@ import 'package:MarkMyProgress/data/abstract/IProgress.dart';
 import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/extensions/StringExtensions.dart';
 import 'package:json_annotation/json_annotation.dart';
-import '../extension/DateExtension.dart';
+import 'package:MarkMyProgress/extensions/DateExtension.dart';
 
 import 'GenericProgress.dart';
 
