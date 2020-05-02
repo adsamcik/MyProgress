@@ -14,6 +14,14 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
 
   Iterable<int> _mapKeys(Iterable<T> items) => items.map((e) => e.id);
 
+  void open() async {
+    await _proxy.open();
+  }
+
+  void close() async {
+    await _proxy.close();
+  }
+
   /// <summary>
   ///     Updates single item.
   /// </summary>
