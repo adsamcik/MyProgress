@@ -85,7 +85,7 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   /// <returns>Item collection (Enumerable).</returns>
   Future<Iterable<T>> getAll({Finder finder}) async {
     var records = await _proxy.getAll((e) {
-      var value = e as Map<String, dynamic>;
+      var value = Map<String, dynamic>.from(e.value as Map<String, dynamic>);
       value['id'] = e.key;
       return value;
     }, finder: finder);
