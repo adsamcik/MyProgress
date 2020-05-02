@@ -3,22 +3,14 @@ import 'package:MarkMyProgress/data/instance/GenericBookmark.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
+import 'DatabaseProxy.dart';
+
 /// <summary>
 ///     Generic implementation of database collection providing basic methods to work with collection.
 /// </summary>
 /// <typeparam name="T"></typeparam>
 abstract class DatabaseCollection<T extends IDatabaseItem> {
-  Database _database;
-
-  void open() async {
-    _database = await databaseFactoryIo.openDatabase('progress_data.db');
-  }
-
-  void close() async {
-    await _database.close();
-  }
-
-  StoreRef _store() => StoreRef<int, dynamic>.main();
+  DatabaseProxy<int, Map<String, dynamic>> _proxy;
 
   Iterable<int> _mapKeys(Iterable<T> items) => items.map((e) => e.id);
 
@@ -27,7 +19,7 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   /// </summary>
   /// <param name="item">Item.</param>
   Future<dynamic> update(T item) async {
-    return await _store().record(item.id).update(_database, item.toJson());
+    return await _proxy.update(item.id, item.toJson());
   }
 
   /// <summary>
@@ -37,7 +29,7 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   Future<List<dynamic>> updateAll(Iterable<T> iterable) async {
     var keys = _mapKeys(iterable);
     var data = iterable.map((e) => e.toJson()).toList(growable: false);
-    return await _store().records(keys).update(_database, data);
+    return await _proxy.updateAll(keys, data);
   }
 
   /// <summary>
@@ -45,8 +37,7 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   /// </summary>
   /// <param name="item">Item.</param>
   Future insert(T item) async {
-    dynamic key = await _store().add(_database, item.toJson());
-    item.id = key as int;
+    item.id = await _proxy.insert(item.toJson());
   }
 
   /// <summary>
@@ -55,11 +46,11 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   /// <param name="itemEnumerable">Item collection (Enumerable).</param>
   Future insertAll(Iterable<T> iterable) async {
     var data = iterable.map((e) => e.toJson()).toList(growable: false);
-    var keyList = await _store().addAll(_database, data);
-    var i = 0;
+    var keyList = (await _proxy.insertAll(data));
+    var keyIterator = keyList.iterator;
     iterable.forEach((element) {
-      element.id = keyList[i] as int;
-      i++;
+      keyIterator.moveNext();
+      element.id = keyIterator.current;
     });
   }
 
@@ -68,7 +59,7 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   /// </summary>
   /// <param name="item">Item.</param>
   Future<dynamic> delete(T item) async {
-    return await _store().record(item.id).delete(_database);
+    return await _proxy.delete(item.id);
   }
 
   /// <summary>
@@ -77,7 +68,7 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   /// <param name="itemEnumerable">Item collection (Enumerable).</param>
   Future<dynamic> deleteAll(Iterable<T> iterable) async {
     var keys = _mapKeys(iterable);
-    return await _store().records(keys).delete(_database);
+    return _proxy.deleteAll(keys);
   }
 
   /// <summary>
@@ -85,10 +76,15 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   /// </summary>
   /// <returns>Item collection (Enumerable).</returns>
   Future<Iterable<T>> getAll({Finder finder}) async {
-    var records = await _store().find(_database, finder: finder);
+    var records = await _proxy.getAll((e) {
+      var value = e as Map<String, dynamic>;
+      value['id'] = e.key;
+      return value;
+    }, finder: finder);
     return records.map((e) {
-      var bookmark = GenericBookmark.fromJson(e.value as Map<String, dynamic>) as T;
-      bookmark.id = e.key as int;
+      var bookmark = GenericBookmark.fromJson(e) as T;
+      // ID is not serialized
+      bookmark.id = e['id'] as int;
       return bookmark;
     });
   }
@@ -98,6 +94,6 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   /// </summary>
   /// <param name="item">Item.</param>
   Future<dynamic> upsert(T item) async {
-    return await update(item);
+    return await _proxy.upsert(item.id, item.toJson());
   }
 }
