@@ -1,17 +1,17 @@
 import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
-import 'package:MarkMyProgress/data/extension/DateExtension.dart';
+import 'package:MarkMyProgress/extensions/DateExtension.dart';
 import 'package:MarkMyProgress/data/runtime/FilterData.dart';
 import 'package:MarkMyProgress/data/runtime/FilterItem.dart';
 import 'package:MarkMyProgress/edit_record.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'data/extension/StringExtensions.dart';
+import 'extensions/StringExtensions.dart';
 import 'data/instance/GenericBookmark.dart';
-import 'data/extension/UserBookmark.dart';
-import 'data/extension/ListExtensions.dart';
+import 'extensions/UserBookmark.dart';
+import 'extensions/ListExtensions.dart';
 
 void main() {
   runApp(MyApp());

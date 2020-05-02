@@ -2,8 +2,8 @@ import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/instance/GenericBookmark.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:MarkMyProgress/data/extension/UserBookmark.dart';
-import 'package:MarkMyProgress/data/extension/StringExtensions.dart';
+import 'package:MarkMyProgress/extensions/UserBookmark.dart';
+import 'package:MarkMyProgress/extensions/StringExtensions.dart';
 
 import 'data/abstract/IPersistentBookmark.dart';
 import 'data/input/RegExInputFormatter.dart';

@@ -1,4 +1,4 @@
-import 'package:MarkMyProgress/data/extension/StringExtensions.dart';
+import 'package:MarkMyProgress/extensions/StringExtensions.dart';
 
 import '../../../abstract/IPersistentBookmark.dart';
 import '../abstract/DatabaseCollection.dart';
