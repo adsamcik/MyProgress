@@ -84,6 +84,10 @@ class DatabaseProxy<Key, Value> {
     });
   }
 
+  Future<Value> get(Value Function(RecordSnapshot<dynamic, dynamic>) mapToValue, {Finder finder}) async {
+    return mapToValue(await _store().findFirst(_database, finder: finder));
+  }
+
   /// <summary>
   ///     Upserts an item.
   /// </summary>
