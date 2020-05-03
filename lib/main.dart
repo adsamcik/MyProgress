@@ -195,8 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onChanged: (query) => _updateFilterQuery(query),
             )),
         actions: [
-          FlatButton(onPressed: () {}, child: Icon(Icons.publish)),
-          FlatButton(onPressed: () {}, child: Icon(Icons.save_alt)),
+          FlatButton(onPressed: () {}, child: Icon(Icons.insert_chart)),
           FlatButton(
               onPressed: () {
                 navigate<dynamic>((context) => Settings());
@@ -251,11 +250,12 @@ class _MyHomePageState extends State<MyHomePage> {
         actions.add(OutlineButton(
             child: Text('Web'),
             onPressed: () {
-              canLaunch(webBookmark.webAddress).then((value) {
-                if (value) {
-                  launch(webBookmark.webAddress);
-                }
-              });
+              // can launch is not implemented on Windows
+              //canLaunch(webBookmark.webAddress).then((value) {
+              //if (value) {
+              launch(webBookmark.webAddress);
+              //}
+              //});
             }));
       }
     }
