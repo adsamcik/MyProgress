@@ -2,6 +2,7 @@ import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
 import 'package:MarkMyProgress/data/database/data/instance/SettingsStore.dart';
+import 'package:MarkMyProgress/data/runtime/SettingsResult.dart';
 import 'package:MarkMyProgress/extensions/DateExtension.dart';
 import 'package:MarkMyProgress/data/runtime/FilterData.dart';
 import 'package:MarkMyProgress/data/runtime/FilterItem.dart';
@@ -215,8 +216,14 @@ class _MyHomePageState extends State<MyHomePage> {
           FlatButton(onPressed: () {}, child: Icon(Icons.insert_chart)),
           FlatButton(
               onPressed: () async {
-                await navigate<dynamic>((context) => Settings());
-                _refreshSettings();
+                var result = await navigate<SettingsResult>((context) => Settings()) ?? SettingsResult(true, true);
+                if(result.filterChanged) {
+                  _refreshSettings();
+                }
+
+                if(result.dataImported) {
+                  _refreshBookmarks();
+                }
               },
               child: Icon(Icons.settings)),
         ],

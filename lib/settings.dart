@@ -1,10 +1,13 @@
 import 'package:MarkMyProgress/data/database/data/instance/SettingsStore.dart';
+import 'package:MarkMyProgress/data/runtime/SettingsResult.dart';
+import 'package:file_chooser/file_chooser.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import 'package:sembast/sembast.dart';
 
 import 'data/runtime/FilterData.dart';
+import 'import/Importer.dart';
 
 class Settings extends StatefulWidget {
   Settings({Key key}) : super(key: key);
@@ -23,6 +26,8 @@ class BookmarkFilterEntry {
 class _SettingsState extends State<Settings> {
   final SettingsStore _store = SettingsStore();
 
+  MutableSettingsResult result = MutableSettingsResult();
+
   final List<BookmarkFilterEntry> _filterDataList = <BookmarkFilterEntry>[
     const BookmarkFilterEntry('reading', 'Reading'),
     const BookmarkFilterEntry('abandoned', 'Abandoned'),
@@ -33,6 +38,12 @@ class _SettingsState extends State<Settings> {
   final List<String> _filters = <String>[];
 
   Future _setFilter(String name, bool value) async {
+    await _store.open();
+    await _store.upsert(name, value);
+    await _store.close();
+
+    result.filterChanged = true;
+
     setState(() {
       if (value) {
         _filters.add(name);
@@ -42,10 +53,6 @@ class _SettingsState extends State<Settings> {
         });
       }
     });
-
-    await _store.open();
-    await _store.upsert(name, value);
-    await _store.close();
   }
 
   Iterable<Widget> get filterWidgets sync* {
@@ -89,6 +96,11 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Settings'),
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context, result);
+              }),
         ),
         body: SafeArea(
             minimum: EdgeInsets.all(16.0),
@@ -110,6 +122,23 @@ class _SettingsState extends State<Settings> {
                       //showAboutDialog(context: context, applicationName: packageInfo.appName, applicationVersion: packageInfo.version);
                       showAboutDialog(context: context, applicationName: 'Mark My Progress');
                     }),
+                Wrap(spacing: 16, children: [
+                  OutlineButton(
+                      child: Text('Import'),
+                      onPressed: () async {
+                        if (await Importer.import()) {
+                          result.dataImported = true;
+                        }
+                      }),
+                  OutlineButton(
+                      child: Text('Export'),
+                      onPressed: () async {
+                        // Windows not yet supported
+                        //var packageInfo = await PackageInfo.fromPlatform();
+                        //showAboutDialog(context: context, applicationName: packageInfo.appName, applicationVersion: packageInfo.version);
+                        showAboutDialog(context: context, applicationName: 'Mark My Progress');
+                      })
+                ]),
               ],
             ))));
   }
