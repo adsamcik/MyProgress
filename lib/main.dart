@@ -223,46 +223,57 @@ class _MyHomePageState extends State<MyHomePage> {
         controller: ScrollController(initialScrollOffset: 0),
         child: ListView.separated(
           padding: EdgeInsets.fromLTRB(16, 0, 16, 96),
-          separatorBuilder: (context, index) => Divider(color: Theme.of(context).backgroundColor)
-          ,
+          separatorBuilder: (context, index) => Divider(color: Theme.of(context).backgroundColor),
           itemBuilder: (context, index) {
             var bookmark = _filteredBookmarks[index];
             var lastProgressDate =
                 bookmark.lastProgress.date == Date.invalid() ? '' : bookmark.lastProgress.date.toDateString();
-            return Padding(
-                padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                child: Row(children: [
-                  ConstrainedBox(
-                    constraints: BoxConstraints.tightForFinite(width: 90),
-                      child: Column(
+            return Row(children: [
+              ConstrainedBox(
+                  constraints: BoxConstraints.tightForFinite(width: 90),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text('${bookmark.progress} / ${bookmark.maxProgress}', maxLines: 1,),
-                      Text(lastProgressDate, maxLines: 1, softWrap: false, overflow: TextOverflow.fade,),
+                      Text(
+                        '${bookmark.progress} / ${bookmark.maxProgress}',
+                        maxLines: 1,
+                      ),
+                      Text(
+                        lastProgressDate,
+                        maxLines: 1,
+                        softWrap: false,
+                        overflow: TextOverflow.fade,
+                      ),
                     ],
                   )),
-                  SizedBox(width: 16),
-                  Expanded(
-                      child: Text(
-                    bookmark.title,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  )),
-                  SizedBox(width: 16),
-                  if (bookmark is IWebBookmark && ((bookmark as IWebBookmark).webAddress ?? '').isNotEmpty)
-                    OutlineButton(
-                        child: Text('Web'),
-                        onPressed: () {
-                          // can launch is not implemented on Windows
-                          //canLaunch(webBookmark.webAddress).then((value) {
-                          //if (value) {
-                          launch((bookmark as IWebBookmark).webAddress);
-                          //}
-                          //});
-                        }),
-                  OutlineButton(
-                      child: Text('+ ${bookmark.progressIncrement}'), onPressed: () => _incrementProgress(bookmark)),
-                ]));
+              SizedBox(width: 16),
+              Expanded(
+                  child: Container(
+                      height: 40,
+                      child: InkWell(
+                          onTap: () => _viewDetail(bookmark),
+                          child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                bookmark.title,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ))))),
+              SizedBox(width: 16),
+              if (bookmark is IWebBookmark && ((bookmark as IWebBookmark).webAddress ?? '').isNotEmpty)
+                OutlineButton(
+                    child: Text('Web'),
+                    onPressed: () {
+                      // can launch is not implemented on Windows
+                      //canLaunch(webBookmark.webAddress).then((value) {
+                      //if (value) {
+                      launch((bookmark as IWebBookmark).webAddress);
+                      //}
+                      //});
+                    }),
+              OutlineButton(
+                  child: Text('+ ${bookmark.progressIncrement}'), onPressed: () => _incrementProgress(bookmark)),
+            ]);
           },
           itemCount: _filteredBookmarks.length,
         ),
