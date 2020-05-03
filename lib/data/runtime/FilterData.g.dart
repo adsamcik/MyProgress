@@ -8,7 +8,6 @@ part of 'FilterData.dart';
 
 FilterData _$FilterDataFromJson(Map<String, dynamic> json) {
   return FilterData()
-    ..query = json['query'] as String
     ..reading = json['reading'] as bool
     ..abandoned = json['abandoned'] as bool
     ..ongoing = json['ongoing'] as bool
@@ -18,7 +17,6 @@ FilterData _$FilterDataFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$FilterDataToJson(FilterData instance) =>
     <String, dynamic>{
-      'query': instance.query,
       'reading': instance.reading,
       'abandoned': instance.abandoned,
       'ongoing': instance.ongoing,

@@ -1,6 +1,7 @@
 import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
+import 'package:MarkMyProgress/data/database/data/instance/SettingsStore.dart';
 import 'package:MarkMyProgress/extensions/DateExtension.dart';
 import 'package:MarkMyProgress/data/runtime/FilterData.dart';
 import 'package:MarkMyProgress/data/runtime/FilterItem.dart';
@@ -65,20 +66,25 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final DataStore _dataStore = DataStore();
+  final SettingsStore _settingsStore = SettingsStore();
+
   List<IPersistentBookmark> _bookmarks = [];
   final List<DataRow> _rowList = [];
   List<DataRow> _filteredRowList = [];
-  final FilterData _filterData = FilterData();
-
-  _MyHomePageState() {
-    _refreshBookmarks();
-  }
+  FilterRuntimeData _filterRuntime = FilterRuntimeData(FilterData());
 
   Future<T> navigate<T>(WidgetBuilder builder) async {
     return await Navigator.push<T>(
       context,
       MaterialPageRoute<T>(builder: builder),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshBookmarks();
+    _refreshSettings();
   }
 
   void _addNewItem() async {
@@ -127,10 +133,19 @@ class _MyHomePageState extends State<MyHomePage> {
     _refreshBookmarks();
   }
 
+  void _refreshSettings() async {
+    await _settingsStore.open();
+    var filterData = await _settingsStore.getFilterData();
+    await _settingsStore.close();
+    setState(() {
+      _filterRuntime = FilterRuntimeData(filterData, query: _filterRuntime.query);
+    });
+  }
+
   final TextEditingController _searchQueryController = TextEditingController();
 
   void _updateFilterQuery(String query) {
-    _filterData.query = query.toLowerCase();
+    _filterRuntime.query = query.toLowerCase();
     _updateFilter();
   }
 
@@ -142,30 +157,31 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Iterable<FilterItem<IPersistentBookmark>> tmp = filterList;
 
-    var strippedFilter = StringExtensions.stripString(_filterData.query);
+    var strippedFilter = StringExtensions.stripString(_filterRuntime.query);
 
     if (strippedFilter.isNotEmpty) {
       tmp = tmp.where((readable) => readable.data.contains(strippedFilter));
     }
 
-    if (_filterData.reading) {
+    var filterData = _filterRuntime.filterData;
+    if (filterData.reading) {
       tmp = tmp.where((readable) =>
           !readable.data.abandoned && (readable.data.ongoing || readable.data.progress < readable.data.maxProgress));
     }
 
-    if (_filterData.abandoned) {
+    if (filterData.abandoned) {
       tmp = tmp.where((readable) => !readable.data.abandoned);
     }
 
-    if (_filterData.ended) {
+    if (filterData.ended) {
       tmp = tmp.where((readable) => readable.data.ongoing);
     }
 
-    if (_filterData.finished) {
+    if (filterData.finished) {
       tmp = tmp.where((readable) => readable.data.ongoing || readable.data.progress < readable.data.maxProgress);
     }
 
-    if (_filterData.ongoing) {
+    if (filterData.ongoing) {
       tmp = tmp.where((readable) => !readable.data.ongoing);
     }
 
@@ -197,8 +213,8 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           FlatButton(onPressed: () {}, child: Icon(Icons.insert_chart)),
           FlatButton(
-              onPressed: () {
-                navigate<dynamic>((context) => Settings());
+              onPressed: () async {
+                await navigate<dynamic>((context) => Settings());
               },
               child: Icon(Icons.settings)),
         ],
