@@ -78,6 +78,8 @@ class _EditRecordState extends State<EditRecord> {
                     initialValue: (bookmark as IWebBookmark).webAddress,
                     decoration: InputDecoration(labelText: 'Web Address'),
                     validator: (value) {
+                      if (value.isNullOrEmpty) return null;
+
                       var hasMatch = RegExp(URL_PATTERN).hasMatch(value);
 
                       if (!hasMatch) {
