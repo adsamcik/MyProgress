@@ -1,4 +1,4 @@
-﻿import 'dart:convert';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
@@ -26,7 +26,9 @@ class JSONDataHandler implements IDataExporter, IDataImporter {
   Future<Iterable<IPersistentBookmark>> import(File file) async {
     var json = await file.readAsString();
     try {
-      return (jsonDecode(json) as List).cast<Map<String, dynamic>>().map((e) => GenericBookmark.fromJson(e));
+      return (jsonDecode(json) as List)
+          .cast<Map<String, dynamic>>()
+          .map((e) => GenericBookmark.fromJson(e));
     } catch (exception) {
       print(exception);
       return Iterable.empty();

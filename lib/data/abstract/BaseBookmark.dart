@@ -23,9 +23,9 @@ abstract class BaseBookmark implements IPersistentBookmark {
 
   @override
   String get title {
-    if(localizedTitle.isNotNullOrEmpty) {
+    if (localizedTitle.isNotNullOrEmpty) {
       return localizedTitle;
-    } else if(originalTitle.isNotNullOrEmpty) {
+    } else if (originalTitle.isNotNullOrEmpty) {
       return originalTitle;
     } else {
       return '';

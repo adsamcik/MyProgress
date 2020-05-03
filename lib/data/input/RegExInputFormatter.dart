@@ -19,7 +19,8 @@ class RegExInputFormatter implements TextInputFormatter {
   }
 
   factory RegExInputFormatter.decimalNumbers() {
-    return RegExInputFormatter.withRegex('^\$|^(0|([1-9][0-9]{0,}))(\\.[0-9]{0,})?\$');
+    return RegExInputFormatter.withRegex(
+        '^\$|^(0|([1-9][0-9]{0,}))(\\.[0-9]{0,})?\$');
   }
 
   @override
