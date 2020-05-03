@@ -140,6 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _filterRuntime = FilterRuntimeData(filterData, query: _filterRuntime.query);
     });
+    _updateFilter();
   }
 
   final TextEditingController _searchQueryController = TextEditingController();
@@ -215,6 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
           FlatButton(
               onPressed: () async {
                 await navigate<dynamic>((context) => Settings());
+                _refreshSettings();
               },
               child: Icon(Icons.settings)),
         ],
