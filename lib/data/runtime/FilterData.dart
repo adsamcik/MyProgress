@@ -18,8 +18,8 @@ class FilterData {
 }
 
 class FilterRuntimeData {
-  String query = '';
+  String query;
   FilterData filterData;
 
-  FilterRuntimeData(this.filterData, {this.query});
+  FilterRuntimeData(this.filterData, {this.query = ''});
 }
