@@ -66,11 +66,11 @@ void setWindowTitle(String title) async {
 }
 
 /// Sets the window title's represented [Uri], of the window containing this Flutter instance.
-/// 
+///
 /// Only implemented for macOS. If the URL is a file URL, the
 /// window shows an icon in its title bar.
 void setWindowTitleRepresentedUrl(Uri url) async {
-    WindowSizeChannel.instance.setWindowTitleRepresentedUrl(url);
+  WindowSizeChannel.instance.setWindowTitleRepresentedUrl(url);
 }
 
 /// Gets the minimum [Size] of the window containing this Flutter instance.

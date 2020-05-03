@@ -21,11 +21,14 @@ const String _kColorPanelChannel = 'flutter/colorpanel';
 
 /// The method name to instruct the native plugin to show the panel.
 const String _kShowColorPanelMethod = 'ColorPanel.Show';
+
 /// The method name to instruct the native plugin to hide the panel.
 const String _kHideColorPanelMethod = 'ColorPanel.Hide';
+
 /// The method name for the Dart-side callback that receives color values.
 const String _kColorPanelColorSelectedCallback =
     'ColorPanel.ColorSelectedCallback';
+
 /// The method name for the Dart-side callback that is called if the panel is
 /// closed from the UI, rather than via a call to kHideColorPanelMethod.
 const String _kColorPanelClosedCallback = 'ColorPanel.ClosedCallback';
