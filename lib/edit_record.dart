@@ -1,3 +1,4 @@
+import 'package:MarkMyProgress/constants/Patterns.dart';
 import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/instance/GenericBookmark.dart';
 import 'package:flutter/material.dart';
@@ -72,14 +73,22 @@ class _EditRecordState extends State<EditRecord> {
                     bookmark.localizedTitle = value;
                   },
                 ),
-                if(bookmark is IWebBookmark)
+                if (bookmark is IWebBookmark)
                   TextFormField(
-                  initialValue: (bookmark as IWebBookmark).webAddress,
-                  decoration: InputDecoration(labelText: 'Web Address'),
-                  onSaved: (String value) {
-                    (bookmark as IWebBookmark).webAddress = value;
-                  },
-                ),
+                    initialValue: (bookmark as IWebBookmark).webAddress,
+                    decoration: InputDecoration(labelText: 'Web Address'),
+                    validator: (value) {
+                      var hasMatch = RegExp(URL_PATTERN).hasMatch(value);
+
+                      if (!hasMatch) {
+                        return 'Invalid web address';
+                      }
+                      return null;
+                    },
+                    onSaved: (String value) {
+                      (bookmark as IWebBookmark).webAddress = value;
+                    },
+                  ),
                 TextFormField(
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[RegExInputFormatter.decimalNumbers()],
