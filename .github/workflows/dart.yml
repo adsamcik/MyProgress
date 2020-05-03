@@ -47,7 +47,7 @@ jobs:
     - run: flutter build windows
     
     - name: Zip Windows build
-      run: zip -r debug.zip build/windows/x64/Debug/Runner
+    - run: zip -r debug.zip build/windows/x64/Debug/Runner
     
     # Upload generated apk to the artifacts.
     - uses: actions/upload-artifact@v1
