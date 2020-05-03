@@ -113,6 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _refreshBookmarks() async {
     await _dataStore.open();
     var bookmarks = (await _dataStore.getAll()).toList();
+    bookmarks.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
     await _dataStore.close();
     setState(() {
       _bookmarks = bookmarks;
