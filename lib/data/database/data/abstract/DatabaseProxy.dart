@@ -1,8 +1,7 @@
-import 'package:MarkMyProgress/data/database/data/abstract/IDatabaseItem.dart';
-import 'package:MarkMyProgress/data/instance/GenericBookmark.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
+import 'package:MarkMyProgress/extensions/ListExtensions.dart';
 
 /// <summary>
 ///     Generic implementation of database collection providing basic methods to work with collection.
@@ -79,9 +78,16 @@ class DatabaseProxy<Key, Value> {
   /// <returns>Item collection (Enumerable).</returns>
   Future<Iterable<Value>> getAll(Value Function(RecordSnapshot<dynamic, dynamic>) mapToValue, {Finder finder}) async {
     var records = await _store().find(_database, finder: finder);
-    return records.map((e) {
-      return mapToValue(e);
-    });
+    return records.map(mapToValue);
+  }
+
+  /// <summary>
+  ///     Returns all items in a database.
+  /// </summary>
+  /// <returns>Item collection (Enumerable).</returns>
+  Future<Iterable<MapEntry<Key, Value>>> getAllWithKeys(Iterable<Key> keys) async {
+    var records = await _store().records(keys).getSnapshots(_database);
+    return records.map((e) => e != null ? MapEntry(e.key as Key, e.value as Value) : null);
   }
 
   Future<Value> get(Value Function(RecordSnapshot<dynamic, dynamic>) mapToValue, {Finder finder}) async {
