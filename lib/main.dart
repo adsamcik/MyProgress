@@ -217,11 +217,11 @@ class _MyHomePageState extends State<MyHomePage> {
           FlatButton(
               onPressed: () async {
                 var result = await navigate<SettingsResult>((context) => Settings()) ?? SettingsResult(true, true);
-                if(result.filterChanged) {
+                if (result.filterChanged) {
                   _refreshSettings();
                 }
 
-                if(result.dataImported) {
+                if (result.dataImported) {
                   _refreshBookmarks();
                 }
               },
@@ -264,7 +264,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   DataRow _buildRow(IPersistentBookmark bookmark) {
-    var actions = <MaterialButton>[];
+    var actions = <Widget>[];
 
     actions.add(
         OutlineButton(child: Text('+ ${bookmark.progressIncrement}'), onPressed: () => _incrementProgress(bookmark)));
@@ -272,16 +272,18 @@ class _MyHomePageState extends State<MyHomePage> {
     if (bookmark is IWebBookmark) {
       var webBookmark = (bookmark as IWebBookmark);
       if ((webBookmark.webAddress ?? '').isNotEmpty) {
-        actions.add(OutlineButton(
-            child: Text('Web'),
-            onPressed: () {
-              // can launch is not implemented on Windows
-              //canLaunch(webBookmark.webAddress).then((value) {
-              //if (value) {
-              launch(webBookmark.webAddress);
-              //}
-              //});
-            }));
+        actions.add(SizedBox(
+            width: 10,
+            child: OutlineButton(
+                child: Text('Web'),
+                onPressed: () {
+                  // can launch is not implemented on Windows
+                  //canLaunch(webBookmark.webAddress).then((value) {
+                  //if (value) {
+                  launch(webBookmark.webAddress);
+                  //}
+                  //});
+                })));
       }
     }
 
@@ -292,9 +294,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return DataRow(
       cells: [
-        DataCell(Text(bookmark.title), onTap: tapFunction),
-        DataCell(Text(bookmark.progress.toString()), onTap: tapFunction),
-        DataCell(Text(lastProgressDate), onTap: tapFunction),
+        DataCell(
+            Text(
+              bookmark.title,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            onTap: tapFunction),
+        DataCell(ConstrainedBox(constraints: BoxConstraints(maxWidth: 75), child: Text(bookmark.progress.toString())),
+            onTap: tapFunction),
+        DataCell(
+            ConstrainedBox(constraints: BoxConstraints(minWidth: 100, maxWidth: 150), child: Text(lastProgressDate)),
+            onTap: tapFunction),
         DataCell(Row(
           children: actions,
         )),
