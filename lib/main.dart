@@ -5,16 +5,15 @@ import 'package:MarkMyProgress/data/database/data/instance/SettingsStore.dart';
 import 'package:MarkMyProgress/data/runtime/SettingsResult.dart';
 import 'package:MarkMyProgress/extensions/DateExtension.dart';
 import 'package:MarkMyProgress/data/runtime/FilterData.dart';
-import 'package:MarkMyProgress/data/runtime/FilterItem.dart';
 import 'package:MarkMyProgress/edit_record.dart';
 import 'package:MarkMyProgress/settings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'extensions/StringExtensions.dart';
 import 'data/instance/GenericBookmark.dart';
 import 'extensions/UserBookmark.dart';
-import 'extensions/ListExtensions.dart';
 
 void main() {
   runApp(MyApp());
@@ -70,8 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final SettingsStore _settingsStore = SettingsStore();
 
   List<IPersistentBookmark> _bookmarks = [];
-  final List<DataRow> _rowList = [];
-  List<DataRow> _filteredRowList = [];
+  List<IPersistentBookmark> _filteredBookmarks = [];
   FilterRuntimeData _filterRuntime = FilterRuntimeData(FilterData());
 
   Future<T> navigate<T>(WidgetBuilder builder) async {
@@ -118,8 +116,8 @@ class _MyHomePageState extends State<MyHomePage> {
     await _dataStore.close();
     setState(() {
       _bookmarks = bookmarks;
-      _updateRows();
     });
+    _updateFilter();
   }
 
   void _incrementProgress(IPersistentBookmark bookmark) async {
@@ -152,46 +150,38 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _updateFilter() {
-    var filterList = List<FilterItem<IPersistentBookmark>>(_bookmarks.length);
-    for (var i = 0; i < filterList.length; i++) {
-      filterList[i] = FilterItem(data: _bookmarks[i], index: i);
-    }
-
-    Iterable<FilterItem<IPersistentBookmark>> tmp = filterList;
+    Iterable<IPersistentBookmark> filterList = _bookmarks.toList();
 
     var strippedFilter = StringExtensions.stripString(_filterRuntime.query);
 
     if (strippedFilter.isNotEmpty) {
-      tmp = tmp.where((readable) => readable.data.contains(strippedFilter));
+      filterList = filterList.where((readable) => readable.contains(strippedFilter));
     }
 
     var filterData = _filterRuntime.filterData;
     if (filterData.reading) {
-      tmp = tmp.where((readable) =>
-          !readable.data.abandoned && (readable.data.ongoing || readable.data.progress < readable.data.maxProgress));
+      filterList = filterList
+          .where((readable) => !readable.abandoned && (readable.ongoing || readable.progress < readable.maxProgress));
     }
 
     if (filterData.abandoned) {
-      tmp = tmp.where((readable) => !readable.data.abandoned);
+      filterList = filterList.where((readable) => !readable.abandoned);
     }
 
     if (filterData.ended) {
-      tmp = tmp.where((readable) => readable.data.ongoing);
+      filterList = filterList.where((readable) => readable.ongoing);
     }
 
     if (filterData.finished) {
-      tmp = tmp.where((readable) => readable.data.ongoing || readable.data.progress < readable.data.maxProgress);
+      filterList = filterList.where((readable) => readable.ongoing || readable.progress < readable.maxProgress);
     }
 
     if (filterData.ongoing) {
-      tmp = tmp.where((readable) => !readable.data.ongoing);
+      filterList = filterList.where((readable) => !readable.ongoing);
     }
 
-    var filterRowIndexes = tmp.map((e) => e.index).toList(growable: false);
-    var filteredRowList = _rowList.filterWithIndexList(filterRowIndexes);
-
     setState(() {
-      _filteredRowList = filteredRowList;
+      _filteredBookmarks = filterList.toList();
     });
   }
 
@@ -228,88 +218,60 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Icon(Icons.settings)),
         ],
       ),
-      body: Container(
+      body: SafeArea(
           child: Scrollbar(
-              controller: ScrollController(initialScrollOffset: 0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-                  DataTable(
-                    sortAscending: true,
-                    sortColumnIndex: 0,
-                    columns: [
-                      DataColumn(label: Text('Title')),
-                      DataColumn(label: Text('Progress'), numeric: true),
-                      DataColumn(label: Text('Last progress')),
-                      DataColumn(label: Text('Actions'))
+        controller: ScrollController(initialScrollOffset: 0),
+        child: ListView.separated(
+          padding: EdgeInsets.fromLTRB(16, 0, 16, 96),
+          separatorBuilder: (context, index) => Divider(color: Theme.of(context).backgroundColor)
+          ,
+          itemBuilder: (context, index) {
+            var bookmark = _filteredBookmarks[index];
+            var lastProgressDate =
+                bookmark.lastProgress.date == Date.invalid() ? '' : bookmark.lastProgress.date.toDateString();
+            return Padding(
+                padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                child: Row(children: [
+                  ConstrainedBox(
+                    constraints: BoxConstraints.tightForFinite(width: 90),
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text('${bookmark.progress} / ${bookmark.maxProgress}', maxLines: 1,),
+                      Text(lastProgressDate, maxLines: 1, softWrap: false, overflow: TextOverflow.fade,),
                     ],
-                    rows: _filteredRowList,
-                  ),
-                ]),
-              ))),
+                  )),
+                  SizedBox(width: 16),
+                  Expanded(
+                      child: Text(
+                    bookmark.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  )),
+                  SizedBox(width: 16),
+                  if (bookmark is IWebBookmark && ((bookmark as IWebBookmark).webAddress ?? '').isNotEmpty)
+                    OutlineButton(
+                        child: Text('Web'),
+                        onPressed: () {
+                          // can launch is not implemented on Windows
+                          //canLaunch(webBookmark.webAddress).then((value) {
+                          //if (value) {
+                          launch((bookmark as IWebBookmark).webAddress);
+                          //}
+                          //});
+                        }),
+                  OutlineButton(
+                      child: Text('+ ${bookmark.progressIncrement}'), onPressed: () => _incrementProgress(bookmark)),
+                ]));
+          },
+          itemCount: _filteredBookmarks.length,
+        ),
+      )),
       floatingActionButton: FloatingActionButton(
         onPressed: _addNewItem,
         tooltip: 'Add new bookmark',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-
-  void _updateRows() {
-    _rowList.clear();
-    _bookmarks.forEach((element) {
-      _rowList.add(_buildRow(element));
-    });
-    _updateFilter();
-  }
-
-  DataRow _buildRow(IPersistentBookmark bookmark) {
-    var actions = <Widget>[];
-
-    actions.add(
-        OutlineButton(child: Text('+ ${bookmark.progressIncrement}'), onPressed: () => _incrementProgress(bookmark)));
-
-    if (bookmark is IWebBookmark) {
-      var webBookmark = (bookmark as IWebBookmark);
-      if ((webBookmark.webAddress ?? '').isNotEmpty) {
-        actions.add(SizedBox(
-            width: 10,
-            child: OutlineButton(
-                child: Text('Web'),
-                onPressed: () {
-                  // can launch is not implemented on Windows
-                  //canLaunch(webBookmark.webAddress).then((value) {
-                  //if (value) {
-                  launch(webBookmark.webAddress);
-                  //}
-                  //});
-                })));
-      }
-    }
-
-    var lastProgressDate =
-        bookmark.lastProgress.date == Date.invalid() ? '' : bookmark.lastProgress.date.toDateString();
-
-    var tapFunction = () => _viewDetail(bookmark);
-
-    return DataRow(
-      cells: [
-        DataCell(
-            Text(
-              bookmark.title,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            onTap: tapFunction),
-        DataCell(ConstrainedBox(constraints: BoxConstraints(maxWidth: 75), child: Text(bookmark.progress.toString())),
-            onTap: tapFunction),
-        DataCell(
-            ConstrainedBox(constraints: BoxConstraints(minWidth: 100, maxWidth: 150), child: Text(lastProgressDate)),
-            onTap: tapFunction),
-        DataCell(Row(
-          children: actions,
-        )),
-      ],
     );
   }
 }
