@@ -222,7 +222,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Scrollbar(
         controller: ScrollController(initialScrollOffset: 0),
         child: ListView.separated(
-          padding: EdgeInsets.fromLTRB(16, 0, 16, 96),
+          padding: EdgeInsets.fromLTRB(16, 16, 16, 96),
           separatorBuilder: (context, index) => Divider(color: Theme.of(context).backgroundColor),
           itemBuilder: (context, index) {
             var bookmark = _filteredBookmarks[index];
