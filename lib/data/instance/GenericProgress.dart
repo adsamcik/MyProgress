@@ -1,4 +1,4 @@
-﻿import 'dart:core';
+import 'dart:core';
 
 import 'package:MarkMyProgress/data/abstract/IProgress.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -22,7 +22,8 @@ class GenericProgress implements IProgress {
   @override
   double value;
 
-  factory GenericProgress.fromJson(Map<String, dynamic> json) => _$GenericProgressFromJson(json);
+  factory GenericProgress.fromJson(Map<String, dynamic> json) =>
+      _$GenericProgressFromJson(json);
 
   Map<String, dynamic> toJson() => _$GenericProgressToJson(this);
 }

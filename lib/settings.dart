@@ -120,7 +120,9 @@ class _SettingsState extends State<Settings> {
                       // Windows not yet supported
                       //var packageInfo = await PackageInfo.fromPlatform();
                       //showAboutDialog(context: context, applicationName: packageInfo.appName, applicationVersion: packageInfo.version);
-                      showAboutDialog(context: context, applicationName: 'Mark My Progress');
+                      showAboutDialog(
+                          context: context,
+                          applicationName: 'Mark My Progress');
                     }),
                 Wrap(spacing: 16, children: [
                   OutlineButton(
@@ -136,7 +138,9 @@ class _SettingsState extends State<Settings> {
                         // Windows not yet supported
                         //var packageInfo = await PackageInfo.fromPlatform();
                         //showAboutDialog(context: context, applicationName: packageInfo.appName, applicationVersion: packageInfo.version);
-                        showAboutDialog(context: context, applicationName: 'Mark My Progress');
+                        showAboutDialog(
+                            context: context,
+                            applicationName: 'Mark My Progress');
                       })
                 ]),
               ],

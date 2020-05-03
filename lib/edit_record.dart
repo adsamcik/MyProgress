@@ -33,7 +33,8 @@ class _EditRecordState extends State<EditRecord> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(bookmark.title.isNullOrEmpty ? 'New bookmark' : bookmark.title),
+        title: Text(
+            bookmark.title.isNullOrEmpty ? 'New bookmark' : bookmark.title),
       ),
       body: SafeArea(
           minimum: EdgeInsets.all(16.0),
@@ -48,7 +49,8 @@ class _EditRecordState extends State<EditRecord> {
                   initialValue: bookmark.originalTitle,
                   decoration: InputDecoration(labelText: 'Original title'),
                   validator: (value) {
-                    if (value.isEmpty && _localizedTitleKey.currentState.value.isEmpty) {
+                    if (value.isEmpty &&
+                        _localizedTitleKey.currentState.value.isEmpty) {
                       return 'Either original or localized title must be entered.';
                     }
 
@@ -63,7 +65,8 @@ class _EditRecordState extends State<EditRecord> {
                   initialValue: bookmark.localizedTitle,
                   decoration: InputDecoration(labelText: 'Localized title'),
                   validator: (value) {
-                    if (value.isEmpty && _originalTitleKey.currentState.value.isEmpty) {
+                    if (value.isEmpty &&
+                        _originalTitleKey.currentState.value.isEmpty) {
                       return 'Either original or localized title must be entered.';
                     }
 
@@ -93,7 +96,9 @@ class _EditRecordState extends State<EditRecord> {
                   ),
                 TextFormField(
                   keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[RegExInputFormatter.decimalNumbers()],
+                  inputFormatters: <TextInputFormatter>[
+                    RegExInputFormatter.decimalNumbers()
+                  ],
                   initialValue: bookmark.progress.toString(),
                   decoration: InputDecoration(labelText: 'Current progress'),
                   onSaved: (String value) {
@@ -102,7 +107,9 @@ class _EditRecordState extends State<EditRecord> {
                 ),
                 TextFormField(
                   keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[RegExInputFormatter.decimalNumbers()],
+                  inputFormatters: <TextInputFormatter>[
+                    RegExInputFormatter.decimalNumbers()
+                  ],
                   initialValue: bookmark.maxProgress.toString(),
                   decoration: InputDecoration(labelText: 'Max progress'),
                   onSaved: (String value) {
@@ -111,9 +118,12 @@ class _EditRecordState extends State<EditRecord> {
                 ),
                 TextFormField(
                   keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[RegExInputFormatter.decimalNumbers()],
+                  inputFormatters: <TextInputFormatter>[
+                    RegExInputFormatter.decimalNumbers()
+                  ],
                   initialValue: bookmark.progressIncrement.toString(),
-                  decoration: InputDecoration(labelText: 'Quick increment value'),
+                  decoration:
+                      InputDecoration(labelText: 'Quick increment value'),
                   onSaved: (String value) {
                     bookmark.progressIncrement = double.parse(value);
                   },
@@ -121,12 +131,14 @@ class _EditRecordState extends State<EditRecord> {
                 SwitchListTile(
                   title: Text('Ongoing'),
                   value: bookmark.ongoing,
-                  onChanged: (value) => setState(() => bookmark.ongoing = value),
+                  onChanged: (value) =>
+                      setState(() => bookmark.ongoing = value),
                 ),
                 SwitchListTile(
                   title: Text('Abandoned'),
                   value: bookmark.abandoned,
-                  onChanged: (value) => setState(() => bookmark.abandoned = value),
+                  onChanged: (value) =>
+                      setState(() => bookmark.abandoned = value),
                 )
               ],
             ),
