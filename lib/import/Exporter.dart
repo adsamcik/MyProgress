@@ -17,7 +17,8 @@ class Exporter {
     var result = await showSavePanel(
         allowedFileTypes: fileTypes,
         confirmButtonText: 'Export',
-        suggestedFileName: 'progress_data.${fileTypes.first.fileExtensions.first}');
+        suggestedFileName:
+            'progress_data.${fileTypes.first.fileExtensions.first}');
 
     if (!result.canceled && result.paths.isNotEmpty) {
       var dataStore = DataStore();
@@ -32,8 +33,8 @@ class Exporter {
         if (ext.isEmpty) return;
 
         ext = ext.substring(1);
-        var exporter = _exporters
-            .firstWhere((e) => e.exportExtensions.contains(ext));
+        var exporter =
+            _exporters.firstWhere((e) => e.exportExtensions.contains(ext));
         if (exporter != null) {
           await exporter.export(data, File(path));
         } else {

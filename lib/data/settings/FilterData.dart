@@ -16,4 +16,3 @@ class FilterData {
 
   Map<String, dynamic> toJson() => _$FilterDataToJson(this);
 }
-
