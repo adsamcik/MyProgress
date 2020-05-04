@@ -26,6 +26,10 @@ class _EditRecordState extends State<EditRecord> {
   final _originalTitleKey = GlobalKey<FormFieldState<String>>();
   final _localizedTitleKey = GlobalKey<FormFieldState<String>>();
 
+  final _progressKey = GlobalKey<FormFieldState<String>>();
+
+  bool maxProgressHasChanged = false;
+
   _EditRecordState({@required this.bookmark});
 
   @override
@@ -94,6 +98,7 @@ class _EditRecordState extends State<EditRecord> {
                     },
                   ),
                 TextFormField(
+                  key: _progressKey,
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
                     RegExInputFormatter.decimalNumbers()
@@ -111,8 +116,20 @@ class _EditRecordState extends State<EditRecord> {
                   ],
                   initialValue: bookmark.maxProgress.toString(),
                   decoration: InputDecoration(labelText: 'Max progress'),
+                  onChanged: (String value) => maxProgressHasChanged = true,
+                  validator: (value) {
+                    if (maxProgressHasChanged &&
+                        double.parse(_progressKey.currentState.value) >
+                            double.parse(value)) {
+                      return 'Max progress value is smaller than progress value.';
+                    }
+                    return null;
+                  },
                   onSaved: (String value) {
-                    bookmark.maxProgress = double.parse(value);
+                    var dValue = double.parse(value);
+                    if (maxProgressHasChanged) {
+                      bookmark.maxProgress = dValue;
+                    }
                   },
                 ),
                 TextFormField(
