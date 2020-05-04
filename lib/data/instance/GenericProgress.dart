@@ -22,7 +22,8 @@ class GenericProgress implements IProgress {
   @override
   double value;
 
-  factory GenericProgress.fromJson(Map<String, dynamic> json) => _$GenericProgressFromJson(json);
+  factory GenericProgress.fromJson(Map<String, dynamic> json) =>
+      _$GenericProgressFromJson(json);
 
   Map<String, dynamic> toJson() => _$GenericProgressToJson(this);
 }
