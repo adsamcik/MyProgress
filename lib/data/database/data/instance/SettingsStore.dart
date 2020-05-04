@@ -1,5 +1,5 @@
 import 'package:MarkMyProgress/data/database/data/abstract/DatabaseProxy.dart';
-import 'package:MarkMyProgress/data/runtime/FilterData.dart';
+import 'package:MarkMyProgress/data/settings/FilterData.dart';
 
 class SettingsStore extends DatabaseProxy<String, dynamic> {
   SettingsStore() : super(databasePath: 'settings.db');

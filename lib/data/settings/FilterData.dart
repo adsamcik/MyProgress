@@ -18,9 +18,3 @@ class FilterData {
   Map<String, dynamic> toJson() => _$FilterDataToJson(this);
 }
 
-class FilterRuntimeData {
-  String query;
-  FilterData filterData;
-
-  FilterRuntimeData(this.filterData, {this.query = ''});
-}
