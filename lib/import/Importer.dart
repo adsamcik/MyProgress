@@ -22,7 +22,7 @@ class Importer {
 
     if (!result.canceled && result.paths.isNotEmpty) {
       var dataStore = DataStore();
-      dataStore.open();
+      await dataStore.open();
       await Future.forEach(result.paths, (String path) async {
         var ext = extension(path);
 
@@ -38,7 +38,7 @@ class Importer {
           // todo report error
         }
       });
-      dataStore.close();
+      await dataStore.close();
       return true;
     } else {
       return false;
