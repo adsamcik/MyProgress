@@ -1,12 +1,9 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
-import 'package:MarkMyProgress/data/instance/GenericBookmark.dart';
 import 'package:MarkMyProgress/import/abstract/IDataExporter.dart';
 import 'package:MarkMyProgress/import/abstract/IDataImporter.dart';
 import 'package:csv/csv.dart';
-import 'package:csv/csv_settings_autodetection.dart';
 import 'package:path/path.dart';
 
 /// <summary>
@@ -36,8 +33,8 @@ class JSONDataHandler implements IDataExporter, IDataImporter {
   @override
   Future export(Iterable<IPersistentBookmark> bookmarks, File file) async {
     var csvData = bookmarks.map((e) => e.toJson().values.toList()).toList();
-    var csv =
-        const ListToCsvConverter().convert(csvData, fieldDelimiter: _getDelimiter(file));
+    var csv = const ListToCsvConverter()
+        .convert(csvData, fieldDelimiter: _getDelimiter(file));
     await file.writeAsString(csv);
   }
 
