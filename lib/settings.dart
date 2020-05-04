@@ -1,5 +1,6 @@
 import 'package:MarkMyProgress/data/database/data/instance/SettingsStore.dart';
 import 'package:MarkMyProgress/data/runtime/SettingsResult.dart';
+import 'package:MarkMyProgress/import/Exporter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -28,9 +29,12 @@ class _SettingsState extends State<Settings> {
   final List<BookmarkFilterEntry> _filterDataList = <BookmarkFilterEntry>[
     const BookmarkFilterEntry('abandoned', 'Abandoned',
         tooltip: 'Things you are no longer interested in and haven`t finished'),
-    const BookmarkFilterEntry('ongoing', 'Ongoing', tooltip: 'Things that are expected to have new max progress in time.'),
-    const BookmarkFilterEntry('ended', 'Ended', tooltip: 'Things that have have max progress that won`t change.'),
-    const BookmarkFilterEntry('finished', 'finished', tooltip: 'Things you have finished and won`t be extended.'),
+    const BookmarkFilterEntry('ongoing', 'Ongoing',
+        tooltip: 'Things that are expected to have new max progress in time.'),
+    const BookmarkFilterEntry('ended', 'Ended',
+        tooltip: 'Things that have have max progress that won`t change.'),
+    const BookmarkFilterEntry('finished', 'finished',
+        tooltip: 'Things you have finished and won`t be extended.'),
   ];
   final List<String> _filters = <String>[];
 
@@ -133,12 +137,7 @@ class _SettingsState extends State<Settings> {
                   OutlineButton(
                       child: Text('Export'),
                       onPressed: () async {
-                        // Windows not yet supported
-                        //var packageInfo = await PackageInfo.fromPlatform();
-                        //showAboutDialog(context: context, applicationName: packageInfo.appName, applicationVersion: packageInfo.version);
-                        showAboutDialog(
-                            context: context,
-                            applicationName: 'Mark My Progress');
+                        await Exporter.export();
                       })
                 ]),
               ],

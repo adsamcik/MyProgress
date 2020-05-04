@@ -18,7 +18,7 @@ class JSONDataHandler implements IDataExporter, IDataImporter {
 
   @override
   Future export(Iterable<IPersistentBookmark> bookmarks, File file) async {
-    var json = jsonEncode(bookmarks);
+    var json = jsonEncode(bookmarks.map((e) => e.toJson()).toList());
     await file.writeAsString(json);
   }
 
