@@ -1,7 +1,6 @@
 import 'package:MarkMyProgress/data/database/data/abstract/IDatabaseItem.dart';
 import 'package:MarkMyProgress/data/instance/GenericBookmark.dart';
 import 'package:sembast/sembast.dart';
-import 'package:sembast/sembast_io.dart';
 
 import 'DatabaseProxy.dart';
 
@@ -10,8 +9,7 @@ import 'DatabaseProxy.dart';
 /// </summary>
 /// <typeparam name="T"></typeparam>
 abstract class DatabaseCollection<T extends IDatabaseItem> {
-  final DatabaseProxy<int, Map<String, dynamic>> _proxy =
-      DatabaseProxy(databasePath: 'progress_data.db');
+  final DatabaseProxy<int, Map<String, dynamic>> _proxy = DatabaseProxy(databasePath: 'progress_data.db');
 
   Iterable<int> _mapKeys(Iterable<T> items) => items.map((e) => e.id);
 

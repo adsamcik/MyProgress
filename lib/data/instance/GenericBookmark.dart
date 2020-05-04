@@ -1,9 +1,9 @@
 import 'package:MarkMyProgress/data/abstract/BaseBookmark.dart';
 import 'package:MarkMyProgress/data/abstract/IProgress.dart';
 import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
+import 'package:MarkMyProgress/extensions/DateExtension.dart';
 import 'package:MarkMyProgress/extensions/StringExtensions.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:MarkMyProgress/extensions/DateExtension.dart';
 
 import 'GenericProgress.dart';
 
@@ -24,8 +24,7 @@ class GenericBookmark extends BaseBookmark implements IWebBookmark {
   @override
   String webAddress;
 
-  factory GenericBookmark.fromJson(Map<String, dynamic> json) =>
-      _$GenericBookmarkFromJson(json);
+  factory GenericBookmark.fromJson(Map<String, dynamic> json) => _$GenericBookmarkFromJson(json);
 
   @override
   Map<String, dynamic> toJson() => _$GenericBookmarkToJson(this);
@@ -49,8 +48,6 @@ class GenericBookmark extends BaseBookmark implements IWebBookmark {
 
   @override
   bool contains(String query) {
-    return _contains(originalTitle, query) ||
-        _contains(localizedTitle, query) ||
-        _contains(webAddress, query);
+    return _contains(originalTitle, query) || _contains(localizedTitle, query) || _contains(webAddress, query);
   }
 }

@@ -15,8 +15,7 @@ FilterData _$FilterDataFromJson(Map<String, dynamic> json) {
     ..finished = json['finished'] as bool;
 }
 
-Map<String, dynamic> _$FilterDataToJson(FilterData instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$FilterDataToJson(FilterData instance) => <String, dynamic>{
       'reading': instance.reading,
       'abandoned': instance.abandoned,
       'ongoing': instance.ongoing,

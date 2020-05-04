@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
-import 'package:MarkMyProgress/extensions/ListExtensions.dart';
 
 /// <summary>
 ///     Generic implementation of database collection providing basic methods to work with collection.
@@ -35,11 +34,8 @@ class DatabaseProxy<Key, Value> {
   ///     Updates all items in a collection.
   /// </summary>
   /// <param name="itemEnumerable">Item collection (Enumerable).</param>
-  Future<List<dynamic>> updateAll(
-      Iterable<Key> keys, Iterable<Value> values) async {
-    return await _store()
-        .records(keys)
-        .update(_database, values.toList(growable: false));
+  Future<List<dynamic>> updateAll(Iterable<Key> keys, Iterable<Value> values) async {
+    return await _store().records(keys).update(_database, values.toList(growable: false));
   }
 
   /// <summary>
@@ -55,8 +51,7 @@ class DatabaseProxy<Key, Value> {
   /// </summary>
   /// <param name="itemEnumerable">Item collection (Enumerable).</param>
   Future<Iterable<Key>> insertAll(Iterable<Value> values) async {
-    var keyList =
-        await _store().addAll(_database, values.toList(growable: false));
+    var keyList = await _store().addAll(_database, values.toList(growable: false));
     return keyList.cast();
   }
 
@@ -80,9 +75,7 @@ class DatabaseProxy<Key, Value> {
   ///     Returns all items in a database.
   /// </summary>
   /// <returns>Item collection (Enumerable).</returns>
-  Future<Iterable<Value>> getAll(
-      Value Function(RecordSnapshot<dynamic, dynamic>) mapToValue,
-      {Finder finder}) async {
+  Future<Iterable<Value>> getAll(Value Function(RecordSnapshot<dynamic, dynamic>) mapToValue, {Finder finder}) async {
     var records = await _store().find(_database, finder: finder);
     return records.map(mapToValue);
   }
@@ -91,15 +84,12 @@ class DatabaseProxy<Key, Value> {
   ///     Returns all items in a database.
   /// </summary>
   /// <returns>Item collection (Enumerable).</returns>
-  Future<Iterable<MapEntry<Key, Value>>> getAllWithKeys(
-      Iterable<Key> keys) async {
+  Future<Iterable<MapEntry<Key, Value>>> getAllWithKeys(Iterable<Key> keys) async {
     var records = await _store().records(keys).getSnapshots(_database);
-    return records.map(
-        (e) => e != null ? MapEntry(e.key as Key, e.value as Value) : null);
+    return records.map((e) => e != null ? MapEntry(e.key as Key, e.value as Value) : null);
   }
 
-  Future<Value> get(Value Function(RecordSnapshot<dynamic, dynamic>) mapToValue,
-      {Finder finder}) async {
+  Future<Value> get(Value Function(RecordSnapshot<dynamic, dynamic>) mapToValue, {Finder finder}) async {
     return mapToValue(await _store().findFirst(_database, finder: finder));
   }
 
