@@ -24,7 +24,8 @@ class GenericBookmark extends BaseBookmark implements IWebBookmark {
   @override
   String webAddress;
 
-  factory GenericBookmark.fromJson(Map<String, dynamic> json) => _$GenericBookmarkFromJson(json);
+  factory GenericBookmark.fromJson(Map<String, dynamic> json) =>
+      _$GenericBookmarkFromJson(json);
 
   @override
   Map<String, dynamic> toJson() => _$GenericBookmarkToJson(this);
@@ -48,6 +49,8 @@ class GenericBookmark extends BaseBookmark implements IWebBookmark {
 
   @override
   bool contains(String query) {
-    return _contains(originalTitle, query) || _contains(localizedTitle, query) || _contains(webAddress, query);
+    return _contains(originalTitle, query) ||
+        _contains(localizedTitle, query) ||
+        _contains(webAddress, query);
   }
 }
