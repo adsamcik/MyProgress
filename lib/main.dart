@@ -246,53 +246,54 @@ class _MyHomePageState extends State<MyHomePage> {
             return InkWell(
                 onTap: () => _viewDetail(bookmark),
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                    padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                     child: Row(children: [
-                  ConstrainedBox(
-                      constraints: BoxConstraints.tightForFinite(width: 90),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            '${bookmark.progress} / ${bookmark.maxProgress}',
-                            maxLines: 1,
-                          ),
-                          Text(
-                            lastProgressDate,
-                            maxLines: 1,
-                            softWrap: false,
-                            overflow: TextOverflow.fade,
-                          ),
-                        ],
-                      )),
-                  SizedBox(width: 16),
-                  Expanded(
-                      child: Container(
-                          height: 40,
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                bookmark.title,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              )))),
-                  SizedBox(width: 16),
-                  if (bookmark is IWebBookmark &&
-                      ((bookmark as IWebBookmark).webAddress ?? '').isNotEmpty)
-                    OutlineButton(
-                        child: Text('Web'),
-                        onPressed: () {
-                          // can launch is not implemented on Windows
-                          //canLaunch(webBookmark.webAddress).then((value) {
-                          //if (value) {
-                          launch((bookmark as IWebBookmark).webAddress);
-                          //}
-                          //});
-                        }),
-                  OutlineButton(
-                      child: Text('+ ${bookmark.progressIncrement}'),
-                      onPressed: () => _incrementProgress(bookmark)),
-                ])));
+                      ConstrainedBox(
+                          constraints: BoxConstraints.tightForFinite(width: 90),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                '${bookmark.progress} / ${bookmark.maxProgress}',
+                                maxLines: 1,
+                              ),
+                              Text(
+                                lastProgressDate,
+                                maxLines: 1,
+                                softWrap: false,
+                                overflow: TextOverflow.fade,
+                              ),
+                            ],
+                          )),
+                      SizedBox(width: 16),
+                      Expanded(
+                          child: Container(
+                              height: 40,
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    bookmark.title,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  )))),
+                      SizedBox(width: 16),
+                      if (bookmark is IWebBookmark &&
+                          ((bookmark as IWebBookmark).webAddress ?? '')
+                              .isNotEmpty)
+                        OutlineButton(
+                            child: Text('Web'),
+                            onPressed: () {
+                              // can launch is not implemented on Windows
+                              //canLaunch(webBookmark.webAddress).then((value) {
+                              //if (value) {
+                              launch((bookmark as IWebBookmark).webAddress);
+                              //}
+                              //});
+                            }),
+                      OutlineButton(
+                          child: Text('+ ${bookmark.progressIncrement}'),
+                          onPressed: () => _incrementProgress(bookmark)),
+                    ])));
           },
           itemCount: _filteredBookmarks.length,
         ),
