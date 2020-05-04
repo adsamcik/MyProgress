@@ -19,7 +19,6 @@ class JSONDataHandler implements IDataExporter, IDataImporter {
   String _getDelimiter(File file) {
     var ext = extension(file.path).substring(1);
 
-    String delimiter;
     switch (ext) {
       case 'csv':
         return ',';
@@ -40,7 +39,7 @@ class JSONDataHandler implements IDataExporter, IDataImporter {
 
   @override
   Future<Iterable<IPersistentBookmark>> import(File file) async {
-    var csv = await file.readAsString();
+    //var csv = await file.readAsString();
     try {
       throw UnimplementedError('CSV import is not yet implemented');
     } catch (exception) {
