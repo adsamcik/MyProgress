@@ -31,6 +31,8 @@ dependencies:
   sembast: ^2.4.3
   flutter_bloc: ^4.0.0
 
+  charts_flutter: ^0.9.0
+
   # Serialization
   json_annotation: ^3.0.1
   csv: ^4.0.3

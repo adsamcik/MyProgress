@@ -7,6 +7,7 @@ import 'package:MarkMyProgress/data/runtime/SettingsResult.dart';
 import 'package:MarkMyProgress/edit_record.dart';
 import 'package:MarkMyProgress/extensions/DateExtension.dart';
 import 'package:MarkMyProgress/settings.dart';
+import 'package:MarkMyProgress/statistics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -212,7 +213,11 @@ class _MyHomePageState extends State<MyHomePage> {
               onChanged: (query) => _updateFilterQuery(query),
             )),
         actions: [
-          FlatButton(onPressed: () {}, child: Icon(Icons.insert_chart)),
+          FlatButton(
+              onPressed: () {
+                navigate<dynamic>((context) => Statistics());
+              },
+              child: Icon(Icons.insert_chart)),
           FlatButton(
               onPressed: () async {
                 var result =
