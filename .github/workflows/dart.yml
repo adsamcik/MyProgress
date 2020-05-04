@@ -41,18 +41,18 @@ jobs:
     # Run widget tests for our flutter project.
     # - run: flutter test
     
-    # Build Windows.
-    - name: Build Windows
-      run: flutter build windows
+    # Build Windows. -- for now unsupported outside of master branch
+    #- name: Build Windows
+    #  run: flutter build windows
     
-    - name: Zip Windows build
-      run: zip -r debug.zip build/windows/x64/Debug/Runner
+    #- name: Zip Windows build
+    #  run: zip -r debug.zip build/windows/x64/Debug/Runner
     
     # Upload generated apk to the artifacts.
-    - uses: actions/upload-artifact@v1
-      with:
-        name: WindowsDebug
-        path: debug.zip
+    #- uses: actions/upload-artifact@v1
+    #  with:
+    #    name: WindowsDebug
+    #    path: debug.zip
     
     # Build apk.
     #- run: flutter build apk
