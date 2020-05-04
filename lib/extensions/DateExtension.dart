@@ -10,6 +10,5 @@ extension Date on DateTime {
     return DateTime(now.year, now.month, now.day);
   }
 
-  String toDateString() =>
-      DateFormat.yMMMd(Intl.getCurrentLocale()).format(this);
+  String toDateString() => DateFormat.yMMMd(Intl.getCurrentLocale()).format(this);
 }

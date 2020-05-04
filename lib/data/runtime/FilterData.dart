@@ -12,8 +12,7 @@ class FilterData {
 
   FilterData();
 
-  factory FilterData.fromJson(Map<String, dynamic> json) =>
-      _$FilterDataFromJson(json);
+  factory FilterData.fromJson(Map<String, dynamic> json) => _$FilterDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$FilterDataToJson(this);
 }

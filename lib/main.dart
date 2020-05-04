@@ -2,17 +2,17 @@ import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
 import 'package:MarkMyProgress/data/database/data/instance/SettingsStore.dart';
-import 'package:MarkMyProgress/data/runtime/SettingsResult.dart';
-import 'package:MarkMyProgress/extensions/DateExtension.dart';
 import 'package:MarkMyProgress/data/runtime/FilterData.dart';
+import 'package:MarkMyProgress/data/runtime/SettingsResult.dart';
 import 'package:MarkMyProgress/edit_record.dart';
+import 'package:MarkMyProgress/extensions/DateExtension.dart';
 import 'package:MarkMyProgress/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'extensions/StringExtensions.dart';
 import 'data/instance/GenericBookmark.dart';
+import 'extensions/StringExtensions.dart';
 import 'extensions/UserBookmark.dart';
 
 void main() {
@@ -88,8 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _addNewItem() async {
     var newItem = GenericBookmark();
-    var item = await navigate<IPersistentBookmark>(
-        (context) => EditRecord(bookmark: newItem));
+    var item = await navigate<IPersistentBookmark>((context) => EditRecord(bookmark: newItem));
 
     if (item == null) {
       return;
@@ -102,8 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _viewDetail(IPersistentBookmark bookmark) async {
-    var item = await navigate<IPersistentBookmark>(
-        (context) => EditRecord(bookmark: bookmark));
+    var item = await navigate<IPersistentBookmark>((context) => EditRecord(bookmark: bookmark));
 
     if (item == null) {
       return;
@@ -115,8 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _refreshBookmarks() async {
     await _dataStore.open();
     var bookmarks = (await _dataStore.getAll()).toList();
-    bookmarks
-        .sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+    bookmarks.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
     await _dataStore.close();
     setState(() {
       _bookmarks = bookmarks;
@@ -141,8 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var filterData = await _settingsStore.getFilterData();
     await _settingsStore.close();
     setState(() {
-      _filterRuntime =
-          FilterRuntimeData(filterData, query: _filterRuntime.query);
+      _filterRuntime = FilterRuntimeData(filterData, query: _filterRuntime.query);
     });
     _updateFilter();
   }
@@ -160,15 +156,13 @@ class _MyHomePageState extends State<MyHomePage> {
     var strippedFilter = StringExtensions.stripString(_filterRuntime.query);
 
     if (strippedFilter.isNotEmpty) {
-      filterList =
-          filterList.where((readable) => readable.contains(strippedFilter));
+      filterList = filterList.where((readable) => readable.contains(strippedFilter));
     }
 
     var filterData = _filterRuntime.filterData;
     if (filterData.reading) {
-      filterList = filterList.where((readable) =>
-          !readable.abandoned &&
-          (readable.ongoing || readable.progress < readable.maxProgress));
+      filterList = filterList
+          .where((readable) => !readable.abandoned && (readable.ongoing || readable.progress < readable.maxProgress));
     }
 
     if (filterData.abandoned) {
@@ -180,8 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     if (filterData.finished) {
-      filterList = filterList.where((readable) =>
-          readable.ongoing || readable.progress < readable.maxProgress);
+      filterList = filterList.where((readable) => readable.ongoing || readable.progress < readable.maxProgress);
     }
 
     if (filterData.ongoing) {
@@ -214,9 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
           FlatButton(onPressed: () {}, child: Icon(Icons.insert_chart)),
           FlatButton(
               onPressed: () async {
-                var result =
-                    await navigate<SettingsResult>((context) => Settings()) ??
-                        SettingsResult(true, true);
+                var result = await navigate<SettingsResult>((context) => Settings()) ?? SettingsResult(true, true);
                 if (result.filterChanged) {
                   _refreshSettings();
                 }
@@ -233,13 +224,11 @@ class _MyHomePageState extends State<MyHomePage> {
         controller: ScrollController(initialScrollOffset: 0),
         child: ListView.separated(
           padding: EdgeInsets.fromLTRB(16, 16, 16, 96),
-          separatorBuilder: (context, index) =>
-              Divider(color: Theme.of(context).backgroundColor),
+          separatorBuilder: (context, index) => Divider(color: Theme.of(context).backgroundColor),
           itemBuilder: (context, index) {
             var bookmark = _filteredBookmarks[index];
-            var lastProgressDate = bookmark.lastProgress.date == Date.invalid()
-                ? ''
-                : bookmark.lastProgress.date.toDateString();
+            var lastProgressDate =
+                bookmark.lastProgress.date == Date.invalid() ? '' : bookmark.lastProgress.date.toDateString();
             return Row(children: [
               ConstrainedBox(
                   constraints: BoxConstraints.tightForFinite(width: 90),
@@ -272,8 +261,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 overflow: TextOverflow.ellipsis,
                               ))))),
               SizedBox(width: 16),
-              if (bookmark is IWebBookmark &&
-                  ((bookmark as IWebBookmark).webAddress ?? '').isNotEmpty)
+              if (bookmark is IWebBookmark && ((bookmark as IWebBookmark).webAddress ?? '').isNotEmpty)
                 OutlineButton(
                     child: Text('Web'),
                     onPressed: () {
@@ -285,8 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       //});
                     }),
               OutlineButton(
-                  child: Text('+ ${bookmark.progressIncrement}'),
-                  onPressed: () => _incrementProgress(bookmark)),
+                  child: Text('+ ${bookmark.progressIncrement}'), onPressed: () => _incrementProgress(bookmark)),
             ]);
           },
           itemCount: _filteredBookmarks.length,

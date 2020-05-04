@@ -1,9 +1,11 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'IProgress.dart';
-import 'IPersistentBookmark.dart';
 import 'dart:math';
-import '../../extensions/UserBookmark.dart';
+
+import 'package:json_annotation/json_annotation.dart';
+
 import '../../extensions/StringExtensions.dart';
+import '../../extensions/UserBookmark.dart';
+import 'IPersistentBookmark.dart';
+import 'IProgress.dart';
 
 /// <summary>
 ///     Base readable implementation providing utility methods for UI.

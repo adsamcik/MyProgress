@@ -12,6 +12,5 @@ class MutableSettingsResult implements SettingsResult {
   @override
   bool dataImported;
 
-  MutableSettingsResult(
-      {this.filterChanged = false, this.dataImported = false});
+  MutableSettingsResult({this.filterChanged = false, this.dataImported = false});
 }
