@@ -4,11 +4,10 @@ part 'FilterData.g.dart';
 
 @JsonSerializable()
 class FilterData {
-  bool reading = true;
   bool abandoned = false;
-  bool ongoing = false;
-  bool ended = false;
+  bool ongoing = true;
   bool finished = false;
+  bool ended = true;
 
   FilterData();
 

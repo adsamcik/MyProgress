@@ -15,8 +15,9 @@ class Settings extends StatefulWidget {
 class BookmarkFilterEntry {
   final String key;
   final String name;
+  final String tooltip;
 
-  const BookmarkFilterEntry(this.key, this.name);
+  const BookmarkFilterEntry(this.key, this.name, {this.tooltip});
 }
 
 class _SettingsState extends State<Settings> {
@@ -25,11 +26,11 @@ class _SettingsState extends State<Settings> {
   MutableSettingsResult result = MutableSettingsResult();
 
   final List<BookmarkFilterEntry> _filterDataList = <BookmarkFilterEntry>[
-    const BookmarkFilterEntry('reading', 'Reading'),
-    const BookmarkFilterEntry('abandoned', 'Abandoned'),
-    const BookmarkFilterEntry('ongoing', 'Ongoing'),
-    const BookmarkFilterEntry('ended', 'Ended'),
-    const BookmarkFilterEntry('finished', 'finished'),
+    const BookmarkFilterEntry('abandoned', 'Abandoned',
+        tooltip: 'Things you are no longer interested in and haven`t finished'),
+    const BookmarkFilterEntry('ongoing', 'Ongoing', tooltip: 'Things that are expected to have new max progress in time.'),
+    const BookmarkFilterEntry('ended', 'Ended', tooltip: 'Things that have have max progress that won`t change.'),
+    const BookmarkFilterEntry('finished', 'finished', tooltip: 'Things you have finished and won`t be extended.'),
   ];
   final List<String> _filters = <String>[];
 
@@ -57,6 +58,7 @@ class _SettingsState extends State<Settings> {
         padding: const EdgeInsets.all(4.0),
         child: FilterChip(
           label: Text(filter.name),
+          tooltip: filter.tooltip,
           selected: _filters.contains(filter.key),
           onSelected: (bool value) => _setFilter(filter.key, value),
         ),

@@ -168,26 +168,21 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     var filterData = _filterRuntime.filterData;
-    if (filterData.reading) {
-      filterList = filterList.where((readable) =>
-          !readable.abandoned &&
-          (readable.ongoing || readable.progress < readable.maxProgress));
-    }
 
-    if (filterData.abandoned) {
+    if (!filterData.abandoned) {
       filterList = filterList.where((readable) => !readable.abandoned);
     }
 
-    if (filterData.ended) {
+    if (!filterData.ended) {
       filterList = filterList.where((readable) => readable.ongoing);
     }
 
-    if (filterData.finished) {
+    if (!filterData.finished) {
       filterList = filterList.where((readable) =>
           readable.ongoing || readable.progress < readable.maxProgress);
     }
 
-    if (filterData.ongoing) {
+    if (!filterData.ongoing) {
       filterList = filterList.where((readable) => !readable.ongoing);
     }
 
