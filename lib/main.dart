@@ -3,8 +3,8 @@ import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
 import 'package:MarkMyProgress/data/database/data/instance/SettingsStore.dart';
 import 'package:MarkMyProgress/data/runtime/FilterRuntimeData.dart';
-import 'package:MarkMyProgress/data/settings/FilterData.dart';
 import 'package:MarkMyProgress/data/runtime/SettingsResult.dart';
+import 'package:MarkMyProgress/data/settings/FilterData.dart';
 import 'package:MarkMyProgress/edit_record.dart';
 import 'package:MarkMyProgress/extensions/DateExtension.dart';
 import 'package:MarkMyProgress/settings.dart';
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
         // This makes the visual density adapt to the platform that you run
         // the app on. For desktop platforms, the controls will be smaller and
         // closer together (more dense) than on mobile platforms.
@@ -198,22 +198,29 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         title: Padding(
             padding: EdgeInsets.all(32),
-            child: TextField(
-              controller: _searchQueryController,
-              autofocus: true,
-              decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search, color: Colors.white),
-                  hintText: 'Search...',
-                  hintStyle: TextStyle(color: Colors.white)),
-              style: TextStyle(color: Colors.white),
-              onChanged: (query) => _updateFilterQuery(query),
-            )),
+            child: Ink(
+                decoration: BoxDecoration(
+                    color: Colors.black26,
+                    borderRadius: BorderRadius.all(Radius.elliptical(8, 16))),
+                child: TextField(
+                  controller: _searchQueryController,
+                  autofocus: true,
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                      hintText: 'Search...',
+                      hintStyle: TextStyle(color: Colors.white)),
+                  style: TextStyle(color: Colors.white),
+                  onChanged: (query) => _updateFilterQuery(query),
+                ))),
         actions: [
           FlatButton(
               onPressed: () {
                 navigate<dynamic>((context) => Statistics());
               },
-              child: Icon(Icons.insert_chart)),
+              child: Icon(
+                Icons.insert_chart,
+                color: Color.fromARGB(229, 255, 255, 255),
+              )),
           FlatButton(
               onPressed: () async {
                 var result =
@@ -227,7 +234,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   _refreshBookmarks();
                 }
               },
-              child: Icon(Icons.settings)),
+              child: Icon(
+                Icons.settings,
+                color: Color.fromARGB(229, 255, 255, 255),
+              )),
         ],
       ),
       body: SafeArea(
