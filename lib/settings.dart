@@ -33,7 +33,7 @@ class _SettingsState extends State<Settings> {
         tooltip: 'Things that are expected to have new max progress in time.'),
     const BookmarkFilterEntry('ended', 'Ended',
         tooltip: 'Things that have have max progress that won`t change.'),
-    const BookmarkFilterEntry('finished', 'finished',
+    const BookmarkFilterEntry('finished', 'Finished',
         tooltip: 'Things you have finished and won`t be extended.'),
   ];
   final List<String> _filters = <String>[];
@@ -83,12 +83,10 @@ class _SettingsState extends State<Settings> {
 
     _filters.clear();
     setState(() {
-      var index = 0;
       filterMap.forEach((key, dynamic value) {
         if (value != null && value is bool && value) {
-          _filters.add(_filterDataList[index].key);
+          _filters.add(key);
         }
-        index++;
       });
     });
   }
