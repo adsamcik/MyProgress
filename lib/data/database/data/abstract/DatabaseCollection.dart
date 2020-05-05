@@ -9,8 +9,11 @@ import 'DatabaseProxy.dart';
 /// </summary>
 /// <typeparam name="T"></typeparam>
 abstract class DatabaseCollection<T extends IDatabaseItem> {
+  // todo move this to implementations
+  static const String databaseFileName = 'progress_data.db';
+
   final DatabaseProxy<int, Map<String, dynamic>> _proxy =
-      DatabaseProxy(databasePath: 'progress_data.db');
+      DatabaseProxy(databasePath: databaseFileName);
 
   Iterable<int> _mapKeys(Iterable<T> items) => items.map((e) => e.id);
 

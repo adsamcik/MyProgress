@@ -5,6 +5,9 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'dart:io';
+
+import 'package:MarkMyProgress/data/database/data/abstract/DatabaseCollection.dart';
 import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
 import 'package:MarkMyProgress/data/instance/GenericBookmark.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -38,17 +41,14 @@ void main() {
   });
 
   group('DataStore tests', () {
+    final dataStore = DataStore();
     test('Save data to store', () async {
-      final dataStore = DataStore();
-
       await dataStore.open();
       await dataStore.insert(testBookmark);
       await dataStore.close();
     });
 
     test('Read data from store', () async {
-      final dataStore = DataStore();
-
       await dataStore.open();
       var bookmark = await dataStore.get(testBookmark.id);
       await dataStore.close();
@@ -57,8 +57,6 @@ void main() {
     });
 
     test('Update data in store', () async {
-      final dataStore = DataStore();
-
       testBookmark.logProgress(20);
 
       await dataStore.open();
@@ -73,8 +71,6 @@ void main() {
     });
 
     test('Delete data from store', () async {
-      final dataStore = DataStore();
-
       await dataStore.open();
       await dataStore.delete(testBookmark);
       await dataStore.close();
@@ -87,6 +83,7 @@ void main() {
       await dataStore.close();
 
       expect(list.isEmpty, true);
+      await File(DatabaseCollection.databaseFileName).delete();
     });
   });
 }
