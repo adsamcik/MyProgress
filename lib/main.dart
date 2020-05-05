@@ -1,10 +1,8 @@
-import 'package:MarkMyProgress/colors.dart';
 import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
 import 'package:MarkMyProgress/data/database/data/instance/SettingsStore.dart';
 import 'package:MarkMyProgress/data/runtime/FilterRuntimeData.dart';
-import 'package:MarkMyProgress/data/runtime/SettingsResult.dart';
 import 'package:MarkMyProgress/data/settings/FilterData.dart';
 import 'package:MarkMyProgress/edit_record.dart';
 import 'package:MarkMyProgress/extensions/DateExtension.dart';
@@ -16,6 +14,7 @@ import 'package:flutter/rendering.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'data/instance/GenericBookmark.dart';
+import 'data/runtime/SettingsResult.dart';
 import 'extensions/StringExtensions.dart';
 import 'extensions/UserBookmark.dart';
 
@@ -30,19 +29,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MarkMyProgress ',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.purple,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
+        brightness: Brightness.dark,
+        accentColor: Colors.red,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'List'),
@@ -194,121 +187,129 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Padding(
-            padding: EdgeInsets.all(32),
-            child: Ink(
-                decoration: BoxDecoration(
-                    color: Colors.black26,
-                    borderRadius: BorderRadius.all(Radius.elliptical(8, 16))),
-                child: TextField(
-                  controller: _searchQueryController,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.search, color: Colors.white),
-                      hintText: 'Search...',
-                      hintStyle: TextStyle(color: Colors.white)),
-                  style: TextStyle(color: Colors.white),
-                  onChanged: (query) => _updateFilterQuery(query),
-                ))),
-        actions: [
-          FlatButton(
-              onPressed: () {
-                navigate<dynamic>((context) => Statistics());
-              },
-              child: Icon(
-                Icons.insert_chart,
-                color: Colors2.white90,
-              )),
-          FlatButton(
-              onPressed: () async {
-                var result =
-                    await navigate<SettingsResult>((context) => Settings()) ??
-                        SettingsResult(true, true);
-                if (result.filterChanged) {
-                  _refreshSettings();
-                }
-
-                if (result.dataImported) {
-                  _refreshBookmarks();
-                }
-              },
-              child: Icon(
-                Icons.settings,
-                color: Colors2.white90,
-              )),
-        ],
-      ),
       body: SafeArea(
-          child: Scrollbar(
-        controller: ScrollController(initialScrollOffset: 0),
-        child: ListView.separated(
-          padding: EdgeInsets.fromLTRB(0, 16, 0, 96),
-          separatorBuilder: (context, index) => Divider(
-            color: Theme.of(context).backgroundColor,
-            height: 0,
+          child: Stack(
+        children: [
+          Scrollbar(
+            controller: ScrollController(initialScrollOffset: 0),
+            child: ListView.separated(
+              padding: EdgeInsets.fromLTRB(0, 72, 0, 96),
+              separatorBuilder: (context, index) => Divider(
+                color: Theme.of(context).dividerColor,
+                height: 0,
+              ),
+              itemBuilder: (context, index) {
+                var bookmark = _filteredBookmarks[index];
+                var lastProgressDate =
+                    bookmark.lastProgress.date == Date.invalid()
+                        ? ''
+                        : bookmark.lastProgress.date.toDateString();
+                return InkWell(
+                    onTap: () => _viewDetail(bookmark),
+                    child: Padding(
+                        padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                        child: Row(children: [
+                          ConstrainedBox(
+                              constraints:
+                                  BoxConstraints.tightForFinite(width: 90),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    '${bookmark.progress} / ${bookmark.maxProgress}',
+                                    maxLines: 1,
+                                  ),
+                                  Text(
+                                    lastProgressDate,
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    overflow: TextOverflow.fade,
+                                  ),
+                                ],
+                              )),
+                          SizedBox(width: 16),
+                          Expanded(
+                              child: Container(
+                                  height: 40,
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        bookmark.title,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      )))),
+                          SizedBox(width: 16),
+                          if (bookmark is IWebBookmark &&
+                              ((bookmark as IWebBookmark).webAddress ?? '')
+                                  .isNotEmpty)
+                            OutlineButton(
+                                child: Text('Web'),
+                                onPressed: () {
+                                  // can launch is not implemented on Windows
+                                  //canLaunch(webBookmark.webAddress).then((value) {
+                                  //if (value) {
+                                  launch((bookmark as IWebBookmark).webAddress);
+                                  //}
+                                  //});
+                                }),
+                          OutlineButton(
+                              child: Text('+ ${bookmark.progressIncrement}'),
+                              onPressed: () => _incrementProgress(bookmark)),
+                        ])));
+              },
+              itemCount: _filteredBookmarks.length,
+            ),
           ),
-          itemBuilder: (context, index) {
-            var bookmark = _filteredBookmarks[index];
-            var lastProgressDate = bookmark.lastProgress.date == Date.invalid()
-                ? ''
-                : bookmark.lastProgress.date.toDateString();
-            return InkWell(
-                onTap: () => _viewDetail(bookmark),
-                child: Padding(
-                    padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+          Positioned(
+            left: 16,
+            right: 16,
+            top: 16,
+            child: Material(
+                color: Theme.of(context).cardColor,
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+                elevation: 2,
+                child: PreferredSize(
+                    preferredSize: Size.fromHeight(64),
                     child: Row(children: [
-                      ConstrainedBox(
-                          constraints: BoxConstraints.tightForFinite(width: 90),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                '${bookmark.progress} / ${bookmark.maxProgress}',
-                                maxLines: 1,
-                              ),
-                              Text(
-                                lastProgressDate,
-                                maxLines: 1,
-                                softWrap: false,
-                                overflow: TextOverflow.fade,
-                              ),
-                            ],
-                          )),
-                      SizedBox(width: 16),
                       Expanded(
-                          child: Container(
-                              height: 40,
-                              child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    bookmark.title,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  )))),
-                      SizedBox(width: 16),
-                      if (bookmark is IWebBookmark &&
-                          ((bookmark as IWebBookmark).webAddress ?? '')
-                              .isNotEmpty)
-                        OutlineButton(
-                            child: Text('Web'),
-                            onPressed: () {
-                              // can launch is not implemented on Windows
-                              //canLaunch(webBookmark.webAddress).then((value) {
-                              //if (value) {
-                              launch((bookmark as IWebBookmark).webAddress);
-                              //}
-                              //});
-                            }),
-                      OutlineButton(
-                          child: Text('+ ${bookmark.progressIncrement}'),
-                          onPressed: () => _incrementProgress(bookmark)),
-                    ])));
-          },
-          itemCount: _filteredBookmarks.length,
-        ),
+                          child: TextField(
+                        controller: _searchQueryController,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(16),
+                          hintText: 'Search...',
+                          border: InputBorder.none,
+                        ),
+                        onChanged: (query) => _updateFilterQuery(query),
+                      )),
+                      IconButton(
+                          onPressed: () {
+                            navigate<dynamic>((context) => Statistics());
+                          },
+                          icon: Icon(
+                            Icons.insert_chart,
+                          )),
+                      IconButton(
+                          onPressed: () async {
+                            var result = await navigate<SettingsResult>(
+                                    (context) => Settings()) ??
+                                SettingsResult(true, true);
+                            if (result.filterChanged) {
+                              _refreshSettings();
+                            }
+
+                            if (result.dataImported) {
+                              _refreshBookmarks();
+                            }
+                          },
+                          icon: Icon(
+                            Icons.settings,
+                          )),
+                    ]))),
+          ),
+        ],
       )),
       floatingActionButton: FloatingActionButton(
         onPressed: _addNewItem,
