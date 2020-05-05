@@ -1,3 +1,4 @@
+import 'package:MarkMyProgress/colors.dart';
 import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
@@ -219,7 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Icon(
                 Icons.insert_chart,
-                color: Color.fromARGB(229, 255, 255, 255),
+                color: Colors2.white90,
               )),
           FlatButton(
               onPressed: () async {
@@ -236,7 +237,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Icon(
                 Icons.settings,
-                color: Color.fromARGB(229, 255, 255, 255),
+                color: Colors2.white90,
               )),
         ],
       ),
