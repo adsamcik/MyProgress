@@ -158,7 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if (strippedFilter.isNotEmpty) {
       filterList =
-          filterList.where((readable) => readable.contains(strippedFilter));
+          filterList.where((readable) => readable.match(strippedFilter) > 0);
     }
 
     var filterData = _filterRuntime.filterData;
@@ -187,7 +187,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return Scaffold(
       body: SafeArea(
           child: Stack(
