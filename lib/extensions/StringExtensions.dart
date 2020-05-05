@@ -5,7 +5,7 @@ extension StringExtensions on String {
 
   static String stripString(String text) {
     return text
-        .replaceAll(RegExp('[.!?\\-_,*/\'"(){}\[\]~`+=;|<>:]'), '')
+        .replaceAll(RegExp(r"""[.!?\\\-_,*/'"(){}\[\]~`+=;|<>: ]"""), '')
         .toLowerCase();
   }
 }
