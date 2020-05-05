@@ -3,6 +3,8 @@ import 'package:MarkMyProgress/data/abstract/IProgress.dart';
 import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/extensions/DateExtension.dart';
 import 'package:MarkMyProgress/extensions/StringExtensions.dart';
+import 'package:fuzzy/bitap/bitap.dart';
+import 'package:fuzzy/fuzzy.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'GenericProgress.dart';
@@ -41,7 +43,7 @@ class GenericBookmark extends BaseBookmark implements IWebBookmark {
   double get progressIncrement => super.progressIncrement ?? 1.0;
 
   bool _contains(String where, String what) {
-    if (where == null) return false;
+    if (where.isNullOrEmpty) return false;
 
     var stripped = StringExtensions.stripString(where);
     return stripped.contains(what);
