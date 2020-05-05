@@ -98,6 +98,19 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   }
 
   /// <summary>
+  ///     Returns all items in a database.
+  /// </summary>
+  /// <returns>Item collection (Enumerable).</returns>
+  Future<T> get(int id) async {
+    var jsonMap = await _proxy.get((e) => e.value as Map<String, dynamic>,
+        finder: Finder(filter: Filter.byKey(id)));
+    var bookmark = GenericBookmark.fromJson(jsonMap) as T;
+    // ID is not serialized
+    bookmark.id = id;
+    return bookmark;
+  }
+
+  /// <summary>
   ///     Upserts an item.
   /// </summary>
   /// <param name="item">Item.</param>
