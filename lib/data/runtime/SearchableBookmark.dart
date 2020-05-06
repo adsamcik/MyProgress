@@ -70,7 +70,7 @@ class SearchableBookmark {
                 max(previousValue, _match(query, substring)));
       }
 
-      if (previousValue.priority * previousValue.match >
+      if (previousValue.priority * previousValue.match >=
           matchValue * e.priority) {
         return previousValue;
       } else {
