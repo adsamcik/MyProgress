@@ -52,14 +52,14 @@ class SearchableBookmark {
       } else if (e.strippedValue.contains(query)) {
         matchValue = 1.0;
       } else {
-        matchValue = _generateSubstringList(e.value, query.length)
-            .fold<double>(
-                0.0,
-                (previousValue, substring) =>
-                    max(previousValue, _match(query, substring)));
+        matchValue = _generateSubstringList(e.value, query.length).fold<double>(
+            0.0,
+            (previousValue, substring) =>
+                max(previousValue, _match(query, substring)));
       }
 
-      if(previousValue.priority*previousValue.match > matchValue * e.priority) {
+      if (previousValue.priority * previousValue.match >
+          matchValue * e.priority) {
         return previousValue;
       } else {
         return MatchResult(e.priority, matchValue);
