@@ -29,13 +29,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.1"
-  bloc:
-    dependency: transitive
-    description:
-      name: bloc
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -211,6 +204,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.6"
+  edit_distance:
+    dependency: "direct main"
+    description:
+      name: edit_distance
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.1"
   fake_async:
     dependency: transitive
     description:
@@ -237,13 +237,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_bloc:
-    dependency: "direct main"
-    description:
-      name: flutter_bloc
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -373,13 +366,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
-  nested:
-    dependency: transitive
-    description:
-      name: nested
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.4"
   node_interop:
     dependency: transitive
     description:
@@ -443,13 +429,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.0"
-  provider:
-    dependency: transitive
-    description:
-      name: provider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.0.5+1"
   pub_semver:
     dependency: transitive
     description:
@@ -652,7 +631,7 @@ packages:
       name: url_launcher_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.1+2"
+    version: "0.1.1+4"
   vector_math:
     dependency: transitive
     description:

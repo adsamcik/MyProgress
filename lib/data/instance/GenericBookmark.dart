@@ -1,6 +1,7 @@
 import 'package:MarkMyProgress/data/abstract/BaseBookmark.dart';
 import 'package:MarkMyProgress/data/abstract/IProgress.dart';
 import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
+import 'package:MarkMyProgress/data/runtime/SearchableVariable.dart';
 import 'package:MarkMyProgress/extensions/DateExtension.dart';
 import 'package:MarkMyProgress/extensions/StringExtensions.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -40,23 +41,10 @@ class GenericBookmark extends BaseBookmark implements IWebBookmark {
   @override
   double get progressIncrement => super.progressIncrement ?? 1.0;
 
-  bool _contains(String where, String what) {
-    if (where.isNullOrEmpty) return false;
-
-    var stripped = StringExtensions.stripString(where);
-    return stripped.contains(what);
-  }
-
   @override
-  double match(String query) {
-    if (_contains(localizedTitle, query)) {
-      return 1;
-    } else if (_contains(originalTitle, query)) {
-      return localizedTitle.isNullOrEmpty ? 1 : 0.99;
-    } else if (_contains(webAddress, query)) {
-      return 0.25;
-    } else {
-      return 0;
-    }
-  }
+  Iterable<SearchableVariable> get searchList => [
+        SearchableVariable(localizedTitle, 1),
+        SearchableVariable(originalTitle, localizedTitle == null ? 1.0 : 0.99),
+        SearchableVariable(webAddress, 0.25)
+      ];
 }

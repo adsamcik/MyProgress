@@ -3,6 +3,8 @@ import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
 import 'package:MarkMyProgress/data/database/data/instance/SettingsStore.dart';
 import 'package:MarkMyProgress/data/runtime/FilterRuntimeData.dart';
+import 'package:MarkMyProgress/data/runtime/Pair.dart';
+import 'package:MarkMyProgress/data/runtime/SearchableBookmark.dart';
 import 'package:MarkMyProgress/data/settings/FilterData.dart';
 import 'package:MarkMyProgress/edit_record.dart';
 import 'package:MarkMyProgress/extensions/DateExtension.dart';
@@ -69,6 +71,8 @@ class _MyHomePageState extends State<MyHomePage> {
   List<IPersistentBookmark> _filteredBookmarks = [];
   FilterRuntimeData _filterRuntime = FilterRuntimeData(FilterData());
 
+  List<SearchableBookmark> _searchList = [];
+
   Future<T> navigate<T>(WidgetBuilder builder) async {
     return await Navigator.push<T>(
       context,
@@ -117,6 +121,8 @@ class _MyHomePageState extends State<MyHomePage> {
     await _dataStore.close();
     setState(() {
       _bookmarks = bookmarks;
+      _searchList =
+          bookmarks.map((e) => SearchableBookmark(e)).toList(growable: false);
     });
     _updateFilter();
   }
@@ -152,36 +158,51 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _updateFilter() {
-    Iterable<IPersistentBookmark> filterList = _bookmarks.toList();
-
-    var strippedFilter = StringExtensions.stripString(_filterRuntime.query);
-
-    if (strippedFilter.isNotEmpty) {
-      filterList =
-          filterList.where((readable) => readable.match(strippedFilter) > 0);
-    }
+    Iterable<SearchableBookmark> filterList = _searchList;
 
     var filterData = _filterRuntime.filterData;
 
     if (!filterData.abandoned) {
-      filterList = filterList.where((readable) => !readable.abandoned);
+      filterList = filterList.where((readable) => !readable.bookmark.abandoned);
     }
 
     if (!filterData.ended) {
-      filterList = filterList.where((readable) => readable.ongoing);
+      filterList = filterList.where((readable) => readable.bookmark.ongoing);
     }
 
     if (!filterData.finished) {
       filterList = filterList.where((readable) =>
-          readable.ongoing || readable.progress < readable.maxProgress);
+          readable.bookmark.ongoing ||
+          readable.bookmark.progress < readable.bookmark.maxProgress);
     }
 
     if (!filterData.ongoing) {
-      filterList = filterList.where((readable) => !readable.ongoing);
+      filterList = filterList.where((readable) => !readable.bookmark.ongoing);
+    }
+
+    var strippedFilter = StringExtensions.stripString(_filterRuntime.query);
+
+    if (strippedFilter.isNotEmpty) {
+      var matchList = filterList
+          .map((e) => Pair(e.bestMatch(strippedFilter), e))
+          .where((element) => element.item1 > 0)
+          .toList();
+
+      matchList.sort((a, b) {
+        if (a.item1 > b.item1) {
+          return -1;
+        } else if (a.item1 < b.item1) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+
+      filterList = matchList.map((e) => e.item2).toList();
     }
 
     setState(() {
-      _filteredBookmarks = filterList.toList();
+      _filteredBookmarks = filterList.map((e) => e.bookmark).toList();
     });
   }
 

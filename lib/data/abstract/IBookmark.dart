@@ -1,5 +1,7 @@
 import 'dart:core';
 
+import 'package:MarkMyProgress/data/runtime/SearchableVariable.dart';
+
 import 'IProgress.dart';
 
 abstract class IBookmark {
@@ -56,8 +58,6 @@ abstract class IBookmark {
   /// <param name="progress">Progress value</param>
   void logProgress(double progress);
 
-  /// Returns true if query matches any meaningful parameter such as title.
-  /// Numerical values should be ignored.
-  /// @returns confidence in match
-  double match(String query);
+  /// List of searchable values
+  Iterable<SearchableVariable> get searchList;
 }
