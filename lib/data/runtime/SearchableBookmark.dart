@@ -54,11 +54,14 @@ class SearchableBookmark {
   }
 
   MatchResult bestMatch(String query) {
-    return variableList.fold<MatchResult>(MatchResult(0, 0), (previousValue, e) {
-      var matchValue = 0.0;
+    return variableList.fold<MatchResult>(MatchResult(0, 0),
+        (previousValue, e) {
       if (e.strippedValue == null) {
         return previousValue;
-      } else if (e.strippedValue.contains(query)) {
+      }
+
+      var matchValue = 0.0;
+      if (e.strippedValue.contains(query)) {
         matchValue = 1.0;
       } else {
         matchValue = _generateSubstringList(e.value, query.length).fold<double>(
