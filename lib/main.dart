@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
@@ -238,7 +240,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Padding(
                         padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                         child: Opacity(
-                          opacity: item.match,
+                          opacity: max(0.3, item.match),
                           child: Row(children: [
                             ConstrainedBox(
                                 constraints:
