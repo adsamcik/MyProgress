@@ -9,11 +9,20 @@ class SearchableBookmark {
   static const int _distanceThreshold = 3;
 
   final IPersistentBookmark bookmark;
-  List<SearchableVariable> _variables;
+  List<SearchableVariable> _variableList;
 
-  SearchableBookmark(this.bookmark) {
-    _variables = bookmark.searchList.toList(growable: false);
-    _variables.sort((a, b) {
+  List<SearchableVariable> get variableList {
+    if (variableList == null) {
+      _initializeCache();
+    }
+    return _variableList;
+  }
+
+  SearchableBookmark(this.bookmark);
+
+  void _initializeCache() {
+    _variableList = bookmark.searchList.toList(growable: false);
+    _variableList.sort((a, b) {
       if (a.priority > b.priority) {
         return 1;
       } else if (a.priority < b.priority) {
@@ -45,7 +54,7 @@ class SearchableBookmark {
   }
 
   MatchResult bestMatch(String query) {
-    return _variables.fold<MatchResult>(MatchResult(0, 0), (previousValue, e) {
+    return variableList.fold<MatchResult>(MatchResult(0, 0), (previousValue, e) {
       var matchValue = 0.0;
       if (e.strippedValue == null) {
         return previousValue;
