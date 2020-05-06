@@ -34,10 +34,7 @@ class SearchableVariable {
 
   @override
   String toString() {
-    return 'SearchableItem{' +
-        ' value: $value,' +
-        ' priority: $priority,' +
-        '}';
+    return 'SearchableItem{' ' value: $value,' ' priority: $priority,' '}';
   }
 
   SearchableVariable copyWith({
