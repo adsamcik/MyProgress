@@ -44,7 +44,7 @@ class GenericBookmark extends BaseBookmark implements IWebBookmark {
   @override
   Iterable<SearchableVariable> get searchList => [
         SearchableVariable(localizedTitle, 1),
-        SearchableVariable(originalTitle, localizedTitle == null ? 1.0 : 0.99),
-        SearchableVariable(webAddress, 0.25)
+        SearchableVariable(originalTitle, localizedTitle.isNullOrEmpty ? 1 : 0.99),
+        SearchableVariable(webAddress, 0.9)
       ];
 }

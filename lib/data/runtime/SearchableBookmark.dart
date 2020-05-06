@@ -1,11 +1,12 @@
 import 'dart:math';
 
 import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
+import 'package:MarkMyProgress/data/runtime/MatchResult.dart';
 import 'package:MarkMyProgress/data/runtime/SearchableVariable.dart';
 import 'package:edit_distance/edit_distance.dart';
 
 class SearchableBookmark {
-  static const int _threshold = 3;
+  static const int _distanceThreshold = 3;
 
   final IPersistentBookmark bookmark;
   List<SearchableVariable> _variables;
@@ -25,8 +26,8 @@ class SearchableBookmark {
 
   double _match(String query, String resultSubstr) {
     var distance = Levenshtein().distance(query, resultSubstr);
-    return distance < _threshold
-        ? 1 - distance.toDouble() / _threshold.toDouble()
+    return distance < _distanceThreshold
+        ? 1 - distance.toDouble() / _distanceThreshold.toDouble()
         : 0;
   }
 
@@ -43,11 +44,11 @@ class SearchableBookmark {
     }
   }
 
-  double bestMatch(String query) {
-    return _variables.fold<double>(0.0, (previousValue, e) {
+  MatchResult bestMatch(String query) {
+    return _variables.fold<MatchResult>(MatchResult(0, 0), (previousValue, e) {
       var matchValue = 0.0;
       if (e.strippedValue == null) {
-        return 0;
+        return previousValue;
       } else if (e.strippedValue.contains(query)) {
         matchValue = 1.0;
       } else {
@@ -57,7 +58,12 @@ class SearchableBookmark {
                 (previousValue, substring) =>
                     max(previousValue, _match(query, substring)));
       }
-      return max(previousValue, matchValue * e.priority);
+
+      if(previousValue.priority*previousValue.match > matchValue * e.priority) {
+        return previousValue;
+      } else {
+        return MatchResult(e.priority, matchValue);
+      }
     });
   }
 }

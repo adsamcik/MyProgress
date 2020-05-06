@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
@@ -186,13 +184,15 @@ class _MyHomePageState extends State<MyHomePage> {
     if (strippedFilter.isNotEmpty) {
       var matchList = filterList
           .map((e) => Pair(e.bestMatch(strippedFilter), e))
-          .where((element) => element.item1 > 0)
+          .where((element) => element.item1.match > 0)
           .toList();
 
       matchList.sort((a, b) {
-        if (a.item1 > b.item1) {
+        var aValue = a.item1.match * a.item1.priority;
+        var bValue = b.item1.match * b.item1.priority;
+        if (aValue > bValue) {
           return -1;
-        } else if (a.item1 < b.item1) {
+        } else if (aValue < bValue) {
           return 1;
         } else {
           return 0;
@@ -201,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       filterList = matchList.map((e) => e.item2).toList();
       var filterResult = matchList
-          .map((e) => SearchResult(e.item2.bookmark, e.item1))
+          .map((e) => SearchResult(e.item2.bookmark, e.item1.match))
           .toList();
       setState(() {
         _filteredBookmarks = filterResult;
@@ -240,7 +240,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Padding(
                         padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                         child: Opacity(
-                          opacity: max(0.3, item.match),
+                          opacity: item.match,
                           child: Row(children: [
                             ConstrainedBox(
                                 constraints:
