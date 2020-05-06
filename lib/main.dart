@@ -4,6 +4,7 @@ import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
 import 'package:MarkMyProgress/data/database/data/instance/SettingsStore.dart';
 import 'package:MarkMyProgress/data/runtime/FilterRuntimeData.dart';
 import 'package:MarkMyProgress/data/runtime/Pair.dart';
+import 'package:MarkMyProgress/data/runtime/SearchResult.dart';
 import 'package:MarkMyProgress/data/runtime/SearchableBookmark.dart';
 import 'package:MarkMyProgress/data/settings/FilterData.dart';
 import 'package:MarkMyProgress/edit_record.dart';
@@ -67,8 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final DataStore _dataStore = DataStore();
   final SettingsStore _settingsStore = SettingsStore();
 
-  List<IPersistentBookmark> _bookmarks = [];
-  List<IPersistentBookmark> _filteredBookmarks = [];
+  List<ISearchResult<IPersistentBookmark>> _filteredBookmarks = [];
   FilterRuntimeData _filterRuntime = FilterRuntimeData(FilterData());
 
   List<SearchableBookmark> _searchList = [];
@@ -120,7 +120,6 @@ class _MyHomePageState extends State<MyHomePage> {
         .sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
     await _dataStore.close();
     setState(() {
-      _bookmarks = bookmarks;
       _searchList =
           bookmarks.map((e) => SearchableBookmark(e)).toList(growable: false);
     });
@@ -199,11 +198,18 @@ class _MyHomePageState extends State<MyHomePage> {
       });
 
       filterList = matchList.map((e) => e.item2).toList();
+      var filterResult = matchList
+          .map((e) => SearchResult(e.item2.bookmark, e.item1))
+          .toList();
+      setState(() {
+        _filteredBookmarks = filterResult;
+      });
+    } else {
+      setState(() {
+        _filteredBookmarks =
+            filterList.map((e) => SearchResult(e.bookmark, 1.0)).toList();
+      });
     }
-
-    setState(() {
-      _filteredBookmarks = filterList.map((e) => e.bookmark).toList();
-    });
   }
 
   @override
@@ -221,7 +227,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 0,
               ),
               itemBuilder: (context, index) {
-                var bookmark = _filteredBookmarks[index];
+                var item = _filteredBookmarks[index];
+                var bookmark = item.value;
                 var lastProgressDate =
                     bookmark.lastProgress.date == Date.invalid()
                         ? ''
@@ -230,54 +237,58 @@ class _MyHomePageState extends State<MyHomePage> {
                     onTap: () => _viewDetail(bookmark),
                     child: Padding(
                         padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                        child: Row(children: [
-                          ConstrainedBox(
-                              constraints:
-                                  BoxConstraints.tightForFinite(width: 90),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    '${bookmark.progress} / ${bookmark.maxProgress}',
-                                    maxLines: 1,
-                                  ),
-                                  Text(
-                                    lastProgressDate,
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    overflow: TextOverflow.fade,
-                                  ),
-                                ],
-                              )),
-                          SizedBox(width: 16),
-                          Expanded(
-                              child: Container(
-                                  height: 40,
-                                  child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        bookmark.title,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      )))),
-                          SizedBox(width: 16),
-                          if (bookmark is IWebBookmark &&
-                              ((bookmark as IWebBookmark).webAddress ?? '')
-                                  .isNotEmpty)
+                        child: Opacity(
+                          opacity: item.match,
+                          child: Row(children: [
+                            ConstrainedBox(
+                                constraints:
+                                    BoxConstraints.tightForFinite(width: 90),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      '${bookmark.progress} / ${bookmark.maxProgress}',
+                                      maxLines: 1,
+                                    ),
+                                    Text(
+                                      lastProgressDate,
+                                      maxLines: 1,
+                                      softWrap: false,
+                                      overflow: TextOverflow.fade,
+                                    ),
+                                  ],
+                                )),
+                            SizedBox(width: 16),
+                            Expanded(
+                                child: Container(
+                                    height: 40,
+                                    child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          bookmark.title,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        )))),
+                            SizedBox(width: 16),
+                            if (bookmark is IWebBookmark &&
+                                ((bookmark as IWebBookmark).webAddress ?? '')
+                                    .isNotEmpty)
+                              OutlineButton(
+                                  child: Text('Web'),
+                                  onPressed: () {
+                                    // can launch is not implemented on Windows
+                                    //canLaunch(webBookmark.webAddress).then((value) {
+                                    //if (value) {
+                                    launch(
+                                        (bookmark as IWebBookmark).webAddress);
+                                    //}
+                                    //});
+                                  }),
                             OutlineButton(
-                                child: Text('Web'),
-                                onPressed: () {
-                                  // can launch is not implemented on Windows
-                                  //canLaunch(webBookmark.webAddress).then((value) {
-                                  //if (value) {
-                                  launch((bookmark as IWebBookmark).webAddress);
-                                  //}
-                                  //});
-                                }),
-                          OutlineButton(
-                              child: Text('+ ${bookmark.progressIncrement}'),
-                              onPressed: () => _incrementProgress(bookmark)),
-                        ])));
+                                child: Text('+ ${bookmark.progressIncrement}'),
+                                onPressed: () => _incrementProgress(bookmark)),
+                          ]),
+                        )));
               },
               itemCount: _filteredBookmarks.length,
             ),
