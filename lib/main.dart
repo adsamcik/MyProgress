@@ -12,6 +12,7 @@ import 'package:MarkMyProgress/extensions/DateExtension.dart';
 import 'package:MarkMyProgress/settings.dart';
 import 'package:MarkMyProgress/statistics.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -231,6 +232,15 @@ class _MyHomePageState extends State<MyHomePage> {
               itemBuilder: (context, index) {
                 var item = _filteredBookmarks[index];
                 var bookmark = item.value;
+
+                String title;
+                if (kDebugMode && item.match != 1) {
+                  title =
+                      '${bookmark.title} - (${item.match.toStringAsFixed(2)})';
+                } else {
+                  title = bookmark.title;
+                }
+
                 var lastProgressDate =
                     bookmark.lastProgress.date == Date.invalid()
                         ? ''
@@ -267,7 +277,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          bookmark.title,
+                                          title,
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                         )))),

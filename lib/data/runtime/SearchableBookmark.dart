@@ -3,16 +3,15 @@ import 'dart:math';
 import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/data/runtime/MatchResult.dart';
 import 'package:MarkMyProgress/data/runtime/SearchableVariable.dart';
+import 'package:MarkMyProgress/extensions/StringExtensions.dart';
 import 'package:edit_distance/edit_distance.dart';
 
 class SearchableBookmark {
-  static const int _distanceThreshold = 3;
-
   final IPersistentBookmark bookmark;
   List<SearchableVariable> _variableList;
 
   List<SearchableVariable> get variableList {
-    if (variableList == null) {
+    if (_variableList == null) {
       _initializeCache();
     }
     return _variableList;
@@ -34,10 +33,7 @@ class SearchableBookmark {
   }
 
   double _match(String query, String resultSubstr) {
-    var distance = Levenshtein().distance(query, resultSubstr);
-    return distance < _distanceThreshold
-        ? 1 - distance.toDouble() / _distanceThreshold.toDouble()
-        : 0;
+    return 1 - JaroWinkler().normalizedDistance(query, resultSubstr);
   }
 
   List<String> _generateSubstringList(String value, int queryLength) {
@@ -56,7 +52,7 @@ class SearchableBookmark {
   MatchResult bestMatch(String query) {
     return variableList.fold<MatchResult>(MatchResult(0, 0),
         (previousValue, e) {
-      if (e.strippedValue == null) {
+      if (e.strippedValue.isNullOrEmpty) {
         return previousValue;
       }
 
@@ -64,10 +60,11 @@ class SearchableBookmark {
       if (e.strippedValue.contains(query)) {
         matchValue = 1.0;
       } else {
-        matchValue = _generateSubstringList(e.value, query.length).fold<double>(
-            0.0,
-            (previousValue, substring) =>
-                max(previousValue, _match(query, substring)));
+        matchValue = _generateSubstringList(e.strippedValue, query.length)
+            .fold<double>(
+                0.0,
+                (previousValue, substring) =>
+                    max(previousValue, _match(query, substring)));
       }
 
       if (previousValue.priority * previousValue.match >=
