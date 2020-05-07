@@ -148,13 +148,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.14.12"
-  color_panel:
-    dependency: "direct main"
-    description:
-      path: "plugins/color_panel"
-      relative: true
-    source: path
-    version: "0.0.1"
   convert:
     dependency: transitive
     description:
@@ -222,8 +215,10 @@ packages:
     dependency: "direct main"
     description:
       path: "plugins/file_chooser"
-      relative: true
-    source: path
+      ref: "100bc306dd"
+      resolved-ref: "100bc306dd15532dbbb2b353170aea47e8173a13"
+      url: "https://github.com/google/flutter-desktop-embedding.git"
+    source: git
     version: "0.1.0"
   fixnum:
     dependency: transitive
@@ -338,13 +333,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.6"
-  menubar:
-    dependency: "direct main"
-    description:
-      path: "plugins/menubar"
-      relative: true
-    source: path
-    version: "0.0.1"
   meta:
     dependency: transitive
     description:
@@ -667,13 +655,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.5.2"
-  window_size:
-    dependency: "direct main"
-    description:
-      path: "plugins/window_size"
-      relative: true
-    source: path
-    version: "0.0.1"
   yaml:
     dependency: transitive
     description:

@@ -44,15 +44,11 @@ dependencies:
       path: plugins/flutter_plugins/url_launcher_fde
       ref: 100bc306dd
 
-
-  color_panel:
-    path: plugins/color_panel
   file_chooser:
-    path: plugins/file_chooser
-  menubar:
-    path: plugins/menubar
-  window_size:
-    path: plugins/window_size
+    git:
+      url: https://github.com/google/flutter-desktop-embedding.git
+      ref: 100bc306dd
+      path: plugins/file_chooser
 
 dev_dependencies:
   flutter_test:
