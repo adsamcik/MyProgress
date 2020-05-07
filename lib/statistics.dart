@@ -86,6 +86,18 @@ class _StatisticsChartState extends State<StatisticsChart> {
       });
     });
 
+    var minDate = dailyReading.keys.fold<DateTime>(
+        DateTime.now(),
+        (previousDate, thisDate) =>
+            thisDate.isBefore(previousDate) ? thisDate : previousDate);
+
+    var now = DateTime.now();
+    var nextDate = minDate.add(Duration(days: 1));
+    while(nextDate.isBefore(now)) {
+      dailyReading.putIfAbsent(nextDate, () => 0);
+      nextDate = nextDate.add(Duration(days: 1));
+    }
+
     var data = dailyReading.entries
         .map((entry) => TimeSeriesCount(entry.key, entry.value))
         .toList();
