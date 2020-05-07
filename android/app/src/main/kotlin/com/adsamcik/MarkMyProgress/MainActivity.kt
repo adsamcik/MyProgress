@@ -1,4 +1,4 @@
-package com.adsamcik.markmyprogress.MarkMyProgress
+package com.adsamcik.MarkMyProgress
 
 import io.flutter.embedding.android.FlutterActivity
 
