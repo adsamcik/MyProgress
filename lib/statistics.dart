@@ -93,7 +93,7 @@ class _StatisticsChartState extends State<StatisticsChart> {
 
     var now = DateTime.now();
     var nextDate = minDate.add(Duration(days: 1));
-    while(nextDate.isBefore(now)) {
+    while (nextDate.isBefore(now)) {
       dailyReading.putIfAbsent(nextDate, () => 0);
       nextDate = nextDate.add(Duration(days: 1));
     }
