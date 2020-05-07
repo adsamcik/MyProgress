@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'data/abstract/IPersistentBookmark.dart';
-import 'data/input/RegExInputFormatter.dart';
+import 'input/RegExInputFormatter.dart';
 
 class EditRecord extends StatefulWidget {
   final IPersistentBookmark bookmark;
