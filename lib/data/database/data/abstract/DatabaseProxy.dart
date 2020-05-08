@@ -12,12 +12,15 @@ class DatabaseProxy<Key, Value> {
 
   DatabaseProxy({@required this.databasePath});
 
+  bool get isOpen => _database != null;
+
   void open() async {
     _database = await databaseFactoryIo.openDatabase(databasePath);
   }
 
   void close() async {
     await _database.close();
+    _database = null;
   }
 
   StoreRef _store() => StoreRef<Key, Value>.main();
@@ -27,6 +30,7 @@ class DatabaseProxy<Key, Value> {
   /// </summary>
   /// <param name="item">Item.</param>
   Future<dynamic> update(Key key, Value item) async {
+    assert(isOpen);
     return await _store().record(key).update(_database, item);
   }
 
@@ -36,6 +40,7 @@ class DatabaseProxy<Key, Value> {
   /// <param name="itemEnumerable">Item collection (Enumerable).</param>
   Future<List<dynamic>> updateAll(
       Iterable<Key> keys, Iterable<Value> values) async {
+    assert(isOpen);
     return await _store()
         .records(keys)
         .update(_database, values.toList(growable: false));
@@ -46,6 +51,7 @@ class DatabaseProxy<Key, Value> {
   /// </summary>
   /// <param name="item">Item.</param>
   Future<Key> insert(Value item) async {
+    assert(isOpen);
     return await _store().add(_database, item) as Key;
   }
 
@@ -54,6 +60,7 @@ class DatabaseProxy<Key, Value> {
   /// </summary>
   /// <param name="itemEnumerable">Item collection (Enumerable).</param>
   Future<Iterable<Key>> insertAll(Iterable<Value> values) async {
+    assert(isOpen);
     var keyList =
         await _store().addAll(_database, values.toList(growable: false));
     return keyList.cast();
@@ -64,6 +71,7 @@ class DatabaseProxy<Key, Value> {
   /// </summary>
   /// <param name="item">Item.</param>
   Future<dynamic> delete(Key key) async {
+    assert(isOpen);
     return await _store().record(key).delete(_database);
   }
 
@@ -72,6 +80,7 @@ class DatabaseProxy<Key, Value> {
   /// </summary>
   /// <param name="itemEnumerable">Item collection (Enumerable).</param>
   Future<dynamic> deleteAll(Iterable<Key> keys) async {
+    assert(isOpen);
     return await _store().records(keys).delete(_database);
   }
 
@@ -82,6 +91,7 @@ class DatabaseProxy<Key, Value> {
   Future<Iterable<Value>> getAll(
       Value Function(RecordSnapshot<dynamic, dynamic>) mapToValue,
       {Finder finder}) async {
+    assert(isOpen);
     var records = await _store().find(_database, finder: finder);
     return records.map(mapToValue);
   }
@@ -92,6 +102,7 @@ class DatabaseProxy<Key, Value> {
   /// <returns>Item collection (Enumerable).</returns>
   Future<Iterable<MapEntry<Key, Value>>> getAllWithKeys(
       Iterable<Key> keys) async {
+    assert(isOpen);
     var records = await _store().records(keys).getSnapshots(_database);
     return records.map(
         (e) => e != null ? MapEntry(e.key as Key, e.value as Value) : null);
@@ -99,6 +110,7 @@ class DatabaseProxy<Key, Value> {
 
   Future<Value> get(Value Function(RecordSnapshot<dynamic, dynamic>) mapToValue,
       {Finder finder}) async {
+    assert(isOpen);
     return mapToValue(await _store().findFirst(_database, finder: finder));
   }
 
@@ -107,6 +119,13 @@ class DatabaseProxy<Key, Value> {
   /// </summary>
   /// <param name="item">Item.</param>
   Future<dynamic> upsert(Key key, Value value) async {
+    assert(isOpen);
     return await _store().record(key).put(_database, value);
+  }
+
+  Future<dynamic> transaction(Function(DatabaseProxy proxy) trans) async {
+    await open();
+    await trans(this);
+    await close();
   }
 }

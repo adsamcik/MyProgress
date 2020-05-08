@@ -17,11 +17,11 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
 
   Iterable<int> _mapKeys(Iterable<T> items) => items.map((e) => e.id);
 
-  void open() async {
+  Future open() async {
     await _proxy.open();
   }
 
-  void close() async {
+  Future close() async {
     await _proxy.close();
   }
 
@@ -48,7 +48,10 @@ abstract class DatabaseCollection<T extends IDatabaseItem> {
   /// </summary>
   /// <param name="item">Item.</param>
   Future insert(T item) async {
+    var isOpen = _proxy.isOpen;
+    if (!isOpen) await _proxy.open();
     item.id = await _proxy.insert(item.toJson());
+    if (!isOpen) await _proxy.close();
   }
 
   /// <summary>

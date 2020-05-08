@@ -33,9 +33,23 @@ dependencies:
   charts_flutter: ^0.9.0
   edit_distance: ^0.4.1
 
+  freezed_annotation: ^0.7.1
+
   # Serialization
   json_annotation: ^3.0.1
   csv: ^4.0.3
+
+  # Bloc
+
+  flutter_bloc: ^4.0.0
+  bloc: ^4.0.0
+
+  # Dependency injection
+
+  injectable: ^0.3.0
+  get_it: ^4.0.2
+
+  # Native
 
   url_launcher: ^5.4.5
   url_launcher_fde:
@@ -57,9 +71,15 @@ dev_dependencies:
   pedantic: ^1.9.0
   intl: ^0.16.1
 
+  # Dependency injection
+  injectable_generator: ^0.3.5
+
+  # Code generators
+  freezed: ^0.10.8
+  json_serializable: ^3.3.0
+
   # flutter pub run build_runner build (or watch)
   build_runner: ^1.9.0
-  json_serializable: ^3.3.0
   package_info: ^0.4.0+17
 
   # Used by tests. Not required to use `json_serializable`.
