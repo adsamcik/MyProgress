@@ -14,11 +14,12 @@ class DatabaseProxy<Key, Value> {
 
   bool get isOpen => _database != null;
 
-  void open() async {
+  Future open() async {
     _database = await databaseFactoryIo.openDatabase(databasePath);
   }
 
-  void close() async {
+  Future close() async {
+    assert(isOpen);
     await _database.close();
     _database = null;
   }
@@ -121,11 +122,5 @@ class DatabaseProxy<Key, Value> {
   Future<dynamic> upsert(Key key, Value value) async {
     assert(isOpen);
     return await _store().record(key).put(_database, value);
-  }
-
-  Future<dynamic> transaction(Function(DatabaseProxy proxy) trans) async {
-    await open();
-    await trans(this);
-    await close();
   }
 }

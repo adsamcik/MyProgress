@@ -1,13 +1,6 @@
 import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/bloc/bloc.dart';
-import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
-import 'package:MarkMyProgress/data/database/data/instance/SettingsStore.dart';
-import 'package:MarkMyProgress/data/runtime/FilterRuntimeData.dart';
-import 'package:MarkMyProgress/data/runtime/Pair.dart';
-import 'package:MarkMyProgress/data/runtime/SearchResult.dart';
-import 'package:MarkMyProgress/data/runtime/SearchableBookmark.dart';
-import 'package:MarkMyProgress/data/settings/FilterData.dart';
 import 'package:MarkMyProgress/edit_record.dart';
 import 'package:MarkMyProgress/extensions/DateExtension.dart';
 import 'package:MarkMyProgress/settings.dart';
@@ -21,9 +14,7 @@ import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'data/instance/GenericBookmark.dart';
-import 'data/runtime/SettingsResult.dart';
 import 'di_setup.dart';
-import 'extensions/StringExtensions.dart';
 import 'extensions/UserBookmark.dart';
 
 void main() {
@@ -80,25 +71,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final DataStore _dataStore = DataStore();
-  final SettingsStore _settingsStore = SettingsStore();
-
-  List<ISearchResult<IPersistentBookmark>> _filteredBookmarks = [];
-  FilterRuntimeData _filterRuntime = FilterRuntimeData(FilterData());
-
-  List<SearchableBookmark> _searchList = [];
-
   Future<T> navigate<T>(WidgetBuilder builder) async {
     return await Navigator.push<T>(
       context,
       MaterialPageRoute<T>(builder: builder),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _refreshSettings();
   }
 
   void _addNewItem(BuildContext context) async {
@@ -110,6 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
       return;
     }
 
+    // todo move this inside edit
     context
         .bloc<BookmarkBloc>()
         .add(BookmarkBlocEvent.addBookmark(bookmark: bookmark));
@@ -123,95 +101,13 @@ class _MyHomePageState extends State<MyHomePage> {
       return;
     }
 
+    // todo move this inside edit
     context
         .bloc<BookmarkBloc>()
         .add(BookmarkBlocEvent.updateBookmark(bookmark: bookmark));
   }
 
-  void _refreshBookmarks(List<IPersistentBookmark> bookmarks) async {
-    // todo move this inside a state
-    bookmarks
-        .sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
-    _searchList =
-        bookmarks.map((e) => SearchableBookmark(e)).toList(growable: false);
-    _updateFilter();
-  }
-
-  void _refreshSettings() async {
-    await _settingsStore.open();
-    var filterData = await _settingsStore.getFilterData();
-    await _settingsStore.close();
-    setState(() {
-      _filterRuntime =
-          FilterRuntimeData(filterData, query: _filterRuntime.query);
-    });
-    _updateFilter();
-  }
-
   final TextEditingController _searchQueryController = TextEditingController();
-
-  void _updateFilterQuery(String query) {
-    _filterRuntime.query = query.toLowerCase();
-    _updateFilter();
-  }
-
-  void _updateFilter() {
-    Iterable<SearchableBookmark> filterList = _searchList;
-
-    var filterData = _filterRuntime.filterData;
-
-    if (!filterData.abandoned) {
-      filterList = filterList.where((readable) => !readable.bookmark.abandoned);
-    }
-
-    if (!filterData.ended) {
-      filterList = filterList.where((readable) => readable.bookmark.ongoing);
-    }
-
-    if (!filterData.finished) {
-      filterList = filterList.where((readable) =>
-          readable.bookmark.ongoing ||
-          readable.bookmark.progress < readable.bookmark.maxProgress);
-    }
-
-    if (!filterData.ongoing) {
-      filterList = filterList.where((readable) => !readable.bookmark.ongoing);
-    }
-
-    var strippedFilter = StringExtensions.stripString(_filterRuntime.query);
-
-    if (strippedFilter.isNotEmpty) {
-      var matchList = filterList
-          .map((e) => Pair(e.bestMatch(strippedFilter), e))
-          .where((element) => element.item1.match > 0)
-          .toList();
-
-      matchList.sort((a, b) {
-        var aValue = a.item1.match * a.item1.priority;
-        var bValue = b.item1.match * b.item1.priority;
-        if (aValue > bValue) {
-          return -1;
-        } else if (aValue < bValue) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-
-      filterList = matchList.map((e) => e.item2).toList();
-      var filterResult = matchList
-          .map((e) => SearchResult(e.item2.bookmark, e.item1.match))
-          .toList();
-      setState(() {
-        _filteredBookmarks = filterResult;
-      });
-    } else {
-      setState(() {
-        _filteredBookmarks =
-            filterList.map((e) => SearchResult(e.bookmark, 1.0)).toList();
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -222,8 +118,8 @@ class _MyHomePageState extends State<MyHomePage> {
           BlocBuilder<BookmarkBloc, BookmarkBlocState>(
             builder: (context, state) {
               return state.maybeWhen(
-                ready: (list, version) {
-                  _refreshBookmarks(list);
+                ready:
+                    (version, bookmarkList, filteredBookmarkList, filterData) {
                   return Scrollbar(
                       controller: ScrollController(initialScrollOffset: 0),
                       child: ListView.separated(
@@ -233,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           height: 0,
                         ),
                         itemBuilder: (context, index) {
-                          var item = _filteredBookmarks[index];
+                          var item = filteredBookmarkList[index];
                           var bookmark = item.value;
 
                           String title;
@@ -316,7 +212,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ]),
                                   )));
                         },
-                        itemCount: _filteredBookmarks.length,
+                        itemCount: filteredBookmarkList.length,
                       ));
                 },
                 orElse: () => Container(),
@@ -343,7 +239,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           hintText: 'Search...',
                           border: InputBorder.none,
                         ),
-                        onChanged: (query) => _updateFilterQuery(query),
+                        onChanged: (query) => context.bloc<BookmarkBloc>().add(
+                            BookmarkBlocEvent.updateFilterQuery(query: query)),
                       )),
                       IconButton(
                           onPressed: () {
@@ -354,12 +251,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           )),
                       IconButton(
                           onPressed: () async {
-                            var result = await navigate<SettingsResult>(
-                                    (context) => Settings()) ??
-                                SettingsResult(true, true);
-                            if (result.filterChanged) {
-                              _refreshSettings();
-                            }
+                            await navigate<dynamic>((context) => Settings());
                           },
                           icon: Icon(
                             Icons.settings,

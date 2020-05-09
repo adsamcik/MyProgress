@@ -40,6 +40,18 @@ class _$BookmarkBlocEventTearOff {
       bookmark: bookmark,
     );
   }
+
+  UpdateFilterQuery updateFilterQuery({@required String query}) {
+    return UpdateFilterQuery(
+      query: query,
+    );
+  }
+
+  UpdateFilterData updateFilterData({@required FilterData data}) {
+    return UpdateFilterData(
+      data: data,
+    );
+  }
 }
 
 // ignore: unused_element
@@ -53,6 +65,8 @@ mixin _$BookmarkBlocEvent {
     @required Result removeBookmark(IPersistentBookmark bookmark),
     @required Result updateBookmark(IPersistentBookmark bookmark),
     @required Result incrementProgress(IPersistentBookmark bookmark),
+    @required Result updateFilterQuery(String query),
+    @required Result updateFilterData(FilterData data),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
@@ -61,6 +75,8 @@ mixin _$BookmarkBlocEvent {
     Result removeBookmark(IPersistentBookmark bookmark),
     Result updateBookmark(IPersistentBookmark bookmark),
     Result incrementProgress(IPersistentBookmark bookmark),
+    Result updateFilterQuery(String query),
+    Result updateFilterData(FilterData data),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -70,6 +86,8 @@ mixin _$BookmarkBlocEvent {
     @required Result removeBookmark(RemoveBookmark value),
     @required Result updateBookmark(UpdateBookmark value),
     @required Result incrementProgress(IncrementProgress value),
+    @required Result updateFilterQuery(UpdateFilterQuery value),
+    @required Result updateFilterData(UpdateFilterData value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
@@ -78,6 +96,8 @@ mixin _$BookmarkBlocEvent {
     Result removeBookmark(RemoveBookmark value),
     Result updateBookmark(UpdateBookmark value),
     Result incrementProgress(IncrementProgress value),
+    Result updateFilterQuery(UpdateFilterQuery value),
+    Result updateFilterData(UpdateFilterData value),
     @required Result orElse(),
   });
 }
@@ -135,12 +155,16 @@ class _$Load implements Load {
     @required Result removeBookmark(IPersistentBookmark bookmark),
     @required Result updateBookmark(IPersistentBookmark bookmark),
     @required Result incrementProgress(IPersistentBookmark bookmark),
+    @required Result updateFilterQuery(String query),
+    @required Result updateFilterData(FilterData data),
   }) {
     assert(load != null);
     assert(addBookmark != null);
     assert(removeBookmark != null);
     assert(updateBookmark != null);
     assert(incrementProgress != null);
+    assert(updateFilterQuery != null);
+    assert(updateFilterData != null);
     return load();
   }
 
@@ -152,6 +176,8 @@ class _$Load implements Load {
     Result removeBookmark(IPersistentBookmark bookmark),
     Result updateBookmark(IPersistentBookmark bookmark),
     Result incrementProgress(IPersistentBookmark bookmark),
+    Result updateFilterQuery(String query),
+    Result updateFilterData(FilterData data),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -169,12 +195,16 @@ class _$Load implements Load {
     @required Result removeBookmark(RemoveBookmark value),
     @required Result updateBookmark(UpdateBookmark value),
     @required Result incrementProgress(IncrementProgress value),
+    @required Result updateFilterQuery(UpdateFilterQuery value),
+    @required Result updateFilterData(UpdateFilterData value),
   }) {
     assert(load != null);
     assert(addBookmark != null);
     assert(removeBookmark != null);
     assert(updateBookmark != null);
     assert(incrementProgress != null);
+    assert(updateFilterQuery != null);
+    assert(updateFilterData != null);
     return load(this);
   }
 
@@ -186,6 +216,8 @@ class _$Load implements Load {
     Result removeBookmark(RemoveBookmark value),
     Result updateBookmark(UpdateBookmark value),
     Result incrementProgress(IncrementProgress value),
+    Result updateFilterQuery(UpdateFilterQuery value),
+    Result updateFilterData(UpdateFilterData value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -265,12 +297,16 @@ class _$AddBookmark implements AddBookmark {
     @required Result removeBookmark(IPersistentBookmark bookmark),
     @required Result updateBookmark(IPersistentBookmark bookmark),
     @required Result incrementProgress(IPersistentBookmark bookmark),
+    @required Result updateFilterQuery(String query),
+    @required Result updateFilterData(FilterData data),
   }) {
     assert(load != null);
     assert(addBookmark != null);
     assert(removeBookmark != null);
     assert(updateBookmark != null);
     assert(incrementProgress != null);
+    assert(updateFilterQuery != null);
+    assert(updateFilterData != null);
     return addBookmark(bookmark);
   }
 
@@ -282,6 +318,8 @@ class _$AddBookmark implements AddBookmark {
     Result removeBookmark(IPersistentBookmark bookmark),
     Result updateBookmark(IPersistentBookmark bookmark),
     Result incrementProgress(IPersistentBookmark bookmark),
+    Result updateFilterQuery(String query),
+    Result updateFilterData(FilterData data),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -299,12 +337,16 @@ class _$AddBookmark implements AddBookmark {
     @required Result removeBookmark(RemoveBookmark value),
     @required Result updateBookmark(UpdateBookmark value),
     @required Result incrementProgress(IncrementProgress value),
+    @required Result updateFilterQuery(UpdateFilterQuery value),
+    @required Result updateFilterData(UpdateFilterData value),
   }) {
     assert(load != null);
     assert(addBookmark != null);
     assert(removeBookmark != null);
     assert(updateBookmark != null);
     assert(incrementProgress != null);
+    assert(updateFilterQuery != null);
+    assert(updateFilterData != null);
     return addBookmark(this);
   }
 
@@ -316,6 +358,8 @@ class _$AddBookmark implements AddBookmark {
     Result removeBookmark(RemoveBookmark value),
     Result updateBookmark(UpdateBookmark value),
     Result incrementProgress(IncrementProgress value),
+    Result updateFilterQuery(UpdateFilterQuery value),
+    Result updateFilterData(UpdateFilterData value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -399,12 +443,16 @@ class _$RemoveBookmark implements RemoveBookmark {
     @required Result removeBookmark(IPersistentBookmark bookmark),
     @required Result updateBookmark(IPersistentBookmark bookmark),
     @required Result incrementProgress(IPersistentBookmark bookmark),
+    @required Result updateFilterQuery(String query),
+    @required Result updateFilterData(FilterData data),
   }) {
     assert(load != null);
     assert(addBookmark != null);
     assert(removeBookmark != null);
     assert(updateBookmark != null);
     assert(incrementProgress != null);
+    assert(updateFilterQuery != null);
+    assert(updateFilterData != null);
     return removeBookmark(bookmark);
   }
 
@@ -416,6 +464,8 @@ class _$RemoveBookmark implements RemoveBookmark {
     Result removeBookmark(IPersistentBookmark bookmark),
     Result updateBookmark(IPersistentBookmark bookmark),
     Result incrementProgress(IPersistentBookmark bookmark),
+    Result updateFilterQuery(String query),
+    Result updateFilterData(FilterData data),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -433,12 +483,16 @@ class _$RemoveBookmark implements RemoveBookmark {
     @required Result removeBookmark(RemoveBookmark value),
     @required Result updateBookmark(UpdateBookmark value),
     @required Result incrementProgress(IncrementProgress value),
+    @required Result updateFilterQuery(UpdateFilterQuery value),
+    @required Result updateFilterData(UpdateFilterData value),
   }) {
     assert(load != null);
     assert(addBookmark != null);
     assert(removeBookmark != null);
     assert(updateBookmark != null);
     assert(incrementProgress != null);
+    assert(updateFilterQuery != null);
+    assert(updateFilterData != null);
     return removeBookmark(this);
   }
 
@@ -450,6 +504,8 @@ class _$RemoveBookmark implements RemoveBookmark {
     Result removeBookmark(RemoveBookmark value),
     Result updateBookmark(UpdateBookmark value),
     Result incrementProgress(IncrementProgress value),
+    Result updateFilterQuery(UpdateFilterQuery value),
+    Result updateFilterData(UpdateFilterData value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -533,12 +589,16 @@ class _$UpdateBookmark implements UpdateBookmark {
     @required Result removeBookmark(IPersistentBookmark bookmark),
     @required Result updateBookmark(IPersistentBookmark bookmark),
     @required Result incrementProgress(IPersistentBookmark bookmark),
+    @required Result updateFilterQuery(String query),
+    @required Result updateFilterData(FilterData data),
   }) {
     assert(load != null);
     assert(addBookmark != null);
     assert(removeBookmark != null);
     assert(updateBookmark != null);
     assert(incrementProgress != null);
+    assert(updateFilterQuery != null);
+    assert(updateFilterData != null);
     return updateBookmark(bookmark);
   }
 
@@ -550,6 +610,8 @@ class _$UpdateBookmark implements UpdateBookmark {
     Result removeBookmark(IPersistentBookmark bookmark),
     Result updateBookmark(IPersistentBookmark bookmark),
     Result incrementProgress(IPersistentBookmark bookmark),
+    Result updateFilterQuery(String query),
+    Result updateFilterData(FilterData data),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -567,12 +629,16 @@ class _$UpdateBookmark implements UpdateBookmark {
     @required Result removeBookmark(RemoveBookmark value),
     @required Result updateBookmark(UpdateBookmark value),
     @required Result incrementProgress(IncrementProgress value),
+    @required Result updateFilterQuery(UpdateFilterQuery value),
+    @required Result updateFilterData(UpdateFilterData value),
   }) {
     assert(load != null);
     assert(addBookmark != null);
     assert(removeBookmark != null);
     assert(updateBookmark != null);
     assert(incrementProgress != null);
+    assert(updateFilterQuery != null);
+    assert(updateFilterData != null);
     return updateBookmark(this);
   }
 
@@ -584,6 +650,8 @@ class _$UpdateBookmark implements UpdateBookmark {
     Result removeBookmark(RemoveBookmark value),
     Result updateBookmark(UpdateBookmark value),
     Result incrementProgress(IncrementProgress value),
+    Result updateFilterQuery(UpdateFilterQuery value),
+    Result updateFilterData(UpdateFilterData value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -668,12 +736,16 @@ class _$IncrementProgress implements IncrementProgress {
     @required Result removeBookmark(IPersistentBookmark bookmark),
     @required Result updateBookmark(IPersistentBookmark bookmark),
     @required Result incrementProgress(IPersistentBookmark bookmark),
+    @required Result updateFilterQuery(String query),
+    @required Result updateFilterData(FilterData data),
   }) {
     assert(load != null);
     assert(addBookmark != null);
     assert(removeBookmark != null);
     assert(updateBookmark != null);
     assert(incrementProgress != null);
+    assert(updateFilterQuery != null);
+    assert(updateFilterData != null);
     return incrementProgress(bookmark);
   }
 
@@ -685,6 +757,8 @@ class _$IncrementProgress implements IncrementProgress {
     Result removeBookmark(IPersistentBookmark bookmark),
     Result updateBookmark(IPersistentBookmark bookmark),
     Result incrementProgress(IPersistentBookmark bookmark),
+    Result updateFilterQuery(String query),
+    Result updateFilterData(FilterData data),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -702,12 +776,16 @@ class _$IncrementProgress implements IncrementProgress {
     @required Result removeBookmark(RemoveBookmark value),
     @required Result updateBookmark(UpdateBookmark value),
     @required Result incrementProgress(IncrementProgress value),
+    @required Result updateFilterQuery(UpdateFilterQuery value),
+    @required Result updateFilterData(UpdateFilterData value),
   }) {
     assert(load != null);
     assert(addBookmark != null);
     assert(removeBookmark != null);
     assert(updateBookmark != null);
     assert(incrementProgress != null);
+    assert(updateFilterQuery != null);
+    assert(updateFilterData != null);
     return incrementProgress(this);
   }
 
@@ -719,6 +797,8 @@ class _$IncrementProgress implements IncrementProgress {
     Result removeBookmark(RemoveBookmark value),
     Result updateBookmark(UpdateBookmark value),
     Result incrementProgress(IncrementProgress value),
+    Result updateFilterQuery(UpdateFilterQuery value),
+    Result updateFilterData(UpdateFilterData value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -735,4 +815,290 @@ abstract class IncrementProgress implements BookmarkBlocEvent {
 
   IPersistentBookmark get bookmark;
   $IncrementProgressCopyWith<IncrementProgress> get copyWith;
+}
+
+abstract class $UpdateFilterQueryCopyWith<$Res> {
+  factory $UpdateFilterQueryCopyWith(
+          UpdateFilterQuery value, $Res Function(UpdateFilterQuery) then) =
+      _$UpdateFilterQueryCopyWithImpl<$Res>;
+  $Res call({String query});
+}
+
+class _$UpdateFilterQueryCopyWithImpl<$Res>
+    extends _$BookmarkBlocEventCopyWithImpl<$Res>
+    implements $UpdateFilterQueryCopyWith<$Res> {
+  _$UpdateFilterQueryCopyWithImpl(
+      UpdateFilterQuery _value, $Res Function(UpdateFilterQuery) _then)
+      : super(_value, (v) => _then(v as UpdateFilterQuery));
+
+  @override
+  UpdateFilterQuery get _value => super._value as UpdateFilterQuery;
+
+  @override
+  $Res call({
+    Object query = freezed,
+  }) {
+    return _then(UpdateFilterQuery(
+      query: query == freezed ? _value.query : query as String,
+    ));
+  }
+}
+
+class _$UpdateFilterQuery implements UpdateFilterQuery {
+  const _$UpdateFilterQuery({@required this.query}) : assert(query != null);
+
+  @override
+  final String query;
+
+  @override
+  String toString() {
+    return 'BookmarkBlocEvent.updateFilterQuery(query: $query)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is UpdateFilterQuery &&
+            (identical(other.query, query) ||
+                const DeepCollectionEquality().equals(other.query, query)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(query);
+
+  @override
+  $UpdateFilterQueryCopyWith<UpdateFilterQuery> get copyWith =>
+      _$UpdateFilterQueryCopyWithImpl<UpdateFilterQuery>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result load(),
+    @required Result addBookmark(IPersistentBookmark bookmark),
+    @required Result removeBookmark(IPersistentBookmark bookmark),
+    @required Result updateBookmark(IPersistentBookmark bookmark),
+    @required Result incrementProgress(IPersistentBookmark bookmark),
+    @required Result updateFilterQuery(String query),
+    @required Result updateFilterData(FilterData data),
+  }) {
+    assert(load != null);
+    assert(addBookmark != null);
+    assert(removeBookmark != null);
+    assert(updateBookmark != null);
+    assert(incrementProgress != null);
+    assert(updateFilterQuery != null);
+    assert(updateFilterData != null);
+    return updateFilterQuery(query);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result load(),
+    Result addBookmark(IPersistentBookmark bookmark),
+    Result removeBookmark(IPersistentBookmark bookmark),
+    Result updateBookmark(IPersistentBookmark bookmark),
+    Result incrementProgress(IPersistentBookmark bookmark),
+    Result updateFilterQuery(String query),
+    Result updateFilterData(FilterData data),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateFilterQuery != null) {
+      return updateFilterQuery(query);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result load(Load value),
+    @required Result addBookmark(AddBookmark value),
+    @required Result removeBookmark(RemoveBookmark value),
+    @required Result updateBookmark(UpdateBookmark value),
+    @required Result incrementProgress(IncrementProgress value),
+    @required Result updateFilterQuery(UpdateFilterQuery value),
+    @required Result updateFilterData(UpdateFilterData value),
+  }) {
+    assert(load != null);
+    assert(addBookmark != null);
+    assert(removeBookmark != null);
+    assert(updateBookmark != null);
+    assert(incrementProgress != null);
+    assert(updateFilterQuery != null);
+    assert(updateFilterData != null);
+    return updateFilterQuery(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result load(Load value),
+    Result addBookmark(AddBookmark value),
+    Result removeBookmark(RemoveBookmark value),
+    Result updateBookmark(UpdateBookmark value),
+    Result incrementProgress(IncrementProgress value),
+    Result updateFilterQuery(UpdateFilterQuery value),
+    Result updateFilterData(UpdateFilterData value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateFilterQuery != null) {
+      return updateFilterQuery(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UpdateFilterQuery implements BookmarkBlocEvent {
+  const factory UpdateFilterQuery({@required String query}) =
+      _$UpdateFilterQuery;
+
+  String get query;
+  $UpdateFilterQueryCopyWith<UpdateFilterQuery> get copyWith;
+}
+
+abstract class $UpdateFilterDataCopyWith<$Res> {
+  factory $UpdateFilterDataCopyWith(
+          UpdateFilterData value, $Res Function(UpdateFilterData) then) =
+      _$UpdateFilterDataCopyWithImpl<$Res>;
+  $Res call({FilterData data});
+}
+
+class _$UpdateFilterDataCopyWithImpl<$Res>
+    extends _$BookmarkBlocEventCopyWithImpl<$Res>
+    implements $UpdateFilterDataCopyWith<$Res> {
+  _$UpdateFilterDataCopyWithImpl(
+      UpdateFilterData _value, $Res Function(UpdateFilterData) _then)
+      : super(_value, (v) => _then(v as UpdateFilterData));
+
+  @override
+  UpdateFilterData get _value => super._value as UpdateFilterData;
+
+  @override
+  $Res call({
+    Object data = freezed,
+  }) {
+    return _then(UpdateFilterData(
+      data: data == freezed ? _value.data : data as FilterData,
+    ));
+  }
+}
+
+class _$UpdateFilterData implements UpdateFilterData {
+  const _$UpdateFilterData({@required this.data}) : assert(data != null);
+
+  @override
+  final FilterData data;
+
+  @override
+  String toString() {
+    return 'BookmarkBlocEvent.updateFilterData(data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is UpdateFilterData &&
+            (identical(other.data, data) ||
+                const DeepCollectionEquality().equals(other.data, data)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(data);
+
+  @override
+  $UpdateFilterDataCopyWith<UpdateFilterData> get copyWith =>
+      _$UpdateFilterDataCopyWithImpl<UpdateFilterData>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result load(),
+    @required Result addBookmark(IPersistentBookmark bookmark),
+    @required Result removeBookmark(IPersistentBookmark bookmark),
+    @required Result updateBookmark(IPersistentBookmark bookmark),
+    @required Result incrementProgress(IPersistentBookmark bookmark),
+    @required Result updateFilterQuery(String query),
+    @required Result updateFilterData(FilterData data),
+  }) {
+    assert(load != null);
+    assert(addBookmark != null);
+    assert(removeBookmark != null);
+    assert(updateBookmark != null);
+    assert(incrementProgress != null);
+    assert(updateFilterQuery != null);
+    assert(updateFilterData != null);
+    return updateFilterData(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result load(),
+    Result addBookmark(IPersistentBookmark bookmark),
+    Result removeBookmark(IPersistentBookmark bookmark),
+    Result updateBookmark(IPersistentBookmark bookmark),
+    Result incrementProgress(IPersistentBookmark bookmark),
+    Result updateFilterQuery(String query),
+    Result updateFilterData(FilterData data),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateFilterData != null) {
+      return updateFilterData(data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result load(Load value),
+    @required Result addBookmark(AddBookmark value),
+    @required Result removeBookmark(RemoveBookmark value),
+    @required Result updateBookmark(UpdateBookmark value),
+    @required Result incrementProgress(IncrementProgress value),
+    @required Result updateFilterQuery(UpdateFilterQuery value),
+    @required Result updateFilterData(UpdateFilterData value),
+  }) {
+    assert(load != null);
+    assert(addBookmark != null);
+    assert(removeBookmark != null);
+    assert(updateBookmark != null);
+    assert(incrementProgress != null);
+    assert(updateFilterQuery != null);
+    assert(updateFilterData != null);
+    return updateFilterData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result load(Load value),
+    Result addBookmark(AddBookmark value),
+    Result removeBookmark(RemoveBookmark value),
+    Result updateBookmark(UpdateBookmark value),
+    Result incrementProgress(IncrementProgress value),
+    Result updateFilterQuery(UpdateFilterQuery value),
+    Result updateFilterData(UpdateFilterData value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateFilterData != null) {
+      return updateFilterData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UpdateFilterData implements BookmarkBlocEvent {
+  const factory UpdateFilterData({@required FilterData data}) =
+      _$UpdateFilterData;
+
+  FilterData get data;
+  $UpdateFilterDataCopyWith<UpdateFilterData> get copyWith;
 }

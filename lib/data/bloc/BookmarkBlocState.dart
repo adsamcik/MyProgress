@@ -1,4 +1,7 @@
 import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
+import 'package:MarkMyProgress/data/runtime/FilterRuntimeData.dart';
+import 'package:MarkMyProgress/data/runtime/SearchResult.dart';
+import 'package:MarkMyProgress/data/runtime/SearchableBookmark.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'BookmarkBlocState.freezed.dart';
@@ -9,8 +12,8 @@ abstract class BookmarkBlocState with _$BookmarkBlocState {
 
   const factory BookmarkBlocState.ready({
     @required int version,
-    @required List<IPersistentBookmark> bookmarkList,
+    @required List<SearchableBookmark> bookmarkList,
+    @required List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+    @required FilterRuntimeData filterData,
   }) = Ready;
-
-  const factory BookmarkBlocState.error() = Error;
 }

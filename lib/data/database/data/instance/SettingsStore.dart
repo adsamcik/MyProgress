@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:MarkMyProgress/data/database/data/abstract/DatabaseProxy.dart';
 import 'package:MarkMyProgress/data/settings/FilterData.dart';
 
@@ -22,5 +24,13 @@ class SettingsStore extends DatabaseProxy<String, dynamic> {
   Future<FilterData> getFilterData() async {
     var filterDataMap = await getFilterMap();
     return FilterData.fromJson(filterDataMap);
+  }
+
+  Future<T> transaction<T>(
+      FutureOr<T> Function(SettingsStore settingsStore) action) async {
+    await open();
+    var result = await action(this);
+    await close();
+    return result;
   }
 }

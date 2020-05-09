@@ -17,16 +17,16 @@ class _$BookmarkBlocStateTearOff {
   }
 
   Ready ready(
-      {@required List<IPersistentBookmark> bookmarkList,
-      @required int version}) {
+      {@required int version,
+      @required List<SearchableBookmark> bookmarkList,
+      @required List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+      @required FilterRuntimeData filterData}) {
     return Ready(
-      bookmarkList: bookmarkList,
       version: version,
+      bookmarkList: bookmarkList,
+      filteredBookmarkList: filteredBookmarkList,
+      filterData: filterData,
     );
-  }
-
-  Error error() {
-    return const Error();
   }
 }
 
@@ -37,27 +37,32 @@ mixin _$BookmarkBlocState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result notReady(),
-    @required Result ready(List<IPersistentBookmark> bookmarkList, int version),
-    @required Result error(),
+    @required
+        Result ready(
+            int version,
+            List<SearchableBookmark> bookmarkList,
+            List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+            FilterRuntimeData filterData),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result notReady(),
-    Result ready(List<IPersistentBookmark> bookmarkList, int version),
-    Result error(),
+    Result ready(
+        int version,
+        List<SearchableBookmark> bookmarkList,
+        List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+        FilterRuntimeData filterData),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result notReady(NotReady value),
     @required Result ready(Ready value),
-    @required Result error(Error value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result notReady(NotReady value),
     Result ready(Ready value),
-    Result error(Error value),
     @required Result orElse(),
   });
 }
@@ -111,12 +116,15 @@ class _$NotReady implements NotReady {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result notReady(),
-    @required Result ready(List<IPersistentBookmark> bookmarkList, int version),
-    @required Result error(),
+    @required
+        Result ready(
+            int version,
+            List<SearchableBookmark> bookmarkList,
+            List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+            FilterRuntimeData filterData),
   }) {
     assert(notReady != null);
     assert(ready != null);
-    assert(error != null);
     return notReady();
   }
 
@@ -124,8 +132,11 @@ class _$NotReady implements NotReady {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result notReady(),
-    Result ready(List<IPersistentBookmark> bookmarkList, int version),
-    Result error(),
+    Result ready(
+        int version,
+        List<SearchableBookmark> bookmarkList,
+        List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+        FilterRuntimeData filterData),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -140,11 +151,9 @@ class _$NotReady implements NotReady {
   Result map<Result extends Object>({
     @required Result notReady(NotReady value),
     @required Result ready(Ready value),
-    @required Result error(Error value),
   }) {
     assert(notReady != null);
     assert(ready != null);
-    assert(error != null);
     return notReady(this);
   }
 
@@ -153,7 +162,6 @@ class _$NotReady implements NotReady {
   Result maybeMap<Result extends Object>({
     Result notReady(NotReady value),
     Result ready(Ready value),
-    Result error(Error value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -171,7 +179,11 @@ abstract class NotReady implements BookmarkBlocState {
 abstract class $ReadyCopyWith<$Res> {
   factory $ReadyCopyWith(Ready value, $Res Function(Ready) then) =
       _$ReadyCopyWithImpl<$Res>;
-  $Res call({List<IPersistentBookmark> bookmarkList, int version});
+  $Res call(
+      {int version,
+      List<SearchableBookmark> bookmarkList,
+      List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+      FilterRuntimeData filterData});
 }
 
 class _$ReadyCopyWithImpl<$Res> extends _$BookmarkBlocStateCopyWithImpl<$Res>
@@ -184,49 +196,76 @@ class _$ReadyCopyWithImpl<$Res> extends _$BookmarkBlocStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object bookmarkList = freezed,
     Object version = freezed,
+    Object bookmarkList = freezed,
+    Object filteredBookmarkList = freezed,
+    Object filterData = freezed,
   }) {
     return _then(Ready(
+      version: version == freezed ? _value.version : version as int,
       bookmarkList: bookmarkList == freezed
           ? _value.bookmarkList
-          : bookmarkList as List<IPersistentBookmark>,
-      version: version == freezed ? _value.version : version as int,
+          : bookmarkList as List<SearchableBookmark>,
+      filteredBookmarkList: filteredBookmarkList == freezed
+          ? _value.filteredBookmarkList
+          : filteredBookmarkList as List<ISearchResult<IPersistentBookmark>>,
+      filterData: filterData == freezed
+          ? _value.filterData
+          : filterData as FilterRuntimeData,
     ));
   }
 }
 
 class _$Ready implements Ready {
-  const _$Ready({@required this.bookmarkList, @required this.version})
-      : assert(bookmarkList != null),
-        assert(version != null);
+  const _$Ready(
+      {@required this.version,
+      @required this.bookmarkList,
+      @required this.filteredBookmarkList,
+      @required this.filterData})
+      : assert(version != null),
+        assert(bookmarkList != null),
+        assert(filteredBookmarkList != null),
+        assert(filterData != null);
 
   @override
-  final List<IPersistentBookmark> bookmarkList;
-  @override
   final int version;
+  @override
+  final List<SearchableBookmark> bookmarkList;
+  @override
+  final List<ISearchResult<IPersistentBookmark>> filteredBookmarkList;
+  @override
+  final FilterRuntimeData filterData;
 
   @override
   String toString() {
-    return 'BookmarkBlocState.ready(bookmarkList: $bookmarkList, version: $version)';
+    return 'BookmarkBlocState.ready(version: $version, bookmarkList: $bookmarkList, filteredBookmarkList: $filteredBookmarkList, filterData: $filterData)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is Ready &&
+            (identical(other.version, version) ||
+                const DeepCollectionEquality()
+                    .equals(other.version, version)) &&
             (identical(other.bookmarkList, bookmarkList) ||
                 const DeepCollectionEquality()
                     .equals(other.bookmarkList, bookmarkList)) &&
-            (identical(other.version, version) ||
-                const DeepCollectionEquality().equals(other.version, version)));
+            (identical(other.filteredBookmarkList, filteredBookmarkList) ||
+                const DeepCollectionEquality().equals(
+                    other.filteredBookmarkList, filteredBookmarkList)) &&
+            (identical(other.filterData, filterData) ||
+                const DeepCollectionEquality()
+                    .equals(other.filterData, filterData)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(version) ^
       const DeepCollectionEquality().hash(bookmarkList) ^
-      const DeepCollectionEquality().hash(version);
+      const DeepCollectionEquality().hash(filteredBookmarkList) ^
+      const DeepCollectionEquality().hash(filterData);
 
   @override
   $ReadyCopyWith<Ready> get copyWith =>
@@ -236,26 +275,32 @@ class _$Ready implements Ready {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result notReady(),
-    @required Result ready(List<IPersistentBookmark> bookmarkList, int version),
-    @required Result error(),
+    @required
+        Result ready(
+            int version,
+            List<SearchableBookmark> bookmarkList,
+            List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+            FilterRuntimeData filterData),
   }) {
     assert(notReady != null);
     assert(ready != null);
-    assert(error != null);
-    return ready(bookmarkList, version);
+    return ready(version, bookmarkList, filteredBookmarkList, filterData);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result notReady(),
-    Result ready(List<IPersistentBookmark> bookmarkList, int version),
-    Result error(),
+    Result ready(
+        int version,
+        List<SearchableBookmark> bookmarkList,
+        List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+        FilterRuntimeData filterData),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (ready != null) {
-      return ready(bookmarkList, version);
+      return ready(version, bookmarkList, filteredBookmarkList, filterData);
     }
     return orElse();
   }
@@ -265,11 +310,9 @@ class _$Ready implements Ready {
   Result map<Result extends Object>({
     @required Result notReady(NotReady value),
     @required Result ready(Ready value),
-    @required Result error(Error value),
   }) {
     assert(notReady != null);
     assert(ready != null);
-    assert(error != null);
     return ready(this);
   }
 
@@ -278,7 +321,6 @@ class _$Ready implements Ready {
   Result maybeMap<Result extends Object>({
     Result notReady(NotReady value),
     Result ready(Ready value),
-    Result error(Error value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -291,101 +333,14 @@ class _$Ready implements Ready {
 
 abstract class Ready implements BookmarkBlocState {
   const factory Ready(
-      {@required List<IPersistentBookmark> bookmarkList,
-      @required int version}) = _$Ready;
+      {@required int version,
+      @required List<SearchableBookmark> bookmarkList,
+      @required List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+      @required FilterRuntimeData filterData}) = _$Ready;
 
-  List<IPersistentBookmark> get bookmarkList;
   int get version;
+  List<SearchableBookmark> get bookmarkList;
+  List<ISearchResult<IPersistentBookmark>> get filteredBookmarkList;
+  FilterRuntimeData get filterData;
   $ReadyCopyWith<Ready> get copyWith;
-}
-
-abstract class $ErrorCopyWith<$Res> {
-  factory $ErrorCopyWith(Error value, $Res Function(Error) then) =
-      _$ErrorCopyWithImpl<$Res>;
-}
-
-class _$ErrorCopyWithImpl<$Res> extends _$BookmarkBlocStateCopyWithImpl<$Res>
-    implements $ErrorCopyWith<$Res> {
-  _$ErrorCopyWithImpl(Error _value, $Res Function(Error) _then)
-      : super(_value, (v) => _then(v as Error));
-
-  @override
-  Error get _value => super._value as Error;
-}
-
-class _$Error implements Error {
-  const _$Error();
-
-  @override
-  String toString() {
-    return 'BookmarkBlocState.error()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is Error);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result notReady(),
-    @required Result ready(List<IPersistentBookmark> bookmarkList, int version),
-    @required Result error(),
-  }) {
-    assert(notReady != null);
-    assert(ready != null);
-    assert(error != null);
-    return error();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result notReady(),
-    Result ready(List<IPersistentBookmark> bookmarkList, int version),
-    Result error(),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (error != null) {
-      return error();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result notReady(NotReady value),
-    @required Result ready(Ready value),
-    @required Result error(Error value),
-  }) {
-    assert(notReady != null);
-    assert(ready != null);
-    assert(error != null);
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result notReady(NotReady value),
-    Result ready(Ready value),
-    Result error(Error value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class Error implements BookmarkBlocState {
-  const factory Error() = _$Error;
 }
