@@ -36,7 +36,7 @@ class _SettingsState extends State<Settings> {
     const BookmarkFilterEntry('finished', 'Finished',
         tooltip: 'Things you have finished and won`t be extended.'),
   ];
-  final List<String> _filters = <String>[];
+  final Map<String, bool> _filterMap = <String, bool>{};
 
   Future _setFilter(String name, bool value) async {
     await _store.open();
@@ -46,13 +46,7 @@ class _SettingsState extends State<Settings> {
     result.filterChanged = true;
 
     setState(() {
-      if (value) {
-        _filters.add(name);
-      } else {
-        _filters.removeWhere((String itemName) {
-          return itemName == name;
-        });
-      }
+      _filterMap[name] = value;
     });
   }
 
@@ -63,7 +57,7 @@ class _SettingsState extends State<Settings> {
         child: FilterChip(
           label: Text(filter.name),
           tooltip: filter.tooltip,
-          selected: _filters.contains(filter.key),
+          selected: _filterMap[filter.key],
           onSelected: (bool value) => _setFilter(filter.key, value),
         ),
       );
@@ -81,11 +75,10 @@ class _SettingsState extends State<Settings> {
     var filterMap = await _store.getFilterMap();
     await _store.close();
 
-    _filters.clear();
     setState(() {
       filterMap.forEach((key, dynamic value) {
-        if (value != null && value is bool && value) {
-          _filters.add(key);
+        if (value != null && value is bool) {
+          _filterMap[key] = value;
         }
       });
     });
