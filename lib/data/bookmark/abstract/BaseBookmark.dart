@@ -1,9 +1,9 @@
 import 'dart:math';
 
+import 'package:MarkMyProgress/extensions/StringExtensions.dart';
+import 'package:MarkMyProgress/extensions/UserBookmark.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../extensions/StringExtensions.dart';
-import '../../extensions/UserBookmark.dart';
 import 'IPersistentBookmark.dart';
 import 'IProgress.dart';
 

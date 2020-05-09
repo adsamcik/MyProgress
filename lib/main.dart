@@ -1,8 +1,9 @@
-import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
-import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
-import 'package:MarkMyProgress/data/bloc/bloc.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/IWebBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/bloc/bloc.dart';
 import 'package:MarkMyProgress/edit_record.dart';
 import 'package:MarkMyProgress/extensions/DateExtension.dart';
+import 'package:MarkMyProgress/extensions/UserBookmark.dart';
 import 'package:MarkMyProgress/settings.dart';
 import 'package:MarkMyProgress/statistics.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,9 +14,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'data/instance/GenericBookmark.dart';
+import 'data/bookmark/instance/GenericBookmark.dart';
 import 'di_setup.dart';
-import 'extensions/UserBookmark.dart';
 
 void main() {
   setupDependencyInjection();
@@ -141,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           }
 
                           var lastProgressDate =
-                              bookmark.lastProgress.date == Date.invalid()
+                              bookmark.lastProgress.date == Date.invalid
                                   ? ''
                                   : bookmark.lastProgress.date.toDateString();
                           return InkWell(

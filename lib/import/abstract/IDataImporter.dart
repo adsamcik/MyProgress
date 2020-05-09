@@ -1,6 +1,6 @@
 ﻿import 'dart:io';
 
-import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
 
 /// <summary>
 ///     Interface for data importing

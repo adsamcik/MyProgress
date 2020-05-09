@@ -1,0 +1,20 @@
+import 'package:MarkMyProgress/data/bookmark/abstract/IProgress.dart';
+import 'package:MarkMyProgress/extensions/DateExtension.dart';
+
+class NoProgress implements IProgress {
+  @override
+  DateTime get date => Date.invalid;
+
+  @override
+  double get value => 0.0;
+
+  @override
+  set date(DateTime _date) {
+    throw StateError('Date cannot be set NoProgress instance.');
+  }
+
+  @override
+  set value(double _value) {
+    throw StateError('Value cannot be set on NoProgress instance.');
+  }
+}

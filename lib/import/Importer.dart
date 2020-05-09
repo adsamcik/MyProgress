@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
+import 'package:MarkMyProgress/data/bookmark/database/DataStore.dart';
 import 'package:MarkMyProgress/import/implementation/JSONDataHandler.dart';
 import 'package:file_chooser/file_chooser.dart';
 import 'package:path/path.dart';

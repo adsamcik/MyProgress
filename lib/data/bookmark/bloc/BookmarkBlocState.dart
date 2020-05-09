@@ -1,7 +1,7 @@
-import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/runtime/SearchableBookmark.dart';
 import 'package:MarkMyProgress/data/runtime/FilterRuntimeData.dart';
 import 'package:MarkMyProgress/data/runtime/SearchResult.dart';
-import 'package:MarkMyProgress/data/runtime/SearchableBookmark.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'BookmarkBlocState.freezed.dart';

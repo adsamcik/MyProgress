@@ -7,9 +7,9 @@
 
 import 'dart:io';
 
+import 'package:MarkMyProgress/data/bookmark/database/DataStore.dart';
+import 'package:MarkMyProgress/data/bookmark/instance/GenericBookmark.dart';
 import 'package:MarkMyProgress/data/database/data/abstract/DatabaseCollection.dart';
-import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
-import 'package:MarkMyProgress/data/instance/GenericBookmark.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sembast/sembast.dart' as sembast;
 

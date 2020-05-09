@@ -1,6 +1,6 @@
 import 'dart:core';
 
-import 'package:MarkMyProgress/data/abstract/IProgress.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/IProgress.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'GenericProgress.g.dart';

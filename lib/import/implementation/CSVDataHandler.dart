@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/import/abstract/IDataExporter.dart';
 import 'package:MarkMyProgress/import/abstract/IDataImporter.dart';
 import 'package:csv/csv.dart';

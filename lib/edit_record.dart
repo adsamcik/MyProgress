@@ -1,11 +1,11 @@
 import 'package:MarkMyProgress/constants/Patterns.dart';
-import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/extensions/StringExtensions.dart';
 import 'package:MarkMyProgress/extensions/UserBookmark.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'data/abstract/IPersistentBookmark.dart';
+import 'data/bookmark/abstract/IPersistentBookmark.dart';
 import 'input/RegExInputFormatter.dart';
 
 class EditRecord extends StatefulWidget {

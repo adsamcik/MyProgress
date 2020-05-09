@@ -1,4 +1,4 @@
-import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/data/settings/FilterData.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

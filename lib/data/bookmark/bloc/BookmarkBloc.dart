@@ -1,17 +1,18 @@
-import 'package:MarkMyProgress/data/abstract/IPersistentBookmark.dart';
-import 'package:MarkMyProgress/data/bloc/BookmarkBlocEvent.dart';
-import 'package:MarkMyProgress/data/database/data/instance/DataStore.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/bloc/BookmarkBlocEvent.dart';
+import 'package:MarkMyProgress/data/bookmark/database/DataStore.dart';
+import 'package:MarkMyProgress/data/bookmark/runtime/SearchableBookmark.dart';
 import 'package:MarkMyProgress/data/database/data/instance/SettingsStore.dart';
 import 'package:MarkMyProgress/data/runtime/FilterRuntimeData.dart';
 import 'package:MarkMyProgress/data/runtime/Pair.dart';
 import 'package:MarkMyProgress/data/runtime/SearchResult.dart';
-import 'package:MarkMyProgress/data/runtime/SearchableBookmark.dart';
 import 'package:MarkMyProgress/data/settings/FilterData.dart';
 import 'package:MarkMyProgress/extensions/StringExtensions.dart';
 import 'package:MarkMyProgress/extensions/UserBookmark.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 
+import 'BookmarkBlocEvent.dart';
 import 'BookmarkBlocState.dart';
 
 class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {

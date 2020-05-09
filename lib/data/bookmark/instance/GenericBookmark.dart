@@ -1,6 +1,6 @@
-import 'package:MarkMyProgress/data/abstract/BaseBookmark.dart';
-import 'package:MarkMyProgress/data/abstract/IProgress.dart';
-import 'package:MarkMyProgress/data/abstract/IWebBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/BaseBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/IProgress.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/runtime/SearchableVariable.dart';
 import 'package:MarkMyProgress/extensions/DateExtension.dart';
 import 'package:MarkMyProgress/extensions/StringExtensions.dart';
@@ -19,7 +19,7 @@ class GenericBookmark extends BaseBookmark implements IWebBookmark {
 
   @override
   IProgress createNewProgress(double progress) {
-    return GenericProgress(Date.today(), progress);
+    return GenericProgress(Date.today, progress);
   }
 
   @override
