@@ -6,15 +6,16 @@ part of 'FilterData.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-FilterData _$FilterDataFromJson(Map<String, dynamic> json) {
-  return FilterData()
-    ..abandoned = json['abandoned'] as bool
-    ..ongoing = json['ongoing'] as bool
-    ..finished = json['finished'] as bool
-    ..ended = json['ended'] as bool;
+_$_FilterData _$_$_FilterDataFromJson(Map<String, dynamic> json) {
+  return _$_FilterData(
+    abandoned: json['abandoned'] as bool ?? false,
+    ongoing: json['ongoing'] as bool ?? true,
+    finished: json['finished'] as bool ?? false,
+    ended: json['ended'] as bool ?? true,
+  );
 }
 
-Map<String, dynamic> _$FilterDataToJson(FilterData instance) =>
+Map<String, dynamic> _$_$_FilterDataToJson(_$_FilterData instance) =>
     <String, dynamic>{
       'abandoned': instance.abandoned,
       'ongoing': instance.ongoing,
