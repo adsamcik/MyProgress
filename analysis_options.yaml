@@ -4,7 +4,7 @@ analyzer:
   exclude:
     - 'plugins/**'
     - '**/*.g.dart'
-  enable-experiment:
+  #enable-experiment:
     #- non-nullable
   strong-mode:
     implicit-casts: false
