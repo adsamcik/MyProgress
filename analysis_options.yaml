@@ -5,7 +5,7 @@ analyzer:
     - 'plugins/**'
     - '**/*.g.dart'
   enable-experiment:
-    - non-nullable
+    #- non-nullable
   strong-mode:
     implicit-casts: false
     implicit-dynamic: false
