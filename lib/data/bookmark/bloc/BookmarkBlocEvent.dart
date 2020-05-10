@@ -1,5 +1,4 @@
 import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
-import 'package:MarkMyProgress/data/bookmark/filter/FilterData.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'BookmarkBlocEvent.freezed.dart';
@@ -22,7 +21,4 @@ abstract class BookmarkBlocEvent with _$BookmarkBlocEvent {
 
   const factory BookmarkBlocEvent.updateFilterQuery({@required String query}) =
       UpdateFilterQuery;
-
-  const factory BookmarkBlocEvent.updateFilterData(
-      {@required FilterData data}) = UpdateFilterData;
 }

@@ -9,5 +9,5 @@ Future setupDependencyInjection() async {
   final GetIt gi = GetIt.instance;
 
   gi.registerLazySingleton<BookmarkBloc>(() =>
-      BookmarkBloc(dataStore: DataStore(), settingsStore: SettingsStore()));
+      BookmarkBloc(dataStore: DataStore(), preferenceBloc: SettingsStore()));
 }

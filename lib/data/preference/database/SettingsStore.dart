@@ -1,14 +1,18 @@
 import 'dart:async';
 
 import 'package:MarkMyProgress/data/bookmark/filter/FilterData.dart';
-import 'package:MarkMyProgress/data/database/abstract/DatabaseProxy.dart';
+import 'package:MarkMyProgress/data/preference/database/preference.dart';
+import 'package:MarkMyProgress/data/storage/abstraction/data_source.dart';
+import 'package:MarkMyProgress/data/storage/storage.dart';
 
-class SettingsStore extends DatabaseProxy<String, dynamic> {
-  SettingsStore() : super(databasePath: 'settings.db');
+class SettingsStore extends Storage<String, Preference> {
+  SettingsStore(DataSource<String, Preference> dataSource) : super(dataSource);
 
   Future<Map<String, dynamic>> getFilterMap() async {
     var filterDataMap = FilterData().toJson();
 
+    var data =
+        await getAll().where((event) => filterDataMap.containsKey(event.key));
     var data = await getAllWithKeys(filterDataMap.keys);
 
     data.forEach((element) {

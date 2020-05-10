@@ -1,14 +1,8 @@
-import 'dart:async';
-
 import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
-import 'package:MarkMyProgress/data/database/abstract/DatabaseCollection.dart';
+import 'package:MarkMyProgress/data/storage/abstraction/data_source.dart';
+import 'package:MarkMyProgress/data/storage/storage.dart';
 
-class DataStore extends DatabaseCollection<IPersistentBookmark> {
-  Future<T> transaction<T>(
-      FutureOr<T> Function(DataStore dataStore) action) async {
-    await open();
-    var result = await action(this);
-    await close();
-    return result;
-  }
+class DataStore extends Storage<int, IPersistentBookmark> {
+  DataStore(DataSource<int, IPersistentBookmark> dataSource)
+      : super(dataSource);
 }

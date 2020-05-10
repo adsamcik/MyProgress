@@ -4,6 +4,7 @@ import 'package:MarkMyProgress/data/bookmark/database/DataStore.dart';
 import 'package:MarkMyProgress/data/bookmark/filter/FilterData.dart';
 import 'package:MarkMyProgress/data/bookmark/filter/FilterRuntimeData.dart';
 import 'package:MarkMyProgress/data/bookmark/filter/SearchableBookmark.dart';
+import 'package:MarkMyProgress/data/preference/bloc/PreferenceBlocState.dart';
 import 'package:MarkMyProgress/data/preference/database/SettingsStore.dart';
 import 'package:MarkMyProgress/data/runtime/Pair.dart';
 import 'package:MarkMyProgress/data/runtime/SearchResult.dart';
@@ -22,6 +23,12 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
   BookmarkBloc({@required this.dataStore, @required this.settingsStore});
 
   @override
+  Future<void> close() async {
+    await super.close();
+    await dataStore.close();
+  }
+
+  @override
   BookmarkBlocState get initialState => BookmarkBlocState.notReady();
 
   @override
@@ -33,7 +40,6 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
       incrementProgress: _mapIncrementBookmark,
       updateBookmark: _mapUpdateBookmark,
       updateFilterQuery: _mapUpdateFilterQuery,
-      updateFilterData: _mapUpdateFilterData,
     );
   }
 
