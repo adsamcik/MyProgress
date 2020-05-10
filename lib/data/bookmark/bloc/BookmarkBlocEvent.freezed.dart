@@ -965,6 +965,8 @@ abstract class $UpdateFilterDataCopyWith<$Res> {
           UpdateFilterData value, $Res Function(UpdateFilterData) then) =
       _$UpdateFilterDataCopyWithImpl<$Res>;
   $Res call({FilterData data});
+
+  $FilterDataCopyWith<$Res> get data;
 }
 
 class _$UpdateFilterDataCopyWithImpl<$Res>
@@ -984,6 +986,16 @@ class _$UpdateFilterDataCopyWithImpl<$Res>
     return _then(UpdateFilterData(
       data: data == freezed ? _value.data : data as FilterData,
     ));
+  }
+
+  @override
+  $FilterDataCopyWith<$Res> get data {
+    if (_value.data == null) {
+      return null;
+    }
+    return $FilterDataCopyWith<$Res>(_value.data, (value) {
+      return _then(_value.copyWith(data: value));
+    });
   }
 }
 

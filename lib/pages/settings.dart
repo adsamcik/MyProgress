@@ -1,10 +1,8 @@
-import 'package:MarkMyProgress/data/database/data/instance/SettingsStore.dart';
-import 'package:MarkMyProgress/data/runtime/SettingsResult.dart';
+import 'package:MarkMyProgress/data/preference/database/SettingsStore.dart';
 import 'package:MarkMyProgress/import/Exporter.dart';
+import 'package:MarkMyProgress/import/Importer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'import/Importer.dart';
 
 class Settings extends StatefulWidget {
   Settings({Key key}) : super(key: key);
@@ -24,8 +22,6 @@ class BookmarkFilterEntry {
 class _SettingsState extends State<Settings> {
   final SettingsStore _store = SettingsStore();
 
-  MutableSettingsResult result = MutableSettingsResult();
-
   final List<BookmarkFilterEntry> _filterDataList = <BookmarkFilterEntry>[
     const BookmarkFilterEntry('abandoned', 'Abandoned',
         tooltip: 'Things you are no longer interested in and haven`t finished'),
@@ -42,8 +38,6 @@ class _SettingsState extends State<Settings> {
     await _store.open();
     await _store.upsert(name, value);
     await _store.close();
-
-    result.filterChanged = true;
 
     setState(() {
       _filterMap[name] = value;
@@ -92,7 +86,7 @@ class _SettingsState extends State<Settings> {
           leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.pop(context, result);
+                Navigator.pop(context);
               }),
         ),
         body: SafeArea(
@@ -122,7 +116,7 @@ class _SettingsState extends State<Settings> {
                       child: Text('Import'),
                       onPressed: () async {
                         if (await Importer.import()) {
-                          result.dataImported = true;
+                          //context.bloc<BookmarkBloc>();
                         }
                       }),
                   OutlineButton(

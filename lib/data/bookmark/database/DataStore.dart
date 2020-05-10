@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
-import 'package:MarkMyProgress/data/database/data/abstract/DatabaseCollection.dart';
+import 'package:MarkMyProgress/data/database/abstract/DatabaseCollection.dart';
 
 class DataStore extends DatabaseCollection<IPersistentBookmark> {
   Future<T> transaction<T>(

@@ -3,7 +3,7 @@ import 'package:MarkMyProgress/extensions/UserBookmark.dart';
 import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 
-import 'data/bookmark/database/DataStore.dart';
+import '../data/bookmark/database/DataStore.dart';
 
 class Statistics extends StatefulWidget {
   Statistics({Key key}) : super(key: key);

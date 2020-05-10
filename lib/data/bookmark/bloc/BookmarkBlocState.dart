@@ -1,6 +1,6 @@
 import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
-import 'package:MarkMyProgress/data/bookmark/runtime/SearchableBookmark.dart';
-import 'package:MarkMyProgress/data/runtime/FilterRuntimeData.dart';
+import 'package:MarkMyProgress/data/bookmark/filter/FilterRuntimeData.dart';
+import 'package:MarkMyProgress/data/bookmark/filter/SearchableBookmark.dart';
 import 'package:MarkMyProgress/data/runtime/SearchResult.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

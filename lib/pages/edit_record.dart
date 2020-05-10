@@ -5,8 +5,8 @@ import 'package:MarkMyProgress/extensions/UserBookmark.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'data/bookmark/abstract/IPersistentBookmark.dart';
-import 'input/RegExInputFormatter.dart';
+import '../data/bookmark/abstract/IPersistentBookmark.dart';
+import '../input/RegExInputFormatter.dart';
 
 class EditRecord extends StatefulWidget {
   final IPersistentBookmark bookmark;

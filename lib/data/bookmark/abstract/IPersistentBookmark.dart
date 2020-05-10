@@ -1,4 +1,4 @@
-import 'package:MarkMyProgress/data/database/data/abstract/IDatabaseItem.dart';
+import 'package:MarkMyProgress/data/database/abstract/IDatabaseItem.dart';
 
 import 'IBookmark.dart';
 

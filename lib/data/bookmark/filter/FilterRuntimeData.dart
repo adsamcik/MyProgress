@@ -1,4 +1,4 @@
-import 'package:MarkMyProgress/data/settings/FilterData.dart';
+import 'FilterData.dart';
 
 class FilterRuntimeData {
   String query;
