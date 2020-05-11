@@ -1,18 +1,19 @@
 import 'package:MarkMyProgress/data/storage/abstraction/data_source.dart';
 import 'package:MarkMyProgress/data/storage/abstraction/storable.dart';
+import 'package:MarkMyProgress/data/storage/abstraction/storage_mapper.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
 class SembastDataSource<Key, Value extends Storable<Key>>
     extends DataSource<Key, Value> {
   final String _connectionString;
-  final Value Function(Map<String, dynamic> map) _mappingFunction;
+  final StorageMapper<Value, Map<String, dynamic>> _mapper;
 
   DatabaseClient _databaseClient;
 
   StoreRef get _store => StoreRef<Key, Value>.main();
 
-  SembastDataSource(this._connectionString, this._mappingFunction);
+  SembastDataSource(this._connectionString, this._mapper);
 
   @override
   Future close() async {
@@ -25,13 +26,16 @@ class SembastDataSource<Key, Value extends Storable<Key>>
     _databaseClient = null;
   }
 
-  Value _mapDatabaseItemToValue(dynamic value) =>
-      _mappingFunction(value as Map<String, dynamic>);
+  Value _mapDatabaseToInstance(dynamic value) =>
+      _mapper.fromDatabase(value as Map<String, dynamic>);
+
+  Map<String, dynamic> _mapInstanceToDatabase(Value value) =>
+      _mapper.toDatabase(value);
 
   @override
   Stream<Value> getAll() {
     return _store.stream(_databaseClient).map((event) {
-      var value = _mapDatabaseItemToValue(event.value);
+      var value = _mapDatabaseToInstance(event.value);
       value.key = event.key as Key;
       return value;
     });
@@ -46,7 +50,7 @@ class SembastDataSource<Key, Value extends Storable<Key>>
         .map(
           (list) => list.map(
             (dynamic element) =>
-                element != null ? _mapDatabaseItemToValue(element) : null,
+                element != null ? _mapDatabaseToInstance(element) : null,
           ),
         )
         .expand((element) => element.cast());
@@ -54,9 +58,14 @@ class SembastDataSource<Key, Value extends Storable<Key>>
 
   @override
   Future<Value> getWithKey(Key key) async {
-    var item = _mapDatabaseItemToValue(_store.record(key).get(_databaseClient));
-    item.key = key;
-    return item;
+    dynamic databaseValue = await _store.record(key).get(_databaseClient);
+    if (databaseValue == null) {
+      return null;
+    } else {
+      var value = _mapDatabaseToInstance(databaseValue);
+      value.key = key;
+      return value;
+    }
   }
 
   @override
@@ -70,18 +79,20 @@ class SembastDataSource<Key, Value extends Storable<Key>>
   }
 
   @override
-  Future<Key> insertAuto(Value item) async {
-    var key = await _store.add(_databaseClient, item) as Key;
-    item.key = key;
+  Future<Key> insertAuto(Value value) async {
+    var key =
+        await _store.add(_databaseClient, _mapInstanceToDatabase(value)) as Key;
+    value.key = key;
     return key;
   }
 
   @override
-  Future<bool> insert(Value item) async {
-    assert(item.key != null, 'Key cannot be null');
+  Future<bool> insert(Value value) async {
+    assert(value.key != null, 'Key cannot be null');
     try {
-      dynamic resultKey =
-          await _store.record(item.key).add(_databaseClient, item);
+      dynamic resultKey = await _store
+          .record(value.key)
+          .add(_databaseClient, _mapInstanceToDatabase(value));
       return resultKey != null;
     } on Error catch (_, trace) {
       print(trace);
@@ -90,9 +101,11 @@ class SembastDataSource<Key, Value extends Storable<Key>>
   }
 
   @override
-  Future<bool> update(Value item) async {
+  Future<bool> update(Value value) async {
     try {
-      await _store.record(item.key).update(_databaseClient, item);
+      await _store
+          .record(value.key)
+          .update(_databaseClient, _mapInstanceToDatabase(value));
       return true;
     } on Error catch (_, trace) {
       print(trace);
@@ -110,9 +123,10 @@ class SembastDataSource<Key, Value extends Storable<Key>>
 
   @override
   Future<bool> deleteWithValue(Value value) async {
+    var databaseValue = _mapInstanceToDatabase(value);
     dynamic key = await _store.findKey(_databaseClient,
-        finder:
-            Finder(filter: Filter.custom((record) => record.value == value)));
+        finder: Finder(
+            filter: Filter.custom((record) => record.value == databaseValue)));
     if (key != null) {
       return await delete(key as Key);
     } else {
@@ -127,7 +141,7 @@ class SembastDataSource<Key, Value extends Storable<Key>>
     if (database is Database) {
       return await database.transaction((transaction) {
         var transactionDataSource =
-            SembastDataSource<Key, Value>(_connectionString, _mappingFunction);
+            SembastDataSource<Key, Value>(_connectionString, _mapper);
         transactionDataSource._openWithClient(transaction);
         return transactionFunc(transactionDataSource);
       });
@@ -138,6 +152,8 @@ class SembastDataSource<Key, Value extends Storable<Key>>
 
   @override
   Future upsert(Value value) async {
-    await _store.record(value).put(_databaseClient, value);
+    await _store
+        .record(value)
+        .put(_databaseClient, _mapInstanceToDatabase(value));
   }
 }

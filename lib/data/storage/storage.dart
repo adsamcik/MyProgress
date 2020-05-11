@@ -2,7 +2,7 @@ import 'package:MarkMyProgress/data/storage/abstraction/data_source.dart';
 
 import 'abstraction/storable.dart';
 
-class Storage<Key, Value extends Storable<Key>> {
+abstract class Storage<Key, Value extends Storable<Key>> {
   final DataSource<Key, Value> _dataSource;
   final Map<Key, Value> _cache = <Key, Value>{};
 
