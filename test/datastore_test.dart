@@ -7,11 +7,15 @@
 
 import 'package:MarkMyProgress/data/bookmark/database/DataStore.dart';
 import 'package:MarkMyProgress/data/bookmark/instance/GenericBookmark.dart';
+import 'package:MarkMyProgress/di_setup.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 
 void main() {
+  setupProductionDependencyInjection();
+
   final gi = GetIt.instance;
+
   final dataStore = gi.get<DataStore>();
   var testBookmark = GenericBookmark();
   testBookmark.ongoing = true;

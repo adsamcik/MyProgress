@@ -9,7 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'di_setup.dart';
 
 void main() {
-  setupDependencyInjection();
+  setupProductionDependencyInjection();
 
   runApp(MyApp());
 }

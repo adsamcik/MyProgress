@@ -8,7 +8,7 @@ import 'data/bookmark/instance/GenericBookmark.dart';
 import 'data/preference/database/SettingsStore.dart';
 import 'data/preference/database/preference.dart';
 
-Future setupDependencyInjection() async {
+Future setupProductionDependencyInjection() async {
   // ignore: omit_local_variable_types
   final GetIt gi = GetIt.instance;
 
