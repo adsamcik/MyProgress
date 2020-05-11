@@ -22,6 +22,7 @@ class SembastDataSource<Key, Value extends Storable<Key>>
     } else {
       throw StateError('Close can only be called for database');
     }
+    _databaseClient = null;
   }
 
   Value _mapDatabaseItemToValue(dynamic value) =>
