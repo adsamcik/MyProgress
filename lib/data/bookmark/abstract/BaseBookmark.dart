@@ -13,7 +13,7 @@ import 'IProgress.dart';
 abstract class BaseBookmark implements IPersistentBookmark {
   @override
   @JsonKey(ignore: true)
-  int id;
+  int key;
 
   @override
   @JsonKey(required: false)

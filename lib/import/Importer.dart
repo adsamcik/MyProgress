@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:MarkMyProgress/data/bookmark/database/DataStore.dart';
 import 'package:MarkMyProgress/import/implementation/JSONDataHandler.dart';
 import 'package:file_chooser/file_chooser.dart';
+import 'package:get_it/get_it.dart';
 import 'package:path/path.dart';
 
 class Importer {
@@ -21,7 +22,7 @@ class Importer {
         canSelectDirectories: false);
 
     if (!result.canceled && result.paths.isNotEmpty) {
-      var dataStore = DataStore();
+      var dataStore = GetIt.instance.get<DataStore>();
       await dataStore.open();
       await Future.forEach(result.paths, (String path) async {
         var ext = extension(path);
@@ -33,7 +34,8 @@ class Importer {
             .firstWhere((importer) => importer.importExtensions.contains(ext));
         if (importer != null) {
           var data = await importer.import(File(path));
-          await dataStore.insertAll(data);
+          await await dataStore.transaction((storage) async =>
+              await data.map((element) async => await storage.insert(element)));
         } else {
           // todo report error
         }

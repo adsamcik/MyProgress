@@ -6,11 +6,13 @@ import 'package:sembast/sembast_io.dart';
 class SembastDataSource<Key, Value extends Storable<Key>>
     extends DataSource<Key, Value> {
   final String _connectionString;
+  final Value Function(Map<String, dynamic> map) _mappingFunction;
+
   DatabaseClient _databaseClient;
 
   StoreRef get _store => StoreRef<Key, Value>.main();
 
-  SembastDataSource(this._connectionString);
+  SembastDataSource(this._connectionString, this._mappingFunction);
 
   @override
   Future close() async {
@@ -22,10 +24,13 @@ class SembastDataSource<Key, Value extends Storable<Key>>
     }
   }
 
+  Value _mapDatabaseItemToValue(dynamic value) =>
+      _mappingFunction(value as Map<String, dynamic>);
+
   @override
   Stream<Value> getAll() {
     return _store.stream(_databaseClient).map((event) {
-      var value = event.value as Value;
+      var value = _mapDatabaseItemToValue(event.value);
       value.key = event.key as Key;
       return value;
     });
@@ -37,12 +42,18 @@ class SembastDataSource<Key, Value extends Storable<Key>>
         .records(keys)
         .get(_databaseClient)
         .asStream()
+        .map(
+          (list) => list.map(
+            (dynamic element) =>
+                element != null ? _mapDatabaseItemToValue(element) : null,
+          ),
+        )
         .expand((element) => element.cast());
   }
 
   @override
   Future<Value> getWithKey(Key key) async {
-    var item = _store.record(key).get(_databaseClient) as Value;
+    var item = _mapDatabaseItemToValue(_store.record(key).get(_databaseClient));
     item.key = key;
     return item;
   }
@@ -66,10 +77,11 @@ class SembastDataSource<Key, Value extends Storable<Key>>
 
   @override
   Future<bool> insert(Value item) async {
+    assert(item.key != null, 'Key cannot be null');
     try {
-      assert(item.key != null, 'Key cannot be null');
-      await _store.record(item.key).put(_databaseClient, item, merge: false);
-      return true;
+      dynamic resultKey =
+          await _store.record(item.key).add(_databaseClient, item);
+      return resultKey != null;
     } on Error catch (_, trace) {
       print(trace);
       return false;
@@ -77,9 +89,9 @@ class SembastDataSource<Key, Value extends Storable<Key>>
   }
 
   @override
-  Future<bool> update(Key key, Value item) async {
+  Future<bool> update(Value item) async {
     try {
-      await _store.record(key).update(_databaseClient, item);
+      await _store.record(item.key).update(_databaseClient, item);
       return true;
     } on Error catch (_, trace) {
       print(trace);
@@ -114,12 +126,17 @@ class SembastDataSource<Key, Value extends Storable<Key>>
     if (database is Database) {
       return await database.transaction((transaction) {
         var transactionDataSource =
-            SembastDataSource<Key, Value>(_connectionString);
+            SembastDataSource<Key, Value>(_connectionString, _mappingFunction);
         transactionDataSource._openWithClient(transaction);
         return transactionFunc(transactionDataSource);
       });
     } else {
       throw StateError('Transaction can only be created from database.');
     }
+  }
+
+  @override
+  Future upsert(Value value) async {
+    await _store.record(value).put(_databaseClient, value);
   }
 }

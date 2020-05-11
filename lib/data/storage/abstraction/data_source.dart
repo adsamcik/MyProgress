@@ -13,7 +13,9 @@ abstract class DataSource<Key, Value extends Storable<Key>> {
   /// Inserts value with preset key
   Future<bool> insert(Value value);
 
-  Future<bool> update(Key key, Value value);
+  Future<bool> update(Value value);
+
+  Future upsert(Value value);
 
   //// Delete item from data source with key
   Future<bool> delete(Key key);

@@ -1,10 +1,8 @@
 import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/data/bookmark/bloc/BookmarkBlocEvent.dart';
 import 'package:MarkMyProgress/data/bookmark/database/DataStore.dart';
-import 'package:MarkMyProgress/data/bookmark/filter/FilterData.dart';
 import 'package:MarkMyProgress/data/bookmark/filter/FilterRuntimeData.dart';
 import 'package:MarkMyProgress/data/bookmark/filter/SearchableBookmark.dart';
-import 'package:MarkMyProgress/data/preference/bloc/PreferenceBlocState.dart';
 import 'package:MarkMyProgress/data/preference/database/SettingsStore.dart';
 import 'package:MarkMyProgress/data/runtime/Pair.dart';
 import 'package:MarkMyProgress/data/runtime/SearchResult.dart';
@@ -44,32 +42,22 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
   }
 
   Stream<BookmarkBlocState> _mapLoad(Load event) async* {
-    var dataList = dataStore.transaction((dataStore) => dataStore.getAll());
-    var filterData = settingsStore
+    var dataList = await await dataStore.transaction((dataStore) =>
+        dataStore.getAll().map((e) => SearchableBookmark(e)).toList());
+    var filterData = await settingsStore
         .transaction((settingsStore) => settingsStore.getFilterData());
-    yield await Future.wait([dataList, filterData]).then(
-      (value) {
-        var dataList = (value[0] as Iterable<IPersistentBookmark>)
-            .map((e) => SearchableBookmark(e))
-            .toList();
 
-        dataList.sort((a, b) => a.bookmark.title
-            .toLowerCase()
-            .compareTo(b.bookmark.title.toLowerCase()));
+    dataList.sort((a, b) => a.bookmark.title
+        .toLowerCase()
+        .compareTo(b.bookmark.title.toLowerCase()));
 
-        var filterData = FilterRuntimeData(value[1] as FilterData);
-        var filterList = _updateFilter(filterData, dataList);
-        return BookmarkBlocState.ready(
-          version: 0,
-          bookmarkList: dataList,
-          filteredBookmarkList: filterList,
-          filterData: filterData,
-        );
-      },
-      onError: (dynamic obj, StackTrace trace) {
-        print(trace);
-        return BookmarkBlocState.notReady();
-      },
+    var filterRuntimeData = FilterRuntimeData(filterData);
+    var filterList = _updateFilter(filterRuntimeData, dataList);
+    yield BookmarkBlocState.ready(
+      version: 0,
+      bookmarkList: dataList,
+      filteredBookmarkList: filterList,
+      filterData: filterRuntimeData,
     );
   }
 
@@ -97,7 +85,7 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
         ready: (currentState) {
           return dataStore
               .transaction<dynamic>(
-                  (dataStore) => dataStore.delete(event.bookmark))
+                  (dataStore) => dataStore.delete(event.bookmark.key))
               .then((dynamic value) {
             currentState.bookmarkList
                 .removeWhere((element) => element.bookmark == event.bookmark);
@@ -136,17 +124,6 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
         ready: (currentState) {
           var filterData = FilterRuntimeData(currentState.filterData.filterData,
               query: event.query.toLowerCase());
-          return _reFilter(currentState, filterData);
-        },
-        orElse: () => state);
-  }
-
-  Stream<BookmarkBlocState> _mapUpdateFilterData(
-      UpdateFilterData event) async* {
-    yield await state.maybeMap(
-        ready: (currentState) {
-          var filterData = FilterRuntimeData(event.data,
-              query: currentState.filterData.query);
           return _reFilter(currentState, filterData);
         },
         orElse: () => state);

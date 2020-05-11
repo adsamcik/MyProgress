@@ -1,4 +1,5 @@
 import 'package:MarkMyProgress/data/bookmark/bloc/bloc.dart';
+import 'package:MarkMyProgress/data/preference/bloc/bloc.dart';
 import 'package:MarkMyProgress/pages/bookmark_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,10 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (_) =>
                 getIt.get<BookmarkBloc>()..add(BookmarkBlocEvent.load()),
+          ),
+          BlocProvider(
+            create: (_) =>
+                getIt.get<PreferenceBloc>()..add(PreferenceBlocEvent.load()),
           ),
         ],
         child: MaterialApp(

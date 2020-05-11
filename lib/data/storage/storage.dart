@@ -27,12 +27,15 @@ class Storage<Key, Value extends Storable<Key>> {
   }
 
   Stream<Value> getAll() {
-    var stream = _dataSource.getAll();
-    stream.listen(_onDataListener);
-    return stream;
+    return _dataSource.getAll().map((item) {
+      _onDataListener(item);
+      return item;
+    });
   }
 
-  Stream<Value> getAllWithKeys(Iterable<Key> keys) {}
+  Stream<Value> getAllWithKeys(Iterable<Key> keys) {
+    return _dataSource.getAllWithKeys(keys);
+  }
 
   Future<Value> get(Key key) async {
     var cached = _cache[key];
@@ -43,13 +46,31 @@ class Storage<Key, Value extends Storable<Key>> {
       if (item != null) {
         item is Value;
         item.key = key;
+        _onDataListener(item);
       }
       return item;
     }
   }
 
   Future<Key> insert(Value item) async {
-    return await _dataSource.insertAuto(item);
+    var key = await _dataSource.insertAuto(item);
+    _cache[key] = item;
+    return key;
+  }
+
+  Future<bool> delete(Key key) async {
+    _cache.remove(key);
+    return await _dataSource.delete(key);
+  }
+
+  Future upsert(Value item) async {
+    _cache[item.key] = item;
+    await _dataSource.upsert(item);
+  }
+
+  Future<bool> update(Value item) async {
+    _cache[item.key] = item;
+    return await _dataSource.update(item);
   }
 
   Future<Result> transaction<Result>(

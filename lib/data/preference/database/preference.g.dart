@@ -6,13 +6,15 @@ part of 'preference.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Preference _$_$_PreferenceFromJson(Map<String, dynamic> json) {
-  return _$_Preference(
-    key: json['key'] as String,
+Preference _$PreferenceFromJson(Map<String, dynamic> json) {
+  return Preference(
+    json['key'] as String,
+    json['value'],
   );
 }
 
-Map<String, dynamic> _$_$_PreferenceToJson(_$_Preference instance) =>
+Map<String, dynamic> _$PreferenceToJson(Preference instance) =>
     <String, dynamic>{
       'key': instance.key,
+      'value': instance.value,
     };

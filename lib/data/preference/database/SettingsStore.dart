@@ -11,11 +11,9 @@ class SettingsStore extends Storage<String, Preference> {
   Future<Map<String, dynamic>> getFilterMap() async {
     var filterDataMap = FilterData().toJson();
 
-    var data =
-        await getAll().where((event) => filterDataMap.containsKey(event.key));
     var data = await getAllWithKeys(filterDataMap.keys);
 
-    data.forEach((element) {
+    await data.forEach((element) {
       if (element != null) {
         filterDataMap[element.key] = element.value;
       }
@@ -30,6 +28,7 @@ class SettingsStore extends Storage<String, Preference> {
     return FilterData.fromJson(filterDataMap);
   }
 
+  @override
   Future<T> transaction<T>(
       FutureOr<T> Function(SettingsStore settingsStore) action) async {
     await open();

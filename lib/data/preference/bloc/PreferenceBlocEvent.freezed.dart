@@ -16,10 +16,16 @@ class _$PreferenceBlocEventTearOff {
     return const LoadPreferences();
   }
 
-  Set set({@required String key, @required dynamic value}) {
-    return Set(
+  SetPreference setPreference({@required String key, @required dynamic value}) {
+    return SetPreference(
       key: key,
       value: value,
+    );
+  }
+
+  UpdateFilterData updateFilterData({@required FilterData data}) {
+    return UpdateFilterData(
+      data: data,
     );
   }
 }
@@ -31,23 +37,27 @@ mixin _$PreferenceBlocEvent {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result load(),
-    @required Result set(String key, dynamic value),
+    @required Result setPreference(String key, dynamic value),
+    @required Result updateFilterData(FilterData data),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result load(),
-    Result set(String key, dynamic value),
+    Result setPreference(String key, dynamic value),
+    Result updateFilterData(FilterData data),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result load(LoadPreferences value),
-    @required Result set(Set value),
+    @required Result setPreference(SetPreference value),
+    @required Result updateFilterData(UpdateFilterData value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result load(LoadPreferences value),
-    Result set(Set value),
+    Result setPreference(SetPreference value),
+    Result updateFilterData(UpdateFilterData value),
     @required Result orElse(),
   });
 }
@@ -104,10 +114,12 @@ class _$LoadPreferences implements LoadPreferences {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result load(),
-    @required Result set(String key, dynamic value),
+    @required Result setPreference(String key, dynamic value),
+    @required Result updateFilterData(FilterData data),
   }) {
     assert(load != null);
-    assert(set != null);
+    assert(setPreference != null);
+    assert(updateFilterData != null);
     return load();
   }
 
@@ -115,7 +127,8 @@ class _$LoadPreferences implements LoadPreferences {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result load(),
-    Result set(String key, dynamic value),
+    Result setPreference(String key, dynamic value),
+    Result updateFilterData(FilterData data),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -129,10 +142,12 @@ class _$LoadPreferences implements LoadPreferences {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result load(LoadPreferences value),
-    @required Result set(Set value),
+    @required Result setPreference(SetPreference value),
+    @required Result updateFilterData(UpdateFilterData value),
   }) {
     assert(load != null);
-    assert(set != null);
+    assert(setPreference != null);
+    assert(updateFilterData != null);
     return load(this);
   }
 
@@ -140,7 +155,8 @@ class _$LoadPreferences implements LoadPreferences {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result load(LoadPreferences value),
-    Result set(Set value),
+    Result setPreference(SetPreference value),
+    Result updateFilterData(UpdateFilterData value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -155,34 +171,37 @@ abstract class LoadPreferences implements PreferenceBlocEvent {
   const factory LoadPreferences() = _$LoadPreferences;
 }
 
-abstract class $SetCopyWith<$Res> {
-  factory $SetCopyWith(Set value, $Res Function(Set) then) =
-      _$SetCopyWithImpl<$Res>;
+abstract class $SetPreferenceCopyWith<$Res> {
+  factory $SetPreferenceCopyWith(
+          SetPreference value, $Res Function(SetPreference) then) =
+      _$SetPreferenceCopyWithImpl<$Res>;
   $Res call({String key, dynamic value});
 }
 
-class _$SetCopyWithImpl<$Res> extends _$PreferenceBlocEventCopyWithImpl<$Res>
-    implements $SetCopyWith<$Res> {
-  _$SetCopyWithImpl(Set _value, $Res Function(Set) _then)
-      : super(_value, (v) => _then(v as Set));
+class _$SetPreferenceCopyWithImpl<$Res>
+    extends _$PreferenceBlocEventCopyWithImpl<$Res>
+    implements $SetPreferenceCopyWith<$Res> {
+  _$SetPreferenceCopyWithImpl(
+      SetPreference _value, $Res Function(SetPreference) _then)
+      : super(_value, (v) => _then(v as SetPreference));
 
   @override
-  Set get _value => super._value as Set;
+  SetPreference get _value => super._value as SetPreference;
 
   @override
   $Res call({
     Object key = freezed,
     Object value = freezed,
   }) {
-    return _then(Set(
+    return _then(SetPreference(
       key: key == freezed ? _value.key : key as String,
       value: value == freezed ? _value.value : value as dynamic,
     ));
   }
 }
 
-class _$Set implements Set {
-  const _$Set({@required this.key, @required this.value})
+class _$SetPreference implements SetPreference {
+  const _$SetPreference({@required this.key, @required this.value})
       : assert(key != null),
         assert(value != null);
 
@@ -193,13 +212,13 @@ class _$Set implements Set {
 
   @override
   String toString() {
-    return 'PreferenceBlocEvent.set(key: $key, value: $value)';
+    return 'PreferenceBlocEvent.setPreference(key: $key, value: $value)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is Set &&
+        (other is SetPreference &&
             (identical(other.key, key) ||
                 const DeepCollectionEquality().equals(other.key, key)) &&
             (identical(other.value, value) ||
@@ -213,29 +232,33 @@ class _$Set implements Set {
       const DeepCollectionEquality().hash(value);
 
   @override
-  $SetCopyWith<Set> get copyWith => _$SetCopyWithImpl<Set>(this, _$identity);
+  $SetPreferenceCopyWith<SetPreference> get copyWith =>
+      _$SetPreferenceCopyWithImpl<SetPreference>(this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result load(),
-    @required Result set(String key, dynamic value),
+    @required Result setPreference(String key, dynamic value),
+    @required Result updateFilterData(FilterData data),
   }) {
     assert(load != null);
-    assert(set != null);
-    return set(key, value);
+    assert(setPreference != null);
+    assert(updateFilterData != null);
+    return setPreference(key, value);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result load(),
-    Result set(String key, dynamic value),
+    Result setPreference(String key, dynamic value),
+    Result updateFilterData(FilterData data),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (set != null) {
-      return set(key, value);
+    if (setPreference != null) {
+      return setPreference(key, value);
     }
     return orElse();
   }
@@ -244,32 +267,167 @@ class _$Set implements Set {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result load(LoadPreferences value),
-    @required Result set(Set value),
+    @required Result setPreference(SetPreference value),
+    @required Result updateFilterData(UpdateFilterData value),
   }) {
     assert(load != null);
-    assert(set != null);
-    return set(this);
+    assert(setPreference != null);
+    assert(updateFilterData != null);
+    return setPreference(this);
   }
 
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result load(LoadPreferences value),
-    Result set(Set value),
+    Result setPreference(SetPreference value),
+    Result updateFilterData(UpdateFilterData value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (set != null) {
-      return set(this);
+    if (setPreference != null) {
+      return setPreference(this);
     }
     return orElse();
   }
 }
 
-abstract class Set implements PreferenceBlocEvent {
-  const factory Set({@required String key, @required dynamic value}) = _$Set;
+abstract class SetPreference implements PreferenceBlocEvent {
+  const factory SetPreference({@required String key, @required dynamic value}) =
+      _$SetPreference;
 
   String get key;
   dynamic get value;
-  $SetCopyWith<Set> get copyWith;
+  $SetPreferenceCopyWith<SetPreference> get copyWith;
+}
+
+abstract class $UpdateFilterDataCopyWith<$Res> {
+  factory $UpdateFilterDataCopyWith(
+          UpdateFilterData value, $Res Function(UpdateFilterData) then) =
+      _$UpdateFilterDataCopyWithImpl<$Res>;
+  $Res call({FilterData data});
+
+  $FilterDataCopyWith<$Res> get data;
+}
+
+class _$UpdateFilterDataCopyWithImpl<$Res>
+    extends _$PreferenceBlocEventCopyWithImpl<$Res>
+    implements $UpdateFilterDataCopyWith<$Res> {
+  _$UpdateFilterDataCopyWithImpl(
+      UpdateFilterData _value, $Res Function(UpdateFilterData) _then)
+      : super(_value, (v) => _then(v as UpdateFilterData));
+
+  @override
+  UpdateFilterData get _value => super._value as UpdateFilterData;
+
+  @override
+  $Res call({
+    Object data = freezed,
+  }) {
+    return _then(UpdateFilterData(
+      data: data == freezed ? _value.data : data as FilterData,
+    ));
+  }
+
+  @override
+  $FilterDataCopyWith<$Res> get data {
+    if (_value.data == null) {
+      return null;
+    }
+    return $FilterDataCopyWith<$Res>(_value.data, (value) {
+      return _then(_value.copyWith(data: value));
+    });
+  }
+}
+
+class _$UpdateFilterData implements UpdateFilterData {
+  const _$UpdateFilterData({@required this.data}) : assert(data != null);
+
+  @override
+  final FilterData data;
+
+  @override
+  String toString() {
+    return 'PreferenceBlocEvent.updateFilterData(data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is UpdateFilterData &&
+            (identical(other.data, data) ||
+                const DeepCollectionEquality().equals(other.data, data)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(data);
+
+  @override
+  $UpdateFilterDataCopyWith<UpdateFilterData> get copyWith =>
+      _$UpdateFilterDataCopyWithImpl<UpdateFilterData>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result load(),
+    @required Result setPreference(String key, dynamic value),
+    @required Result updateFilterData(FilterData data),
+  }) {
+    assert(load != null);
+    assert(setPreference != null);
+    assert(updateFilterData != null);
+    return updateFilterData(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result load(),
+    Result setPreference(String key, dynamic value),
+    Result updateFilterData(FilterData data),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateFilterData != null) {
+      return updateFilterData(data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result load(LoadPreferences value),
+    @required Result setPreference(SetPreference value),
+    @required Result updateFilterData(UpdateFilterData value),
+  }) {
+    assert(load != null);
+    assert(setPreference != null);
+    assert(updateFilterData != null);
+    return updateFilterData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result load(LoadPreferences value),
+    Result setPreference(SetPreference value),
+    Result updateFilterData(UpdateFilterData value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateFilterData != null) {
+      return updateFilterData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UpdateFilterData implements PreferenceBlocEvent {
+  const factory UpdateFilterData({@required FilterData data}) =
+      _$UpdateFilterData;
+
+  FilterData get data;
+  $UpdateFilterDataCopyWith<UpdateFilterData> get copyWith;
 }

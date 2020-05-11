@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:MarkMyProgress/data/bookmark/database/DataStore.dart';
 import 'package:MarkMyProgress/import/implementation/JSONDataHandler.dart';
 import 'package:file_chooser/file_chooser.dart';
+import 'package:get_it/get_it.dart';
 import 'package:path/path.dart';
 
 class Exporter {
@@ -21,11 +22,6 @@ class Exporter {
             'progress_data.${fileTypes.first.fileExtensions.first}');
 
     if (!result.canceled && result.paths.isNotEmpty) {
-      var dataStore = DataStore();
-      await dataStore.open();
-      var data = await dataStore.getAll();
-      await dataStore.close();
-
       await Future.forEach(result.paths, (String path) async {
         var ext = extension(path);
 
@@ -36,6 +32,11 @@ class Exporter {
         var exporter =
             _exporters.firstWhere((e) => e.exportExtensions.contains(ext));
         if (exporter != null) {
+          var dataStore = GetIt.instance.get<DataStore>();
+          await dataStore.open();
+          var data = await dataStore.getAll().toList();
+          await dataStore.close();
+
           await exporter.export(data, File(path));
         } else {
           // todo report error

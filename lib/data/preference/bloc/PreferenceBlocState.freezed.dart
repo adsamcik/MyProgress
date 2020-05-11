@@ -23,12 +23,6 @@ class _$PreferenceBlocStateTearOff {
       preferences: preferences,
     );
   }
-
-  UpdateFilterData updateFilterData({@required FilterData data}) {
-    return UpdateFilterData(
-      data: data,
-    );
-  }
 }
 
 // ignore: unused_element
@@ -39,26 +33,22 @@ mixin _$PreferenceBlocState {
   Result when<Result extends Object>({
     @required Result notReady(),
     @required Result ready(int version, Map<String, dynamic> preferences),
-    @required Result updateFilterData(FilterData data),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result notReady(),
     Result ready(int version, Map<String, dynamic> preferences),
-    Result updateFilterData(FilterData data),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result notReady(PreferencesNotReady value),
     @required Result ready(PreferencesReady value),
-    @required Result updateFilterData(UpdateFilterData value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result notReady(PreferencesNotReady value),
     Result ready(PreferencesReady value),
-    Result updateFilterData(UpdateFilterData value),
     @required Result orElse(),
   });
 }
@@ -116,11 +106,9 @@ class _$PreferencesNotReady implements PreferencesNotReady {
   Result when<Result extends Object>({
     @required Result notReady(),
     @required Result ready(int version, Map<String, dynamic> preferences),
-    @required Result updateFilterData(FilterData data),
   }) {
     assert(notReady != null);
     assert(ready != null);
-    assert(updateFilterData != null);
     return notReady();
   }
 
@@ -129,7 +117,6 @@ class _$PreferencesNotReady implements PreferencesNotReady {
   Result maybeWhen<Result extends Object>({
     Result notReady(),
     Result ready(int version, Map<String, dynamic> preferences),
-    Result updateFilterData(FilterData data),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -144,11 +131,9 @@ class _$PreferencesNotReady implements PreferencesNotReady {
   Result map<Result extends Object>({
     @required Result notReady(PreferencesNotReady value),
     @required Result ready(PreferencesReady value),
-    @required Result updateFilterData(UpdateFilterData value),
   }) {
     assert(notReady != null);
     assert(ready != null);
-    assert(updateFilterData != null);
     return notReady(this);
   }
 
@@ -157,7 +142,6 @@ class _$PreferencesNotReady implements PreferencesNotReady {
   Result maybeMap<Result extends Object>({
     Result notReady(PreferencesNotReady value),
     Result ready(PreferencesReady value),
-    Result updateFilterData(UpdateFilterData value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -245,11 +229,9 @@ class _$PreferencesReady implements PreferencesReady {
   Result when<Result extends Object>({
     @required Result notReady(),
     @required Result ready(int version, Map<String, dynamic> preferences),
-    @required Result updateFilterData(FilterData data),
   }) {
     assert(notReady != null);
     assert(ready != null);
-    assert(updateFilterData != null);
     return ready(version, preferences);
   }
 
@@ -258,7 +240,6 @@ class _$PreferencesReady implements PreferencesReady {
   Result maybeWhen<Result extends Object>({
     Result notReady(),
     Result ready(int version, Map<String, dynamic> preferences),
-    Result updateFilterData(FilterData data),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -273,11 +254,9 @@ class _$PreferencesReady implements PreferencesReady {
   Result map<Result extends Object>({
     @required Result notReady(PreferencesNotReady value),
     @required Result ready(PreferencesReady value),
-    @required Result updateFilterData(UpdateFilterData value),
   }) {
     assert(notReady != null);
     assert(ready != null);
-    assert(updateFilterData != null);
     return ready(this);
   }
 
@@ -286,7 +265,6 @@ class _$PreferencesReady implements PreferencesReady {
   Result maybeMap<Result extends Object>({
     Result notReady(PreferencesNotReady value),
     Result ready(PreferencesReady value),
-    Result updateFilterData(UpdateFilterData value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -305,135 +283,4 @@ abstract class PreferencesReady implements PreferenceBlocState {
   int get version;
   Map<String, dynamic> get preferences;
   $PreferencesReadyCopyWith<PreferencesReady> get copyWith;
-}
-
-abstract class $UpdateFilterDataCopyWith<$Res> {
-  factory $UpdateFilterDataCopyWith(
-          UpdateFilterData value, $Res Function(UpdateFilterData) then) =
-      _$UpdateFilterDataCopyWithImpl<$Res>;
-  $Res call({FilterData data});
-
-  $FilterDataCopyWith<$Res> get data;
-}
-
-class _$UpdateFilterDataCopyWithImpl<$Res>
-    extends _$PreferenceBlocStateCopyWithImpl<$Res>
-    implements $UpdateFilterDataCopyWith<$Res> {
-  _$UpdateFilterDataCopyWithImpl(
-      UpdateFilterData _value, $Res Function(UpdateFilterData) _then)
-      : super(_value, (v) => _then(v as UpdateFilterData));
-
-  @override
-  UpdateFilterData get _value => super._value as UpdateFilterData;
-
-  @override
-  $Res call({
-    Object data = freezed,
-  }) {
-    return _then(UpdateFilterData(
-      data: data == freezed ? _value.data : data as FilterData,
-    ));
-  }
-
-  @override
-  $FilterDataCopyWith<$Res> get data {
-    if (_value.data == null) {
-      return null;
-    }
-    return $FilterDataCopyWith<$Res>(_value.data, (value) {
-      return _then(_value.copyWith(data: value));
-    });
-  }
-}
-
-class _$UpdateFilterData implements UpdateFilterData {
-  const _$UpdateFilterData({@required this.data}) : assert(data != null);
-
-  @override
-  final FilterData data;
-
-  @override
-  String toString() {
-    return 'PreferenceBlocState.updateFilterData(data: $data)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is UpdateFilterData &&
-            (identical(other.data, data) ||
-                const DeepCollectionEquality().equals(other.data, data)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(data);
-
-  @override
-  $UpdateFilterDataCopyWith<UpdateFilterData> get copyWith =>
-      _$UpdateFilterDataCopyWithImpl<UpdateFilterData>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result notReady(),
-    @required Result ready(int version, Map<String, dynamic> preferences),
-    @required Result updateFilterData(FilterData data),
-  }) {
-    assert(notReady != null);
-    assert(ready != null);
-    assert(updateFilterData != null);
-    return updateFilterData(data);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result notReady(),
-    Result ready(int version, Map<String, dynamic> preferences),
-    Result updateFilterData(FilterData data),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (updateFilterData != null) {
-      return updateFilterData(data);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result notReady(PreferencesNotReady value),
-    @required Result ready(PreferencesReady value),
-    @required Result updateFilterData(UpdateFilterData value),
-  }) {
-    assert(notReady != null);
-    assert(ready != null);
-    assert(updateFilterData != null);
-    return updateFilterData(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result notReady(PreferencesNotReady value),
-    Result ready(PreferencesReady value),
-    Result updateFilterData(UpdateFilterData value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (updateFilterData != null) {
-      return updateFilterData(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class UpdateFilterData implements PreferenceBlocState {
-  const factory UpdateFilterData({@required FilterData data}) =
-      _$UpdateFilterData;
-
-  FilterData get data;
-  $UpdateFilterDataCopyWith<UpdateFilterData> get copyWith;
 }

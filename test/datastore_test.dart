@@ -5,15 +5,14 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'dart:io';
-
 import 'package:MarkMyProgress/data/bookmark/database/DataStore.dart';
 import 'package:MarkMyProgress/data/bookmark/instance/GenericBookmark.dart';
-import 'package:MarkMyProgress/data/database/abstract/DatabaseCollection.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sembast/sembast.dart' as sembast;
+import 'package:get_it/get_it.dart';
 
 void main() {
+  final gi = GetIt.instance;
+  final dataStore = gi.get<DataStore>();
   var testBookmark = GenericBookmark();
   testBookmark.ongoing = true;
   testBookmark.logProgress(15);
@@ -41,7 +40,6 @@ void main() {
   });
 
   group('DataStore tests', () {
-    final dataStore = DataStore();
     test('Save data to store', () async {
       await dataStore.open();
       await dataStore.insert(testBookmark);
@@ -50,7 +48,7 @@ void main() {
 
     test('Read data from store', () async {
       await dataStore.open();
-      var bookmark = await dataStore.get(testBookmark.id);
+      var bookmark = await dataStore.get(testBookmark.key);
       await dataStore.close();
 
       expect(bookmark.toJson(), testBookmark.toJson());
@@ -64,7 +62,7 @@ void main() {
       await dataStore.close();
 
       await dataStore.open();
-      var bookmark = await dataStore.get(testBookmark.id);
+      var bookmark = await dataStore.get(testBookmark.key);
       await dataStore.close();
 
       expect(bookmark.toJson(), testBookmark.toJson());
@@ -72,18 +70,16 @@ void main() {
 
     test('Delete data from store', () async {
       await dataStore.open();
-      await dataStore.delete(testBookmark);
+      await dataStore.delete(testBookmark.key);
       await dataStore.close();
 
       await dataStore.open();
 
-      var list = await dataStore.getAll(
-          finder:
-              sembast.Finder(filter: sembast.Filter.byKey(testBookmark.id)));
+      var item = await dataStore.get(testBookmark.key);
       await dataStore.close();
 
-      expect(list.isEmpty, true);
-      await File(DatabaseCollection.databaseFileName).delete();
+      expect(item, null);
+      // todo delete database file
     });
   });
 }
