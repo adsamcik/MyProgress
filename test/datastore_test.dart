@@ -58,6 +58,14 @@ void main() {
       expect(bookmark.toJson(), testBookmark.toJson());
     });
 
+    test('Read non-existent data from store', () async {
+      await dataStore.open();
+      var invalid = await dataStore.get(-1);
+      await dataStore.close();
+
+      expect(invalid, null);
+    });
+
     test('Update data in store', () async {
       testBookmark.logProgress(20);
 
