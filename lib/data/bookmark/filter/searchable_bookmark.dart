@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
-import 'package:MarkMyProgress/data/runtime/MatchResult.dart';
-import 'package:MarkMyProgress/data/runtime/SearchableVariable.dart';
+import 'package:MarkMyProgress/data/runtime/match_result.dart';
+import 'package:MarkMyProgress/data/runtime/searchable_variable.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
 import 'package:edit_distance/edit_distance.dart';
 

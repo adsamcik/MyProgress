@@ -1,6 +1,6 @@
 import 'dart:core';
 
-import 'package:MarkMyProgress/data/runtime/SearchableVariable.dart';
+import 'package:MarkMyProgress/data/runtime/searchable_variable.dart';
 
 import 'progress.dart';
 
