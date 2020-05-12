@@ -45,11 +45,12 @@ class PreferenceBloc extends Bloc<PreferenceBlocEvent, PreferenceBlocState> {
     yield await state.maybeMap(
         ready: (PreferencesReady ready) {
           var preference = Preference(event.key, event.value);
-          return settingsStore.upsert(preference).then((dynamic value) {
-            ready.preferences[event.key] = event.value;
+          return settingsStore.transactionClosed((settingsStore) =>
+              settingsStore.upsert(preference).then((dynamic value) {
+                ready.preferences[event.key] = event.value;
 
-            return ready.copyWith(version: ready.version + 1);
-          });
+                return ready.copyWith(version: ready.version + 1);
+              }));
         },
         orElse: () => state);
   }
