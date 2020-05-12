@@ -21,6 +21,9 @@ abstract class MockDataSource<Key, Value extends Storable<Key>>
     extends DataSource<Key, Value> {
   bool _isOpen = false;
 
+  @override
+  bool get isOpen => _isOpen;
+
   final Map<Key, Value> _data = <Key, Value>{};
 
   /// Increment current key value and return it

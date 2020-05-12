@@ -9,6 +9,9 @@ class SembastDataSource<Key, Value extends Storable<Key>>
   final String _connectionString;
   final StorageMapper<Value, Map<String, dynamic>> _mapper;
 
+  @override
+  bool get isOpen => _databaseClient != null;
+
   DatabaseClient _databaseClient;
 
   StoreRef get _store => StoreRef<Key, Value>.main();
@@ -153,7 +156,7 @@ class SembastDataSource<Key, Value extends Storable<Key>>
   @override
   Future upsert(Value value) async {
     await _store
-        .record(value)
+        .record(value.key)
         .put(_databaseClient, _mapInstanceToDatabase(value));
   }
 }

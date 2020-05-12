@@ -1,6 +1,8 @@
 import 'package:MarkMyProgress/data/storage/abstraction/storable.dart';
 
 abstract class DataSource<Key, Value extends Storable<Key>> {
+  bool get isOpen;
+
   Stream<Value> getAll();
 
   Stream<Value> getAllWithKeys(Iterable<Key> keys);
