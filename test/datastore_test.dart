@@ -46,8 +46,19 @@ void main() {
   group('DataStore tests', () {
     test('Save data to store', () async {
       await dataStore.open();
-      await dataStore.insert(testBookmark);
+      var key = await dataStore.insertAuto(testBookmark);
       await dataStore.close();
+
+      expect(key != null, true);
+      expect(key >= 0, true);
+    });
+
+    test('Try insert existing data to store', () async {
+      await dataStore.open();
+      var success = await dataStore.insert(testBookmark);
+      await dataStore.close();
+
+      expect(success, false);
     });
 
     test('Read data from store', () async {
