@@ -1,7 +1,7 @@
 import 'package:MarkMyProgress/data/bookmark/filter/filter_data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'PreferenceBlocEvent.freezed.dart';
+part 'preference_bloc_event.freezed.dart';
 
 @freezed
 abstract class PreferenceBlocEvent with _$PreferenceBlocEvent {

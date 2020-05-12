@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'PreferenceBlocState.freezed.dart';
+part 'preference_bloc_state.freezed.dart';
 
 @freezed
 abstract class PreferenceBlocState with _$PreferenceBlocState {

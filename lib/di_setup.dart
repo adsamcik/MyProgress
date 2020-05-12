@@ -6,7 +6,7 @@ import 'package:MarkMyProgress/data/storage/implementation/sembast_data_source.d
 import 'package:get_it/get_it.dart';
 
 import 'data/bookmark/database/data_store.dart';
-import 'data/preference/database/SettingsStore.dart';
+import 'data/preference/database/settings_store.dart';
 
 Future setupProductionDependencyInjection() async {
   final gi = GetIt.instance;
