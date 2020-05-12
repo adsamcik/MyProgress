@@ -9,8 +9,7 @@ import 'data/bookmark/database/DataStore.dart';
 import 'data/preference/database/SettingsStore.dart';
 
 Future setupProductionDependencyInjection() async {
-  // ignore: omit_local_variable_types
-  final GetIt gi = GetIt.instance;
+  final gi = GetIt.instance;
 
   gi.registerSingleton(
       DataStore(SembastDataSource('progress_data.db', BookmarkMapper())));
