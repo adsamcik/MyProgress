@@ -1,6 +1,6 @@
 ﻿import 'dart:io';
 
-import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
 
 /// <summary>
 ///     Interface for data exporting.
@@ -16,5 +16,5 @@ abstract class DataExporter {
   /// </summary>
   /// <param name="bookmarks"></param>
   /// <param name="file"></param>
-  Future export(Iterable<IPersistentBookmark> bookmarks, File file);
+  Future export(Iterable<PersistentBookmark> bookmarks, File file);
 }

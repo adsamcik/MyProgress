@@ -1,7 +1,7 @@
 /// <summary>
 ///     Properties specific for web content.
 /// </summary>
-abstract class IWebBookmark {
+abstract class WebBookmark {
   /// <summary>
   ///     Web Address
   /// </summary>

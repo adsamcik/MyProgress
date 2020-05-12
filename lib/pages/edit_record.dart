@@ -1,15 +1,15 @@
 import 'package:MarkMyProgress/constants/Patterns.dart';
-import 'package:MarkMyProgress/data/bookmark/abstract/IWebBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/web_bookmark.dart';
 import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../data/bookmark/abstract/IPersistentBookmark.dart';
+import '../data/bookmark/abstract/persistent_bookmark.dart';
 import '../input/reg_ex_input_formatter.dart';
 
 class EditRecord extends StatefulWidget {
-  final IPersistentBookmark bookmark;
+  final PersistentBookmark bookmark;
 
   EditRecord({@required this.bookmark});
 
@@ -20,7 +20,7 @@ class EditRecord extends StatefulWidget {
 }
 
 class _EditRecordState extends State<EditRecord> {
-  final IPersistentBookmark bookmark;
+  final PersistentBookmark bookmark;
 
   final _formKey = GlobalKey<FormState>();
   final _originalTitleKey = GlobalKey<FormFieldState<String>>();
@@ -79,9 +79,9 @@ class _EditRecordState extends State<EditRecord> {
                     bookmark.localizedTitle = value;
                   },
                 ),
-                if (bookmark is IWebBookmark)
+                if (bookmark is WebBookmark)
                   TextFormField(
-                    initialValue: (bookmark as IWebBookmark).webAddress,
+                    initialValue: (bookmark as WebBookmark).webAddress,
                     decoration: InputDecoration(labelText: 'Web Address'),
                     validator: (value) {
                       if (value.isNullOrEmpty) return null;
@@ -94,7 +94,7 @@ class _EditRecordState extends State<EditRecord> {
                       return null;
                     },
                     onSaved: (String value) {
-                      (bookmark as IWebBookmark).webAddress = value;
+                      (bookmark as WebBookmark).webAddress = value;
                     },
                   ),
                 TextFormField(

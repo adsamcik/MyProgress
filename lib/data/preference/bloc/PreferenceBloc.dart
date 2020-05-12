@@ -1,9 +1,8 @@
-import 'package:MarkMyProgress/data/bookmark/filter/FilterData.dart';
+import 'package:MarkMyProgress/data/bookmark/filter/filter_data.dart';
 import 'package:MarkMyProgress/data/preference/bloc/PreferenceBlocEvent.dart';
 import 'package:MarkMyProgress/data/preference/bloc/PreferenceBlocState.dart';
 import 'package:MarkMyProgress/data/preference/database/SettingsStore.dart';
 import 'package:MarkMyProgress/data/preference/database/preference.dart';
-import 'package:MarkMyProgress/extensions/map_extensions.dart';
 import 'package:bloc/bloc.dart';
 
 class PreferenceBloc extends Bloc<PreferenceBlocEvent, PreferenceBlocState> {

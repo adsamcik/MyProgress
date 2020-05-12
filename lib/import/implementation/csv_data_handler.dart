@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
 import 'package:MarkMyProgress/import/abstract/data_exporter.dart';
 import 'package:MarkMyProgress/import/abstract/data_importer.dart';
 import 'package:csv/csv.dart';
@@ -30,7 +30,7 @@ class JSONDataHandler implements DataExporter, DataImporter {
   }
 
   @override
-  Future export(Iterable<IPersistentBookmark> bookmarks, File file) async {
+  Future export(Iterable<PersistentBookmark> bookmarks, File file) async {
     var csvData = bookmarks.map((e) => e.toJson().values.toList()).toList();
     var csv = const ListToCsvConverter()
         .convert(csvData, fieldDelimiter: _getDelimiter(file));
@@ -38,7 +38,7 @@ class JSONDataHandler implements DataExporter, DataImporter {
   }
 
   @override
-  Future<Iterable<IPersistentBookmark>> import(File file) async {
+  Future<Iterable<PersistentBookmark>> import(File file) async {
     //var csv = await file.readAsString();
     try {
       throw UnimplementedError('CSV import is not yet implemented');

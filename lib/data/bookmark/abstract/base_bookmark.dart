@@ -4,13 +4,13 @@ import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'IPersistentBookmark.dart';
-import 'IProgress.dart';
+import 'persistent_bookmark.dart';
+import 'progress.dart';
 
 /// <summary>
 ///     Base readable implementation providing utility methods for UI.
 /// </summary>
-abstract class BaseBookmark implements IPersistentBookmark {
+abstract class BaseBookmark implements PersistentBookmark {
   @override
   @JsonKey(ignore: true)
   int key;
@@ -73,5 +73,5 @@ abstract class BaseBookmark implements IPersistentBookmark {
     }
   }
 
-  IProgress createNewProgress(double progress);
+  Progress createNewProgress(double progress);
 }

@@ -5,9 +5,9 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
-import 'package:MarkMyProgress/data/bookmark/database/DataStore.dart';
-import 'package:MarkMyProgress/data/bookmark/instance/GenericBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/database/data_store.dart';
+import 'package:MarkMyProgress/data/bookmark/instance/generic_bookmark.dart';
 import 'package:MarkMyProgress/di_setup.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
@@ -15,7 +15,7 @@ import 'package:get_it/get_it.dart';
 import 'di_setup.dart';
 
 void dataStoreTests(
-    String title, DataStore dataStore, IPersistentBookmark testBookmark) {
+    String title, DataStore dataStore, PersistentBookmark testBookmark) {
   group(title, () {
     test('Save data to store', () async {
       await dataStore.open();

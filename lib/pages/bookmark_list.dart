@@ -1,7 +1,7 @@
-import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
-import 'package:MarkMyProgress/data/bookmark/abstract/IWebBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/web_bookmark.dart';
 import 'package:MarkMyProgress/data/bookmark/bloc/bloc.dart';
-import 'package:MarkMyProgress/data/bookmark/instance/GenericBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/instance/generic_bookmark.dart';
 import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/pages/settings.dart';
@@ -42,7 +42,7 @@ class _BookmarkListState extends State<BookmarkList> {
 
   void _addNewItem(BuildContext context) async {
     var newItem = GenericBookmark();
-    var bookmark = await navigate<IPersistentBookmark>(
+    var bookmark = await navigate<PersistentBookmark>(
         (context) => EditRecord(bookmark: newItem));
 
     if (bookmark == null) {
@@ -55,8 +55,8 @@ class _BookmarkListState extends State<BookmarkList> {
         .add(BookmarkBlocEvent.addBookmark(bookmark: bookmark));
   }
 
-  void _viewDetail(IPersistentBookmark bookmark) async {
-    var item = await navigate<IPersistentBookmark>(
+  void _viewDetail(PersistentBookmark bookmark) async {
+    var item = await navigate<PersistentBookmark>(
         (context) => EditRecord(bookmark: bookmark));
 
     if (item == null) {
@@ -147,8 +147,8 @@ class _BookmarkListState extends State<BookmarkList> {
                                                         TextOverflow.ellipsis,
                                                   )))),
                                       SizedBox(width: 16),
-                                      if (bookmark is IWebBookmark &&
-                                          ((bookmark as IWebBookmark)
+                                      if (bookmark is WebBookmark &&
+                                          ((bookmark as WebBookmark)
                                                       .webAddress ??
                                                   '')
                                               .isNotEmpty)
@@ -158,7 +158,7 @@ class _BookmarkListState extends State<BookmarkList> {
                                               // can launch is not implemented on Windows
                                               //canLaunch(webBookmark.webAddress).then((value) {
                                               //if (value) {
-                                              launch((bookmark as IWebBookmark)
+                                              launch((bookmark as WebBookmark)
                                                   .webAddress);
                                               //}
                                               //});

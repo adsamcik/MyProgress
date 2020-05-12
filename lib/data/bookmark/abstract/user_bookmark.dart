@@ -1,10 +1,10 @@
-import 'IBookmark.dart';
-import 'IProgress.dart';
+import 'bookmark.dart';
+import 'progress.dart';
 
 /// <summary>
 ///     Interface containing methods and properties required by UI.
 /// </summary>
-abstract class IUserBookmark implements IBookmark {
+abstract class UserBookmark implements Bookmark {
   /// <summary>
   ///     Progress in a readable way. Default is Progress/MaxProgress.
   /// </summary>
@@ -18,7 +18,7 @@ abstract class IUserBookmark implements IBookmark {
   /// <summary>
   ///     Returns last progress instance or default value if no progress is logged.
   /// </summary>
-  IProgress lastProgress;
+  Progress lastProgress;
 
   /// <summary>
   ///     Date of the first progress entry.

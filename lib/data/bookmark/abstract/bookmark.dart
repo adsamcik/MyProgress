@@ -2,9 +2,9 @@ import 'dart:core';
 
 import 'package:MarkMyProgress/data/runtime/SearchableVariable.dart';
 
-import 'IProgress.dart';
+import 'progress.dart';
 
-abstract class IBookmark {
+abstract class Bookmark {
   /// <summary>
   ///     Title of the reading material
   /// </summary>
@@ -39,7 +39,7 @@ abstract class IBookmark {
   /// <summary>
   ///     Complete progress history of reading.
   /// </summary>
-  List<IProgress> get history;
+  List<Progress> get history;
 
   /// <summary>
   ///     Progress increment value.

@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named
 
-part of 'BookmarkBlocState.dart';
+part of 'bookmark_bloc_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -19,7 +19,7 @@ class _$BookmarkBlocStateTearOff {
   Ready ready(
       {@required int version,
       @required List<SearchableBookmark> bookmarkList,
-      @required List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+      @required List<ISearchResult<PersistentBookmark>> filteredBookmarkList,
       @required FilterRuntimeData filterData}) {
     return Ready(
       version: version,
@@ -41,7 +41,7 @@ mixin _$BookmarkBlocState {
         Result ready(
             int version,
             List<SearchableBookmark> bookmarkList,
-            List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+            List<ISearchResult<PersistentBookmark>> filteredBookmarkList,
             FilterRuntimeData filterData),
   });
   @optionalTypeArgs
@@ -50,7 +50,7 @@ mixin _$BookmarkBlocState {
     Result ready(
         int version,
         List<SearchableBookmark> bookmarkList,
-        List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+        List<ISearchResult<PersistentBookmark>> filteredBookmarkList,
         FilterRuntimeData filterData),
     @required Result orElse(),
   });
@@ -120,7 +120,7 @@ class _$NotReady implements NotReady {
         Result ready(
             int version,
             List<SearchableBookmark> bookmarkList,
-            List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+            List<ISearchResult<PersistentBookmark>> filteredBookmarkList,
             FilterRuntimeData filterData),
   }) {
     assert(notReady != null);
@@ -135,7 +135,7 @@ class _$NotReady implements NotReady {
     Result ready(
         int version,
         List<SearchableBookmark> bookmarkList,
-        List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+        List<ISearchResult<PersistentBookmark>> filteredBookmarkList,
         FilterRuntimeData filterData),
     @required Result orElse(),
   }) {
@@ -182,7 +182,7 @@ abstract class $ReadyCopyWith<$Res> {
   $Res call(
       {int version,
       List<SearchableBookmark> bookmarkList,
-      List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+      List<ISearchResult<PersistentBookmark>> filteredBookmarkList,
       FilterRuntimeData filterData});
 }
 
@@ -208,7 +208,7 @@ class _$ReadyCopyWithImpl<$Res> extends _$BookmarkBlocStateCopyWithImpl<$Res>
           : bookmarkList as List<SearchableBookmark>,
       filteredBookmarkList: filteredBookmarkList == freezed
           ? _value.filteredBookmarkList
-          : filteredBookmarkList as List<ISearchResult<IPersistentBookmark>>,
+          : filteredBookmarkList as List<ISearchResult<PersistentBookmark>>,
       filterData: filterData == freezed
           ? _value.filterData
           : filterData as FilterRuntimeData,
@@ -232,7 +232,7 @@ class _$Ready implements Ready {
   @override
   final List<SearchableBookmark> bookmarkList;
   @override
-  final List<ISearchResult<IPersistentBookmark>> filteredBookmarkList;
+  final List<ISearchResult<PersistentBookmark>> filteredBookmarkList;
   @override
   final FilterRuntimeData filterData;
 
@@ -279,7 +279,7 @@ class _$Ready implements Ready {
         Result ready(
             int version,
             List<SearchableBookmark> bookmarkList,
-            List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+            List<ISearchResult<PersistentBookmark>> filteredBookmarkList,
             FilterRuntimeData filterData),
   }) {
     assert(notReady != null);
@@ -294,7 +294,7 @@ class _$Ready implements Ready {
     Result ready(
         int version,
         List<SearchableBookmark> bookmarkList,
-        List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+        List<ISearchResult<PersistentBookmark>> filteredBookmarkList,
         FilterRuntimeData filterData),
     @required Result orElse(),
   }) {
@@ -335,12 +335,12 @@ abstract class Ready implements BookmarkBlocState {
   const factory Ready(
       {@required int version,
       @required List<SearchableBookmark> bookmarkList,
-      @required List<ISearchResult<IPersistentBookmark>> filteredBookmarkList,
+      @required List<ISearchResult<PersistentBookmark>> filteredBookmarkList,
       @required FilterRuntimeData filterData}) = _$Ready;
 
   int get version;
   List<SearchableBookmark> get bookmarkList;
-  List<ISearchResult<IPersistentBookmark>> get filteredBookmarkList;
+  List<ISearchResult<PersistentBookmark>> get filteredBookmarkList;
   FilterRuntimeData get filterData;
   $ReadyCopyWith<Ready> get copyWith;
 }

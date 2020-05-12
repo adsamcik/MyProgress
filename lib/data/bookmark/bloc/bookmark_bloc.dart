@@ -1,8 +1,8 @@
-import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
-import 'package:MarkMyProgress/data/bookmark/bloc/BookmarkBlocEvent.dart';
-import 'package:MarkMyProgress/data/bookmark/database/DataStore.dart';
-import 'package:MarkMyProgress/data/bookmark/filter/FilterRuntimeData.dart';
-import 'package:MarkMyProgress/data/bookmark/filter/SearchableBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/bloc/bookmark_bloc_event.dart';
+import 'package:MarkMyProgress/data/bookmark/database/data_store.dart';
+import 'package:MarkMyProgress/data/bookmark/filter/filter_runtime_data.dart';
+import 'package:MarkMyProgress/data/bookmark/filter/searchable_bookmark.dart';
 import 'package:MarkMyProgress/data/preference/database/SettingsStore.dart';
 import 'package:MarkMyProgress/data/runtime/Pair.dart';
 import 'package:MarkMyProgress/data/runtime/SearchResult.dart';
@@ -11,8 +11,8 @@ import 'package:MarkMyProgress/extensions/string_extensions.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 
-import 'BookmarkBlocEvent.dart';
-import 'BookmarkBlocState.dart';
+import 'bookmark_bloc_event.dart';
+import 'bookmark_bloc_state.dart';
 
 class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
   final DataStore dataStore;
@@ -129,12 +129,12 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
         orElse: () => state);
   }
 
-  Future _updateBookmark(IPersistentBookmark bookmark) async {
+  Future _updateBookmark(PersistentBookmark bookmark) async {
     return await dataStore
         .transactionClosed<dynamic>((dataStore) => dataStore.update(bookmark));
   }
 
-  List<SearchResult<IPersistentBookmark>> _updateFilter(
+  List<SearchResult<PersistentBookmark>> _updateFilter(
       FilterRuntimeData filterRuntimeData,
       Iterable<SearchableBookmark> bookmarks) {
     var filterList = bookmarks;

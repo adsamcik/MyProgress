@@ -1,23 +1,23 @@
-import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'BookmarkBlocEvent.freezed.dart';
+part 'bookmark_bloc_event.freezed.dart';
 
 @freezed
 abstract class BookmarkBlocEvent with _$BookmarkBlocEvent {
   const factory BookmarkBlocEvent.load() = Load;
 
   const factory BookmarkBlocEvent.addBookmark(
-      {@required IPersistentBookmark bookmark}) = AddBookmark;
+      {@required PersistentBookmark bookmark}) = AddBookmark;
 
   const factory BookmarkBlocEvent.removeBookmark(
-      {@required IPersistentBookmark bookmark}) = RemoveBookmark;
+      {@required PersistentBookmark bookmark}) = RemoveBookmark;
 
   const factory BookmarkBlocEvent.updateBookmark(
-      {@required IPersistentBookmark bookmark}) = UpdateBookmark;
+      {@required PersistentBookmark bookmark}) = UpdateBookmark;
 
   const factory BookmarkBlocEvent.incrementProgress(
-      {@required IPersistentBookmark bookmark}) = IncrementProgress;
+      {@required PersistentBookmark bookmark}) = IncrementProgress;
 
   const factory BookmarkBlocEvent.updateFilterQuery({@required String query}) =
       UpdateFilterQuery;

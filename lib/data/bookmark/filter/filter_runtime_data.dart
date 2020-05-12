@@ -1,4 +1,4 @@
-import 'FilterData.dart';
+import 'filter_data.dart';
 
 class FilterRuntimeData {
   String query;

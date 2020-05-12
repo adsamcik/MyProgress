@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'FilterData.dart';
+part of 'filter_data.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

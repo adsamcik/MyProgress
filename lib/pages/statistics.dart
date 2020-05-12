@@ -1,10 +1,10 @@
-import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
 import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../data/bookmark/database/DataStore.dart';
+import '../data/bookmark/database/data_store.dart';
 
 class Statistics extends StatefulWidget {
   Statistics({Key key}) : super(key: key);
@@ -16,7 +16,7 @@ class Statistics extends StatefulWidget {
 class _StatisticsState extends State<Statistics> {
   int _activelyReading = 0;
 
-  Future<List<IPersistentBookmark>> _loadDatabaseData() async {
+  Future<List<PersistentBookmark>> _loadDatabaseData() async {
     var store = GetIt.instance.get<DataStore>();
     await store.open();
     var records = await store.getAll().toList();
@@ -25,7 +25,7 @@ class _StatisticsState extends State<Statistics> {
     return records;
   }
 
-  void _recalculateData(List<IPersistentBookmark> list) {
+  void _recalculateData(List<PersistentBookmark> list) {
     _activelyReading = list.fold<int>(0, (previousValue, element) {
       if (!element.abandoned &&
           (element.ongoing || element.progress < element.maxProgress)) {
@@ -43,7 +43,7 @@ class _StatisticsState extends State<Statistics> {
         body: SafeArea(
             minimum: EdgeInsets.all(16.0),
             maintainBottomViewPadding: true,
-            child: FutureBuilder<List<IPersistentBookmark>>(
+            child: FutureBuilder<List<PersistentBookmark>>(
               future: _loadDatabaseData(),
               builder: (context, data) {
                 if (data.hasData) {
@@ -62,7 +62,7 @@ class _StatisticsState extends State<Statistics> {
 }
 
 class StatisticsChart extends StatefulWidget {
-  final List<IPersistentBookmark> _bookmarks;
+  final List<PersistentBookmark> _bookmarks;
 
   StatisticsChart(this._bookmarks);
 

@@ -1,7 +1,7 @@
-import 'package:MarkMyProgress/data/bookmark/abstract/IProgress.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/progress.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
 
-class NoProgress implements IProgress {
+class NoProgress implements Progress {
   @override
   DateTime get date => Date.invalid;
 

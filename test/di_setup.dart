@@ -1,4 +1,4 @@
-import 'package:MarkMyProgress/data/bookmark/database/DataStore.dart';
+import 'package:MarkMyProgress/data/bookmark/database/data_store.dart';
 import 'package:MarkMyProgress/data/preference/database/SettingsStore.dart';
 import 'package:get_it/get_it.dart';
 

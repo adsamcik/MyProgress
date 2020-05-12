@@ -1,13 +1,13 @@
 import 'dart:math';
 
-import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
 import 'package:MarkMyProgress/data/runtime/MatchResult.dart';
 import 'package:MarkMyProgress/data/runtime/SearchableVariable.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
 import 'package:edit_distance/edit_distance.dart';
 
 class SearchableBookmark {
-  final IPersistentBookmark bookmark;
+  final PersistentBookmark bookmark;
   List<SearchableVariable> _variableList;
 
   List<SearchableVariable> get variableList {

@@ -1,11 +1,11 @@
-import 'package:MarkMyProgress/data/bookmark/abstract/IBookmark.dart';
-import 'package:MarkMyProgress/data/bookmark/abstract/IProgress.dart';
-import 'package:MarkMyProgress/data/bookmark/instance/NoProgress.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/bookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/progress.dart';
+import 'package:MarkMyProgress/data/bookmark/instance/no_progress.dart';
 
 /// <summary>
 ///     Latest progress data.
 /// </summary>
-extension BookmarkExtensions on IBookmark {
+extension BookmarkExtensions on Bookmark {
   /// <summary>
   ///     Latest progress data.
   /// </summary>
@@ -13,6 +13,5 @@ extension BookmarkExtensions on IBookmark {
 
   double get progress => lastProgress?.value ?? 0.0;
 
-  IProgress get lastProgress =>
-      history.isNotEmpty ? history.last : NoProgress();
+  Progress get lastProgress => history.isNotEmpty ? history.last : NoProgress();
 }

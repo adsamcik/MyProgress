@@ -1,16 +1,16 @@
 import 'dart:core';
 
-import 'package:MarkMyProgress/data/bookmark/abstract/IProgress.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/progress.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'GenericProgress.g.dart';
+part 'generic_progress.g.dart';
 
 /// <summary>
 ///     Generic implementation of progress.
 ///     Should represent most use cases.
 /// </summary>
 @JsonSerializable()
-class GenericProgress implements IProgress {
+class GenericProgress implements Progress {
   GenericProgress(DateTime date, double value) {
     this.date = date;
     this.value = value;

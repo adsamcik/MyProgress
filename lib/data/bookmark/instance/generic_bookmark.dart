@@ -1,24 +1,24 @@
-import 'package:MarkMyProgress/data/bookmark/abstract/BaseBookmark.dart';
-import 'package:MarkMyProgress/data/bookmark/abstract/IProgress.dart';
-import 'package:MarkMyProgress/data/bookmark/abstract/IWebBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/base_bookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/progress.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/web_bookmark.dart';
 import 'package:MarkMyProgress/data/runtime/SearchableVariable.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'GenericProgress.dart';
+import 'generic_progress.dart';
 
-part 'GenericBookmark.g.dart';
+part 'generic_bookmark.g.dart';
 
 /// <summary>
 ///     Generic readable implementation for most reading materials.
 /// </summary>
 @JsonSerializable(explicitToJson: true)
-class GenericBookmark extends BaseBookmark implements IWebBookmark {
+class GenericBookmark extends BaseBookmark implements WebBookmark {
   GenericBookmark();
 
   @override
-  IProgress createNewProgress(double progress) {
+  Progress createNewProgress(double progress) {
     return GenericProgress(Date.today, progress);
   }
 
@@ -36,7 +36,7 @@ class GenericBookmark extends BaseBookmark implements IWebBookmark {
   List<GenericProgress> history_generic = [];
 
   @override
-  List<IProgress> get history => history_generic;
+  List<Progress> get history => history_generic;
 
   @override
   double get progressIncrement => super.progressIncrement ?? 1.0;

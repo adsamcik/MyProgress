@@ -1,4 +1,4 @@
-import 'package:MarkMyProgress/data/bookmark/filter/FilterData.dart';
+import 'package:MarkMyProgress/data/bookmark/filter/filter_data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'PreferenceBlocEvent.freezed.dart';

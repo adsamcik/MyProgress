@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'FilterData.freezed.dart';
-part 'FilterData.g.dart';
+part 'filter_data.freezed.dart';
+part 'filter_data.g.dart';
 
 @freezed
 abstract class FilterData with _$FilterData {

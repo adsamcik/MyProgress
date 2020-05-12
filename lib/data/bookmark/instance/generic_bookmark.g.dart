@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'GenericBookmark.dart';
+part of 'generic_bookmark.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

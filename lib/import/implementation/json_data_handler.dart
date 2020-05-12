@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
-import 'package:MarkMyProgress/data/bookmark/instance/GenericBookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/instance/generic_bookmark.dart';
 import 'package:MarkMyProgress/import/abstract/data_exporter.dart';
 import 'package:MarkMyProgress/import/abstract/data_importer.dart';
 
@@ -17,13 +17,13 @@ class JSONDataHandler implements DataExporter, DataImporter {
   Iterable<String> get importExtensions => ['json'];
 
   @override
-  Future export(Iterable<IPersistentBookmark> bookmarks, File file) async {
+  Future export(Iterable<PersistentBookmark> bookmarks, File file) async {
     var json = jsonEncode(bookmarks.map((e) => e.toJson()).toList());
     await file.writeAsString(json);
   }
 
   @override
-  Future<Iterable<IPersistentBookmark>> import(File file) async {
+  Future<Iterable<PersistentBookmark>> import(File file) async {
     var json = await file.readAsString();
     try {
       return (jsonDecode(json) as List)

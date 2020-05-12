@@ -1,7 +1,7 @@
 ﻿/// <summary>
 ///     Progress update interface
 /// </summary>
-abstract class IProgress {
+abstract class Progress {
   /// <summary>
   ///     Date of the progress update
   /// </summary>

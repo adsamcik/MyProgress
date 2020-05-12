@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named
 
-part of 'BookmarkBlocEvent.dart';
+part of 'bookmark_bloc_event.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -16,26 +16,25 @@ class _$BookmarkBlocEventTearOff {
     return const Load();
   }
 
-  AddBookmark addBookmark({@required IPersistentBookmark bookmark}) {
+  AddBookmark addBookmark({@required PersistentBookmark bookmark}) {
     return AddBookmark(
       bookmark: bookmark,
     );
   }
 
-  RemoveBookmark removeBookmark({@required IPersistentBookmark bookmark}) {
+  RemoveBookmark removeBookmark({@required PersistentBookmark bookmark}) {
     return RemoveBookmark(
       bookmark: bookmark,
     );
   }
 
-  UpdateBookmark updateBookmark({@required IPersistentBookmark bookmark}) {
+  UpdateBookmark updateBookmark({@required PersistentBookmark bookmark}) {
     return UpdateBookmark(
       bookmark: bookmark,
     );
   }
 
-  IncrementProgress incrementProgress(
-      {@required IPersistentBookmark bookmark}) {
+  IncrementProgress incrementProgress({@required PersistentBookmark bookmark}) {
     return IncrementProgress(
       bookmark: bookmark,
     );
@@ -55,19 +54,19 @@ mixin _$BookmarkBlocEvent {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result load(),
-    @required Result addBookmark(IPersistentBookmark bookmark),
-    @required Result removeBookmark(IPersistentBookmark bookmark),
-    @required Result updateBookmark(IPersistentBookmark bookmark),
-    @required Result incrementProgress(IPersistentBookmark bookmark),
+    @required Result addBookmark(PersistentBookmark bookmark),
+    @required Result removeBookmark(PersistentBookmark bookmark),
+    @required Result updateBookmark(PersistentBookmark bookmark),
+    @required Result incrementProgress(PersistentBookmark bookmark),
     @required Result updateFilterQuery(String query),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result load(),
-    Result addBookmark(IPersistentBookmark bookmark),
-    Result removeBookmark(IPersistentBookmark bookmark),
-    Result updateBookmark(IPersistentBookmark bookmark),
-    Result incrementProgress(IPersistentBookmark bookmark),
+    Result addBookmark(PersistentBookmark bookmark),
+    Result removeBookmark(PersistentBookmark bookmark),
+    Result updateBookmark(PersistentBookmark bookmark),
+    Result incrementProgress(PersistentBookmark bookmark),
     Result updateFilterQuery(String query),
     @required Result orElse(),
   });
@@ -141,10 +140,10 @@ class _$Load implements Load {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result load(),
-    @required Result addBookmark(IPersistentBookmark bookmark),
-    @required Result removeBookmark(IPersistentBookmark bookmark),
-    @required Result updateBookmark(IPersistentBookmark bookmark),
-    @required Result incrementProgress(IPersistentBookmark bookmark),
+    @required Result addBookmark(PersistentBookmark bookmark),
+    @required Result removeBookmark(PersistentBookmark bookmark),
+    @required Result updateBookmark(PersistentBookmark bookmark),
+    @required Result incrementProgress(PersistentBookmark bookmark),
     @required Result updateFilterQuery(String query),
   }) {
     assert(load != null);
@@ -160,10 +159,10 @@ class _$Load implements Load {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result load(),
-    Result addBookmark(IPersistentBookmark bookmark),
-    Result removeBookmark(IPersistentBookmark bookmark),
-    Result updateBookmark(IPersistentBookmark bookmark),
-    Result incrementProgress(IPersistentBookmark bookmark),
+    Result addBookmark(PersistentBookmark bookmark),
+    Result removeBookmark(PersistentBookmark bookmark),
+    Result updateBookmark(PersistentBookmark bookmark),
+    Result incrementProgress(PersistentBookmark bookmark),
     Result updateFilterQuery(String query),
     @required Result orElse(),
   }) {
@@ -220,7 +219,7 @@ abstract class $AddBookmarkCopyWith<$Res> {
   factory $AddBookmarkCopyWith(
           AddBookmark value, $Res Function(AddBookmark) then) =
       _$AddBookmarkCopyWithImpl<$Res>;
-  $Res call({IPersistentBookmark bookmark});
+  $Res call({PersistentBookmark bookmark});
 }
 
 class _$AddBookmarkCopyWithImpl<$Res>
@@ -240,7 +239,7 @@ class _$AddBookmarkCopyWithImpl<$Res>
     return _then(AddBookmark(
       bookmark: bookmark == freezed
           ? _value.bookmark
-          : bookmark as IPersistentBookmark,
+          : bookmark as PersistentBookmark,
     ));
   }
 }
@@ -249,7 +248,7 @@ class _$AddBookmark implements AddBookmark {
   const _$AddBookmark({@required this.bookmark}) : assert(bookmark != null);
 
   @override
-  final IPersistentBookmark bookmark;
+  final PersistentBookmark bookmark;
 
   @override
   String toString() {
@@ -277,10 +276,10 @@ class _$AddBookmark implements AddBookmark {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result load(),
-    @required Result addBookmark(IPersistentBookmark bookmark),
-    @required Result removeBookmark(IPersistentBookmark bookmark),
-    @required Result updateBookmark(IPersistentBookmark bookmark),
-    @required Result incrementProgress(IPersistentBookmark bookmark),
+    @required Result addBookmark(PersistentBookmark bookmark),
+    @required Result removeBookmark(PersistentBookmark bookmark),
+    @required Result updateBookmark(PersistentBookmark bookmark),
+    @required Result incrementProgress(PersistentBookmark bookmark),
     @required Result updateFilterQuery(String query),
   }) {
     assert(load != null);
@@ -296,10 +295,10 @@ class _$AddBookmark implements AddBookmark {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result load(),
-    Result addBookmark(IPersistentBookmark bookmark),
-    Result removeBookmark(IPersistentBookmark bookmark),
-    Result updateBookmark(IPersistentBookmark bookmark),
-    Result incrementProgress(IPersistentBookmark bookmark),
+    Result addBookmark(PersistentBookmark bookmark),
+    Result removeBookmark(PersistentBookmark bookmark),
+    Result updateBookmark(PersistentBookmark bookmark),
+    Result incrementProgress(PersistentBookmark bookmark),
     Result updateFilterQuery(String query),
     @required Result orElse(),
   }) {
@@ -349,10 +348,10 @@ class _$AddBookmark implements AddBookmark {
 }
 
 abstract class AddBookmark implements BookmarkBlocEvent {
-  const factory AddBookmark({@required IPersistentBookmark bookmark}) =
+  const factory AddBookmark({@required PersistentBookmark bookmark}) =
       _$AddBookmark;
 
-  IPersistentBookmark get bookmark;
+  PersistentBookmark get bookmark;
   $AddBookmarkCopyWith<AddBookmark> get copyWith;
 }
 
@@ -360,7 +359,7 @@ abstract class $RemoveBookmarkCopyWith<$Res> {
   factory $RemoveBookmarkCopyWith(
           RemoveBookmark value, $Res Function(RemoveBookmark) then) =
       _$RemoveBookmarkCopyWithImpl<$Res>;
-  $Res call({IPersistentBookmark bookmark});
+  $Res call({PersistentBookmark bookmark});
 }
 
 class _$RemoveBookmarkCopyWithImpl<$Res>
@@ -380,7 +379,7 @@ class _$RemoveBookmarkCopyWithImpl<$Res>
     return _then(RemoveBookmark(
       bookmark: bookmark == freezed
           ? _value.bookmark
-          : bookmark as IPersistentBookmark,
+          : bookmark as PersistentBookmark,
     ));
   }
 }
@@ -389,7 +388,7 @@ class _$RemoveBookmark implements RemoveBookmark {
   const _$RemoveBookmark({@required this.bookmark}) : assert(bookmark != null);
 
   @override
-  final IPersistentBookmark bookmark;
+  final PersistentBookmark bookmark;
 
   @override
   String toString() {
@@ -417,10 +416,10 @@ class _$RemoveBookmark implements RemoveBookmark {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result load(),
-    @required Result addBookmark(IPersistentBookmark bookmark),
-    @required Result removeBookmark(IPersistentBookmark bookmark),
-    @required Result updateBookmark(IPersistentBookmark bookmark),
-    @required Result incrementProgress(IPersistentBookmark bookmark),
+    @required Result addBookmark(PersistentBookmark bookmark),
+    @required Result removeBookmark(PersistentBookmark bookmark),
+    @required Result updateBookmark(PersistentBookmark bookmark),
+    @required Result incrementProgress(PersistentBookmark bookmark),
     @required Result updateFilterQuery(String query),
   }) {
     assert(load != null);
@@ -436,10 +435,10 @@ class _$RemoveBookmark implements RemoveBookmark {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result load(),
-    Result addBookmark(IPersistentBookmark bookmark),
-    Result removeBookmark(IPersistentBookmark bookmark),
-    Result updateBookmark(IPersistentBookmark bookmark),
-    Result incrementProgress(IPersistentBookmark bookmark),
+    Result addBookmark(PersistentBookmark bookmark),
+    Result removeBookmark(PersistentBookmark bookmark),
+    Result updateBookmark(PersistentBookmark bookmark),
+    Result incrementProgress(PersistentBookmark bookmark),
     Result updateFilterQuery(String query),
     @required Result orElse(),
   }) {
@@ -489,10 +488,10 @@ class _$RemoveBookmark implements RemoveBookmark {
 }
 
 abstract class RemoveBookmark implements BookmarkBlocEvent {
-  const factory RemoveBookmark({@required IPersistentBookmark bookmark}) =
+  const factory RemoveBookmark({@required PersistentBookmark bookmark}) =
       _$RemoveBookmark;
 
-  IPersistentBookmark get bookmark;
+  PersistentBookmark get bookmark;
   $RemoveBookmarkCopyWith<RemoveBookmark> get copyWith;
 }
 
@@ -500,7 +499,7 @@ abstract class $UpdateBookmarkCopyWith<$Res> {
   factory $UpdateBookmarkCopyWith(
           UpdateBookmark value, $Res Function(UpdateBookmark) then) =
       _$UpdateBookmarkCopyWithImpl<$Res>;
-  $Res call({IPersistentBookmark bookmark});
+  $Res call({PersistentBookmark bookmark});
 }
 
 class _$UpdateBookmarkCopyWithImpl<$Res>
@@ -520,7 +519,7 @@ class _$UpdateBookmarkCopyWithImpl<$Res>
     return _then(UpdateBookmark(
       bookmark: bookmark == freezed
           ? _value.bookmark
-          : bookmark as IPersistentBookmark,
+          : bookmark as PersistentBookmark,
     ));
   }
 }
@@ -529,7 +528,7 @@ class _$UpdateBookmark implements UpdateBookmark {
   const _$UpdateBookmark({@required this.bookmark}) : assert(bookmark != null);
 
   @override
-  final IPersistentBookmark bookmark;
+  final PersistentBookmark bookmark;
 
   @override
   String toString() {
@@ -557,10 +556,10 @@ class _$UpdateBookmark implements UpdateBookmark {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result load(),
-    @required Result addBookmark(IPersistentBookmark bookmark),
-    @required Result removeBookmark(IPersistentBookmark bookmark),
-    @required Result updateBookmark(IPersistentBookmark bookmark),
-    @required Result incrementProgress(IPersistentBookmark bookmark),
+    @required Result addBookmark(PersistentBookmark bookmark),
+    @required Result removeBookmark(PersistentBookmark bookmark),
+    @required Result updateBookmark(PersistentBookmark bookmark),
+    @required Result incrementProgress(PersistentBookmark bookmark),
     @required Result updateFilterQuery(String query),
   }) {
     assert(load != null);
@@ -576,10 +575,10 @@ class _$UpdateBookmark implements UpdateBookmark {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result load(),
-    Result addBookmark(IPersistentBookmark bookmark),
-    Result removeBookmark(IPersistentBookmark bookmark),
-    Result updateBookmark(IPersistentBookmark bookmark),
-    Result incrementProgress(IPersistentBookmark bookmark),
+    Result addBookmark(PersistentBookmark bookmark),
+    Result removeBookmark(PersistentBookmark bookmark),
+    Result updateBookmark(PersistentBookmark bookmark),
+    Result incrementProgress(PersistentBookmark bookmark),
     Result updateFilterQuery(String query),
     @required Result orElse(),
   }) {
@@ -629,10 +628,10 @@ class _$UpdateBookmark implements UpdateBookmark {
 }
 
 abstract class UpdateBookmark implements BookmarkBlocEvent {
-  const factory UpdateBookmark({@required IPersistentBookmark bookmark}) =
+  const factory UpdateBookmark({@required PersistentBookmark bookmark}) =
       _$UpdateBookmark;
 
-  IPersistentBookmark get bookmark;
+  PersistentBookmark get bookmark;
   $UpdateBookmarkCopyWith<UpdateBookmark> get copyWith;
 }
 
@@ -640,7 +639,7 @@ abstract class $IncrementProgressCopyWith<$Res> {
   factory $IncrementProgressCopyWith(
           IncrementProgress value, $Res Function(IncrementProgress) then) =
       _$IncrementProgressCopyWithImpl<$Res>;
-  $Res call({IPersistentBookmark bookmark});
+  $Res call({PersistentBookmark bookmark});
 }
 
 class _$IncrementProgressCopyWithImpl<$Res>
@@ -660,7 +659,7 @@ class _$IncrementProgressCopyWithImpl<$Res>
     return _then(IncrementProgress(
       bookmark: bookmark == freezed
           ? _value.bookmark
-          : bookmark as IPersistentBookmark,
+          : bookmark as PersistentBookmark,
     ));
   }
 }
@@ -670,7 +669,7 @@ class _$IncrementProgress implements IncrementProgress {
       : assert(bookmark != null);
 
   @override
-  final IPersistentBookmark bookmark;
+  final PersistentBookmark bookmark;
 
   @override
   String toString() {
@@ -698,10 +697,10 @@ class _$IncrementProgress implements IncrementProgress {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result load(),
-    @required Result addBookmark(IPersistentBookmark bookmark),
-    @required Result removeBookmark(IPersistentBookmark bookmark),
-    @required Result updateBookmark(IPersistentBookmark bookmark),
-    @required Result incrementProgress(IPersistentBookmark bookmark),
+    @required Result addBookmark(PersistentBookmark bookmark),
+    @required Result removeBookmark(PersistentBookmark bookmark),
+    @required Result updateBookmark(PersistentBookmark bookmark),
+    @required Result incrementProgress(PersistentBookmark bookmark),
     @required Result updateFilterQuery(String query),
   }) {
     assert(load != null);
@@ -717,10 +716,10 @@ class _$IncrementProgress implements IncrementProgress {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result load(),
-    Result addBookmark(IPersistentBookmark bookmark),
-    Result removeBookmark(IPersistentBookmark bookmark),
-    Result updateBookmark(IPersistentBookmark bookmark),
-    Result incrementProgress(IPersistentBookmark bookmark),
+    Result addBookmark(PersistentBookmark bookmark),
+    Result removeBookmark(PersistentBookmark bookmark),
+    Result updateBookmark(PersistentBookmark bookmark),
+    Result incrementProgress(PersistentBookmark bookmark),
     Result updateFilterQuery(String query),
     @required Result orElse(),
   }) {
@@ -770,10 +769,10 @@ class _$IncrementProgress implements IncrementProgress {
 }
 
 abstract class IncrementProgress implements BookmarkBlocEvent {
-  const factory IncrementProgress({@required IPersistentBookmark bookmark}) =
+  const factory IncrementProgress({@required PersistentBookmark bookmark}) =
       _$IncrementProgress;
 
-  IPersistentBookmark get bookmark;
+  PersistentBookmark get bookmark;
   $IncrementProgressCopyWith<IncrementProgress> get copyWith;
 }
 
@@ -835,10 +834,10 @@ class _$UpdateFilterQuery implements UpdateFilterQuery {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result load(),
-    @required Result addBookmark(IPersistentBookmark bookmark),
-    @required Result removeBookmark(IPersistentBookmark bookmark),
-    @required Result updateBookmark(IPersistentBookmark bookmark),
-    @required Result incrementProgress(IPersistentBookmark bookmark),
+    @required Result addBookmark(PersistentBookmark bookmark),
+    @required Result removeBookmark(PersistentBookmark bookmark),
+    @required Result updateBookmark(PersistentBookmark bookmark),
+    @required Result incrementProgress(PersistentBookmark bookmark),
     @required Result updateFilterQuery(String query),
   }) {
     assert(load != null);
@@ -854,10 +853,10 @@ class _$UpdateFilterQuery implements UpdateFilterQuery {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result load(),
-    Result addBookmark(IPersistentBookmark bookmark),
-    Result removeBookmark(IPersistentBookmark bookmark),
-    Result updateBookmark(IPersistentBookmark bookmark),
-    Result incrementProgress(IPersistentBookmark bookmark),
+    Result addBookmark(PersistentBookmark bookmark),
+    Result removeBookmark(PersistentBookmark bookmark),
+    Result updateBookmark(PersistentBookmark bookmark),
+    Result incrementProgress(PersistentBookmark bookmark),
     Result updateFilterQuery(String query),
     @required Result orElse(),
   }) {

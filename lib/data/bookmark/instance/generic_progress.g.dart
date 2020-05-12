@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'GenericProgress.dart';
+part of 'generic_progress.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
