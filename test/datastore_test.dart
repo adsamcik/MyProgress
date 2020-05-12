@@ -129,8 +129,8 @@ void main() {
     });
   });
 
-  dataStoreTests('Mock DataStore tests', gi.get(instanceName: 'MockDataStore'),
-      GenericBookmark.fromJson(json));
+  dataStoreTests('Mock DataStore tests',
+      gi.get(instanceName: mockDataStoreName), GenericBookmark.fromJson(json));
 
   dataStoreTests(
       'Production DataStore tests', gi.get(), GenericBookmark.fromJson(json));

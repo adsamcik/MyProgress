@@ -4,11 +4,14 @@ import 'package:get_it/get_it.dart';
 
 import 'mock/mock_data_source.dart';
 
+const String mockSettingsStoreName = 'MockSettingsStore';
+const String mockDataStoreName = 'MockDataStore';
+
 Future setupMockDependencyInjection() async {
   final gi = GetIt.instance;
 
   gi.registerSingleton(DataStore(MockIntDataSource()),
-      instanceName: 'MockDataStore');
+      instanceName: mockDataStoreName);
   gi.registerSingleton(SettingsStore(MockStringDataSource()),
-      instanceName: 'MockSettingsStore');
+      instanceName: mockSettingsStoreName);
 }
