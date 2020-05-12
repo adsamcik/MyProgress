@@ -1,4 +1,4 @@
-import 'package:MarkMyProgress/extensions/StringExtensions.dart';
+import 'package:MarkMyProgress/extensions/string_extensions.dart';
 
 class SearchableVariable {
   /// Value that will be searched

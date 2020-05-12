@@ -1,5 +1,5 @@
 import 'package:MarkMyProgress/data/bookmark/abstract/IProgress.dart';
-import 'package:MarkMyProgress/extensions/DateExtension.dart';
+import 'package:MarkMyProgress/extensions/date_extensions.dart';
 
 class NoProgress implements IProgress {
   @override

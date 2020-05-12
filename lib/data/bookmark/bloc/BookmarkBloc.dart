@@ -6,8 +6,8 @@ import 'package:MarkMyProgress/data/bookmark/filter/SearchableBookmark.dart';
 import 'package:MarkMyProgress/data/preference/database/SettingsStore.dart';
 import 'package:MarkMyProgress/data/runtime/Pair.dart';
 import 'package:MarkMyProgress/data/runtime/SearchResult.dart';
-import 'package:MarkMyProgress/extensions/StringExtensions.dart';
-import 'package:MarkMyProgress/extensions/UserBookmark.dart';
+import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
+import 'package:MarkMyProgress/extensions/string_extensions.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 

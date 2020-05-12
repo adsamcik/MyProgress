@@ -2,8 +2,8 @@ import 'package:MarkMyProgress/data/bookmark/abstract/BaseBookmark.dart';
 import 'package:MarkMyProgress/data/bookmark/abstract/IProgress.dart';
 import 'package:MarkMyProgress/data/bookmark/abstract/IWebBookmark.dart';
 import 'package:MarkMyProgress/data/runtime/SearchableVariable.dart';
-import 'package:MarkMyProgress/extensions/DateExtension.dart';
-import 'package:MarkMyProgress/extensions/StringExtensions.dart';
+import 'package:MarkMyProgress/extensions/date_extensions.dart';
+import 'package:MarkMyProgress/extensions/string_extensions.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'GenericProgress.dart';

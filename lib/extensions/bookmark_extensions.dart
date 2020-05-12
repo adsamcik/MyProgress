@@ -5,7 +5,7 @@ import 'package:MarkMyProgress/data/bookmark/instance/NoProgress.dart';
 /// <summary>
 ///     Latest progress data.
 /// </summary>
-extension BookmarkUi on IBookmark {
+extension BookmarkExtensions on IBookmark {
   /// <summary>
   ///     Latest progress data.
   /// </summary>
