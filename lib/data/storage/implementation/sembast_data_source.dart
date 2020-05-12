@@ -14,7 +14,7 @@ class SembastDataSource<Key, Value extends Storable<Key>>
 
   DatabaseClient _databaseClient;
 
-  StoreRef get _store => StoreRef<Key, Value>.main();
+  StoreRef get _store => StoreRef<Key, Map<String, dynamic>>.main();
 
   SembastDataSource(this._connectionString, this._mapper);
 
