@@ -5,7 +5,7 @@ import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
 /// <summary>
 ///     Interface for data importing
 /// </summary>
-abstract class IDataImporter {
+abstract class DataImporter {
   /// <summary>
   ///     Array of import extensions.
   /// </summary>

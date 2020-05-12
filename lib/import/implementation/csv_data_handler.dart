@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
-import 'package:MarkMyProgress/import/abstract/IDataExporter.dart';
-import 'package:MarkMyProgress/import/abstract/IDataImporter.dart';
+import 'package:MarkMyProgress/import/abstract/data_exporter.dart';
+import 'package:MarkMyProgress/import/abstract/data_importer.dart';
 import 'package:csv/csv.dart';
 import 'package:path/path.dart';
 
 /// <summary>
 ///     JSON data handler providing JSON import and export for IBookmark.
 /// </summary>
-class JSONDataHandler implements IDataExporter, IDataImporter {
+class JSONDataHandler implements DataExporter, DataImporter {
   @override
   Iterable<String> get exportExtensions => ['csv', 'tsv'];
 

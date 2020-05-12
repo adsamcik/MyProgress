@@ -5,14 +5,14 @@ import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
 /// <summary>
 ///     Interface for data exporting.
 /// </summary>
-abstract class IDataExporter {
+abstract class DataExporter {
   /// <summary>
   ///     Array of all supported extensions
   /// </summary>
   Iterable<String> get exportExtensions;
 
   /// <summary>
-  ///     Exports data from readables to a file.
+  ///     Exports data from bookmarks to a file.
   /// </summary>
   /// <param name="bookmarks"></param>
   /// <param name="file"></param>
