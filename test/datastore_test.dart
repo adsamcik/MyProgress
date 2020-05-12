@@ -5,45 +5,18 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:MarkMyProgress/data/bookmark/abstract/IPersistentBookmark.dart';
 import 'package:MarkMyProgress/data/bookmark/database/DataStore.dart';
 import 'package:MarkMyProgress/data/bookmark/instance/GenericBookmark.dart';
 import 'package:MarkMyProgress/di_setup.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 
-void main() {
-  setupProductionDependencyInjection();
+import 'di_setup.dart';
 
-  final gi = GetIt.instance;
-
-  final dataStore = gi.get<DataStore>();
-  var testBookmark = GenericBookmark();
-  testBookmark.ongoing = true;
-  testBookmark.logProgress(15);
-  testBookmark.localizedTitle = 'localized title';
-  testBookmark.originalTitle = 'original title';
-  testBookmark.webAddress = 'web address';
-
-  test('Serialization test', () async {
-    var json = testBookmark.toJson();
-    expect(json, {
-      'localizedTitle': 'localized title',
-      'originalTitle': 'original title',
-      'maxProgress': 15.0,
-      'ongoing': true,
-      'abandoned': false,
-      'webAddress': 'web address',
-      'history': [
-        {
-          'date': testBookmark.history.first.date.toIso8601String(),
-          'value': 15.0
-        }
-      ],
-      'progressIncrement': 1.0
-    });
-  });
-
-  group('DataStore tests', () {
+void dataStoreTests(
+    String title, DataStore dataStore, IPersistentBookmark testBookmark) {
+  group(title, () {
     test('Save data to store', () async {
       await dataStore.open();
       var key = await dataStore.insertAuto(testBookmark);
@@ -101,8 +74,64 @@ void main() {
       var item = await dataStore.get(testBookmark.key);
       await dataStore.close();
 
-      expect(item, null);
+      expect(item, isNull);
+      // todo delete database file
+    });
+
+    test('Test transaction', () async {
+      await dataStore.open();
+      var inserted = await await dataStore
+          .transaction((storage) => storage.insert(testBookmark));
+
+      expect(inserted, isTrue);
+
+      var deleted = await dataStore.delete(testBookmark.key);
+      expect(deleted, isTrue);
+
+      var item = await dataStore.get(testBookmark.key);
+      await dataStore.close();
+
+      expect(item, isNull);
       // todo delete database file
     });
   });
+}
+
+void main() {
+  setupProductionDependencyInjection();
+  setupMockDependencyInjection();
+
+  final gi = GetIt.instance;
+
+  final testBookmark = GenericBookmark();
+  testBookmark.ongoing = true;
+  testBookmark.logProgress(15);
+  testBookmark.localizedTitle = 'localized title';
+  testBookmark.originalTitle = 'original title';
+  testBookmark.webAddress = 'web address';
+
+  var json = testBookmark.toJson();
+  test('Serialization test', () async {
+    expect(json, {
+      'localizedTitle': 'localized title',
+      'originalTitle': 'original title',
+      'maxProgress': 15.0,
+      'ongoing': true,
+      'abandoned': false,
+      'webAddress': 'web address',
+      'history': [
+        {
+          'date': testBookmark.history.first.date.toIso8601String(),
+          'value': 15.0
+        }
+      ],
+      'progressIncrement': 1.0
+    });
+  });
+
+  dataStoreTests('Mock DataStore tests', gi.get(instanceName: 'MockDataStore'),
+      GenericBookmark.fromJson(json));
+
+  dataStoreTests(
+      'Production DataStore tests', gi.get(), GenericBookmark.fromJson(json));
 }
