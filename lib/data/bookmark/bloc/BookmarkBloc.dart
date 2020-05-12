@@ -66,7 +66,7 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
         ready: (currentState) {
           return dataStore
               .transaction<dynamic>(
-                  (dataStore) => dataStore.insert(event.bookmark))
+                  (dataStore) => dataStore.insertAuto(event.bookmark))
               .then((dynamic value) {
             currentState.bookmarkList.add(SearchableBookmark(event.bookmark));
             var filterList = _updateFilter(

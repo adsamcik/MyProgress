@@ -52,10 +52,19 @@ abstract class Storage<Key, Value extends Storable<Key>> {
     }
   }
 
-  Future<Key> insert(Value item) async {
+  Future<Key> insertAuto(Value item) async {
     var key = await _dataSource.insertAuto(item);
     _cache[key] = item;
     return key;
+  }
+
+  Future<bool> insert(Value item) async {
+    var success = await _dataSource.insert(item);
+    if (success) {
+      _cache[item.key] = item;
+    }
+
+    return success;
   }
 
   Future<bool> delete(Key key) async {
