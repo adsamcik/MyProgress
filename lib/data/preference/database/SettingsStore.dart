@@ -29,7 +29,7 @@ class SettingsStore extends Storage<String, Preference> {
   }
 
   @override
-  Future<T> transaction<T>(
+  Future<T> transactionClosed<T>(
       FutureOr<T> Function(SettingsStore settingsStore) action) async {
     await open();
     var result = await action(this);

@@ -53,12 +53,14 @@ abstract class Storage<Key, Value extends Storable<Key>> {
   }
 
   Future<Key> insertAuto(Value item) async {
+    assert(item.key == null, 'Key must be null for auto insertion');
     var key = await _dataSource.insertAuto(item);
     _cache[key] = item;
     return key;
   }
 
   Future<bool> insert(Value item) async {
+    assert(item.key != null, 'Key must not be null for insertion at key');
     var success = await _dataSource.insert(item);
     if (success) {
       _cache[item.key] = item;
@@ -82,12 +84,15 @@ abstract class Storage<Key, Value extends Storable<Key>> {
     return await _dataSource.update(item);
   }
 
-  Future<Result> transaction<Result>(
+  Future<Result> transactionClosed<Result>(
       Result Function(Storage<Key, Value> storage) transactionFunc) async {
     await open();
-    var result =
-        await _dataSource.transaction((storage) => transactionFunc(this));
+    var result = await transaction(transactionFunc);
     await close();
     return result;
   }
+
+  Future<Result> transaction<Result>(
+          Result Function(Storage<Key, Value> storage) transactionFunc) async =>
+      await _dataSource.transaction((storage) => transactionFunc(this));
 }

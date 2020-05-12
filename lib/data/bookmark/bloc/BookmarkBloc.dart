@@ -42,10 +42,10 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
   }
 
   Stream<BookmarkBlocState> _mapLoad(Load event) async* {
-    var dataList = await await dataStore.transaction((dataStore) =>
+    var dataList = await await dataStore.transactionClosed((dataStore) =>
         dataStore.getAll().map((e) => SearchableBookmark(e)).toList());
     var filterData = await settingsStore
-        .transaction((settingsStore) => settingsStore.getFilterData());
+        .transactionClosed((settingsStore) => settingsStore.getFilterData());
 
     dataList.sort((a, b) => a.bookmark.title
         .toLowerCase()
@@ -65,7 +65,7 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
     yield await state.maybeMap(
         ready: (currentState) {
           return dataStore
-              .transaction<dynamic>(
+              .transactionClosed<dynamic>(
                   (dataStore) => dataStore.insertAuto(event.bookmark))
               .then((dynamic value) {
             currentState.bookmarkList.add(SearchableBookmark(event.bookmark));
@@ -84,7 +84,7 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
     yield await state.maybeMap(
         ready: (currentState) {
           return dataStore
-              .transaction<dynamic>(
+              .transactionClosed<dynamic>(
                   (dataStore) => dataStore.delete(event.bookmark.key))
               .then((dynamic value) {
             currentState.bookmarkList
@@ -131,7 +131,7 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
 
   Future _updateBookmark(IPersistentBookmark bookmark) async {
     return await dataStore
-        .transaction<dynamic>((dataStore) => dataStore.update(bookmark));
+        .transactionClosed<dynamic>((dataStore) => dataStore.update(bookmark));
   }
 
   List<SearchResult<IPersistentBookmark>> _updateFilter(

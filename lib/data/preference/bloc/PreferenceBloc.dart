@@ -24,7 +24,7 @@ class PreferenceBloc extends Bloc<PreferenceBlocEvent, PreferenceBlocState> {
   Stream<PreferenceBlocState> _mapLoad(LoadPreferences event) async* {
     try {
       var preferences = await settingsStore
-          .transaction((settingsStore) => settingsStore.getAll());
+          .transactionClosed((settingsStore) => settingsStore.getAll());
       var entries =
           await preferences.map((event) => event.toMapEntry()).toList();
       yield PreferenceBlocState.ready(

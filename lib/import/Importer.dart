@@ -34,7 +34,7 @@ class Importer {
             .firstWhere((importer) => importer.importExtensions.contains(ext));
         if (importer != null) {
           var data = await importer.import(File(path));
-          await await dataStore.transaction((storage) async => await data
+          await await dataStore.transactionClosed((storage) async => await data
               .map((element) async => await storage.insertAuto(element)));
         } else {
           // todo report error
