@@ -6,6 +6,10 @@ abstract class Storage<Key, Value extends Storable<Key>> {
   final DataSource<Key, Value> _dataSource;
   final Map<Key, Value> _cache = <Key, Value>{};
 
+  bool get isOpen => _dataSource.isOpen;
+
+  int _openCounter = 0;
+
   Storage(this._dataSource);
 
   void _onDataListener(Value item) {
@@ -14,12 +18,18 @@ abstract class Storage<Key, Value extends Storable<Key>> {
 
   /// Opens storage
   Future open() async {
-    await _dataSource.open();
+    if (_openCounter++ == 0) {
+      await _dataSource.open();
+    }
   }
 
   /// Closes storage
   Future close() async {
-    await _dataSource.close();
+    assert(_openCounter > 0);
+    if (--_openCounter <= 0) {
+      await _dataSource.close();
+      assert(_openCounter == 0);
+    }
   }
 
   void purgeCache() {
@@ -27,6 +37,7 @@ abstract class Storage<Key, Value extends Storable<Key>> {
   }
 
   Stream<Value> getAll() {
+    _checkIfOpen();
     return _dataSource.getAll().map((item) {
       _onDataListener(item);
       return item;
@@ -34,10 +45,12 @@ abstract class Storage<Key, Value extends Storable<Key>> {
   }
 
   Stream<Value> getAllWithKeys(Iterable<Key> keys) {
+    _checkIfOpen();
     return _dataSource.getAllWithKeys(keys);
   }
 
   Future<Value> get(Key key) async {
+    _checkIfOpen();
     var cached = _cache[key];
     if (cached != null) {
       return cached;
@@ -53,6 +66,7 @@ abstract class Storage<Key, Value extends Storable<Key>> {
   }
 
   Future<Key> insertAuto(Value item) async {
+    _checkIfOpen();
     assert(item.key == null, 'Key must be null for auto insertion');
     var key = await _dataSource.insertAuto(item);
     _cache[key] = item;
@@ -60,6 +74,7 @@ abstract class Storage<Key, Value extends Storable<Key>> {
   }
 
   Future<bool> insert(Value item) async {
+    _checkIfOpen();
     assert(item.key != null, 'Key must not be null for insertion at key');
     var success = await _dataSource.insert(item);
     if (success) {
@@ -70,16 +85,19 @@ abstract class Storage<Key, Value extends Storable<Key>> {
   }
 
   Future<bool> delete(Key key) async {
+    _checkIfOpen();
     _cache.remove(key);
     return await _dataSource.delete(key);
   }
 
   Future upsert(Value item) async {
+    _checkIfOpen();
     _cache[item.key] = item;
     await _dataSource.upsert(item);
   }
 
   Future<bool> update(Value item) async {
+    _checkIfOpen();
     _cache[item.key] = item;
     return await _dataSource.update(item);
   }
@@ -95,4 +113,11 @@ abstract class Storage<Key, Value extends Storable<Key>> {
   Future<Result> transaction<Result>(
           Result Function(Storage<Key, Value> storage) transactionFunc) async =>
       await _dataSource.transaction((storage) => transactionFunc(this));
+
+  void _checkIfOpen() {
+    assert(
+        isOpen,
+        'DataSource is not open. '
+        'It needs to be opened before doing any operations on it.');
+  }
 }
