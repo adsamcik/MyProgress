@@ -1,3 +1,4 @@
+import 'package:MarkMyProgress/data/bookmark/filter/FilterData.dart';
 import 'package:MarkMyProgress/data/preference/bloc/PreferenceBlocEvent.dart';
 import 'package:MarkMyProgress/data/preference/bloc/PreferenceBlocState.dart';
 import 'package:MarkMyProgress/data/preference/database/SettingsStore.dart';
@@ -21,14 +22,19 @@ class PreferenceBloc extends Bloc<PreferenceBlocEvent, PreferenceBlocState> {
         updateFilterData: _mapUpdateFilterData,
       );
 
+  Map<String, dynamic> _defaultPreferences() {
+    return FilterData().toJson();
+  }
+
   Stream<PreferenceBlocState> _mapLoad(LoadPreferences event) async* {
     try {
       var preferences = await settingsStore
           .transactionClosed((settingsStore) => settingsStore.getAll());
       var entries =
           await preferences.map((event) => event.toMapEntry()).toList();
-      yield PreferenceBlocState.ready(
-          version: 0, preferences: Map<String, dynamic>.fromEntries(entries));
+      var preferenceMap = _defaultPreferences();
+      preferenceMap.addEntries(entries);
+      yield PreferenceBlocState.ready(version: 0, preferences: preferenceMap);
     } on Error catch (_, trace) {
       print(trace);
       yield PreferenceBlocState.notReady();
