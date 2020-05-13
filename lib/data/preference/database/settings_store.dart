@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:MarkMyProgress/data/bookmark/filter/filter_data.dart';
 import 'package:MarkMyProgress/data/preference/database/preference.dart';
 import 'package:MarkMyProgress/data/storage/abstraction/data_source.dart';
-import 'package:MarkMyProgress/data/storage/storage.dart';
+import 'package:MarkMyProgress/data/storage/abstraction/storage.dart';
 
 class SettingsStore extends Storage<String, Preference> {
   SettingsStore(DataSource<String, Preference> dataSource) : super(dataSource);

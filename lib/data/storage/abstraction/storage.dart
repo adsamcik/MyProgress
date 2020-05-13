@@ -1,6 +1,6 @@
 import 'package:MarkMyProgress/data/storage/abstraction/data_source.dart';
 
-import 'abstraction/storable.dart';
+import 'storable.dart';
 
 abstract class Storage<Key, Value extends Storable<Key>> {
   final DataSource<Key, Value> _dataSource;
