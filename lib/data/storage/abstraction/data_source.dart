@@ -1,4 +1,5 @@
 import 'package:MarkMyProgress/data/storage/abstraction/storable.dart';
+import 'package:MarkMyProgress/data/storage/abstraction/storage_subscribable.dart';
 
 abstract class DataSource<Key, Value extends Storable<Key>> {
   /// True if data source is open
@@ -25,7 +26,7 @@ abstract class DataSource<Key, Value extends Storable<Key>> {
 
   /// Updates single record in data source if it exists.
   /// If it does not exist, the record is inserted.
-  Future upsert(Value value);
+  Future<StorageEvent> upsert(Value value);
 
   //// Delete item from data source with key
   Future<bool> delete(Key key);

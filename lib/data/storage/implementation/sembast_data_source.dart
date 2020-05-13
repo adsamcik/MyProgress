@@ -1,6 +1,7 @@
 import 'package:MarkMyProgress/data/storage/abstraction/data_source.dart';
 import 'package:MarkMyProgress/data/storage/abstraction/storable.dart';
 import 'package:MarkMyProgress/data/storage/abstraction/storage_mapper.dart';
+import 'package:MarkMyProgress/data/storage/abstraction/storage_subscribable.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
@@ -51,11 +52,12 @@ class SembastDataSource<Key, Value extends Storable<Key>>
         .get(_databaseClient)
         .asStream()
         .map(
-          (list) => list.map(
-            (dynamic element) =>
-                element != null ? _mapDatabaseToInstance(element) : null,
+          (list) =>
+          list.map(
+                (dynamic element) =>
+            element != null ? _mapDatabaseToInstance(element) : null,
           ),
-        )
+    )
         .expand((element) => element.cast());
   }
 
@@ -84,7 +86,7 @@ class SembastDataSource<Key, Value extends Storable<Key>>
   @override
   Future<Key> insertAuto(Value value) async {
     var key =
-        await _store.add(_databaseClient, _mapInstanceToDatabase(value)) as Key;
+    await _store.add(_databaseClient, _mapInstanceToDatabase(value)) as Key;
     value.key = key;
     return key;
   }
@@ -144,7 +146,7 @@ class SembastDataSource<Key, Value extends Storable<Key>>
     if (database is Database) {
       return await database.transaction((transaction) {
         var transactionDataSource =
-            SembastDataSource<Key, Value>(_connectionString, _mapper);
+        SembastDataSource<Key, Value>(_connectionString, _mapper);
         transactionDataSource._openWithClient(transaction);
         return transactionFunc(transactionDataSource);
       });
@@ -154,9 +156,12 @@ class SembastDataSource<Key, Value extends Storable<Key>>
   }
 
   @override
-  Future upsert(Value value) async {
-    await _store
-        .record(value.key)
-        .put(_databaseClient, _mapInstanceToDatabase(value));
+  Future<StorageEvent> upsert(Value value) async {
+    var record = _store.record(value.key);
+
+    var exists = await record.exists(_databaseClient)
+    await
+    record.put(_databaseClient, _mapInstanceToDatabase(value), merge: true);
+    return exists ? StorageEvent.updated : StorageEvent.inserted;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:MarkMyProgress/data/storage/abstraction/data_source.dart';
+import 'package:MarkMyProgress/data/storage/abstraction/storage_subscribable.dart';
 
 import 'storable.dart';
 
@@ -84,16 +85,28 @@ abstract class Storage<Key, Value extends Storable<Key>> {
     return success;
   }
 
+  Future<Iterable<bool>> insertAll(Iterable<Value> value) async {
+    _checkIfOpen();
+    var result = await Future.wait(value.map((e) => _dataSource.insert(e)));
+    var resultIt = result.iterator;
+    value.forEach((element) {
+      if (resultIt.moveNext()) {
+        _cache[element.key] = element;
+      }
+    });
+    return result;
+  }
+
   Future<bool> delete(Key key) async {
     _checkIfOpen();
     _cache.remove(key);
     return await _dataSource.delete(key);
   }
 
-  Future upsert(Value item) async {
+  Future<StorageEvent> upsert(Value item) async {
     _checkIfOpen();
     _cache[item.key] = item;
-    await _dataSource.upsert(item);
+    return await _dataSource.upsert(item);
   }
 
   Future<bool> update(Value item) async {

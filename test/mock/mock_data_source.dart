@@ -1,5 +1,6 @@
 import 'package:MarkMyProgress/data/storage/abstraction/data_source.dart';
 import 'package:MarkMyProgress/data/storage/abstraction/storable.dart';
+import 'package:MarkMyProgress/data/storage/abstraction/storage_subscribable.dart';
 
 class MockIntDataSource<Value extends Storable<int>>
     extends MockDataSource<int, Value> {
@@ -122,10 +123,12 @@ abstract class MockDataSource<Key, Value extends Storable<Key>>
   }
 
   @override
-  Future upsert(Value value) async {
+  Future<StorageEvent> upsert(Value value) async {
     assert(_isOpen);
     assert(value.key != null);
 
+    var exists = _data.containsKey(value.key);
     _data[value.key] = value;
+    return exists ? StorageEvent.updated : StorageEvent.inserted;
   }
 }
