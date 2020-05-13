@@ -2,12 +2,12 @@ import 'package:MarkMyProgress/data/bookmark/filter/filter_data.dart';
 import 'package:MarkMyProgress/data/preference/bloc/preference_bloc_event.dart';
 import 'package:MarkMyProgress/data/preference/bloc/preference_bloc_state.dart';
 import 'package:MarkMyProgress/data/preference/database/preference.dart';
-import 'package:MarkMyProgress/data/preference/database/settings_store.dart';
+import 'package:MarkMyProgress/data/preference/database/preference_store.dart';
 import 'package:MarkMyProgress/extensions/map_extensions.dart';
 import 'package:bloc/bloc.dart';
 
 class PreferenceBloc extends Bloc<PreferenceBlocEvent, PreferenceBlocState> {
-  final SettingsStore settingsStore;
+  final PreferenceStore settingsStore;
 
   PreferenceBloc(this.settingsStore);
 
