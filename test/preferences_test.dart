@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:MarkMyProgress/data/bookmark/filter/filter_data.dart';
 import 'package:MarkMyProgress/data/preference/database/preference.dart';
-import 'package:MarkMyProgress/data/preference/database/settings_store.dart';
+import 'package:MarkMyProgress/data/preference/database/preference_store.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 
@@ -35,7 +35,7 @@ void main() {
 
   group('Test settings store', () {
     final settingsStore =
-        gi.get<SettingsStore>(instanceName: mockSettingsStoreName);
+        gi.get<PreferenceStore>(instanceName: mockSettingsStoreName);
     test('Set preferences', () async {
       await settingsStore.open();
       expect(await settingsStore.insert(stringPreference), isTrue);

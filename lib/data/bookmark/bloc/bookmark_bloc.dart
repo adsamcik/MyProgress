@@ -3,7 +3,7 @@ import 'package:MarkMyProgress/data/bookmark/bloc/bookmark_bloc_event.dart';
 import 'package:MarkMyProgress/data/bookmark/database/data_store.dart';
 import 'package:MarkMyProgress/data/bookmark/filter/filter_runtime_data.dart';
 import 'package:MarkMyProgress/data/bookmark/filter/searchable_bookmark.dart';
-import 'package:MarkMyProgress/data/preference/database/settings_store.dart';
+import 'package:MarkMyProgress/data/preference/database/preference_store.dart';
 import 'package:MarkMyProgress/data/runtime/pair.dart';
 import 'package:MarkMyProgress/data/runtime/search_result.dart';
 import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
@@ -16,7 +16,7 @@ import 'bookmark_bloc_state.dart';
 
 class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
   final DataStore dataStore;
-  final SettingsStore settingsStore;
+  final PreferenceStore settingsStore;
 
   BookmarkBloc({@required this.dataStore, @required this.settingsStore});
 

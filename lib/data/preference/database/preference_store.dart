@@ -5,8 +5,9 @@ import 'package:MarkMyProgress/data/preference/database/preference.dart';
 import 'package:MarkMyProgress/data/storage/abstraction/data_source.dart';
 import 'package:MarkMyProgress/data/storage/abstraction/storage.dart';
 
-class SettingsStore extends Storage<String, Preference> {
-  SettingsStore(DataSource<String, Preference> dataSource) : super(dataSource);
+class PreferenceStore extends Storage<String, Preference> {
+  PreferenceStore(DataSource<String, Preference> dataSource)
+      : super(dataSource);
 
   Future<Map<String, dynamic>> getFilterMap() async {
     var filterDataMap = FilterData().toJson();
@@ -30,7 +31,7 @@ class SettingsStore extends Storage<String, Preference> {
 
   @override
   Future<T> transactionClosed<T>(
-      FutureOr<T> Function(SettingsStore settingsStore) action) async {
+      FutureOr<T> Function(PreferenceStore settingsStore) action) async {
     await open();
     var result = await action(this);
     await close();
