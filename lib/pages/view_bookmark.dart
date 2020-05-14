@@ -4,7 +4,7 @@ import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/extensions/numbers.dart';
 import 'package:MarkMyProgress/extensions/state_extensions.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
-import 'package:MarkMyProgress/pages/edit_record.dart';
+import 'package:MarkMyProgress/pages/edit_bookmark.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:url_launcher/url_launcher.dart';
