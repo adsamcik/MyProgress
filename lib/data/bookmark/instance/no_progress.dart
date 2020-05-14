@@ -7,14 +7,4 @@ class NoProgress implements Progress {
 
   @override
   double get value => 0.0;
-
-  @override
-  set date(DateTime _date) {
-    throw StateError('Date cannot be set NoProgress instance.');
-  }
-
-  @override
-  set value(double _value) {
-    throw StateError('Value cannot be set on NoProgress instance.');
-  }
 }

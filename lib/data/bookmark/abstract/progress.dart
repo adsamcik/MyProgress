@@ -5,10 +5,10 @@ abstract class Progress {
   /// <summary>
   ///     Date of the progress update
   /// </summary>
-  DateTime date;
+  DateTime get date;
 
   /// <summary>
   ///     Progress value
   /// </summary>
-  double value;
+  double get value;
 }
