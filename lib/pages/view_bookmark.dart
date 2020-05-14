@@ -127,15 +127,10 @@ class _ViewBookmarkState extends State<ViewBookmark> {
                     textDirection: TextDirection.ltr,
                   );
                   renderParagraph.layout(constraints);
-                  var theme = Theme.of(context);
                   const padding = 16.0;
                   const textProgressPadding = 4.0;
                   var textWidth = renderParagraph
                       .getMinIntrinsicWidth(textStyle.fontSize)
-                      .ceilToDouble();
-
-                  var textHeight = renderParagraph
-                      .getMinIntrinsicHeight(textStyle.fontSize)
                       .ceilToDouble();
 
                   var textOffsetHorizontal = max(
