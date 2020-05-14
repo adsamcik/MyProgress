@@ -1,11 +1,14 @@
 import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
 import 'package:MarkMyProgress/data/bookmark/bloc/bookmark_bloc_event.dart';
 import 'package:MarkMyProgress/data/bookmark/database/data_store.dart';
+import 'package:MarkMyProgress/data/bookmark/filter/filter_data.dart';
 import 'package:MarkMyProgress/data/bookmark/filter/filter_runtime_data.dart';
 import 'package:MarkMyProgress/data/bookmark/filter/searchable_bookmark.dart';
+import 'package:MarkMyProgress/data/preference/database/preference.dart';
 import 'package:MarkMyProgress/data/preference/database/preference_store.dart';
 import 'package:MarkMyProgress/data/runtime/pair.dart';
 import 'package:MarkMyProgress/data/runtime/search_result.dart';
+import 'package:MarkMyProgress/data/storage/abstraction/storage_subscribable.dart';
 import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
 import 'package:bloc/bloc.dart';
@@ -18,7 +21,9 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
   final DataStore dataStore;
   final PreferenceStore settingsStore;
 
-  BookmarkBloc({@required this.dataStore, @required this.settingsStore});
+  BookmarkBloc({@required this.dataStore, @required this.settingsStore}) {
+    settingsStore.subscribeToDataChanges(_onSettingsChanged);
+  }
 
   @override
   Future<void> close() async {
@@ -29,6 +34,15 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
   @override
   BookmarkBlocState get initialState => BookmarkBlocState.notReady();
 
+  void _onSettingsChanged(
+      StorageEvent event, Iterable<Preference> preferences) {
+    var json = FilterData().toJson();
+    if (preferences.any((element) => json.containsKey(element.key))) {
+      settingsStore.getFilterData().then((filterData) =>
+          add(BookmarkBlocEvent.updateFilterData(data: filterData)));
+    }
+  }
+
   @override
   Stream<BookmarkBlocState> mapEventToState(BookmarkBlocEvent event) async* {
     yield* event.map(
@@ -38,6 +52,7 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
       incrementProgress: _mapIncrementBookmark,
       updateBookmark: _mapUpdateBookmark,
       updateFilterQuery: _mapUpdateFilterQuery,
+      updateFilterData: _mapUpdateFilterData,
     );
   }
 
@@ -121,10 +136,20 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
   Stream<BookmarkBlocState> _mapUpdateFilterQuery(
       UpdateFilterQuery event) async* {
     yield await state.maybeMap(
-        ready: (currentState) {
-          var filterData = FilterRuntimeData(currentState.filterData.filterData,
-              query: event.query.toLowerCase());
-          return _reFilter(currentState, filterData);
+        ready: (ready) {
+          var filterData =
+              ready.filterData.copyWith(query: event.query.toLowerCase());
+          return _reFilter(ready, filterData);
+        },
+        orElse: () => state);
+  }
+
+  Stream<BookmarkBlocState> _mapUpdateFilterData(
+      UpdateFilterData event) async* {
+    yield await state.maybeMap(
+        ready: (ready) {
+          var filterData = ready.filterData.copyWith(filterData: event.data);
+          return _reFilter(ready, filterData);
         },
         orElse: () => state);
   }
