@@ -4,27 +4,19 @@ import 'package:MarkMyProgress/data/bookmark/bloc/bloc.dart';
 import 'package:MarkMyProgress/data/bookmark/instance/generic_bookmark.dart';
 import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
+import 'package:MarkMyProgress/extensions/numbers.dart';
+import 'package:MarkMyProgress/extensions/state_extensions.dart';
 import 'package:MarkMyProgress/pages/settings.dart';
 import 'package:MarkMyProgress/pages/statistics.dart';
+import 'package:MarkMyProgress/pages/view_bookmark.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'edit_record.dart';
-
 class BookmarkList extends StatefulWidget {
   BookmarkList({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -33,22 +25,13 @@ class BookmarkList extends StatefulWidget {
 }
 
 class _BookmarkListState extends State<BookmarkList> {
-  Future<T> navigate<T>(WidgetBuilder builder) async {
-    return await Navigator.push<T>(
-      context,
-      MaterialPageRoute<T>(builder: builder),
-    );
-  }
-
   void _addNewItem(BuildContext context) async {
     var newItem = GenericBookmark();
-    await navigate<PersistentBookmark>(
-        (context) => EditRecord(bookmark: newItem));
+    await navigate<void>((context) => ViewBookmark(bookmark: newItem));
   }
 
   void _viewDetail(PersistentBookmark bookmark) async {
-    await navigate<PersistentBookmark>(
-        (context) => EditRecord(bookmark: bookmark));
+    await navigate<void>((context) => ViewBookmark(bookmark: bookmark));
   }
 
   final TextEditingController _searchQueryController = TextEditingController();
@@ -79,7 +62,7 @@ class _BookmarkListState extends State<BookmarkList> {
                           String title;
                           if (kDebugMode && item.match != 1) {
                             title =
-                                '${bookmark.title} - (${item.match.toStringAsFixed(2)})';
+                                '${bookmark.title} - (${item.match.toPrecision(2).toString()})';
                           } else {
                             title = bookmark.title;
                           }
