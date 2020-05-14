@@ -26,4 +26,9 @@ class GenericProgress implements Progress {
       _$GenericProgressFromJson(json);
 
   Map<String, dynamic> toJson() => _$GenericProgressToJson(this);
+
+  @override
+  String toString() {
+    return 'GenericProgress{date: $date, value: $value}';
+  }
 }
