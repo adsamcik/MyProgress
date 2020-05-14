@@ -1,8 +1,11 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import 'filter_data.dart';
 
-class FilterRuntimeData {
-  String query;
-  FilterData filterData;
+part 'filter_runtime_data.freezed.dart';
 
-  FilterRuntimeData(this.filterData, {this.query = ''});
+@freezed
+abstract class FilterRuntimeData with _$FilterRuntimeData {
+  factory FilterRuntimeData(FilterData filterData,
+      {@Default('') String query}) = _FilterRuntimeData;
 }
