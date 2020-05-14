@@ -111,6 +111,8 @@ class _ViewBookmarkState extends State<ViewBookmark> {
                     value: (bookmark.progress / bookmark.maxProgress),
                     semanticsValue: bookmark.progress.toString(),
                     semanticsLabel: 'Progress',
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        (Theme.of(context).accentColor.withAlpha(127))),
                   )),
             ),
             Positioned.fill(
