@@ -4,6 +4,7 @@ import 'package:MarkMyProgress/data/bookmark/abstract/web_bookmark.dart';
 import 'package:MarkMyProgress/data/runtime/searchable_variable.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'generic_progress.dart';
@@ -48,4 +49,9 @@ class GenericBookmark extends BaseBookmark implements WebBookmark {
             originalTitle, localizedTitle.isNullOrEmpty ? 1 : 0.99),
         SearchableVariable(webAddress, 0.9)
       ];
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
 }

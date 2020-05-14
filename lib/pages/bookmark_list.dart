@@ -42,31 +42,13 @@ class _BookmarkListState extends State<BookmarkList> {
 
   void _addNewItem(BuildContext context) async {
     var newItem = GenericBookmark();
-    var bookmark = await navigate<PersistentBookmark>(
+    await navigate<PersistentBookmark>(
         (context) => EditRecord(bookmark: newItem));
-
-    if (bookmark == null) {
-      return;
-    }
-
-    // todo move this inside edit
-    context
-        .bloc<BookmarkBloc>()
-        .add(BookmarkBlocEvent.addBookmark(bookmark: bookmark));
   }
 
   void _viewDetail(PersistentBookmark bookmark) async {
-    var item = await navigate<PersistentBookmark>(
+    await navigate<PersistentBookmark>(
         (context) => EditRecord(bookmark: bookmark));
-
-    if (item == null) {
-      return;
-    }
-
-    // todo move this inside edit
-    context
-        .bloc<BookmarkBloc>()
-        .add(BookmarkBlocEvent.updateBookmark(bookmark: bookmark));
   }
 
   final TextEditingController _searchQueryController = TextEditingController();

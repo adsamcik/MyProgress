@@ -1,9 +1,11 @@
 import 'package:MarkMyProgress/constants/Patterns.dart';
 import 'package:MarkMyProgress/data/bookmark/abstract/web_bookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/bloc/bloc.dart';
 import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 
 import '../data/bookmark/abstract/persistent_bookmark.dart';
 import '../input/reg_ex_input_formatter.dart';
@@ -163,6 +165,9 @@ class _EditRecordState extends State<EditRecord> {
         onPressed: () {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
+            GetIt.instance
+                .get<BookmarkBloc>()
+                .add(BookmarkBlocEvent.saveBookmark(bookmark: bookmark));
             Navigator.pop(context, bookmark);
           }
         },

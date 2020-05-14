@@ -19,5 +19,7 @@ Future setupProductionDependencyInjection() async {
   gi.registerLazySingleton<BookmarkBloc>(
       () => BookmarkBloc(dataStore: gi.get(), settingsStore: gi.get()));
 
+  // BlocSupervisor.delegate = BlocDebugDelegate();
+
   gi.registerLazySingleton<PreferenceBloc>(() => PreferenceBloc(gi.get()));
 }

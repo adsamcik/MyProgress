@@ -107,10 +107,10 @@ class SembastDataSource<Key, Value extends Storable<Key>>
   @override
   Future<bool> update(Value value) async {
     try {
-      await _store
-          .record(value.key)
-          .update(_databaseClient, _mapInstanceToDatabase(value));
-      return true;
+      return await _store
+              .record(value.key)
+              .update(_databaseClient, _mapInstanceToDatabase(value)) !=
+          null;
     } on Error catch (_, trace) {
       print(trace);
       return false;
@@ -146,8 +146,12 @@ class SembastDataSource<Key, Value extends Storable<Key>>
       return await database.transaction((transaction) {
         var transactionDataSource =
             SembastDataSource<Key, Value>(_connectionString, _mapper);
-        transactionDataSource._openWithClient(transaction);
-        return transactionFunc(transactionDataSource);
+        try {
+          transactionDataSource._openWithClient(transaction);
+          return transactionFunc(transactionDataSource);
+        } finally {
+          transactionDataSource.close();
+        }
       });
     } else {
       throw StateError('Transaction can only be created from database.');

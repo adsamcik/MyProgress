@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:MarkMyProgress/data/storage/abstraction/data_source.dart';
 import 'package:MarkMyProgress/data/storage/abstraction/storage_subscribable.dart';
 
@@ -116,21 +118,36 @@ abstract class Storage<Key, Value extends Storable<Key>> {
   }
 
   Future<Result> transactionClosed<Result>(
-      Result Function(Storage<Key, Value> storage) transactionFunc) async {
-    await open();
-    var result = await transaction(transactionFunc);
-    await close();
-    return result;
+      FutureOr<Result> Function(Storage<Key, Value> storage)
+          transactionFunc) async {
+    try {
+      await open();
+      return await transaction(transactionFunc);
+    } catch (error, trace) {
+      print(error);
+      print(trace);
+      return null;
+    } finally {
+      await close();
+    }
   }
 
   Future<Result> transaction<Result>(
-          Result Function(Storage<Key, Value> storage) transactionFunc) async =>
-      await _dataSource.transaction((storage) => transactionFunc(this));
+      FutureOr<Result> Function(Storage<Key, Value> storage)
+          transactionFunc) async {
+    // todo implement transactions properly
+    return await transactionFunc(this);
+    /*await open();
+
+    await close();
+    var result =
+        await _dataSource.transaction((storage -- this needs to be used) => transactionFunc(this));*/
+  }
 
   void _checkIfOpen() {
     assert(
         isOpen,
-        'DataSource is not open. '
+        'storage is not open. '
         'It needs to be opened before doing any operations on it.');
   }
 }

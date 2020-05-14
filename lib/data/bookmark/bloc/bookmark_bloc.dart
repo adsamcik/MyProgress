@@ -47,10 +47,9 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
   Stream<BookmarkBlocState> mapEventToState(BookmarkBlocEvent event) async* {
     yield* event.map(
       load: _mapLoad,
-      addBookmark: _mapAddBookmark,
+      saveBookmark: _mapSaveBookmark,
       removeBookmark: _mapRemoveBookmark,
       incrementProgress: _mapIncrementBookmark,
-      updateBookmark: _mapUpdateBookmark,
       updateFilterQuery: _mapUpdateFilterQuery,
       updateFilterData: _mapUpdateFilterData,
     );
@@ -76,18 +75,21 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
     );
   }
 
-  Stream<BookmarkBlocState> _mapAddBookmark(AddBookmark event) async* {
+  Stream<BookmarkBlocState> _mapSaveBookmark(AddBookmark event) async* {
     yield await state.maybeMap(
-        ready: (currentState) {
-          return dataStore
-              .transactionClosed<dynamic>(
-                  (dataStore) => dataStore.insertAuto(event.bookmark))
-              .then((dynamic value) {
-            currentState.bookmarkList.add(SearchableBookmark(event.bookmark));
-            var filterList = _updateFilter(
-                currentState.filterData, currentState.bookmarkList);
-            return currentState.copyWith(
-              version: currentState.version + 1,
+        ready: (ready) {
+          return dataStore.transactionClosed<dynamic>((transaction) {
+            if (event.bookmark.key == null) {
+              ready.bookmarkList.add(SearchableBookmark(event.bookmark));
+              return transaction.insertAuto(event.bookmark);
+            } else {
+              return transaction.update(event.bookmark);
+            }
+          }).then((dynamic value) {
+            var filterList =
+                _updateFilter(ready.filterData, ready.bookmarkList);
+            return ready.copyWith(
+              version: ready.version + 1,
               filteredBookmarkList: filterList,
             );
           });
@@ -121,15 +123,6 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
             return currentState.copyWith(version: currentState.version + 1);
           });
         },
-        orElse: () => state);
-  }
-
-  Stream<BookmarkBlocState> _mapUpdateBookmark(UpdateBookmark event) async* {
-    yield await state.maybeMap(
-        ready: (currentState) =>
-            _updateBookmark(event.bookmark).then((dynamic value) {
-              return currentState.copyWith(version: currentState.version + 1);
-            }),
         orElse: () => state);
   }
 
