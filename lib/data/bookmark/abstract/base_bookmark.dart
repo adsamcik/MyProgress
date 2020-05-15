@@ -74,4 +74,27 @@ abstract class BaseBookmark implements PersistentBookmark {
   }
 
   Progress createNewProgress(double progress);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is BaseBookmark &&
+          runtimeType == other.runtimeType &&
+          key == other.key &&
+          localizedTitle == other.localizedTitle &&
+          originalTitle == other.originalTitle &&
+          maxProgress == other.maxProgress &&
+          ongoing == other.ongoing &&
+          abandoned == other.abandoned &&
+          progressIncrement == other.progressIncrement;
+
+  @override
+  int get hashCode =>
+      key.hashCode ^
+      localizedTitle.hashCode ^
+      originalTitle.hashCode ^
+      maxProgress.hashCode ^
+      ongoing.hashCode ^
+      abandoned.hashCode ^
+      progressIncrement.hashCode;
 }

@@ -4,6 +4,7 @@ import 'package:MarkMyProgress/data/bookmark/abstract/web_bookmark.dart';
 import 'package:MarkMyProgress/data/runtime/searchable_variable.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -54,4 +55,17 @@ class GenericBookmark extends BaseBookmark implements WebBookmark {
   String toString() {
     return toJson().toString();
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      super == other &&
+          other is GenericBookmark &&
+          runtimeType == other.runtimeType &&
+          webAddress == other.webAddress &&
+          listEquals(history, other.history);
+
+  @override
+  int get hashCode =>
+      super.hashCode ^ webAddress.hashCode ^ history_generic.hashCode;
 }
