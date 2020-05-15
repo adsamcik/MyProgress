@@ -1,6 +1,6 @@
 import 'package:MarkMyProgress/data/bookmark/bloc/bloc.dart';
 import 'package:MarkMyProgress/data/preference/bloc/bloc.dart';
-import 'package:MarkMyProgress/pages/bookmark_list.dart';
+import 'package:MarkMyProgress/pages/list_bookmark.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
