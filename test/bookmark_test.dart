@@ -24,89 +24,69 @@ void main() {
   testBookmark.originalTitle = 'original title';
   testBookmark.webAddress = 'web address';
 
-  var json = testBookmark.toJson();
-  test('Serialization test', () async {
-    expect(json, {
-      'localizedTitle': 'localized title',
-      'originalTitle': 'original title',
-      'maxProgress': 15.0,
-      'ongoing': true,
-      'abandoned': false,
-      'webAddress': 'web address',
-      'history': [
-        {
-          'date': testBookmark.history.first.date.toIso8601String(),
-          'value': 15.0
-        }
-      ],
-      'progressIncrement': 1.0
-    });
-  });
-
   group('Bookmark function test', () {
-    var testBookmarkCopy = GenericBookmark();
+    var bookmark = GenericBookmark();
 
     test('Title test', () {
-      expect(testBookmarkCopy.title, '');
+      expect(bookmark.title, '');
 
-      testBookmarkCopy.localizedTitle = testBookmark.localizedTitle;
+      bookmark.localizedTitle = testBookmark.localizedTitle;
 
-      expect(testBookmarkCopy.title, testBookmark.localizedTitle);
+      expect(bookmark.title, testBookmark.localizedTitle);
 
-      testBookmarkCopy.originalTitle = testBookmark.originalTitle;
-      testBookmarkCopy.localizedTitle = null;
+      bookmark.originalTitle = testBookmark.originalTitle;
+      bookmark.localizedTitle = null;
 
-      expect(testBookmarkCopy.title, testBookmark.originalTitle);
+      expect(bookmark.title, testBookmark.originalTitle);
 
-      testBookmarkCopy.originalTitle = null;
+      bookmark.originalTitle = null;
 
-      expect(testBookmarkCopy.title, '');
+      expect(bookmark.title, '');
     });
 
     test('Log progress test', () {
       const progress = 123.456;
-      expect(testBookmarkCopy.progress, 0.0);
-      testBookmarkCopy.logProgress(progress);
-      expect(testBookmarkCopy.progress, progress);
+      expect(bookmark.progress, 0.0);
+      bookmark.logProgress(progress);
+      expect(bookmark.progress, progress);
     });
 
     test('Log progress update max progress test', () {
       const progress = 234.567;
 
       final resetProgress = () {
-        testBookmarkCopy.progress = 0.0;
-        testBookmarkCopy.maxProgress = 0.0;
-        expect(testBookmarkCopy.progress, 0.0);
-        expect(testBookmarkCopy.maxProgress, 0.0);
+        bookmark.progress = 0.0;
+        bookmark.maxProgress = 0.0;
+        expect(bookmark.progress, 0.0);
+        expect(bookmark.maxProgress, 0.0);
       };
 
       resetProgress();
-      testBookmarkCopy.ongoing = false;
-      expect(testBookmarkCopy.ongoing, false);
+      bookmark.ongoing = false;
+      expect(bookmark.ongoing, false);
 
-      testBookmarkCopy.logProgress(progress);
-      expect(testBookmarkCopy.progress, progress);
-      expect(testBookmarkCopy.maxProgress, 0.0);
+      bookmark.logProgress(progress);
+      expect(bookmark.progress, progress);
+      expect(bookmark.maxProgress, 0.0);
 
       resetProgress();
-      testBookmarkCopy.ongoing = true;
-      expect(testBookmarkCopy.ongoing, true);
+      bookmark.ongoing = true;
+      expect(bookmark.ongoing, true);
 
-      testBookmarkCopy.logProgress(progress);
-      expect(testBookmarkCopy.progress, progress);
-      expect(testBookmarkCopy.maxProgress, progress);
+      bookmark.logProgress(progress);
+      expect(bookmark.progress, progress);
+      expect(bookmark.maxProgress, progress);
 
-      testBookmarkCopy.logProgress(progress - 1.0);
-      expect(testBookmarkCopy.progress, progress - 1.0);
-      expect(testBookmarkCopy.maxProgress, progress);
+      bookmark.logProgress(progress - 1.0);
+      expect(bookmark.progress, progress - 1.0);
+      expect(bookmark.maxProgress, progress);
     });
 
     test('Increment progress test', () {
-      final expectedProgress =
-          testBookmarkCopy.progress + testBookmarkCopy.progressIncrement;
+      final expectedProgress = bookmark.progress + bookmark.progressIncrement;
 
-      testBookmarkCopy.incrementProgress();
-      expect(testBookmarkCopy.progress, expectedProgress);
+      bookmark.incrementProgress();
+      expect(bookmark.progress, expectedProgress);
     });
 
     test('History behaviour test', () {
@@ -117,6 +97,8 @@ void main() {
       expect(tmpBookmark.history, [GenericProgress(today, 20.0)]);
     });
   });
+
+  var json = testBookmark.toJson();
 
   storageTests<int, PersistentBookmark>(
     'Mock DataStore tests',
