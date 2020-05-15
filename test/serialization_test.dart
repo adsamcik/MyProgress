@@ -1,4 +1,5 @@
 import 'package:MarkMyProgress/data/bookmark/instance/generic_bookmark.dart';
+import 'package:MarkMyProgress/data/preference/database/preference.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void _genericBookmarkSerializationTest() {
@@ -31,6 +32,29 @@ void _genericBookmarkSerializationTest() {
   });
 }
 
+void _preferenceSerializationTest() {
+  final stringPreference = Preference('string', 'value');
+  final boolPreference = Preference('bool', true);
+  final intPreference = Preference('int', 7);
+
+  const stringJson = {'key': 'string', 'value': 'value'};
+  const boolJson = {'key': 'bool', 'value': true};
+  const intJson = {'key': 'int', 'value': 7};
+
+  test('Serialization test', () async {
+    expect(stringPreference.toJson(), stringJson);
+    expect(boolPreference.toJson(), boolJson);
+    expect(intPreference.toJson(), intJson);
+  });
+
+  test('Deserialization test', () async {
+    expect(Preference.fromJson(stringJson), stringPreference);
+    expect(Preference.fromJson(boolJson), boolPreference);
+    expect(Preference.fromJson(intJson), intPreference);
+  });
+}
+
 void main() {
   _genericBookmarkSerializationTest();
+  _preferenceSerializationTest();
 }

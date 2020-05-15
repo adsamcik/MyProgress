@@ -17,22 +17,6 @@ void main() {
   final boolPreference = Preference('bool', true);
   final intPreference = Preference('int', 7);
 
-  var stringJson = stringPreference.toJson();
-  var boolJson = boolPreference.toJson();
-  var intJson = intPreference.toJson();
-
-  test('Serialization test', () async {
-    expect(stringJson, {'key': 'string', 'value': 'value'});
-    expect(boolJson, {'key': 'bool', 'value': true});
-    expect(intJson, {'key': 'int', 'value': 7});
-  });
-
-  test('Deserialization test', () async {
-    expect(Preference.fromJson(stringJson), stringPreference);
-    expect(Preference.fromJson(boolJson), boolPreference);
-    expect(Preference.fromJson(intJson), intPreference);
-  });
-
   group('Test settings store', () {
     final settingsStore =
         gi.get<PreferenceStore>(instanceName: mockSettingsStoreName);
