@@ -7,6 +7,7 @@ import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/extensions/numbers.dart';
 import 'package:MarkMyProgress/extensions/state_extensions.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
+import 'package:MarkMyProgress/get.dart';
 import 'package:MarkMyProgress/pages/edit_bookmark.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -112,14 +113,14 @@ class _ViewBookmarkState extends State<ViewBookmark> {
                     semanticsValue: bookmark.progress.toString(),
                     semanticsLabel: 'Progress',
                     valueColor: AlwaysStoppedAnimation<Color>(
-                        (Theme.of(context).accentColor.withAlpha(127))),
+                        (Get.theme(context).accentColor.withAlpha(127))),
                   )),
             ),
             Positioned.fill(
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   var progress = bookmark.progress.toString();
-                  var textStyle = Theme.of(context)
+                  var textStyle = Get.theme(context)
                       .textTheme
                       .subtitle1
                       .copyWith(fontWeight: FontWeight.bold);

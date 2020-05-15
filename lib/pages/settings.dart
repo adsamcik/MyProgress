@@ -1,4 +1,5 @@
 import 'package:MarkMyProgress/data/preference/bloc/bloc.dart';
+import 'package:MarkMyProgress/get.dart';
 import 'package:MarkMyProgress/import/exporter.dart';
 import 'package:MarkMyProgress/import/importer.dart';
 import 'package:flutter/cupertino.dart';
@@ -55,7 +56,7 @@ class _SettingsState extends State<Settings> {
                 children: [
                   Text(
                     'Filter',
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Get.theme(context).textTheme.headline5,
                   ),
                   Wrap(
                     children: _filterDataList

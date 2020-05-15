@@ -6,6 +6,7 @@ import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/extensions/numbers.dart';
 import 'package:MarkMyProgress/extensions/state_extensions.dart';
+import 'package:MarkMyProgress/get.dart';
 import 'package:MarkMyProgress/pages/settings.dart';
 import 'package:MarkMyProgress/pages/statistics.dart';
 import 'package:MarkMyProgress/pages/view_bookmark.dart';
@@ -52,7 +53,7 @@ class _BookmarkListState extends State<BookmarkList> {
                       child: ListView.separated(
                         padding: EdgeInsets.fromLTRB(0, 72, 0, 96),
                         separatorBuilder: (context, index) => Divider(
-                          color: Theme.of(context).dividerColor,
+                          color: Get.theme(context).dividerColor,
                           height: 0,
                         ),
                         itemBuilder: (context, index) {
@@ -151,7 +152,7 @@ class _BookmarkListState extends State<BookmarkList> {
             right: 16,
             top: 16,
             child: Material(
-                color: Theme.of(context).cardColor,
+                color: Get.theme(context).cardColor,
                 borderRadius: BorderRadius.all(Radius.circular(16)),
                 elevation: 2,
                 child: PreferredSize(
