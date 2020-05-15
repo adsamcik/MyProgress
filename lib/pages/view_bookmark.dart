@@ -99,6 +99,21 @@ class _ViewBookmarkState extends State<ViewBookmark> {
               )));
 
   List<Widget> _buildProgressData() {
+    var theme = Get.theme(context);
+    var progressBarBackgroundColor = HSLColor.fromColor(theme.colorScheme.background);
+    var sign = (0.5 - progressBarBackgroundColor.lightness);
+    const lightnessStepValue = 0.1;
+    var lightnessStep = sign >= 0 ? lightnessStepValue : -lightnessStepValue;
+    var lightness = max(
+        min(progressBarBackgroundColor.lightness, 1.0 - lightnessStepValue),
+        lightnessStepValue);
+    progressBarBackgroundColor =
+        progressBarBackgroundColor.withLightness(lightness - lightnessStep);
+
+    var progressBarForegroundColor = progressBarBackgroundColor
+        .withLightness(lightness + lightnessStep)
+        .toColor();
+
     return [
       _buildRowWrapper([
         Expanded(
@@ -112,8 +127,9 @@ class _ViewBookmarkState extends State<ViewBookmark> {
                     value: (bookmark.progress / bookmark.maxProgress),
                     semanticsValue: bookmark.progress.toString(),
                     semanticsLabel: 'Progress',
+                    backgroundColor: progressBarBackgroundColor.toColor(),
                     valueColor: AlwaysStoppedAnimation<Color>(
-                        (Get.theme(context).accentColor.withAlpha(127))),
+                        progressBarForegroundColor),
                   )),
             ),
             Positioned.fill(
@@ -124,6 +140,7 @@ class _ViewBookmarkState extends State<ViewBookmark> {
                       .textTheme
                       .subtitle1
                       .copyWith(fontWeight: FontWeight.bold);
+
                   var renderParagraph = RenderParagraph(
                     TextSpan(text: progress, style: textStyle),
                     maxLines: 1,
