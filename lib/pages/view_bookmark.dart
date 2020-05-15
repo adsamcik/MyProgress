@@ -6,6 +6,7 @@ import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/extensions/numbers.dart';
 import 'package:MarkMyProgress/extensions/state_extensions.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
+import 'package:MarkMyProgress/misc/app_icons.dart';
 import 'package:MarkMyProgress/pages/edit_bookmark.dart';
 import 'package:MarkMyProgress/widgets/label_progress_bar.dart';
 import 'package:flutter/material.dart';
@@ -57,12 +58,12 @@ class _ViewBookmarkState extends State<ViewBookmark> {
 
     if (bookmark.originalTitle.isNotNullOrEmpty) {
       _generalDataList.add(
-          _ItemData(Icons.title, 'Original title', bookmark.originalTitle));
+          _ItemData(AppIcons.title, 'Original title', bookmark.originalTitle));
     }
 
     if (bookmark.localizedTitle.isNotNullOrEmpty) {
-      _generalDataList.add(
-          _ItemData(Icons.title, 'Localized title', bookmark.localizedTitle));
+      _generalDataList.add(_ItemData(
+          AppIcons.language, 'Localized title', bookmark.localizedTitle));
     }
 
     if (bookmark is WebBookmark) {
@@ -97,12 +98,41 @@ class _ViewBookmarkState extends State<ViewBookmark> {
                 children: children.toList(),
               )));
 
+  IconData _selectIcon(double value) {
+    if (value < 0.2) {
+      return AppIcons.progress_0;
+    } else if (value < 0.4) {
+      return AppIcons.progress_1;
+    } else if (value < 0.9) {
+      return AppIcons.progress_2;
+    } else {
+      return AppIcons.progress_3;
+    }
+  }
+
   List<Widget> _buildProgressData() {
     var lastProgress = bookmark.lastProgress;
     var progress = bookmark.maxProgress < bookmark.progress
         ? 1.0
         : bookmark.progress / bookmark.maxProgress;
+
     return [
+      _buildRowWrapper(
+        _buildIconValueRow(
+            _selectIcon(progress), 'Progress', bookmark.progress.toString()),
+        null,
+      ),
+      _buildRowWrapper(
+        _buildIconValueRow(AppIcons.progress_3, 'Max progress',
+            bookmark.maxProgress.toString()),
+        null,
+      ),
+      if (!(lastProgress is NoProgress))
+        _buildRowWrapper(
+          _buildIconValueRow(AppIcons.calendar, 'Last progress',
+              lastProgress.date.toDateString()),
+          null,
+        ),
       _buildRowWrapper([
         Expanded(
             child: LinearLabelProgressIndicator(
@@ -110,22 +140,6 @@ class _ViewBookmarkState extends State<ViewBookmark> {
           textValue: bookmark.progress.toString(),
         ))
       ]),
-      _buildRowWrapper(
-        _buildIconValueRow(
-            Icons.show_chart, 'Progress', bookmark.progress.toString()),
-        null,
-      ),
-      _buildRowWrapper(
-        _buildIconValueRow(Icons.trending_flat, 'Max progress',
-            bookmark.maxProgress.toString()),
-        null,
-      ),
-      if (!(lastProgress is NoProgress))
-        _buildRowWrapper(
-          _buildIconValueRow(Icons.calendar_today, 'Last progress',
-              lastProgress.date.toDateString()),
-          null,
-        ),
     ];
   }
 
