@@ -1,5 +1,6 @@
 import 'package:MarkMyProgress/data/bookmark/abstract/progress.dart';
 import 'package:MarkMyProgress/data/bookmark/abstract/web_bookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/bloc/bloc.dart';
 import 'package:MarkMyProgress/data/bookmark/instance/no_progress.dart';
 import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
@@ -11,19 +12,20 @@ import 'package:MarkMyProgress/pages/edit_bookmark.dart';
 import 'package:MarkMyProgress/widgets/label_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../data/bookmark/abstract/persistent_bookmark.dart';
 
 class ViewBookmark extends StatefulWidget {
-  final PersistentBookmark bookmark;
+  final int bookmarkKey;
 
-  ViewBookmark({@required this.bookmark});
+  ViewBookmark({@required this.bookmarkKey});
 
   @override
   State<StatefulWidget> createState() {
-    return _ViewBookmarkState(bookmark: bookmark);
+    return _ViewBookmarkState();
   }
 }
 
@@ -45,16 +47,12 @@ class _HistoryData {
 }
 
 class _ViewBookmarkState extends State<ViewBookmark> {
-  final PersistentBookmark bookmark;
-
   final List<_ItemData> _generalDataList = [];
   final List<_HistoryData> _historyDataList = [];
+  bool _isCompleteHistory = false;
 
-  _ViewBookmarkState({@required this.bookmark});
-
-  @override
-  void initState() {
-    super.initState();
+  void _updateState(PersistentBookmark bookmark) {
+    _generalDataList.clear();
 
     if (bookmark.originalTitle.isNotNullOrEmpty) {
       _generalDataList.add(
@@ -82,11 +80,14 @@ class _ViewBookmarkState extends State<ViewBookmark> {
         (bookmark.history ?? <Progress>[]).reversed.take(10).toList().reversed;
 
     var lastProgress = 0.0;
+    _historyDataList.clear();
     historyList.forEach((element) {
       var progress = lastProgress == 0 ? 0.0 : element.value - lastProgress;
       _historyDataList.add(_HistoryData(element.date, element.value, progress));
       lastProgress = element.value;
     });
+
+    _isCompleteHistory = _historyDataList.length == bookmark.history.length;
   }
 
   Widget _buildRowWrapper(Iterable<Widget> children, [void Function() onTap]) =>
@@ -110,7 +111,7 @@ class _ViewBookmarkState extends State<ViewBookmark> {
     }
   }
 
-  List<Widget> _buildProgressData() {
+  List<Widget> _buildProgressData(PersistentBookmark bookmark) {
     var lastProgress = bookmark.lastProgress;
     var progress = bookmark.maxProgress < bookmark.progress
         ? 1.0
@@ -184,7 +185,7 @@ class _ViewBookmarkState extends State<ViewBookmark> {
       String diff;
 
       if (item.deltaValue == 0) {
-        if (_historyDataList.length == bookmark.history.length) {
+        if (_isCompleteHistory) {
           diff = '+${item.value.toPrecision(2).toString()}';
         } else {
           diff = '...';
@@ -202,45 +203,59 @@ class _ViewBookmarkState extends State<ViewBookmark> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(bookmark.title),
-      ),
-      body: SingleChildScrollView(
-          child: SafeArea(
-              minimum: EdgeInsets.all(16.0),
-              maintainBottomViewPadding: true,
-              child: Column(children: [
-                Card(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: _buildGeneralData(),
-                  ),
+    return BlocBuilder<BookmarkBloc, BookmarkBlocState>(
+        builder: (BuildContext context, state) => state.maybeMap(
+            ready: (ready) {
+              var bookmark = ready.bookmarkList
+                  .firstWhere(
+                      (element) => element.bookmark.key == widget.bookmarkKey)
+                  .bookmark;
+
+              _updateState(bookmark);
+
+              return Scaffold(
+                appBar: AppBar(
+                  title: Text(bookmark.title),
                 ),
-                Card(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: _buildProgressData(),
-                  ),
+                body: SingleChildScrollView(
+                  child: SafeArea(
+                      minimum: EdgeInsets.all(16.0),
+                      maintainBottomViewPadding: true,
+                      child: Column(children: [
+                        Card(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: _buildGeneralData(),
+                          ),
+                        ),
+                        Card(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: _buildProgressData(bookmark),
+                          ),
+                        ),
+                        Card(
+                          child: ListView.builder(
+                            physics: ClampingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: _historyDataList.length + 1,
+                            itemBuilder: (context, index) {
+                              return _buildHistoryItem(index);
+                            },
+                          ),
+                        ),
+                      ])),
                 ),
-                Card(
-                  child: ListView.builder(
-                    physics: ClampingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: _historyDataList.length + 1,
-                    itemBuilder: (context, index) {
-                      return _buildHistoryItem(index);
-                    },
-                  ),
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () {
+                    navigate<void>(
+                        (context) => EditBookmark(bookmark: bookmark));
+                  },
+                  tooltip: 'Edit',
+                  child: Icon(Icons.edit),
                 ),
-              ]))),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          navigate<void>((context) => EditRecord(bookmark: bookmark));
-        },
-        tooltip: 'Edit',
-        child: Icon(Icons.edit),
-      ),
-    );
+              );
+            },
+            orElse: () => Container()));
   }
 }

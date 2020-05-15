@@ -17,6 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'edit_bookmark.dart';
+
 class BookmarkList extends StatefulWidget {
   BookmarkList({Key key, this.title}) : super(key: key);
 
@@ -29,11 +31,11 @@ class BookmarkList extends StatefulWidget {
 class _BookmarkListState extends State<BookmarkList> {
   void _addNewItem(BuildContext context) async {
     var newItem = GenericBookmark();
-    await navigate<void>((context) => ViewBookmark(bookmark: newItem));
+    await navigate<void>((context) => EditBookmark(bookmark: newItem));
   }
 
   void _viewDetail(PersistentBookmark bookmark) async {
-    await navigate<void>((context) => ViewBookmark(bookmark: bookmark));
+    await navigate<void>((context) => ViewBookmark(bookmarkKey: bookmark.key));
   }
 
   final TextEditingController _searchQueryController = TextEditingController();

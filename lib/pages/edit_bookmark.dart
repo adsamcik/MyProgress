@@ -10,18 +10,18 @@ import 'package:get_it/get_it.dart';
 import '../data/bookmark/abstract/persistent_bookmark.dart';
 import '../input/reg_ex_input_formatter.dart';
 
-class EditRecord extends StatefulWidget {
+class EditBookmark extends StatefulWidget {
   final PersistentBookmark bookmark;
 
-  EditRecord({@required this.bookmark});
+  EditBookmark({@required this.bookmark});
 
   @override
   State<StatefulWidget> createState() {
-    return _EditRecordState(bookmark: bookmark);
+    return _EditBookmarkState(bookmark: bookmark);
   }
 }
 
-class _EditRecordState extends State<EditRecord> {
+class _EditBookmarkState extends State<EditBookmark> {
   final PersistentBookmark bookmark;
 
   final _formKey = GlobalKey<FormState>();
@@ -32,7 +32,7 @@ class _EditRecordState extends State<EditRecord> {
 
   bool maxProgressHasChanged = false;
 
-  _EditRecordState({@required this.bookmark});
+  _EditBookmarkState({@required this.bookmark});
 
   @override
   Widget build(BuildContext context) {
