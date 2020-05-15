@@ -41,13 +41,13 @@ void _preferenceSerializationTest() {
   const boolJson = {'key': 'bool', 'value': true};
   const intJson = {'key': 'int', 'value': 7};
 
-  test('Serialization test', () async {
+  test('Preference serialization test', () async {
     expect(stringPreference.toJson(), stringJson);
     expect(boolPreference.toJson(), boolJson);
     expect(intPreference.toJson(), intJson);
   });
 
-  test('Deserialization test', () async {
+  test('Preference deserialization test', () async {
     expect(Preference.fromJson(stringJson), stringPreference);
     expect(Preference.fromJson(boolJson), boolPreference);
     expect(Preference.fromJson(intJson), intPreference);
