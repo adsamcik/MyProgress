@@ -7,7 +7,7 @@ import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/extensions/numbers.dart';
 import 'package:MarkMyProgress/extensions/state_extensions.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
-import 'package:MarkMyProgress/get.dart';
+import 'package:MarkMyProgress/misc/get.dart';
 import 'package:MarkMyProgress/pages/edit_bookmark.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

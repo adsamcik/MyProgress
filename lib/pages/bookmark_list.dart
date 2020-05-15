@@ -6,7 +6,7 @@ import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/extensions/numbers.dart';
 import 'package:MarkMyProgress/extensions/state_extensions.dart';
-import 'package:MarkMyProgress/get.dart';
+import 'package:MarkMyProgress/misc/get.dart';
 import 'package:MarkMyProgress/pages/settings.dart';
 import 'package:MarkMyProgress/pages/statistics.dart';
 import 'package:MarkMyProgress/pages/view_bookmark.dart';
