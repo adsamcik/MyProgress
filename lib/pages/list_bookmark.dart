@@ -6,6 +6,7 @@ import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/extensions/numbers.dart';
 import 'package:MarkMyProgress/extensions/state_extensions.dart';
+import 'package:MarkMyProgress/misc/app_icons.dart';
 import 'package:MarkMyProgress/misc/get.dart';
 import 'package:MarkMyProgress/pages/settings.dart';
 import 'package:MarkMyProgress/pages/statistics.dart';
@@ -174,16 +175,15 @@ class _BookmarkListState extends State<BookmarkList> {
                           onPressed: () {
                             navigate<dynamic>((context) => Statistics());
                           },
-                          icon: Icon(
-                            Icons.insert_chart,
-                          )),
+                          icon: Icon(AppIcons.insert_chart)),
                       IconButton(
                           onPressed: () async {
                             await navigate<dynamic>((context) => Settings());
                           },
-                          icon: Icon(
-                            Icons.settings,
-                          )),
+                          icon: Icon(AppIcons.settings_applications)),
+                      SizedBox(
+                        width: 8,
+                      )
                     ]))),
           ),
         ],
