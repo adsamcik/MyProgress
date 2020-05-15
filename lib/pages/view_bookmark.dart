@@ -1,5 +1,6 @@
 import 'package:MarkMyProgress/data/bookmark/abstract/progress.dart';
 import 'package:MarkMyProgress/data/bookmark/abstract/web_bookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/instance/no_progress.dart';
 import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/extensions/numbers.dart';
@@ -97,14 +98,46 @@ class _ViewBookmarkState extends State<ViewBookmark> {
               )));
 
   List<Widget> _buildProgressData() {
+    var lastProgress = bookmark.lastProgress;
+    var progress = bookmark.maxProgress < bookmark.progress
+        ? 1.0
+        : bookmark.progress / bookmark.maxProgress;
     return [
       _buildRowWrapper([
         Expanded(
             child: LinearLabelProgressIndicator(
-          value: bookmark.progress / bookmark.maxProgress,
+          value: progress,
           textValue: bookmark.progress.toString(),
         ))
-      ])
+      ]),
+      _buildRowWrapper(
+        _buildIconValueRow(
+            Icons.show_chart, 'Progress', bookmark.progress.toString()),
+        null,
+      ),
+      _buildRowWrapper(
+        _buildIconValueRow(Icons.trending_flat, 'Max progress',
+            bookmark.maxProgress.toString()),
+        null,
+      ),
+      if (!(lastProgress is NoProgress))
+        _buildRowWrapper(
+          _buildIconValueRow(Icons.calendar_today, 'Last progress',
+              lastProgress.date.toDateString()),
+          null,
+        ),
+    ];
+  }
+
+  List<Widget> _buildIconValueRow(IconData icon, String title, String value) {
+    return [
+      Expanded(
+          child: Row(children: [
+        Icon(icon),
+        SizedBox(width: 16),
+        Text(title),
+      ])),
+      Expanded(child: Text(value)),
     ];
   }
 
@@ -113,15 +146,13 @@ class _ViewBookmarkState extends State<ViewBookmark> {
 
     for (var i = 0; i < _generalDataList.length; i++) {
       var item = _generalDataList[i];
-      widgetList[i] = _buildRowWrapper([
-        Expanded(
-            child: Row(children: [
-          Icon(item.icon),
-          SizedBox(width: 16),
-          Text(item.title)
-        ])),
-        Expanded(child: Text(item.value)),
-      ], item.onTap);
+      widgetList[i] = _buildRowWrapper(
+          _buildIconValueRow(
+            item.icon,
+            item.title,
+            item.value,
+          ),
+          item.onTap);
     }
     return widgetList;
   }
