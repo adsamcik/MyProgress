@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:MarkMyProgress/data/bookmark/abstract/progress.dart';
 import 'package:MarkMyProgress/data/bookmark/abstract/web_bookmark.dart';
 import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
@@ -7,8 +5,8 @@ import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/extensions/numbers.dart';
 import 'package:MarkMyProgress/extensions/state_extensions.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
-import 'package:MarkMyProgress/misc/get.dart';
 import 'package:MarkMyProgress/pages/edit_bookmark.dart';
+import 'package:MarkMyProgress/widgets/label_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -99,84 +97,12 @@ class _ViewBookmarkState extends State<ViewBookmark> {
               )));
 
   List<Widget> _buildProgressData() {
-    var theme = Get.theme(context);
-    var progressBarBackgroundColor = HSLColor.fromColor(theme.colorScheme.background);
-    var sign = (0.5 - progressBarBackgroundColor.lightness);
-    const lightnessStepValue = 0.1;
-    var lightnessStep = sign >= 0 ? lightnessStepValue : -lightnessStepValue;
-    var lightness = max(
-        min(progressBarBackgroundColor.lightness, 1.0 - lightnessStepValue),
-        lightnessStepValue);
-    progressBarBackgroundColor =
-        progressBarBackgroundColor.withLightness(lightness - lightnessStep);
-
-    var progressBarForegroundColor = progressBarBackgroundColor
-        .withLightness(lightness + lightnessStep)
-        .toColor();
-
     return [
       _buildRowWrapper([
         Expanded(
-            child: Stack(
-          children: <Widget>[
-            SizedBox(
-              height: 30,
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(4.0),
-                  child: LinearProgressIndicator(
-                    value: (bookmark.progress / bookmark.maxProgress),
-                    semanticsValue: bookmark.progress.toString(),
-                    semanticsLabel: 'Progress',
-                    backgroundColor: progressBarBackgroundColor.toColor(),
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                        progressBarForegroundColor),
-                  )),
-            ),
-            Positioned.fill(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  var progress = bookmark.progress.toString();
-                  var textStyle = Get.theme(context)
-                      .textTheme
-                      .subtitle1
-                      .copyWith(fontWeight: FontWeight.bold);
-
-                  var renderParagraph = RenderParagraph(
-                    TextSpan(text: progress, style: textStyle),
-                    maxLines: 1,
-                    textDirection: TextDirection.ltr,
-                  );
-                  renderParagraph.layout(constraints);
-                  const padding = 16.0;
-                  const textProgressPadding = 4.0;
-                  var textWidth = renderParagraph
-                      .getMinIntrinsicWidth(textStyle.fontSize)
-                      .ceilToDouble();
-
-                  var textOffsetHorizontal = max(
-                      min(
-                          constraints.biggest.width *
-                                  (bookmark.progress / bookmark.maxProgress) +
-                              textProgressPadding,
-                          constraints.biggest.width - textWidth - padding),
-                      padding);
-
-                  return Padding(
-                    padding: EdgeInsets.only(
-                      left: textOffsetHorizontal,
-                    ),
-                    child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          progress,
-                          textAlign: TextAlign.left,
-                          style: textStyle,
-                        )),
-                  );
-                },
-              ),
-            )
-          ],
+            child: LinearLabelProgressIndicator(
+          value: bookmark.progress / bookmark.maxProgress,
+          textValue: bookmark.progress.toString(),
         ))
       ])
     ];
