@@ -184,6 +184,8 @@ abstract class $ReadyCopyWith<$Res> {
       List<SearchableBookmark> bookmarkList,
       List<ISearchResult<PersistentBookmark>> filteredBookmarkList,
       FilterRuntimeData filterData});
+
+  $FilterRuntimeDataCopyWith<$Res> get filterData;
 }
 
 class _$ReadyCopyWithImpl<$Res> extends _$BookmarkBlocStateCopyWithImpl<$Res>
@@ -213,6 +215,16 @@ class _$ReadyCopyWithImpl<$Res> extends _$BookmarkBlocStateCopyWithImpl<$Res>
           ? _value.filterData
           : filterData as FilterRuntimeData,
     ));
+  }
+
+  @override
+  $FilterRuntimeDataCopyWith<$Res> get filterData {
+    if (_value.filterData == null) {
+      return null;
+    }
+    return $FilterRuntimeDataCopyWith<$Res>(_value.filterData, (value) {
+      return _then(_value.copyWith(filterData: value));
+    });
   }
 }
 
