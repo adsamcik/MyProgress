@@ -106,7 +106,7 @@ class _EditBookmarkState extends State<EditBookmark> {
                   inputFormatters: <TextInputFormatter>[
                     RegExInputFormatter.decimalNumbers()
                   ],
-                  initialValue: bookmark.progress.toString(),
+                  initialValue: bookmark.progress.toDecimalString(),
                   decoration: InputDecoration(labelText: 'Current progress'),
                   onSaved: (String value) {
                     bookmark.logProgress(Rational.parse(value));
@@ -117,7 +117,7 @@ class _EditBookmarkState extends State<EditBookmark> {
                   inputFormatters: <TextInputFormatter>[
                     RegExInputFormatter.decimalNumbers()
                   ],
-                  initialValue: bookmark.maxProgress.toString(),
+                  initialValue: bookmark.maxProgress.toDecimalString(),
                   decoration: InputDecoration(labelText: 'Max progress'),
                   onChanged: (String value) => maxProgressHasChanged = true,
                   validator: (value) {
@@ -139,7 +139,7 @@ class _EditBookmarkState extends State<EditBookmark> {
                   inputFormatters: <TextInputFormatter>[
                     RegExInputFormatter.decimalNumbers()
                   ],
-                  initialValue: bookmark.progressIncrement.toString(),
+                  initialValue: bookmark.progressIncrement.toDecimalString(),
                   decoration:
                       InputDecoration(labelText: 'Quick increment value'),
                   onSaved: (String value) {

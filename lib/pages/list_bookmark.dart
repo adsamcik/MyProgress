@@ -91,7 +91,7 @@ class _BookmarkListState extends State<BookmarkList> {
                                                 CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                '${bookmark.progress} / ${bookmark.maxProgress}',
+                                                '${bookmark.progress.toDecimalString()} / ${bookmark.maxProgress.toDecimalString()}',
                                                 maxLines: 1,
                                               ),
                                               Text(
@@ -134,7 +134,7 @@ class _BookmarkListState extends State<BookmarkList> {
                                             }),
                                       OutlineButton(
                                           child: Text(
-                                              '+ ${bookmark.progressIncrement}'),
+                                              '+ ${bookmark.progressIncrement.toDecimalString()}'),
                                           onPressed: () => context
                                               .bloc<BookmarkBloc>()
                                               .add(BookmarkBlocEvent

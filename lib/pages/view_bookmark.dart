@@ -120,13 +120,13 @@ class _ViewBookmarkState extends State<ViewBookmark> {
 
     return [
       _buildRowWrapper(
-        _buildIconValueRow(
-            _selectIcon(progress), 'Progress', bookmark.progress.toString()),
+        _buildIconValueRow(_selectIcon(progress), 'Progress',
+            bookmark.progress.toDecimalString()),
         null,
       ),
       _buildRowWrapper(
         _buildIconValueRow(AppIcons.progress_3, 'Max progress',
-            bookmark.maxProgress.toString()),
+            bookmark.maxProgress.toDecimalString()),
         null,
       ),
       if (!(lastProgress is NoProgress))
@@ -139,7 +139,7 @@ class _ViewBookmarkState extends State<ViewBookmark> {
         Expanded(
             child: LinearLabelProgressIndicator(
           value: progress,
-          textValue: bookmark.progress.toString(),
+          textValue: bookmark.progress.toDecimalString(),
         ))
       ]),
     ];
@@ -197,7 +197,7 @@ class _ViewBookmarkState extends State<ViewBookmark> {
 
       return _buildRowWrapper([
         Expanded(child: Text(item.date.toDateString())),
-        Expanded(child: Text('${item.value} ($diff)')),
+        Expanded(child: Text('${item.value.toDecimalString()} ($diff)')),
       ], null);
     }
   }
