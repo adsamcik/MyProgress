@@ -4,7 +4,6 @@ import 'package:MarkMyProgress/data/bookmark/bloc/bloc.dart';
 import 'package:MarkMyProgress/data/bookmark/instance/no_progress.dart';
 import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
-import 'package:MarkMyProgress/extensions/numbers.dart';
 import 'package:MarkMyProgress/extensions/state_extensions.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
 import 'package:MarkMyProgress/misc/app_icons.dart';
@@ -14,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:rational/rational.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../data/bookmark/abstract/persistent_bookmark.dart';
@@ -40,8 +40,8 @@ class _ItemData {
 
 class _HistoryData {
   final DateTime date;
-  final double value;
-  final double deltaValue;
+  final Rational value;
+  final Rational deltaValue;
 
   _HistoryData(this.date, this.value, this.deltaValue);
 }
@@ -79,10 +79,11 @@ class _ViewBookmarkState extends State<ViewBookmark> {
     var historyList =
         (bookmark.history ?? <Progress>[]).reversed.take(10).toList().reversed;
 
-    var lastProgress = 0.0;
+    var zero = Rational.zero;
+    var lastProgress = zero;
     _historyDataList.clear();
     historyList.forEach((element) {
-      var progress = lastProgress == 0 ? 0.0 : element.value - lastProgress;
+      var progress = lastProgress == zero ? zero : element.value - lastProgress;
       _historyDataList.add(_HistoryData(element.date, element.value, progress));
       lastProgress = element.value;
     });
@@ -115,7 +116,7 @@ class _ViewBookmarkState extends State<ViewBookmark> {
     var lastProgress = bookmark.lastProgress;
     var progress = bookmark.maxProgress < bookmark.progress
         ? 1.0
-        : bookmark.progress / bookmark.maxProgress;
+        : (bookmark.progress / bookmark.maxProgress).toDouble();
 
     return [
       _buildRowWrapper(
@@ -180,18 +181,18 @@ class _ViewBookmarkState extends State<ViewBookmark> {
       ], null);
     } else {
       var item = _historyDataList[_historyDataList.length - index];
-      var symbol = item.deltaValue >= 0 ? '+' : '';
+      var symbol = item.deltaValue >= Rational.zero ? '+' : '';
 
       String diff;
 
-      if (item.deltaValue == 0) {
+      if (item.deltaValue == Rational.zero) {
         if (_isCompleteHistory) {
-          diff = '+${item.value.toPrecision(2).toString()}';
+          diff = '+${item.value.toStringAsPrecision(2)}';
         } else {
           diff = '...';
         }
       } else {
-        diff = '$symbol${item.deltaValue.toPrecision(2).toString()}';
+        diff = '$symbol${item.deltaValue.toStringAsPrecision(2)}';
       }
 
       return _buildRowWrapper([

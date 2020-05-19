@@ -35,6 +35,7 @@ dependencies:
 
   freezed_annotation: ^0.7.1
   meta: ^1.1.8
+  rational: ^0.3.8
 
   # Serialization
   json_annotation: ^3.0.1

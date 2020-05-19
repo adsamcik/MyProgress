@@ -1,6 +1,7 @@
 import 'package:MarkMyProgress/data/bookmark/abstract/bookmark.dart';
 import 'package:MarkMyProgress/data/bookmark/abstract/progress.dart';
 import 'package:MarkMyProgress/data/bookmark/instance/no_progress.dart';
+import 'package:rational/rational.dart';
 
 /// <summary>
 ///     Latest progress data.
@@ -9,9 +10,9 @@ extension BookmarkExtensions on Bookmark {
   /// <summary>
   ///     Latest progress data.
   /// </summary>
-  set progress(double value) => logProgress(value);
+  set progress(Rational value) => logProgress(value);
 
-  double get progress => lastProgress?.value ?? 0.0;
+  Rational get progress => lastProgress?.value ?? Rational.fromInt(0);
 
   Progress get lastProgress => history.isNotEmpty ? history.last : NoProgress();
 }

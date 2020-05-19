@@ -6,6 +6,7 @@ import 'package:MarkMyProgress/extensions/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
+import 'package:rational/rational.dart';
 
 import '../data/bookmark/abstract/persistent_bookmark.dart';
 import '../input/reg_ex_input_formatter.dart';
@@ -108,7 +109,7 @@ class _EditBookmarkState extends State<EditBookmark> {
                   initialValue: bookmark.progress.toString(),
                   decoration: InputDecoration(labelText: 'Current progress'),
                   onSaved: (String value) {
-                    bookmark.logProgress(double.parse(value));
+                    bookmark.logProgress(Rational.parse(value));
                   },
                 ),
                 TextFormField(
@@ -128,9 +129,8 @@ class _EditBookmarkState extends State<EditBookmark> {
                     return null;
                   },
                   onSaved: (String value) {
-                    var dValue = double.parse(value);
                     if (maxProgressHasChanged) {
-                      bookmark.maxProgress = dValue;
+                      bookmark.maxProgress = Rational.parse(value);
                     }
                   },
                 ),
@@ -143,7 +143,7 @@ class _EditBookmarkState extends State<EditBookmark> {
                   decoration:
                       InputDecoration(labelText: 'Quick increment value'),
                   onSaved: (String value) {
-                    bookmark.progressIncrement = double.parse(value);
+                    bookmark.progressIncrement = Rational.parse(value);
                   },
                 ),
                 SwitchListTile(

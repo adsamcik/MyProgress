@@ -10,7 +10,7 @@ GenericBookmark _$GenericBookmarkFromJson(Map<String, dynamic> json) {
   return GenericBookmark()
     ..localizedTitle = json['localizedTitle'] as String
     ..originalTitle = json['originalTitle'] as String
-    ..maxProgress = (json['maxProgress'] as num)?.toDouble()
+    ..maxProgress = rationalFromJson(json['maxProgress'] as String)
     ..ongoing = json['ongoing'] as bool
     ..abandoned = json['abandoned'] as bool
     ..webAddress = json['webAddress'] as String
@@ -19,17 +19,17 @@ GenericBookmark _$GenericBookmarkFromJson(Map<String, dynamic> json) {
             ? null
             : GenericProgress.fromJson(e as Map<String, dynamic>))
         ?.toList()
-    ..progressIncrement = (json['progressIncrement'] as num)?.toDouble();
+    ..progressIncrement = rationalFromJson(json['progressIncrement'] as String);
 }
 
 Map<String, dynamic> _$GenericBookmarkToJson(GenericBookmark instance) =>
     <String, dynamic>{
       'localizedTitle': instance.localizedTitle,
       'originalTitle': instance.originalTitle,
-      'maxProgress': instance.maxProgress,
+      'maxProgress': rationalToJson(instance.maxProgress),
       'ongoing': instance.ongoing,
       'abandoned': instance.abandoned,
       'webAddress': instance.webAddress,
       'history': instance.history_generic?.map((e) => e?.toJson())?.toList(),
-      'progressIncrement': instance.progressIncrement,
+      'progressIncrement': rationalToJson(instance.progressIncrement),
     };

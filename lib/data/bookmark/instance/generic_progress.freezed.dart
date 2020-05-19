@@ -15,7 +15,11 @@ GenericProgress _$GenericProgressFromJson(Map<String, dynamic> json) {
 class _$GenericProgressTearOff {
   const _$GenericProgressTearOff();
 
-  _GenericProgress call(DateTime date, double value) {
+  _GenericProgress call(
+      @JsonKey(required: true)
+          DateTime date,
+      @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson)
+          Rational value) {
     return _GenericProgress(
       date,
       value,
@@ -27,8 +31,10 @@ class _$GenericProgressTearOff {
 const $GenericProgress = _$GenericProgressTearOff();
 
 mixin _$GenericProgress {
+  @JsonKey(required: true)
   DateTime get date;
-  double get value;
+  @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson)
+  Rational get value;
 
   Map<String, dynamic> toJson();
   $GenericProgressCopyWith<GenericProgress> get copyWith;
@@ -38,7 +44,11 @@ abstract class $GenericProgressCopyWith<$Res> {
   factory $GenericProgressCopyWith(
           GenericProgress value, $Res Function(GenericProgress) then) =
       _$GenericProgressCopyWithImpl<$Res>;
-  $Res call({DateTime date, double value});
+  $Res call(
+      {@JsonKey(required: true)
+          DateTime date,
+      @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson)
+          Rational value});
 }
 
 class _$GenericProgressCopyWithImpl<$Res>
@@ -56,7 +66,7 @@ class _$GenericProgressCopyWithImpl<$Res>
   }) {
     return _then(_value.copyWith(
       date: date == freezed ? _value.date : date as DateTime,
-      value: value == freezed ? _value.value : value as double,
+      value: value == freezed ? _value.value : value as Rational,
     ));
   }
 }
@@ -67,7 +77,11 @@ abstract class _$GenericProgressCopyWith<$Res>
           _GenericProgress value, $Res Function(_GenericProgress) then) =
       __$GenericProgressCopyWithImpl<$Res>;
   @override
-  $Res call({DateTime date, double value});
+  $Res call(
+      {@JsonKey(required: true)
+          DateTime date,
+      @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson)
+          Rational value});
 }
 
 class __$GenericProgressCopyWithImpl<$Res>
@@ -87,14 +101,18 @@ class __$GenericProgressCopyWithImpl<$Res>
   }) {
     return _then(_GenericProgress(
       date == freezed ? _value.date : date as DateTime,
-      value == freezed ? _value.value : value as double,
+      value == freezed ? _value.value : value as Rational,
     ));
   }
 }
 
 @JsonSerializable()
 class _$_GenericProgress implements _GenericProgress {
-  _$_GenericProgress(this.date, this.value)
+  _$_GenericProgress(
+      @JsonKey(required: true)
+          this.date,
+      @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson)
+          this.value)
       : assert(date != null),
         assert(value != null);
 
@@ -102,9 +120,11 @@ class _$_GenericProgress implements _GenericProgress {
       _$_$_GenericProgressFromJson(json);
 
   @override
+  @JsonKey(required: true)
   final DateTime date;
   @override
-  final double value;
+  @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson)
+  final Rational value;
 
   @override
   String toString() {
@@ -138,15 +158,21 @@ class _$_GenericProgress implements _GenericProgress {
 }
 
 abstract class _GenericProgress implements GenericProgress {
-  factory _GenericProgress(DateTime date, double value) = _$_GenericProgress;
+  factory _GenericProgress(
+      @JsonKey(required: true)
+          DateTime date,
+      @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson)
+          Rational value) = _$_GenericProgress;
 
   factory _GenericProgress.fromJson(Map<String, dynamic> json) =
       _$_GenericProgress.fromJson;
 
   @override
+  @JsonKey(required: true)
   DateTime get date;
   @override
-  double get value;
+  @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson)
+  Rational get value;
   @override
   _$GenericProgressCopyWith<_GenericProgress> get copyWith;
 }

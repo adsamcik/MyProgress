@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:MarkMyProgress/data/runtime/searchable_variable.dart';
+import 'package:rational/rational.dart';
 
 import 'progress.dart';
 
@@ -23,7 +24,7 @@ abstract class Bookmark {
   /// <summary>
   ///     Max progress indicates how long the reading material is.
   /// </summary>
-  double maxProgress;
+  Rational maxProgress;
 
   /// <summary>
   ///     Indicates whether the reading material is still being added to.
@@ -44,7 +45,7 @@ abstract class Bookmark {
   /// <summary>
   ///     Progress increment value.
   /// </summary>
-  double progressIncrement;
+  Rational progressIncrement;
 
   /// <summary>
   ///     Increments progress by 1. If this is first time reading that day
@@ -56,7 +57,7 @@ abstract class Bookmark {
   ///     Updates reading progress with given progress value.
   /// </summary>
   /// <param name="progress">Progress value</param>
-  void logProgress(double progress);
+  void logProgress(Rational progress);
 
   /// List of searchable values
   Iterable<SearchableVariable> get searchList;

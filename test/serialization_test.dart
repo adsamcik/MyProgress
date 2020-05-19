@@ -1,10 +1,11 @@
 import 'package:MarkMyProgress/data/bookmark/instance/generic_bookmark.dart';
 import 'package:MarkMyProgress/data/preference/database/preference.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rational/rational.dart';
 
 void _genericBookmarkSerializationTest() {
   final testBookmark = GenericBookmark();
-  testBookmark.logProgress(15);
+  testBookmark.logProgress(Rational.parse('17.357896'));
   testBookmark.ongoing = true;
   testBookmark.localizedTitle = 'localized title';
   testBookmark.originalTitle = 'original title';
@@ -13,14 +14,17 @@ void _genericBookmarkSerializationTest() {
   final testBookmarkJson = {
     'localizedTitle': 'localized title',
     'originalTitle': 'original title',
-    'maxProgress': 0.0,
+    'maxProgress': '0',
     'ongoing': true,
     'abandoned': false,
     'webAddress': 'web address',
     'history': [
-      {'date': testBookmark.history.first.date.toIso8601String(), 'value': 15.0}
+      {
+        'date': testBookmark.history.first.date.toIso8601String(),
+        'value': '17.357896'
+      }
     ],
-    'progressIncrement': 1.0
+    'progressIncrement': '1'
   };
 
   test('Generic bookmark serialization test', () async {

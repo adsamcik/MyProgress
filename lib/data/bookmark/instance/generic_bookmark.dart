@@ -4,9 +4,11 @@ import 'package:MarkMyProgress/data/bookmark/abstract/web_bookmark.dart';
 import 'package:MarkMyProgress/data/runtime/searchable_variable.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
+import 'package:MarkMyProgress/misc/rational.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:rational/rational.dart';
 
 import 'generic_progress.dart';
 
@@ -20,7 +22,7 @@ class GenericBookmark extends BaseBookmark implements WebBookmark {
   GenericBookmark();
 
   @override
-  Progress createNewProgress(double progress) {
+  Progress createNewProgress(Rational progress) {
     return GenericProgress(Date.today, progress);
   }
 
@@ -41,7 +43,7 @@ class GenericBookmark extends BaseBookmark implements WebBookmark {
   List<Progress> get history => history_generic;
 
   @override
-  double get progressIncrement => super.progressIncrement ?? 1.0;
+  Rational get progressIncrement => super.progressIncrement ?? Rational.one;
 
   @override
   Iterable<SearchableVariable> get searchList => [

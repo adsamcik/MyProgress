@@ -1,8 +1,8 @@
-import 'dart:math';
-
 import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
+import 'package:MarkMyProgress/misc/rational.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:rational/rational.dart';
 
 import 'persistent_bookmark.dart';
 import 'progress.dart';
@@ -35,8 +35,8 @@ abstract class BaseBookmark implements PersistentBookmark {
   }
 
   @override
-  @JsonKey(required: false)
-  double maxProgress = 0.0;
+  @JsonKey(required: false, fromJson: rationalFromJson, toJson: rationalToJson)
+  Rational maxProgress = Rational.fromInt(0);
 
   @override
   @JsonKey(required: false)
@@ -47,8 +47,8 @@ abstract class BaseBookmark implements PersistentBookmark {
   bool abandoned = false;
 
   @override
-  @JsonKey(required: false)
-  double progressIncrement = 1.0;
+  @JsonKey(required: false, fromJson: rationalFromJson, toJson: rationalToJson)
+  Rational progressIncrement = Rational.fromInt(1);
 
   @override
   void incrementProgress() {
@@ -56,13 +56,13 @@ abstract class BaseBookmark implements PersistentBookmark {
   }
 
   @override
-  void logProgress(double progress) {
-    if (!ongoing && maxProgress > 0) {
-      progress = min(maxProgress, progress);
+  void logProgress(Rational progress) {
+    if (!ongoing && maxProgress > Rational.zero) {
+      progress = minRational(maxProgress, progress);
     }
 
     if (ongoing) {
-      maxProgress = max(progress, maxProgress);
+      maxProgress = maxRational(progress, maxProgress);
     }
 
     var newProgress = createNewProgress(progress);
@@ -73,7 +73,7 @@ abstract class BaseBookmark implements PersistentBookmark {
     }
   }
 
-  Progress createNewProgress(double progress);
+  Progress createNewProgress(Rational progress);
 
   @override
   bool operator ==(Object other) =>

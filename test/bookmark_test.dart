@@ -7,6 +7,7 @@ import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
+import 'package:rational/rational.dart';
 
 import 'di_setup.dart';
 import 'storage_test.dart';
@@ -19,7 +20,7 @@ void main() {
 
   final testBookmark = GenericBookmark();
   testBookmark.ongoing = true;
-  testBookmark.logProgress(15);
+  testBookmark.logProgress(Rational.fromInt(15));
   testBookmark.localizedTitle = 'localized title';
   testBookmark.originalTitle = 'original title';
   testBookmark.webAddress = 'web address';
@@ -45,20 +46,20 @@ void main() {
     });
 
     test('Log progress test', () {
-      const progress = 123.456;
-      expect(bookmark.progress, 0.0);
+      final progress = Rational.parse('123.456');
+      expect(bookmark.progress, Rational.zero);
       bookmark.logProgress(progress);
       expect(bookmark.progress, progress);
     });
 
     test('Log progress update max progress test', () {
-      const progress = 234.567;
+      final progress = Rational.parse('234.567');
 
       final resetProgress = () {
-        bookmark.progress = 0.0;
-        bookmark.maxProgress = 0.0;
-        expect(bookmark.progress, 0.0);
-        expect(bookmark.maxProgress, 0.0);
+        bookmark.progress = Rational.zero;
+        bookmark.maxProgress = Rational.zero;
+        expect(bookmark.progress, Rational.zero);
+        expect(bookmark.maxProgress, Rational.zero);
       };
 
       resetProgress();
@@ -67,7 +68,7 @@ void main() {
 
       bookmark.logProgress(progress);
       expect(bookmark.progress, progress);
-      expect(bookmark.maxProgress, 0.0);
+      expect(bookmark.maxProgress, Rational.zero);
 
       resetProgress();
       bookmark.ongoing = true;
@@ -77,8 +78,8 @@ void main() {
       expect(bookmark.progress, progress);
       expect(bookmark.maxProgress, progress);
 
-      bookmark.logProgress(progress - 1.0);
-      expect(bookmark.progress, progress - 1.0);
+      bookmark.logProgress(progress - Rational.one);
+      expect(bookmark.progress, progress - Rational.one);
       expect(bookmark.maxProgress, progress);
     });
 
@@ -89,12 +90,23 @@ void main() {
       expect(bookmark.progress, expectedProgress);
     });
 
+    test('Repeated increment progress test', () {
+      bookmark.progress = Rational.zero;
+      bookmark.progressIncrement = Rational.parse('0.001');
+
+      for (var i = 0; i < 1000; i++) {
+        bookmark.incrementProgress();
+      }
+      expect(bookmark.progress, Rational.one);
+    });
+
     test('History behaviour test', () {
       final tmpBookmark = GenericBookmark();
       final today = Date.today;
-      tmpBookmark.logProgress(10.0);
-      tmpBookmark.logProgress(20.0);
-      expect(tmpBookmark.history, [GenericProgress(today, 20.0)]);
+      tmpBookmark.logProgress(Rational.parse('10.0'));
+      tmpBookmark.logProgress(Rational.parse('20.0'));
+      expect(tmpBookmark.history,
+          [GenericProgress(today, Rational.parse('20.0'))]);
     });
   });
 
