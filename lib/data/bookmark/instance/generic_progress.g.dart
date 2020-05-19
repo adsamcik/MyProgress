@@ -10,7 +10,7 @@ _$_GenericProgress _$_$_GenericProgressFromJson(Map<String, dynamic> json) {
   $checkKeys(json, requiredKeys: const ['date', 'value']);
   return _$_GenericProgress(
     json['date'] == null ? null : DateTime.parse(json['date'] as String),
-    rationalFromJson(json['value'] as String),
+    rationalFromJson(json['value']),
   );
 }
 

@@ -34,6 +34,26 @@ void _genericBookmarkSerializationTest() {
   test('Generic bookmark deserialization test', () async {
     expect(testBookmark, GenericBookmark.fromJson(testBookmarkJson));
   });
+
+  test('Rational serialization migration test', () async {
+    final oldBookmark = {
+      'localizedTitle': 'localized title',
+      'originalTitle': 'original title',
+      'maxProgress': 0.0,
+      'ongoing': true,
+      'abandoned': false,
+      'webAddress': 'web address',
+      'history': [
+        {
+          'date': testBookmark.history.first.date.toIso8601String(),
+          'value': 17.357896
+        }
+      ],
+      'progressIncrement': 1.0
+    };
+
+    expect(GenericBookmark.fromJson(oldBookmark), testBookmark);
+  });
 }
 
 void _preferenceSerializationTest() {
