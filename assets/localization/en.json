@@ -1,0 +1,33 @@
+{
+  "list": "list",
+  "search": "search",
+  "web": "web",
+  "add_bookmark": "add new bookmark",
+  "settings": "settings",
+  "filter": "filter",
+  "filter_abandoned": "abandoned",
+  "filter_ongoing": "ongoing",
+  "filter_ended": "ended",
+  "filter_finished": "finished",
+  "about": "about",
+  "import": "import",
+  "export": "export",
+  "statistics": "statistics",
+  "statistics_item_count": {
+    "zero": "no active records",
+    "one": "{} active record",
+    "other": "{} active records"
+  },
+  "new_bookmark": "new bookmark",
+  "original_title": "original title",
+  "localized_title": "localized title",
+  "web_address": "web address",
+  "current_progress": "current progress",
+  "max_progress": "max progress",
+  "increment_value": "quick increment value",
+  "ongoing": "ongoing",
+  "abandoned": "abandoned",
+  "date": "date",
+  "progress": "progress",
+  "last_progress": "last progress"
+}

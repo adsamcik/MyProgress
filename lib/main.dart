@@ -1,12 +1,14 @@
 import 'package:MarkMyProgress/data/bookmark/bloc/bloc.dart';
 import 'package:MarkMyProgress/data/preference/bloc/bloc.dart';
 import 'package:MarkMyProgress/pages/list_bookmark.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'di_setup.dart';
+import 'generated/locale_keys.g.dart';
 
 void main() {
   setupProductionDependencyInjection();
@@ -30,19 +32,22 @@ class MyApp extends StatelessWidget {
                 getIt.get<PreferenceBloc>()..add(PreferenceBlocEvent.load()),
           ),
         ],
-        child: MaterialApp(
-          title: 'MarkMyProgress ',
-          theme: ThemeData(
-            brightness: Brightness.dark,
-            accentColor: Colors.red,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          darkTheme: ThemeData(
-            brightness: Brightness.dark,
-            primarySwatch: Colors.red,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          home: BookmarkList(title: 'List'),
-        ));
+        child: EasyLocalization(
+            path: 'assets/localization',
+            supportedLocales: [Locale('en')],
+            child: MaterialApp(
+              title: 'MarkMyProgress ',
+              theme: ThemeData(
+                brightness: Brightness.dark,
+                accentColor: Colors.red,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+              ),
+              darkTheme: ThemeData(
+                brightness: Brightness.dark,
+                primarySwatch: Colors.red,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+              ),
+              home: BookmarkList(title: LocaleKeys.list),
+            )));
   }
 }
