@@ -1,10 +1,11 @@
 import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/database/data_store.dart';
 import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
+import 'package:MarkMyProgress/generated/locale_keys.g.dart';
 import 'package:charts_flutter/flutter.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-
-import '../data/bookmark/database/data_store.dart';
 
 class Statistics extends StatefulWidget {
   Statistics({Key key}) : super(key: key);
@@ -39,7 +40,7 @@ class _StatisticsState extends State<Statistics> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Statistics')),
+        appBar: AppBar(title: Text(LocaleKeys.statistics.tr())),
         body: SafeArea(
             minimum: EdgeInsets.all(16.0),
             maintainBottomViewPadding: true,
@@ -51,7 +52,8 @@ class _StatisticsState extends State<Statistics> {
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                        Text('Reading series $_activelyReading'),
+                        Text(LocaleKeys.statistics_item_count
+                            .plural(_activelyReading)),
                         StatisticsChart(data.data),
                       ]));
                 }

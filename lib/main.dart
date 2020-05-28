@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'di_setup.dart';
-import 'generated/locale_keys.g.dart';
 
 void main() {
   setupProductionDependencyInjection();
@@ -33,21 +32,23 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: EasyLocalization(
-            path: 'assets/localization',
-            supportedLocales: [Locale('en')],
-            child: MaterialApp(
-              title: 'MarkMyProgress ',
-              theme: ThemeData(
-                brightness: Brightness.dark,
-                accentColor: Colors.red,
-                visualDensity: VisualDensity.adaptivePlatformDensity,
-              ),
-              darkTheme: ThemeData(
-                brightness: Brightness.dark,
-                primarySwatch: Colors.red,
-                visualDensity: VisualDensity.adaptivePlatformDensity,
-              ),
-              home: BookmarkList(title: LocaleKeys.list),
-            )));
+          path: 'assets/localization',
+          supportedLocales: [Locale('en')],
+          assetLoader: RootBundleAssetLoader(),
+          fallbackLocale: Locale('en'),
+          child: MaterialApp(
+            theme: ThemeData(
+              brightness: Brightness.dark,
+              accentColor: Colors.red,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              primarySwatch: Colors.red,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            home: BookmarkList(),
+          ),
+        ));
   }
 }

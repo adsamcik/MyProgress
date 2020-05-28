@@ -6,11 +6,13 @@ import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/extensions/numbers.dart';
 import 'package:MarkMyProgress/extensions/state_extensions.dart';
+import 'package:MarkMyProgress/generated/locale_keys.g.dart';
 import 'package:MarkMyProgress/misc/app_icons.dart';
 import 'package:MarkMyProgress/misc/get.dart';
 import 'package:MarkMyProgress/pages/settings.dart';
 import 'package:MarkMyProgress/pages/statistics.dart';
 import 'package:MarkMyProgress/pages/view_bookmark.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +22,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'edit_bookmark.dart';
 
 class BookmarkList extends StatefulWidget {
-  BookmarkList({Key key, this.title}) : super(key: key);
-
-  final String title;
+  BookmarkList({Key key}) : super(key: key);
 
   @override
   _BookmarkListState createState() => _BookmarkListState();
@@ -122,7 +122,7 @@ class _BookmarkListState extends State<BookmarkList> {
                                                   '')
                                               .isNotEmpty)
                                         OutlineButton(
-                                            child: Text('Web'),
+                                            child: Text(LocaleKeys.web).tr(),
                                             onPressed: () {
                                               // can launch is not implemented on Windows
                                               //canLaunch(webBookmark.webAddress).then((value) {
@@ -167,7 +167,7 @@ class _BookmarkListState extends State<BookmarkList> {
                         autofocus: true,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(16),
-                          hintText: 'Search...',
+                          hintText: LocaleKeys.search.tr(),
                           border: InputBorder.none,
                         ),
                         onChanged: (query) => context.bloc<BookmarkBloc>().add(
@@ -192,7 +192,7 @@ class _BookmarkListState extends State<BookmarkList> {
       )),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addNewItem(context),
-        tooltip: 'Add new bookmark',
+        tooltip: LocaleKeys.add_bookmark.tr(),
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );

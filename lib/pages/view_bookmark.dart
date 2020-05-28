@@ -1,3 +1,4 @@
+import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
 import 'package:MarkMyProgress/data/bookmark/abstract/progress.dart';
 import 'package:MarkMyProgress/data/bookmark/abstract/web_bookmark.dart';
 import 'package:MarkMyProgress/data/bookmark/bloc/bloc.dart';
@@ -6,17 +7,17 @@ import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/extensions/state_extensions.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
+import 'package:MarkMyProgress/generated/locale_keys.g.dart';
 import 'package:MarkMyProgress/misc/app_icons.dart';
 import 'package:MarkMyProgress/pages/edit_bookmark.dart';
 import 'package:MarkMyProgress/widgets/label_progress_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rational/rational.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../data/bookmark/abstract/persistent_bookmark.dart';
 
 class ViewBookmark extends StatefulWidget {
   final int bookmarkKey;
@@ -120,18 +121,18 @@ class _ViewBookmarkState extends State<ViewBookmark> {
 
     return [
       _buildRowWrapper(
-        _buildIconValueRow(_selectIcon(progress), 'Progress',
+        _buildIconValueRow(_selectIcon(progress), LocaleKeys.progress.tr(),
             bookmark.progress.toDecimalString()),
         null,
       ),
       _buildRowWrapper(
-        _buildIconValueRow(AppIcons.progress_3, 'Max progress',
+        _buildIconValueRow(AppIcons.progress_3, LocaleKeys.max_progress.tr(),
             bookmark.maxProgress.toDecimalString()),
         null,
       ),
       if (!(lastProgress is NoProgress))
         _buildRowWrapper(
-          _buildIconValueRow(AppIcons.calendar, 'Last progress',
+          _buildIconValueRow(AppIcons.calendar, LocaleKeys.last_progress.tr(),
               lastProgress.date.toDateString()),
           null,
         ),
@@ -176,20 +177,21 @@ class _ViewBookmarkState extends State<ViewBookmark> {
   Widget _buildHistoryItem(int index) {
     if (index == 0) {
       return _buildRowWrapper([
-        Expanded(child: Text('Date')),
-        Expanded(child: Text('Progress')),
+        Expanded(child: Text(LocaleKeys.date.tr())),
+        Expanded(child: Text(LocaleKeys.progress.tr())),
       ], null);
     } else {
-      var item = _historyDataList[_historyDataList.length - index];
+      var dataIndex = _historyDataList.length - index;
+      var item = _historyDataList[dataIndex];
       var symbol = item.deltaValue >= Rational.zero ? '+' : '';
 
       String diff;
 
-      if (item.deltaValue == Rational.zero) {
+      if (dataIndex == 0 && item.deltaValue == Rational.zero) {
         if (_isCompleteHistory) {
           diff = '+${item.value.toStringAsPrecision(2)}';
         } else {
-          diff = '...';
+          diff = '…';
         }
       } else {
         diff = '$symbol${item.deltaValue.toStringAsPrecision(2)}';
@@ -252,7 +254,7 @@ class _ViewBookmarkState extends State<ViewBookmark> {
                     navigate<void>(
                         (context) => EditBookmark(bookmark: bookmark));
                   },
-                  tooltip: 'Edit',
+                  tooltip: LocaleKeys.edit.tr(),
                   child: Icon(Icons.edit),
                 ),
               );

@@ -207,10 +207,12 @@ packages:
   easy_localization:
     dependency: "direct main"
     description:
-      name: easy_localization
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.3.2"
+      path: "."
+      ref: HEAD
+      resolved-ref: d549cf158d96f3bdfde9081170ed2a81979b2150
+      url: "https://github.com/adsamcik/easy_localization.git"
+    source: git
+    version: "2.3.1-dev.2"
   edit_distance:
     dependency: "direct main"
     description:
@@ -534,34 +536,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.4+1"
-  shared_preferences:
-    dependency: transitive
-    description:
-      name: shared_preferences
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.5.7+3"
-  shared_preferences_macos:
-    dependency: transitive
-    description:
-      name: shared_preferences_macos
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1+9"
-  shared_preferences_platform_interface:
-    dependency: transitive
-    description:
-      name: shared_preferences_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.4"
-  shared_preferences_web:
-    dependency: transitive
-    description:
-      name: shared_preferences_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.2+7"
   shelf:
     dependency: transitive
     description:
@@ -771,7 +745,7 @@ packages:
       name: webkit_inspection_protocol
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.2"
+    version: "0.7.3"
   yaml:
     dependency: transitive
     description:

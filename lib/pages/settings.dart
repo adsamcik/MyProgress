@@ -1,7 +1,9 @@
 import 'package:MarkMyProgress/data/preference/bloc/bloc.dart';
+import 'package:MarkMyProgress/generated/locale_keys.g.dart';
 import 'package:MarkMyProgress/import/exporter.dart';
 import 'package:MarkMyProgress/import/importer.dart';
 import 'package:MarkMyProgress/misc/get.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,21 +25,21 @@ class BookmarkFilterEntry {
 
 class _SettingsState extends State<Settings> {
   final List<BookmarkFilterEntry> _filterDataList = <BookmarkFilterEntry>[
-    const BookmarkFilterEntry('abandoned', 'Abandoned',
-        tooltip: 'Things you are no longer interested in and haven`t finished'),
-    const BookmarkFilterEntry('ongoing', 'Ongoing',
-        tooltip: 'Things that are expected to have new max progress in time.'),
-    const BookmarkFilterEntry('ended', 'Ended',
-        tooltip: 'Things that have have max progress that won`t change.'),
-    const BookmarkFilterEntry('finished', 'Finished',
-        tooltip: 'Things you have finished and won`t be extended.'),
+    const BookmarkFilterEntry('abandoned', LocaleKeys.filter_abandoned,
+        tooltip: LocaleKeys.filter_abandoned_desc),
+    const BookmarkFilterEntry('ongoing', LocaleKeys.filter_ongoing,
+        tooltip: LocaleKeys.filter_ongoing_desc),
+    const BookmarkFilterEntry('ended', LocaleKeys.filter_ended,
+        tooltip: LocaleKeys.filter_ended_desc),
+    const BookmarkFilterEntry('finished', LocaleKeys.filter_finished,
+        tooltip: LocaleKeys.filter_finished_desc),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text(LocaleKeys.settings.tr()),
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
@@ -55,7 +57,7 @@ class _SettingsState extends State<Settings> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Filter',
+                    LocaleKeys.filter.tr(),
                     style: Get.theme(context).textTheme.headline5,
                   ),
                   Wrap(
@@ -63,7 +65,7 @@ class _SettingsState extends State<Settings> {
                         .map((filter) => Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: FilterChip(
-                                  label: Text(filter.name),
+                                  label: Text(filter.name.tr()),
                                   tooltip: filter.tooltip,
                                   selected:
                                       ready.preferences[filter.key] as bool,
@@ -75,25 +77,25 @@ class _SettingsState extends State<Settings> {
                         .toList(),
                   ),
                   OutlineButton(
-                      child: Text('About'),
+                      child: Text(LocaleKeys.about.tr()),
                       onPressed: () async {
                         // Windows not yet supported
                         //var packageInfo = await PackageInfo.fromPlatform();
                         //showAboutDialog(context: context, applicationName: packageInfo.appName, applicationVersion: packageInfo.version);
                         showAboutDialog(
                             context: context,
-                            applicationName: 'Mark My Progress');
+                            applicationName: LocaleKeys.app_name.tr());
                       }),
                   Wrap(spacing: 16, children: [
                     OutlineButton(
-                        child: Text('Import'),
+                        child: Text(LocaleKeys.import.tr()),
                         onPressed: () async {
                           if (await Importer.import()) {
                             //context.bloc<BookmarkBloc>();
                           }
                         }),
                     OutlineButton(
-                        child: Text('Export'),
+                        child: Text(LocaleKeys.export.tr()),
                         onPressed: () async {
                           await Exporter.export();
                         })
