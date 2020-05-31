@@ -4,8 +4,8 @@ import 'package:MarkMyProgress/data/bookmark/abstract/web_bookmark.dart';
 import 'package:MarkMyProgress/data/bookmark/bloc/bloc.dart';
 import 'package:MarkMyProgress/data/bookmark/instance/no_progress.dart';
 import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
+import 'package:MarkMyProgress/extensions/context_extensions.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
-import 'package:MarkMyProgress/extensions/state_extensions.dart';
 import 'package:MarkMyProgress/extensions/string_extensions.dart';
 import 'package:MarkMyProgress/generated/locale_keys.g.dart';
 import 'package:MarkMyProgress/misc/app_icons.dart';
@@ -251,7 +251,7 @@ class _ViewBookmarkState extends State<ViewBookmark> {
                 ),
                 floatingActionButton: FloatingActionButton(
                   onPressed: () {
-                    navigate<void>(
+                    context.navigate<void>(
                         (context) => EditBookmark(bookmark: bookmark));
                   },
                   tooltip: LocaleKeys.edit.tr(),

@@ -1,22 +1,25 @@
 import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
 import 'package:MarkMyProgress/data/bookmark/abstract/web_bookmark.dart';
 import 'package:MarkMyProgress/data/bookmark/bloc/bloc.dart';
+import 'package:MarkMyProgress/data/bookmark/bloc/bookmark_bloc_event.dart';
 import 'package:MarkMyProgress/data/bookmark/instance/generic_bookmark.dart';
 import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
+import 'package:MarkMyProgress/extensions/context_extensions.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/extensions/numbers.dart';
-import 'package:MarkMyProgress/extensions/state_extensions.dart';
 import 'package:MarkMyProgress/generated/locale_keys.g.dart';
 import 'package:MarkMyProgress/misc/app_icons.dart';
 import 'package:MarkMyProgress/misc/get.dart';
 import 'package:MarkMyProgress/pages/settings.dart';
 import 'package:MarkMyProgress/pages/statistics.dart';
 import 'package:MarkMyProgress/pages/view_bookmark.dart';
+import 'package:MarkMyProgress/widgets/progress_bottom_sheet.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'edit_bookmark.dart';
@@ -29,16 +32,27 @@ class BookmarkList extends StatefulWidget {
 }
 
 class _BookmarkListState extends State<BookmarkList> {
-  void _addNewItem(BuildContext context) async {
+  void _addNewItem() async {
     var newItem = GenericBookmark();
-    await navigate<void>((context) => EditBookmark(bookmark: newItem));
+    await context.navigate<void>((context) => EditBookmark(bookmark: newItem));
   }
 
   void _viewDetail(PersistentBookmark bookmark) async {
-    await navigate<void>((context) => ViewBookmark(bookmarkKey: bookmark.key));
+    await context
+        .navigate<void>((context) => ViewBookmark(bookmarkKey: bookmark.key));
   }
 
   final TextEditingController _searchQueryController = TextEditingController();
+
+  void _showProgressSheet(PersistentBookmark bookmark) async {
+    var result = await showProgressBottomSheet(context, bookmark);
+    if (result != null) {
+      bookmark.logProgress(result);
+      GetIt.instance
+          .get<BookmarkBloc>()
+          .add(BookmarkBlocEvent.saveBookmark(bookmark: bookmark));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +90,8 @@ class _BookmarkListState extends State<BookmarkList> {
                                   ? ''
                                   : bookmark.lastProgress.date.toDateString();
                           return InkWell(
-                              onTap: () => _viewDetail(bookmark),
+                              onTap: () => _showProgressSheet(bookmark),
+                              onLongPress: () => _viewDetail(bookmark),
                               child: Padding(
                                   padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                                   child: Opacity(
@@ -175,12 +190,14 @@ class _BookmarkListState extends State<BookmarkList> {
                       )),
                       IconButton(
                           onPressed: () {
-                            navigate<dynamic>((context) => Statistics());
+                            context
+                                .navigate<dynamic>((context) => Statistics());
                           },
                           icon: Icon(AppIcons.insert_chart)),
                       IconButton(
                           onPressed: () async {
-                            await navigate<dynamic>((context) => Settings());
+                            await context
+                                .navigate<dynamic>((context) => Settings());
                           },
                           icon: Icon(AppIcons.settings_applications)),
                       SizedBox(
@@ -191,7 +208,7 @@ class _BookmarkListState extends State<BookmarkList> {
         ],
       )),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _addNewItem(context),
+        onPressed: () => _addNewItem(),
         tooltip: LocaleKeys.add_bookmark.tr(),
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
