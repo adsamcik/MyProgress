@@ -2,6 +2,7 @@
   "about": "About",
   "add_bookmark": "Add new bookmark",
   "app_name": "Mark My Progress",
+  "cancel": "Cancel",
   "current_progress": "Current progress",
   "date": "Date",
   "edit": "Edit",
@@ -29,6 +30,7 @@
   "save": "Save",
   "search": "Search…",
   "settings": "Settings",
+  "show_details": "Show details",
   "statistics": "Statistics",
   "statistics_item_count": {
     "one": "{} active record",

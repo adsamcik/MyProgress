@@ -78,16 +78,16 @@ Future<Rational> showProgressBottomSheet(
               children: [
                 createButton(
                   onPressed: () => Navigator.pop(context, null),
-                  child: Text('Cancel'),
+                  child: Text(LocaleKeys.cancel.tr()),
                 ),
                 createButton(
                   onPressed: () => Navigator.pop(context, result),
-                  child: Text('Save'),
+                  child: Text(LocaleKeys.save.tr()),
                 ),
               ],
             ),
             createButton(
-              child: Text('Show details'),
+              child: Text(LocaleKeys.show_details.tr()),
               onPressed: () async => await context.navigate<void>(
                   (context) => ViewBookmark(bookmarkKey: bookmark.key)),
             )
