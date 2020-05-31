@@ -5,6 +5,7 @@ import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
 import 'package:MarkMyProgress/extensions/context_extensions.dart';
 import 'package:MarkMyProgress/generated/locale_keys.g.dart';
 import 'package:MarkMyProgress/input/reg_ex_input_formatter.dart';
+import 'package:MarkMyProgress/misc/app_icons.dart';
 import 'package:MarkMyProgress/pages/view_bookmark.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -21,11 +22,13 @@ Future<Rational> showProgressBottomSheet(
         var result = bookmark.progress;
 
         var theme = Theme.of(context);
-        var createButton =
-            ({void Function() onPressed, Widget child}) => ListTile(
-                  onTap: onPressed,
-                  title: child,
-                );
+        var createButton = (
+                {IconData icon, void Function() onPressed, Widget child}) =>
+            ListTile(
+              onTap: onPressed,
+              title: child,
+              leading: Icon(icon),
+            );
 
         var streamInput = StreamController<Rational>();
         var textEditingController =
@@ -62,7 +65,8 @@ Future<Rational> showProgressBottomSheet(
           Rational.fromInt(1),
           Rational.fromInt(1, 2)
         }.map<Widget>((e) => createButton(
-            child: Text('+${e.toDecimalString()}'),
+            icon: AppIcons.plus_circle,
+            child: Text(e.toDecimalString()),
             onPressed: () {
               streamInput.add(result + e);
             }));
@@ -79,14 +83,17 @@ Future<Rational> showProgressBottomSheet(
                 createButton(
                   onPressed: () => Navigator.pop(context, null),
                   child: Text(LocaleKeys.cancel.tr()),
+                  icon: AppIcons.cancel,
                 ),
                 createButton(
                   onPressed: () => Navigator.pop(context, result),
                   child: Text(LocaleKeys.save.tr()),
+                  icon: AppIcons.save,
                 ),
               ],
             ),
             createButton(
+              icon: AppIcons.expand_more,
               child: Text(LocaleKeys.show_details.tr()),
               onPressed: () async => await context.navigate<void>(
                   (context) => ViewBookmark(bookmarkKey: bookmark.key)),
