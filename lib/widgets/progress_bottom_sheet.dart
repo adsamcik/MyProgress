@@ -65,7 +65,7 @@ Future<Rational> showProgressBottomSheet(
           Rational.fromInt(1),
           Rational.fromInt(1, 2)
         }.map<Widget>((e) => createButton(
-            icon: AppIcons.plus_circle,
+            icon: AppIcons.plus_squared,
             child: Text(e.toDecimalString()),
             onPressed: () {
               streamInput.add(result + e);
@@ -83,7 +83,7 @@ Future<Rational> showProgressBottomSheet(
                 createButton(
                   onPressed: () => Navigator.pop(context, null),
                   child: Text(LocaleKeys.cancel.tr()),
-                  icon: AppIcons.cancel,
+                  icon: AppIcons.cancel_squared,
                 ),
                 createButton(
                   onPressed: () => Navigator.pop(context, result),
@@ -93,7 +93,7 @@ Future<Rational> showProgressBottomSheet(
               ],
             ),
             createButton(
-              icon: AppIcons.expand_more,
+              icon: AppIcons.book,
               child: Text(LocaleKeys.show_details.tr()),
               onPressed: () async => await context.navigate<void>(
                   (context) => ViewBookmark(bookmarkKey: bookmark.key)),
