@@ -35,19 +35,27 @@ class MyApp extends StatelessWidget {
           supportedLocales: [Locale('en')],
           assetLoader: RootBundleAssetLoader(),
           fallbackLocale: Locale('en'),
-          child: MaterialApp(
-            theme: ThemeData(
-              brightness: Brightness.dark,
-              accentColor: Colors.red,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-            ),
-            darkTheme: ThemeData(
-              brightness: Brightness.dark,
-              primarySwatch: Colors.red,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-            ),
-            home: BookmarkList(),
-          ),
+          child: MyMaterialApp(),
         ));
   }
+}
+
+class MyMaterialApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => MaterialApp(
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          accentColor: Colors.red,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          primarySwatch: Colors.red,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: BookmarkList(),
+      );
 }
