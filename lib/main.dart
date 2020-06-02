@@ -9,9 +9,8 @@ import 'package:get_it/get_it.dart';
 
 import 'di_setup.dart';
 
-void main() {
-  setupProductionDependencyInjection();
-
+Future<void> main() async {
+  await setupProductionDependencyInjection();
   runApp(MyApp());
 }
 

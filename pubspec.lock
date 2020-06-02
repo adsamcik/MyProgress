@@ -231,8 +231,8 @@ packages:
     dependency: "direct main"
     description:
       path: "plugins/file_chooser"
-      ref: d2e406470d
-      resolved-ref: d2e406470d135085409ee3541a08108840d237a4
+      ref: f1694f9dc00b3d02b2bb21913ab6f74c668885f1
+      resolved-ref: f1694f9dc00b3d02b2bb21913ab6f74c668885f1
       url: "https://github.com/google/flutter-desktop-embedding.git"
     source: git
     version: "0.1.0"
@@ -460,12 +460,42 @@ packages:
     source: hosted
     version: "0.4.0+18"
   path:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  path_provider:
+    dependency: "direct main"
+    description:
+      name: path_provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.6.9"
+  path_provider_fde:
+    dependency: "direct main"
+    description:
+      path: "plugins/flutter_plugins/path_provider_fde"
+      ref: f1694f9dc00b3d02b2bb21913ab6f74c668885f1
+      resolved-ref: f1694f9dc00b3d02b2bb21913ab6f74c668885f1
+      url: "https://github.com/google/flutter-desktop-embedding.git"
+    source: git
+    version: "0.0.1"
+  path_provider_macos:
+    dependency: transitive
+    description:
+      name: path_provider_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4+3"
+  path_provider_platform_interface:
+    dependency: transitive
+    description:
+      name: path_provider_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   pedantic:
     dependency: "direct dev"
     description:
@@ -473,6 +503,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.9.0"
+  platform:
+    dependency: transitive
+    description:
+      name: platform
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.1"
   platform_detect:
     dependency: transitive
     description:
@@ -685,8 +722,8 @@ packages:
     dependency: "direct main"
     description:
       path: "plugins/flutter_plugins/url_launcher_fde"
-      ref: d2e406470d
-      resolved-ref: d2e406470d135085409ee3541a08108840d237a4
+      ref: f1694f9dc00b3d02b2bb21913ab6f74c668885f1
+      resolved-ref: f1694f9dc00b3d02b2bb21913ab6f74c668885f1
       url: "https://github.com/google/flutter-desktop-embedding.git"
     source: git
     version: "0.0.1"
