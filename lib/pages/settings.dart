@@ -25,14 +25,10 @@ class BookmarkFilterEntry {
 
 class _SettingsState extends State<Settings> {
   final List<BookmarkFilterEntry> _filterDataList = <BookmarkFilterEntry>[
-    const BookmarkFilterEntry('abandoned', LocaleKeys.filter_abandoned,
-        tooltip: LocaleKeys.filter_abandoned_desc),
-    const BookmarkFilterEntry('ongoing', LocaleKeys.filter_ongoing,
-        tooltip: LocaleKeys.filter_ongoing_desc),
-    const BookmarkFilterEntry('ended', LocaleKeys.filter_ended,
-        tooltip: LocaleKeys.filter_ended_desc),
-    const BookmarkFilterEntry('finished', LocaleKeys.filter_finished,
-        tooltip: LocaleKeys.filter_finished_desc),
+    const BookmarkFilterEntry('abandoned', LocaleKeys.filter_abandoned, tooltip: LocaleKeys.filter_abandoned_desc),
+    const BookmarkFilterEntry('ongoing', LocaleKeys.filter_ongoing, tooltip: LocaleKeys.filter_ongoing_desc),
+    const BookmarkFilterEntry('ended', LocaleKeys.filter_ended, tooltip: LocaleKeys.filter_ended_desc),
+    const BookmarkFilterEntry('finished', LocaleKeys.filter_finished, tooltip: LocaleKeys.filter_finished_desc),
   ];
 
   @override
@@ -67,12 +63,10 @@ class _SettingsState extends State<Settings> {
                               child: FilterChip(
                                   label: Text(filter.name.tr()),
                                   tooltip: filter.tooltip,
-                                  selected:
-                                      ready.preferences[filter.key] as bool,
+                                  selected: ready.preferences[filter.key] as bool,
                                   onSelected: (bool value) => context
                                       .bloc<PreferenceBloc>()
-                                      .add(PreferenceBlocEvent.setPreference(
-                                          key: filter.key, value: value))),
+                                      .add(PreferenceBlocEvent.setPreference(key: filter.key, value: value))),
                             ))
                         .toList(),
                   ),
@@ -82,9 +76,7 @@ class _SettingsState extends State<Settings> {
                         // Windows not yet supported
                         //var packageInfo = await PackageInfo.fromPlatform();
                         //showAboutDialog(context: context, applicationName: packageInfo.appName, applicationVersion: packageInfo.version);
-                        showAboutDialog(
-                            context: context,
-                            applicationName: LocaleKeys.app_name.tr());
+                        showAboutDialog(context: context, applicationName: LocaleKeys.app_name.tr());
                       }),
                   Wrap(spacing: 16, children: [
                     OutlineButton(
