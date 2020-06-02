@@ -17,13 +17,20 @@ Future<String> getDirPath() async {
   return dir.path;
 }
 
-Future setupProductionDependencyInjection() async {
+Future setupProductionDependencyInjection({bool inPlace = false}) async {
   final gi = GetIt.instance;
-  WidgetsFlutterBinding.ensureInitialized();
+  var progressDataPath = 'progress_data.db';
+  var settingsDataPath = 'settings.db';
 
-  var path = await getDirPath();
-  gi.registerSingleton(DataStore(SembastDataSource(join(path, 'progress_data.db'), BookmarkMapper())));
-  gi.registerSingleton(PreferenceStore(SembastDataSource(join(path, 'settings.db'), PreferenceMapper())));
+  if (!inPlace) {
+    WidgetsFlutterBinding.ensureInitialized();
+    var path = await getDirPath();
+    progressDataPath = join(path, progressDataPath);
+    settingsDataPath = join(path, settingsDataPath);
+  }
+
+  gi.registerSingleton(DataStore(SembastDataSource(progressDataPath, BookmarkMapper())));
+  gi.registerSingleton(PreferenceStore(SembastDataSource(settingsDataPath, PreferenceMapper())));
 
   gi.registerLazySingleton<BookmarkBloc>(() => BookmarkBloc(dataStore: gi.get(), settingsStore: gi.get()));
 

@@ -12,9 +12,9 @@ import 'package:rational/rational.dart';
 import 'di_setup.dart';
 import 'storage_test.dart';
 
-void main() {
-  setupProductionDependencyInjection();
-  setupMockDependencyInjection();
+Future<void> main() async {
+  await setupProductionDependencyInjection(inPlace: true);
+  await setupMockDependencyInjection();
 
   final gi = GetIt.instance;
 
