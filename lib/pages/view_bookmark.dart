@@ -115,7 +115,7 @@ class _ViewBookmarkState extends State<ViewBookmark> {
 
   List<Widget> _buildProgressData(PersistentBookmark bookmark) {
     var lastProgress = bookmark.lastProgress;
-    var progress = bookmark.maxProgress < bookmark.progress
+    var progress = bookmark.maxProgress <= bookmark.progress.abs()
         ? 1.0
         : (bookmark.progress / bookmark.maxProgress).toDouble();
 
