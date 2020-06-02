@@ -10,6 +10,7 @@ import 'package:MarkMyProgress/extensions/numbers.dart';
 import 'package:MarkMyProgress/generated/locale_keys.g.dart';
 import 'package:MarkMyProgress/misc/app_icons.dart';
 import 'package:MarkMyProgress/misc/get.dart';
+import 'package:MarkMyProgress/misc/platform.dart';
 import 'package:MarkMyProgress/pages/settings.dart';
 import 'package:MarkMyProgress/pages/statistics.dart';
 import 'package:MarkMyProgress/pages/view_bookmark.dart';
@@ -179,7 +180,7 @@ class _BookmarkListState extends State<BookmarkList> {
                       Expanded(
                           child: TextField(
                         controller: _searchQueryController,
-                        autofocus: true,
+                        autofocus: AppPlatform.isDesktop,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(16),
                           hintText: LocaleKeys.search.tr(),
