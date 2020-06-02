@@ -12,6 +12,5 @@ abstract class PreferenceBlocEvent with _$PreferenceBlocEvent {
     @required dynamic value,
   }) = SetPreference;
 
-  const factory PreferenceBlocEvent.updateFilterData(
-      {@required FilterData data}) = UpdateFilterData;
+  const factory PreferenceBlocEvent.updateFilterData({@required FilterData data}) = UpdateFilterData;
 }

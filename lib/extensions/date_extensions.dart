@@ -7,6 +7,5 @@ extension Date on DateTime {
 
   DateTime toDate() => DateTime(year, month, day);
 
-  String toDateString() =>
-      DateFormat.yMMMd(Intl.getCurrentLocale()).format(this);
+  String toDateString() => DateFormat.yMMMd(Intl.getCurrentLocale()).format(this);
 }

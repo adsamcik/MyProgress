@@ -8,18 +8,13 @@ part 'bookmark_bloc_event.freezed.dart';
 abstract class BookmarkBlocEvent with _$BookmarkBlocEvent {
   const factory BookmarkBlocEvent.load() = Load;
 
-  const factory BookmarkBlocEvent.saveBookmark(
-      {@required PersistentBookmark bookmark}) = AddBookmark;
+  const factory BookmarkBlocEvent.saveBookmark({@required PersistentBookmark bookmark}) = AddBookmark;
 
-  const factory BookmarkBlocEvent.removeBookmark(
-      {@required PersistentBookmark bookmark}) = RemoveBookmark;
+  const factory BookmarkBlocEvent.removeBookmark({@required PersistentBookmark bookmark}) = RemoveBookmark;
 
-  const factory BookmarkBlocEvent.incrementProgress(
-      {@required PersistentBookmark bookmark}) = IncrementProgress;
+  const factory BookmarkBlocEvent.incrementProgress({@required PersistentBookmark bookmark}) = IncrementProgress;
 
-  const factory BookmarkBlocEvent.updateFilterQuery({@required String query}) =
-      UpdateFilterQuery;
+  const factory BookmarkBlocEvent.updateFilterQuery({@required String query}) = UpdateFilterQuery;
 
-  const factory BookmarkBlocEvent.updateFilterData(
-      {@required FilterData data}) = UpdateFilterData;
+  const factory BookmarkBlocEvent.updateFilterData({@required FilterData data}) = UpdateFilterData;
 }

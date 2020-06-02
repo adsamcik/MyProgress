@@ -17,10 +17,7 @@ class MockStorable implements Storable<String> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is MockStorable &&
-          runtimeType == other.runtimeType &&
-          key == other.key &&
-          value == other.value);
+      (other is MockStorable && runtimeType == other.runtimeType && key == other.key && value == other.value);
 
   @override
   int get hashCode => key.hashCode ^ value.hashCode;

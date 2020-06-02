@@ -16,8 +16,7 @@ class _$PreferenceBlocStateTearOff {
     return const PreferencesNotReady();
   }
 
-  PreferencesReady ready(
-      {@required int version, @required Map<String, dynamic> preferences}) {
+  PreferencesReady ready({@required int version, @required Map<String, dynamic> preferences}) {
     return PreferencesReady(
       version: version,
       preferences: preferences,
@@ -54,13 +53,11 @@ mixin _$PreferenceBlocState {
 }
 
 abstract class $PreferenceBlocStateCopyWith<$Res> {
-  factory $PreferenceBlocStateCopyWith(
-          PreferenceBlocState value, $Res Function(PreferenceBlocState) then) =
+  factory $PreferenceBlocStateCopyWith(PreferenceBlocState value, $Res Function(PreferenceBlocState) then) =
       _$PreferenceBlocStateCopyWithImpl<$Res>;
 }
 
-class _$PreferenceBlocStateCopyWithImpl<$Res>
-    implements $PreferenceBlocStateCopyWith<$Res> {
+class _$PreferenceBlocStateCopyWithImpl<$Res> implements $PreferenceBlocStateCopyWith<$Res> {
   _$PreferenceBlocStateCopyWithImpl(this._value, this._then);
 
   final PreferenceBlocState _value;
@@ -69,16 +66,13 @@ class _$PreferenceBlocStateCopyWithImpl<$Res>
 }
 
 abstract class $PreferencesNotReadyCopyWith<$Res> {
-  factory $PreferencesNotReadyCopyWith(
-          PreferencesNotReady value, $Res Function(PreferencesNotReady) then) =
+  factory $PreferencesNotReadyCopyWith(PreferencesNotReady value, $Res Function(PreferencesNotReady) then) =
       _$PreferencesNotReadyCopyWithImpl<$Res>;
 }
 
-class _$PreferencesNotReadyCopyWithImpl<$Res>
-    extends _$PreferenceBlocStateCopyWithImpl<$Res>
+class _$PreferencesNotReadyCopyWithImpl<$Res> extends _$PreferenceBlocStateCopyWithImpl<$Res>
     implements $PreferencesNotReadyCopyWith<$Res> {
-  _$PreferencesNotReadyCopyWithImpl(
-      PreferencesNotReady _value, $Res Function(PreferencesNotReady) _then)
+  _$PreferencesNotReadyCopyWithImpl(PreferencesNotReady _value, $Res Function(PreferencesNotReady) _then)
       : super(_value, (v) => _then(v as PreferencesNotReady));
 
   @override
@@ -157,17 +151,14 @@ abstract class PreferencesNotReady implements PreferenceBlocState {
 }
 
 abstract class $PreferencesReadyCopyWith<$Res> {
-  factory $PreferencesReadyCopyWith(
-          PreferencesReady value, $Res Function(PreferencesReady) then) =
+  factory $PreferencesReadyCopyWith(PreferencesReady value, $Res Function(PreferencesReady) then) =
       _$PreferencesReadyCopyWithImpl<$Res>;
   $Res call({int version, Map<String, dynamic> preferences});
 }
 
-class _$PreferencesReadyCopyWithImpl<$Res>
-    extends _$PreferenceBlocStateCopyWithImpl<$Res>
+class _$PreferencesReadyCopyWithImpl<$Res> extends _$PreferenceBlocStateCopyWithImpl<$Res>
     implements $PreferencesReadyCopyWith<$Res> {
-  _$PreferencesReadyCopyWithImpl(
-      PreferencesReady _value, $Res Function(PreferencesReady) _then)
+  _$PreferencesReadyCopyWithImpl(PreferencesReady _value, $Res Function(PreferencesReady) _then)
       : super(_value, (v) => _then(v as PreferencesReady));
 
   @override
@@ -180,9 +171,7 @@ class _$PreferencesReadyCopyWithImpl<$Res>
   }) {
     return _then(PreferencesReady(
       version: version == freezed ? _value.version : version as int,
-      preferences: preferences == freezed
-          ? _value.preferences
-          : preferences as Map<String, dynamic>,
+      preferences: preferences == freezed ? _value.preferences : preferences as Map<String, dynamic>,
     ));
   }
 }
@@ -206,12 +195,9 @@ class _$PreferencesReady implements PreferencesReady {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is PreferencesReady &&
-            (identical(other.version, version) ||
-                const DeepCollectionEquality()
-                    .equals(other.version, version)) &&
+            (identical(other.version, version) || const DeepCollectionEquality().equals(other.version, version)) &&
             (identical(other.preferences, preferences) ||
-                const DeepCollectionEquality()
-                    .equals(other.preferences, preferences)));
+                const DeepCollectionEquality().equals(other.preferences, preferences)));
   }
 
   @override
@@ -276,9 +262,8 @@ class _$PreferencesReady implements PreferencesReady {
 }
 
 abstract class PreferencesReady implements PreferenceBlocState {
-  const factory PreferencesReady(
-      {@required int version,
-      @required Map<String, dynamic> preferences}) = _$PreferencesReady;
+  const factory PreferencesReady({@required int version, @required Map<String, dynamic> preferences}) =
+      _$PreferencesReady;
 
   int get version;
   Map<String, dynamic> get preferences;

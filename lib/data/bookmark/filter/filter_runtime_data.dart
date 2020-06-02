@@ -6,6 +6,5 @@ part 'filter_runtime_data.freezed.dart';
 
 @freezed
 abstract class FilterRuntimeData with _$FilterRuntimeData {
-  factory FilterRuntimeData(FilterData filterData,
-      {@Default('') String query}) = _FilterRuntimeData;
+  factory FilterRuntimeData(FilterData filterData, {@Default('') String query}) = _FilterRuntimeData;
 }

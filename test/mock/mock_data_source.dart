@@ -2,24 +2,21 @@ import 'package:MarkMyProgress/data/storage/abstraction/data_source.dart';
 import 'package:MarkMyProgress/data/storage/abstraction/storable.dart';
 import 'package:MarkMyProgress/data/storage/abstraction/storage_subscribable.dart';
 
-class MockIntDataSource<Value extends Storable<int>>
-    extends MockDataSource<int, Value> {
+class MockIntDataSource<Value extends Storable<int>> extends MockDataSource<int, Value> {
   int _lastKey = -1;
 
   @override
   int nextKey() => ++_lastKey;
 }
 
-class MockStringDataSource<Value extends Storable<String>>
-    extends MockDataSource<String, Value> {
+class MockStringDataSource<Value extends Storable<String>> extends MockDataSource<String, Value> {
   int _lastKey = -1;
 
   @override
   String nextKey() => '${DateTime.now().toString()}_${(++_lastKey).toString()}';
 }
 
-abstract class MockDataSource<Key, Value extends Storable<Key>>
-    extends DataSource<Key, Value> {
+abstract class MockDataSource<Key, Value extends Storable<Key>> extends DataSource<Key, Value> {
   bool _isOpen = false;
 
   @override
@@ -105,9 +102,7 @@ abstract class MockDataSource<Key, Value extends Storable<Key>>
   }
 
   @override
-  Future<Result> transaction<Result>(
-          Result Function(DataSource<Key, Value> storage)
-              transactionFunc) async =>
+  Future<Result> transaction<Result>(Result Function(DataSource<Key, Value> storage) transactionFunc) async =>
       transactionFunc(this);
 
   @override

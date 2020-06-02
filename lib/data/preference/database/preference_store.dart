@@ -6,8 +6,7 @@ import 'package:MarkMyProgress/data/storage/abstraction/data_source.dart';
 import 'package:MarkMyProgress/data/storage/abstraction/subscribable_storage.dart';
 
 class PreferenceStore extends SubscribableStorage<String, Preference> {
-  PreferenceStore(DataSource<String, Preference> dataSource)
-      : super(dataSource);
+  PreferenceStore(DataSource<String, Preference> dataSource) : super(dataSource);
 
   Future<Map<String, dynamic>> getFilterMap() async {
     var filterDataMap = FilterData().toJson();
@@ -30,8 +29,7 @@ class PreferenceStore extends SubscribableStorage<String, Preference> {
   }
 
   @override
-  Future<T> transactionClosed<T>(
-      FutureOr<T> Function(PreferenceStore settingsStore) action) async {
+  Future<T> transactionClosed<T>(FutureOr<T> Function(PreferenceStore settingsStore) action) async {
     await open();
     var result = await action(this);
     await close();

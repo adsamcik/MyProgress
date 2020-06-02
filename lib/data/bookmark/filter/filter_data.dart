@@ -12,6 +12,5 @@ abstract class FilterData with _$FilterData {
     @Default(true) bool ended,
   }) = _FilterData;
 
-  factory FilterData.fromJson(Map<String, dynamic> json) =>
-      _$FilterDataFromJson(json);
+  factory FilterData.fromJson(Map<String, dynamic> json) => _$FilterDataFromJson(json);
 }

@@ -15,11 +15,9 @@ class Preference implements Storable<String> {
     this.value,
   );
 
-  MapEntry<String, dynamic> toMapEntry() =>
-      MapEntry<String, dynamic>(key, value);
+  MapEntry<String, dynamic> toMapEntry() => MapEntry<String, dynamic>(key, value);
 
-  factory Preference.fromJson(Map<String, dynamic> json) =>
-      _$PreferenceFromJson(json);
+  factory Preference.fromJson(Map<String, dynamic> json) => _$PreferenceFromJson(json);
 
   @override
   Map<String, dynamic> toJson() => _$PreferenceToJson(this);
@@ -29,10 +27,7 @@ class Preference implements Storable<String> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Preference &&
-          runtimeType == other.runtimeType &&
-          key == other.key &&
-          value == other.value);
+      (other is Preference && runtimeType == other.runtimeType && key == other.key && value == other.value);
 
   @override
   int get hashCode => key.hashCode ^ value.hashCode;

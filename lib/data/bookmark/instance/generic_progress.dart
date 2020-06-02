@@ -16,10 +16,8 @@ part 'generic_progress.g.dart';
 abstract class GenericProgress with _$GenericProgress implements Progress {
   factory GenericProgress(
     @JsonKey(required: true) DateTime date,
-    @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson)
-        Rational value,
+    @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson) Rational value,
   ) = _GenericProgress;
 
-  factory GenericProgress.fromJson(Map<String, dynamic> json) =>
-      _$GenericProgressFromJson(json);
+  factory GenericProgress.fromJson(Map<String, dynamic> json) => _$GenericProgressFromJson(json);
 }

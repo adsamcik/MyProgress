@@ -34,12 +34,10 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
   @override
   BookmarkBlocState get initialState => BookmarkBlocState.notReady();
 
-  void _onSettingsChanged(
-      StorageEvent event, Iterable<Preference> preferences) {
+  void _onSettingsChanged(StorageEvent event, Iterable<Preference> preferences) {
     var json = FilterData().toJson();
     if (preferences.any((element) => json.containsKey(element.key))) {
-      settingsStore.getFilterData().then((filterData) =>
-          add(BookmarkBlocEvent.updateFilterData(data: filterData)));
+      settingsStore.getFilterData().then((filterData) => add(BookmarkBlocEvent.updateFilterData(data: filterData)));
     }
   }
 
@@ -56,14 +54,11 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
   }
 
   Stream<BookmarkBlocState> _mapLoad(Load event) async* {
-    var dataList = await await dataStore.transactionClosed((dataStore) =>
-        dataStore.getAll().map((e) => SearchableBookmark(e)).toList());
-    var filterData = await settingsStore
-        .transactionClosed((settingsStore) => settingsStore.getFilterData());
+    var dataList = await await dataStore
+        .transactionClosed((dataStore) => dataStore.getAll().map((e) => SearchableBookmark(e)).toList());
+    var filterData = await settingsStore.transactionClosed((settingsStore) => settingsStore.getFilterData());
 
-    dataList.sort((a, b) => a.bookmark.title
-        .toLowerCase()
-        .compareTo(b.bookmark.title.toLowerCase()));
+    dataList.sort((a, b) => a.bookmark.title.toLowerCase().compareTo(b.bookmark.title.toLowerCase()));
 
     var filterRuntimeData = FilterRuntimeData(filterData);
     var filterList = _updateFilter(filterRuntimeData, dataList);
@@ -86,8 +81,7 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
               return transaction.update(event.bookmark);
             }
           }).then((dynamic value) {
-            var filterList =
-                _updateFilter(ready.filterData, ready.bookmarkList);
+            var filterList = _updateFilter(ready.filterData, ready.bookmarkList);
             return ready.copyWith(
               version: ready.version + 1,
               filteredBookmarkList: filterList,
@@ -101,21 +95,17 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
     yield await state.maybeMap(
         ready: (currentState) {
           return dataStore
-              .transactionClosed<dynamic>(
-                  (dataStore) => dataStore.delete(event.bookmark.key))
+              .transactionClosed<dynamic>((dataStore) => dataStore.delete(event.bookmark.key))
               .then((dynamic value) {
-            currentState.bookmarkList
-                .removeWhere((element) => element.bookmark == event.bookmark);
-            currentState.filteredBookmarkList
-                .removeWhere((element) => element.value == event.bookmark);
+            currentState.bookmarkList.removeWhere((element) => element.bookmark == event.bookmark);
+            currentState.filteredBookmarkList.removeWhere((element) => element.value == event.bookmark);
             return currentState.copyWith(version: currentState.version + 1);
           });
         },
         orElse: () => state);
   }
 
-  Stream<BookmarkBlocState> _mapIncrementBookmark(
-      IncrementProgress event) async* {
+  Stream<BookmarkBlocState> _mapIncrementBookmark(IncrementProgress event) async* {
     yield await state.maybeMap(
         ready: (currentState) {
           event.bookmark.incrementProgress();
@@ -126,19 +116,16 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
         orElse: () => state);
   }
 
-  Stream<BookmarkBlocState> _mapUpdateFilterQuery(
-      UpdateFilterQuery event) async* {
+  Stream<BookmarkBlocState> _mapUpdateFilterQuery(UpdateFilterQuery event) async* {
     yield await state.maybeMap(
         ready: (ready) {
-          var filterData =
-              ready.filterData.copyWith(query: event.query.toLowerCase());
+          var filterData = ready.filterData.copyWith(query: event.query.toLowerCase());
           return _reFilter(ready, filterData);
         },
         orElse: () => state);
   }
 
-  Stream<BookmarkBlocState> _mapUpdateFilterData(
-      UpdateFilterData event) async* {
+  Stream<BookmarkBlocState> _mapUpdateFilterData(UpdateFilterData event) async* {
     yield await state.maybeMap(
         ready: (ready) {
           var filterData = ready.filterData.copyWith(filterData: event.data);
@@ -148,13 +135,11 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
   }
 
   Future _updateBookmark(PersistentBookmark bookmark) async {
-    return await dataStore
-        .transactionClosed<dynamic>((dataStore) => dataStore.update(bookmark));
+    return await dataStore.transactionClosed<dynamic>((dataStore) => dataStore.update(bookmark));
   }
 
   List<SearchResult<PersistentBookmark>> _updateFilter(
-      FilterRuntimeData filterRuntimeData,
-      Iterable<SearchableBookmark> bookmarks) {
+      FilterRuntimeData filterRuntimeData, Iterable<SearchableBookmark> bookmarks) {
     var filterList = bookmarks;
 
     var filterData = filterRuntimeData.filterData;
@@ -168,9 +153,8 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
     }
 
     if (!filterData.finished) {
-      filterList = filterList.where((readable) =>
-          readable.bookmark.ongoing ||
-          readable.bookmark.progress < readable.bookmark.maxProgress);
+      filterList = filterList
+          .where((readable) => readable.bookmark.ongoing || readable.bookmark.progress < readable.bookmark.maxProgress);
     }
 
     if (!filterData.ongoing) {
@@ -198,9 +182,7 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
       });
 
       filterList = matchList.map((e) => e.item2).toList();
-      return matchList
-          .map((e) => SearchResult(e.item2.bookmark, e.item1.match))
-          .toList();
+      return matchList.map((e) => SearchResult(e.item2.bookmark, e.item1.match)).toList();
     } else {
       return filterList.map((e) => SearchResult(e.bookmark, 1.0)).toList();
     }

@@ -4,13 +4,12 @@ import 'package:MarkMyProgress/data/storage/abstraction/storage.dart';
 import 'package:MarkMyProgress/data/storage/abstraction/storage_subscribable.dart';
 import 'package:meta/meta.dart';
 
-abstract class SubscribableStorage<Key, Value extends Storable<Key>>
-    extends Storage<Key, Value> implements SubscriptionStorage<Value> {
+abstract class SubscribableStorage<Key, Value extends Storable<Key>> extends Storage<Key, Value>
+    implements SubscriptionStorage<Value> {
   SubscribableStorage(DataSource<Key, Value> dataSource) : super(dataSource);
 
   @protected
-  final List<void Function(StorageEvent event, Iterable<Value> value)>
-      subscriptions = [];
+  final List<void Function(StorageEvent event, Iterable<Value> value)> subscriptions = [];
 
   @protected
   void onDataChanged(StorageEvent event, Iterable<Value> values) {
@@ -18,14 +17,12 @@ abstract class SubscribableStorage<Key, Value extends Storable<Key>>
   }
 
   @override
-  void subscribeToDataChanges(
-      void Function(StorageEvent event, Iterable<Value> value) callback) {
+  void subscribeToDataChanges(void Function(StorageEvent event, Iterable<Value> value) callback) {
     subscriptions.add(callback);
   }
 
   @override
-  void unsubscribeFromDataChanges(
-      void Function(StorageEvent event, Iterable<Value> value) callback) {
+  void unsubscribeFromDataChanges(void Function(StorageEvent event, Iterable<Value> value) callback) {
     subscriptions.remove(callback);
   }
 

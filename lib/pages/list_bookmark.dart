@@ -39,8 +39,7 @@ class _BookmarkListState extends State<BookmarkList> {
   }
 
   void _viewDetail(PersistentBookmark bookmark) async {
-    await context
-        .navigate<void>((context) => ViewBookmark(bookmarkKey: bookmark.key));
+    await context.navigate<void>((context) => ViewBookmark(bookmarkKey: bookmark.key));
   }
 
   final TextEditingController _searchQueryController = TextEditingController();
@@ -49,9 +48,7 @@ class _BookmarkListState extends State<BookmarkList> {
     var result = await showProgressBottomSheet(context, bookmark);
     if (result != null) {
       bookmark.logProgress(result);
-      GetIt.instance
-          .get<BookmarkBloc>()
-          .add(BookmarkBlocEvent.saveBookmark(bookmark: bookmark));
+      GetIt.instance.get<BookmarkBloc>().add(BookmarkBlocEvent.saveBookmark(bookmark: bookmark));
     }
   }
 
@@ -64,8 +61,7 @@ class _BookmarkListState extends State<BookmarkList> {
           BlocBuilder<BookmarkBloc, BookmarkBlocState>(
             builder: (context, state) {
               return state.maybeWhen(
-                ready:
-                    (version, bookmarkList, filteredBookmarkList, filterData) {
+                ready: (version, bookmarkList, filteredBookmarkList, filterData) {
                   return Scrollbar(
                       controller: ScrollController(initialScrollOffset: 0),
                       child: ListView.separated(
@@ -80,16 +76,14 @@ class _BookmarkListState extends State<BookmarkList> {
 
                           String title;
                           if (kDebugMode && item.match != 1) {
-                            title =
-                                '${bookmark.title} - (${item.match.toPrecision(2).toString()})';
+                            title = '${bookmark.title} - (${item.match.toPrecision(2).toString()})';
                           } else {
                             title = bookmark.title;
                           }
 
-                          var lastProgressDate =
-                              bookmark.lastProgress.date == Date.invalid
-                                  ? ''
-                                  : bookmark.lastProgress.date.toDateString();
+                          var lastProgressDate = bookmark.lastProgress.date == Date.invalid
+                              ? ''
+                              : bookmark.lastProgress.date.toDateString();
                           return InkWell(
                               onTap: () => _showProgressSheet(bookmark),
                               onLongPress: () => _viewDetail(bookmark),
@@ -99,12 +93,9 @@ class _BookmarkListState extends State<BookmarkList> {
                                     opacity: item.match,
                                     child: Row(children: [
                                       ConstrainedBox(
-                                          constraints:
-                                              BoxConstraints.tightForFinite(
-                                                  width: 90),
+                                          constraints: BoxConstraints.tightForFinite(width: 90),
                                           child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
+                                            crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               Text(
                                                 '${bookmark.progress.toDecimalString()} / ${bookmark.maxProgress.toDecimalString()}',
@@ -123,39 +114,30 @@ class _BookmarkListState extends State<BookmarkList> {
                                           child: Container(
                                               height: 40,
                                               child: Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
+                                                  alignment: Alignment.centerLeft,
                                                   child: Text(
                                                     title,
                                                     maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
+                                                    overflow: TextOverflow.ellipsis,
                                                   )))),
                                       SizedBox(width: 16),
                                       if (bookmark is WebBookmark &&
-                                          ((bookmark as WebBookmark)
-                                                      .webAddress ??
-                                                  '')
-                                              .isNotEmpty)
+                                          ((bookmark as WebBookmark).webAddress ?? '').isNotEmpty)
                                         OutlineButton(
                                             child: Text(LocaleKeys.web).tr(),
                                             onPressed: () {
                                               // can launch is not implemented on Windows
                                               //canLaunch(webBookmark.webAddress).then((value) {
                                               //if (value) {
-                                              launch((bookmark as WebBookmark)
-                                                  .webAddress);
+                                              launch((bookmark as WebBookmark).webAddress);
                                               //}
                                               //});
                                             }),
                                       OutlineButton(
-                                          child: Text(
-                                              '+ ${bookmark.progressIncrement.toDecimalString()}'),
+                                          child: Text('+ ${bookmark.progressIncrement.toDecimalString()}'),
                                           onPressed: () => context
                                               .bloc<BookmarkBloc>()
-                                              .add(BookmarkBlocEvent
-                                                  .incrementProgress(
-                                                      bookmark: bookmark))),
+                                              .add(BookmarkBlocEvent.incrementProgress(bookmark: bookmark))),
                                     ]),
                                   )));
                         },
@@ -186,19 +168,17 @@ class _BookmarkListState extends State<BookmarkList> {
                           hintText: LocaleKeys.search.tr(),
                           border: InputBorder.none,
                         ),
-                        onChanged: (query) => context.bloc<BookmarkBloc>().add(
-                            BookmarkBlocEvent.updateFilterQuery(query: query)),
+                        onChanged: (query) =>
+                            context.bloc<BookmarkBloc>().add(BookmarkBlocEvent.updateFilterQuery(query: query)),
                       )),
                       IconButton(
                           onPressed: () {
-                            context
-                                .navigate<dynamic>((context) => Statistics());
+                            context.navigate<dynamic>((context) => Statistics());
                           },
                           icon: Icon(AppIcons.insert_chart)),
                       IconButton(
                           onPressed: () async {
-                            await context
-                                .navigate<dynamic>((context) => Settings());
+                            await context.navigate<dynamic>((context) => Settings());
                           },
                           icon: Icon(AppIcons.settings_applications)),
                       SizedBox(

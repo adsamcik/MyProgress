@@ -50,8 +50,7 @@ class SearchableBookmark {
   }
 
   MatchResult bestMatch(String query) {
-    return variableList.fold<MatchResult>(MatchResult(0, 0),
-        (previousValue, e) {
+    return variableList.fold<MatchResult>(MatchResult(0, 0), (previousValue, e) {
       if (e.strippedValue.isNullOrEmpty) {
         return previousValue;
       }
@@ -61,14 +60,10 @@ class SearchableBookmark {
         matchValue = 1.0;
       } else {
         matchValue = _generateSubstringList(e.strippedValue, query.length)
-            .fold<double>(
-                0.0,
-                (previousValue, substring) =>
-                    max(previousValue, _match(query, substring)));
+            .fold<double>(0.0, (previousValue, substring) => max(previousValue, _match(query, substring)));
       }
 
-      if (previousValue.priority * previousValue.match >=
-          matchValue * e.priority) {
+      if (previousValue.priority * previousValue.match >= matchValue * e.priority) {
         return previousValue;
       } else {
         return MatchResult(e.priority, matchValue);

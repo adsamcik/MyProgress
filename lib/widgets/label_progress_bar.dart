@@ -34,25 +34,18 @@ class LinearLabelProgressIndicator extends ProgressIndicator {
   State<StatefulWidget> createState() => _LinearLabelProgressIndicatorState();
 }
 
-class _LinearLabelProgressIndicatorState
-    extends State<LinearLabelProgressIndicator> {
+class _LinearLabelProgressIndicatorState extends State<LinearLabelProgressIndicator> {
   @override
   Widget build(BuildContext context) {
     var theme = Get.theme(context);
-    var progressBarBackgroundColor =
-        HSLColor.fromColor(theme.colorScheme.background);
+    var progressBarBackgroundColor = HSLColor.fromColor(theme.colorScheme.background);
     var sign = (0.5 - progressBarBackgroundColor.lightness);
     const lightnessStepValue = 0.1;
     var lightnessStep = sign >= 0 ? lightnessStepValue : -lightnessStepValue;
-    var lightness = max(
-        min(progressBarBackgroundColor.lightness, 1.0 - lightnessStepValue),
-        lightnessStepValue);
-    progressBarBackgroundColor =
-        progressBarBackgroundColor.withLightness(lightness - lightnessStep);
+    var lightness = max(min(progressBarBackgroundColor.lightness, 1.0 - lightnessStepValue), lightnessStepValue);
+    progressBarBackgroundColor = progressBarBackgroundColor.withLightness(lightness - lightnessStep);
 
-    var progressBarForegroundColor = progressBarBackgroundColor
-        .withLightness(lightness + lightnessStep)
-        .toColor();
+    var progressBarForegroundColor = progressBarBackgroundColor.withLightness(lightness + lightnessStep).toColor();
 
     return Stack(
       children: <Widget>[
@@ -65,17 +58,13 @@ class _LinearLabelProgressIndicatorState
                 semanticsValue: widget.semanticsValue,
                 semanticsLabel: widget.semanticsLabel,
                 backgroundColor: progressBarBackgroundColor.toColor(),
-                valueColor:
-                    AlwaysStoppedAnimation<Color>(progressBarForegroundColor),
+                valueColor: AlwaysStoppedAnimation<Color>(progressBarForegroundColor),
               )),
         ),
         Positioned.fill(
           child: LayoutBuilder(
             builder: (context, constraints) {
-              var textStyle = Get.theme(context)
-                  .textTheme
-                  .subtitle1
-                  .copyWith(fontWeight: FontWeight.bold);
+              var textStyle = Get.theme(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.bold);
 
               var renderParagraph = RenderParagraph(
                 TextSpan(text: widget.textValue, style: textStyle),
@@ -85,14 +74,10 @@ class _LinearLabelProgressIndicatorState
               renderParagraph.layout(constraints);
               const padding = 16.0;
               const textProgressPadding = 4.0;
-              var textWidth = renderParagraph
-                  .getMinIntrinsicWidth(textStyle.fontSize)
-                  .ceilToDouble();
+              var textWidth = renderParagraph.getMinIntrinsicWidth(textStyle.fontSize).ceilToDouble();
 
               var textOffsetHorizontal = max(
-                  min(
-                      constraints.biggest.width * widget.value +
-                          textProgressPadding,
+                  min(constraints.biggest.width * widget.value + textProgressPadding,
                       constraints.biggest.width - textWidth - padding),
                   padding);
 

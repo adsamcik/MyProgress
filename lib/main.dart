@@ -22,12 +22,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (_) =>
-                getIt.get<BookmarkBloc>()..add(BookmarkBlocEvent.load()),
+            create: (_) => getIt.get<BookmarkBloc>()..add(BookmarkBlocEvent.load()),
           ),
           BlocProvider(
-            create: (_) =>
-                getIt.get<PreferenceBloc>()..add(PreferenceBlocEvent.load()),
+            create: (_) => getIt.get<PreferenceBloc>()..add(PreferenceBlocEvent.load()),
           ),
         ],
         child: EasyLocalization(

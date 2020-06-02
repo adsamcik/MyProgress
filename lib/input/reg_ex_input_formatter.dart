@@ -19,13 +19,11 @@ class RegExInputFormatter implements TextInputFormatter {
   }
 
   factory RegExInputFormatter.decimalNumbers() {
-    return RegExInputFormatter.withRegex(
-        '^\$|^(0|([1-9][0-9]{0,}))(\\.[0-9]{0,})?\$');
+    return RegExInputFormatter.withRegex('^\$|^(0|([1-9][0-9]{0,}))(\\.[0-9]{0,})?\$');
   }
 
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     final oldValueValid = _isValid(oldValue.text);
     final newValueValid = _isValid(newValue.text);
     if (oldValueValid && !newValueValid) {

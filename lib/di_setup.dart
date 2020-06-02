@@ -22,13 +22,10 @@ Future setupProductionDependencyInjection() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   var path = await getDirPath();
-  gi.registerSingleton(DataStore(
-      SembastDataSource(join(path, 'progress_data.db'), BookmarkMapper())));
-  gi.registerSingleton(PreferenceStore(
-      SembastDataSource(join(path, 'settings.db'), PreferenceMapper())));
+  gi.registerSingleton(DataStore(SembastDataSource(join(path, 'progress_data.db'), BookmarkMapper())));
+  gi.registerSingleton(PreferenceStore(SembastDataSource(join(path, 'settings.db'), PreferenceMapper())));
 
-  gi.registerLazySingleton<BookmarkBloc>(
-      () => BookmarkBloc(dataStore: gi.get(), settingsStore: gi.get()));
+  gi.registerLazySingleton<BookmarkBloc>(() => BookmarkBloc(dataStore: gi.get(), settingsStore: gi.get()));
 
   // BlocSupervisor.delegate = BlocDebugDelegate();
 

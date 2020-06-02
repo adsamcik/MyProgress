@@ -14,8 +14,7 @@ _$_GenericProgress _$_$_GenericProgressFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_GenericProgressToJson(_$_GenericProgress instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$_$_GenericProgressToJson(_$_GenericProgress instance) => <String, dynamic>{
       'date': instance.date?.toIso8601String(),
       'value': rationalToJson(instance.value),
     };

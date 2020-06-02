@@ -19,10 +19,7 @@ void _genericBookmarkSerializationTest() {
     'abandoned': false,
     'webAddress': 'web address',
     'history': [
-      {
-        'date': testBookmark.history.first.date.toIso8601String(),
-        'value': '17.357896'
-      }
+      {'date': testBookmark.history.first.date.toIso8601String(), 'value': '17.357896'}
     ],
     'progressIncrement': '1'
   };
@@ -44,10 +41,7 @@ void _genericBookmarkSerializationTest() {
       'abandoned': false,
       'webAddress': 'web address',
       'history': [
-        {
-          'date': testBookmark.history.first.date.toIso8601String(),
-          'value': 17.357896
-        }
+        {'date': testBookmark.history.first.date.toIso8601String(), 'value': 17.357896}
       ],
       'progressIncrement': 1.0
     };

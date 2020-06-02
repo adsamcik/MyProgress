@@ -40,9 +40,7 @@ class _EditBookmarkState extends State<EditBookmark> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(bookmark.title.isNullOrEmpty
-            ? LocaleKeys.new_bookmark
-            : bookmark.title),
+        title: Text(bookmark.title.isNullOrEmpty ? LocaleKeys.new_bookmark : bookmark.title),
       ),
       body: SafeArea(
           minimum: EdgeInsets.all(16.0),
@@ -55,11 +53,9 @@ class _EditBookmarkState extends State<EditBookmark> {
                 TextFormField(
                   key: _originalTitleKey,
                   initialValue: bookmark.originalTitle,
-                  decoration: InputDecoration(
-                      labelText: LocaleKeys.original_title.tr()),
+                  decoration: InputDecoration(labelText: LocaleKeys.original_title.tr()),
                   validator: (value) {
-                    if (value.isEmpty &&
-                        _localizedTitleKey.currentState.value.isEmpty) {
+                    if (value.isEmpty && _localizedTitleKey.currentState.value.isEmpty) {
                       return LocaleKeys.edit_error_all_titles_empty.tr();
                     }
 
@@ -72,11 +68,9 @@ class _EditBookmarkState extends State<EditBookmark> {
                 TextFormField(
                   key: _localizedTitleKey,
                   initialValue: bookmark.localizedTitle,
-                  decoration: InputDecoration(
-                      labelText: LocaleKeys.localized_title.tr()),
+                  decoration: InputDecoration(labelText: LocaleKeys.localized_title.tr()),
                   validator: (value) {
-                    if (value.isEmpty &&
-                        _originalTitleKey.currentState.value.isEmpty) {
+                    if (value.isEmpty && _originalTitleKey.currentState.value.isEmpty) {
                       return LocaleKeys.edit_error_all_titles_empty.tr();
                     }
 
@@ -107,31 +101,22 @@ class _EditBookmarkState extends State<EditBookmark> {
                 TextFormField(
                   key: _progressKey,
                   keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    RegExInputFormatter.decimalNumbers()
-                  ],
+                  inputFormatters: <TextInputFormatter>[RegExInputFormatter.decimalNumbers()],
                   initialValue: bookmark.progress.toDecimalString(),
-                  decoration: InputDecoration(
-                      labelText: LocaleKeys.current_progress.tr()),
+                  decoration: InputDecoration(labelText: LocaleKeys.current_progress.tr()),
                   onSaved: (String value) {
                     bookmark.logProgress(Rational.parse(value));
                   },
                 ),
                 TextFormField(
                   keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    RegExInputFormatter.decimalNumbers()
-                  ],
+                  inputFormatters: <TextInputFormatter>[RegExInputFormatter.decimalNumbers()],
                   initialValue: bookmark.maxProgress.toDecimalString(),
-                  decoration:
-                      InputDecoration(labelText: LocaleKeys.max_progress.tr()),
+                  decoration: InputDecoration(labelText: LocaleKeys.max_progress.tr()),
                   onChanged: (String value) => maxProgressHasChanged = true,
                   validator: (value) {
-                    if (maxProgressHasChanged &&
-                        double.parse(_progressKey.currentState.value) >
-                            double.parse(value)) {
-                      return LocaleKeys.edit_error_max_progress_less_than_actual
-                          .tr();
+                    if (maxProgressHasChanged && double.parse(_progressKey.currentState.value) > double.parse(value)) {
+                      return LocaleKeys.edit_error_max_progress_less_than_actual.tr();
                     }
                     return null;
                   },
@@ -143,12 +128,9 @@ class _EditBookmarkState extends State<EditBookmark> {
                 ),
                 TextFormField(
                   keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    RegExInputFormatter.decimalNumbers()
-                  ],
+                  inputFormatters: <TextInputFormatter>[RegExInputFormatter.decimalNumbers()],
                   initialValue: bookmark.progressIncrement.toDecimalString(),
-                  decoration: InputDecoration(
-                      labelText: LocaleKeys.increment_value.tr()),
+                  decoration: InputDecoration(labelText: LocaleKeys.increment_value.tr()),
                   onSaved: (String value) {
                     bookmark.progressIncrement = Rational.parse(value);
                   },
@@ -156,14 +138,12 @@ class _EditBookmarkState extends State<EditBookmark> {
                 SwitchListTile(
                   title: Text(LocaleKeys.filter_ongoing.tr()),
                   value: bookmark.ongoing,
-                  onChanged: (value) =>
-                      setState(() => bookmark.ongoing = value),
+                  onChanged: (value) => setState(() => bookmark.ongoing = value),
                 ),
                 SwitchListTile(
                   title: Text(LocaleKeys.filter_abandoned.tr()),
                   value: bookmark.abandoned,
-                  onChanged: (value) =>
-                      setState(() => bookmark.abandoned = value),
+                  onChanged: (value) => setState(() => bookmark.abandoned = value),
                 )
               ],
             ),
@@ -172,9 +152,7 @@ class _EditBookmarkState extends State<EditBookmark> {
         onPressed: () {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
-            GetIt.instance
-                .get<BookmarkBloc>()
-                .add(BookmarkBlocEvent.saveBookmark(bookmark: bookmark));
+            GetIt.instance.get<BookmarkBloc>().add(BookmarkBlocEvent.saveBookmark(bookmark: bookmark));
             Navigator.pop(context, bookmark);
           }
         },

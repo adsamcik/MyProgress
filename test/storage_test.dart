@@ -106,8 +106,7 @@ Future<void> runCrudTests() async {
   // Mock storage tests
   var mockStorage = MockStorage<String, MockStorable>(MockStringDataSource());
 
-  storageTests<String, MockStorable>(
-      'Storage CRUD test', mockStorage, _nullKeyStorable, (data) {
+  storageTests<String, MockStorable>('Storage CRUD test', mockStorage, _nullKeyStorable, (data) {
     data.value = 'updated value';
     return data;
   }, 'null');
@@ -120,8 +119,7 @@ Future<void> main() async {
     var mockStorage = MockStorage<String, MockStorable>(MockStringDataSource());
     StorageEvent lastEvent;
     Iterable<MockStorable> storables;
-    final void Function(StorageEvent, Iterable<MockStorable>) changeListener =
-        (event, value) {
+    final void Function(StorageEvent, Iterable<MockStorable>) changeListener = (event, value) {
       lastEvent = event;
       storables = value;
     };

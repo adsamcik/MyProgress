@@ -118,8 +118,7 @@ abstract class Storage<Key, Value extends Storable<Key>> {
   }
 
   Future<Result> transactionClosed<Result>(
-      FutureOr<Result> Function(Storage<Key, Value> storage)
-          transactionFunc) async {
+      FutureOr<Result> Function(Storage<Key, Value> storage) transactionFunc) async {
     try {
       await open();
       return await transaction(transactionFunc);
@@ -132,9 +131,7 @@ abstract class Storage<Key, Value extends Storable<Key>> {
     }
   }
 
-  Future<Result> transaction<Result>(
-      FutureOr<Result> Function(Storage<Key, Value> storage)
-          transactionFunc) async {
+  Future<Result> transaction<Result>(FutureOr<Result> Function(Storage<Key, Value> storage) transactionFunc) async {
     // todo implement transactions properly
     return await transactionFunc(this);
     /*await open();

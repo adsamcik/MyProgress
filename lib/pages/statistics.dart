@@ -28,8 +28,7 @@ class _StatisticsState extends State<Statistics> {
 
   void _recalculateData(List<PersistentBookmark> list) {
     _activelyReading = list.fold<int>(0, (previousValue, element) {
-      if (!element.abandoned &&
-          (element.ongoing || element.progress < element.maxProgress)) {
+      if (!element.abandoned && (element.ongoing || element.progress < element.maxProgress)) {
         return previousValue + 1;
       } else {
         return previousValue;
@@ -49,13 +48,10 @@ class _StatisticsState extends State<Statistics> {
               builder: (context, data) {
                 if (data.hasData) {
                   return SingleChildScrollView(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                        Text(LocaleKeys.statistics_item_count
-                            .plural(_activelyReading)),
-                        StatisticsChart(data.data),
-                      ]));
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Text(LocaleKeys.statistics_item_count.plural(_activelyReading)),
+                    StatisticsChart(data.data),
+                  ]));
                 }
                 return Container();
               },
@@ -91,9 +87,7 @@ class _StatisticsChartState extends State<StatisticsChart> {
     });
 
     var minDate = dailyReading.keys.fold<DateTime>(
-        DateTime.now(),
-        (previousDate, thisDate) =>
-            thisDate.isBefore(previousDate) ? thisDate : previousDate);
+        DateTime.now(), (previousDate, thisDate) => thisDate.isBefore(previousDate) ? thisDate : previousDate);
 
     var now = DateTime.now();
     var nextDate = minDate.add(Duration(days: 1));
@@ -102,9 +96,7 @@ class _StatisticsChartState extends State<StatisticsChart> {
       nextDate = nextDate.add(Duration(days: 1));
     }
 
-    var data = dailyReading.entries
-        .map((entry) => TimeSeriesCount(entry.key, entry.value))
-        .toList();
+    var data = dailyReading.entries.map((entry) => TimeSeriesCount(entry.key, entry.value)).toList();
 
     data.sort((a, b) => a.date.compareTo(b.date));
 

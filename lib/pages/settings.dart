@@ -90,9 +90,7 @@ class _SettingsState extends State<Settings> {
                     OutlineButton(
                         child: Text(LocaleKeys.import.tr()),
                         onPressed: () async {
-                          if (await Importer.import()) {
-                            //context.bloc<BookmarkBloc>();
-                          }
+                          await Importer.import();
                         }),
                     OutlineButton(
                         child: Text(LocaleKeys.export.tr()),

@@ -29,8 +29,7 @@ class GenericBookmark extends BaseBookmark implements WebBookmark {
   @override
   String webAddress;
 
-  factory GenericBookmark.fromJson(Map<String, dynamic> json) =>
-      _$GenericBookmarkFromJson(json);
+  factory GenericBookmark.fromJson(Map<String, dynamic> json) => _$GenericBookmarkFromJson(json);
 
   @override
   Map<String, dynamic> toJson() => _$GenericBookmarkToJson(this);
@@ -48,8 +47,7 @@ class GenericBookmark extends BaseBookmark implements WebBookmark {
   @override
   Iterable<SearchableVariable> get searchList => [
         SearchableVariable(localizedTitle, 1),
-        SearchableVariable(
-            originalTitle, localizedTitle.isNullOrEmpty ? 1 : 0.99),
+        SearchableVariable(originalTitle, localizedTitle.isNullOrEmpty ? 1 : 0.99),
         SearchableVariable(webAddress, 0.9)
       ];
 
@@ -68,6 +66,5 @@ class GenericBookmark extends BaseBookmark implements WebBookmark {
           listEquals(history, other.history);
 
   @override
-  int get hashCode =>
-      super.hashCode ^ webAddress.hashCode ^ history_generic.hashCode;
+  int get hashCode => super.hashCode ^ webAddress.hashCode ^ history_generic.hashCode;
 }

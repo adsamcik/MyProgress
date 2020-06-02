@@ -32,8 +32,7 @@ class JSONDataHandler implements DataExporter, DataImporter {
   @override
   Future export(Iterable<PersistentBookmark> bookmarks, File file) async {
     var csvData = bookmarks.map((e) => e.toJson().values.toList()).toList();
-    var csv = const ListToCsvConverter()
-        .convert(csvData, fieldDelimiter: _getDelimiter(file));
+    var csv = const ListToCsvConverter().convert(csvData, fieldDelimiter: _getDelimiter(file));
     await file.writeAsString(csv);
   }
 

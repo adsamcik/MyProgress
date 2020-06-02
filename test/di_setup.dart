@@ -10,8 +10,6 @@ const String mockDataStoreName = 'MockDataStore';
 Future setupMockDependencyInjection() async {
   final gi = GetIt.instance;
 
-  gi.registerSingleton(DataStore(MockIntDataSource()),
-      instanceName: mockDataStoreName);
-  gi.registerSingleton(PreferenceStore(MockStringDataSource()),
-      instanceName: mockSettingsStoreName);
+  gi.registerSingleton(DataStore(MockIntDataSource()), instanceName: mockDataStoreName);
+  gi.registerSingleton(PreferenceStore(MockStringDataSource()), instanceName: mockSettingsStoreName);
 }

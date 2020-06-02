@@ -12,64 +12,52 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rational/rational.dart';
 
-Future<Rational> showProgressBottomSheet(
-    BuildContext context, PersistentBookmark bookmark) {
+Future<Rational> showProgressBottomSheet(BuildContext context, PersistentBookmark bookmark) {
   return showModalBottomSheet<Rational>(
       context: context,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
       builder: (context) {
         var result = bookmark.progress;
 
         var theme = Theme.of(context);
-        var createButton = (
-                {IconData icon, void Function() onPressed, Widget child}) =>
-            ListTile(
+        var createButton = ({IconData icon, void Function() onPressed, Widget child}) => ListTile(
               onTap: onPressed,
               title: child,
               leading: Icon(icon),
             );
 
         var streamInput = StreamController<Rational>();
-        var textEditingController =
-            TextEditingController(text: result.toDecimalString());
+        var textEditingController = TextEditingController(text: result.toDecimalString());
 
         streamInput.stream.listen((event) {
-          textEditingController.value =
-              TextEditingValue(text: event.toDecimalString());
+          textEditingController.value = TextEditingValue(text: event.toDecimalString());
           result = event;
         });
 
         var numberFieldStream = TextFormField(
           controller: textEditingController,
           keyboardType: TextInputType.number,
-          inputFormatters: <TextInputFormatter>[
-            RegExInputFormatter.decimalNumbers()
-          ],
+          inputFormatters: <TextInputFormatter>[RegExInputFormatter.decimalNumbers()],
           onChanged: (String value) => result = Rational.parse(value),
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: theme.highlightColor, width: 1.0),
             ),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: theme.chipTheme.backgroundColor, width: 1.0),
+              borderSide: BorderSide(color: theme.chipTheme.backgroundColor, width: 1.0),
             ),
             hintText: LocaleKeys.progress.tr(),
           ),
         );
         ;
 
-        var childrenValues = {
-          bookmark.progressIncrement,
-          Rational.fromInt(1),
-          Rational.fromInt(1, 2)
-        }.map<Widget>((e) => createButton(
-            icon: AppIcons.plus_squared,
-            child: Text(e.toDecimalString()),
-            onPressed: () {
-              streamInput.add(result + e);
-            }));
+        var childrenValues =
+            {bookmark.progressIncrement, Rational.fromInt(1), Rational.fromInt(1, 2)}.map<Widget>((e) => createButton(
+                icon: AppIcons.plus_squared,
+                child: Text(e.toDecimalString()),
+                onPressed: () {
+                  streamInput.add(result + e);
+                }));
 
         return Column(
           children: [
@@ -95,8 +83,7 @@ Future<Rational> showProgressBottomSheet(
             createButton(
               icon: AppIcons.book,
               child: Text(LocaleKeys.show_details.tr()),
-              onPressed: () async => await context.navigate<void>(
-                  (context) => ViewBookmark(bookmarkKey: bookmark.key)),
+              onPressed: () async => await context.navigate<void>((context) => ViewBookmark(bookmarkKey: bookmark.key)),
             )
           ],
         );

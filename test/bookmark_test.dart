@@ -105,8 +105,7 @@ void main() {
       final today = Date.today;
       tmpBookmark.logProgress(Rational.parse('10.0'));
       tmpBookmark.logProgress(Rational.parse('20.0'));
-      expect(tmpBookmark.history,
-          [GenericProgress(today, Rational.parse('20.0'))]);
+      expect(tmpBookmark.history, [GenericProgress(today, Rational.parse('20.0'))]);
     });
   });
 

@@ -41,6 +41,5 @@ abstract class DataSource<Key, Value extends Storable<Key>> {
   Future close();
 
   /// Runs [transactionFunc] in transaction.
-  Future<Result> transaction<Result>(
-      Result Function(DataSource<Key, Value> storage) transactionFunc);
+  Future<Result> transaction<Result>(Result Function(DataSource<Key, Value> storage) transactionFunc);
 }

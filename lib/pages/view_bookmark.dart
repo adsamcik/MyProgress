@@ -56,13 +56,11 @@ class _ViewBookmarkState extends State<ViewBookmark> {
     _generalDataList.clear();
 
     if (bookmark.originalTitle.isNotNullOrEmpty) {
-      _generalDataList.add(
-          _ItemData(AppIcons.title, 'Original title', bookmark.originalTitle));
+      _generalDataList.add(_ItemData(AppIcons.title, 'Original title', bookmark.originalTitle));
     }
 
     if (bookmark.localizedTitle.isNotNullOrEmpty) {
-      _generalDataList.add(_ItemData(
-          AppIcons.language, 'Localized title', bookmark.localizedTitle));
+      _generalDataList.add(_ItemData(AppIcons.language, 'Localized title', bookmark.localizedTitle));
     }
 
     if (bookmark is WebBookmark) {
@@ -77,8 +75,7 @@ class _ViewBookmarkState extends State<ViewBookmark> {
       }
     }
 
-    var historyList =
-        (bookmark.history ?? <Progress>[]).reversed.take(10).toList().reversed;
+    var historyList = (bookmark.history ?? <Progress>[]).reversed.take(10).toList().reversed;
 
     var zero = Rational.zero;
     var lastProgress = zero;
@@ -92,14 +89,13 @@ class _ViewBookmarkState extends State<ViewBookmark> {
     _isCompleteHistory = _historyDataList.length == bookmark.history.length;
   }
 
-  Widget _buildRowWrapper(Iterable<Widget> children, [void Function() onTap]) =>
-      InkWell(
-          onTap: onTap,
-          child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Row(
-                children: children.toList(),
-              )));
+  Widget _buildRowWrapper(Iterable<Widget> children, [void Function() onTap]) => InkWell(
+      onTap: onTap,
+      child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Row(
+            children: children.toList(),
+          )));
 
   IconData _selectIcon(double value) {
     if (value < 0.2) {
@@ -115,25 +111,21 @@ class _ViewBookmarkState extends State<ViewBookmark> {
 
   List<Widget> _buildProgressData(PersistentBookmark bookmark) {
     var lastProgress = bookmark.lastProgress;
-    var progress = bookmark.maxProgress <= bookmark.progress.abs()
-        ? 1.0
-        : (bookmark.progress / bookmark.maxProgress).toDouble();
+    var progress =
+        bookmark.maxProgress <= bookmark.progress.abs() ? 1.0 : (bookmark.progress / bookmark.maxProgress).toDouble();
 
     return [
       _buildRowWrapper(
-        _buildIconValueRow(_selectIcon(progress), LocaleKeys.progress.tr(),
-            bookmark.progress.toDecimalString()),
+        _buildIconValueRow(_selectIcon(progress), LocaleKeys.progress.tr(), bookmark.progress.toDecimalString()),
         null,
       ),
       _buildRowWrapper(
-        _buildIconValueRow(AppIcons.progress_3, LocaleKeys.max_progress.tr(),
-            bookmark.maxProgress.toDecimalString()),
+        _buildIconValueRow(AppIcons.progress_3, LocaleKeys.max_progress.tr(), bookmark.maxProgress.toDecimalString()),
         null,
       ),
       if (!(lastProgress is NoProgress))
         _buildRowWrapper(
-          _buildIconValueRow(AppIcons.calendar, LocaleKeys.last_progress.tr(),
-              lastProgress.date.toDateString()),
+          _buildIconValueRow(AppIcons.calendar, LocaleKeys.last_progress.tr(), lastProgress.date.toDateString()),
           null,
         ),
       _buildRowWrapper([
@@ -209,10 +201,8 @@ class _ViewBookmarkState extends State<ViewBookmark> {
     return BlocBuilder<BookmarkBloc, BookmarkBlocState>(
         builder: (BuildContext context, state) => state.maybeMap(
             ready: (ready) {
-              var bookmark = ready.bookmarkList
-                  .firstWhere(
-                      (element) => element.bookmark.key == widget.bookmarkKey)
-                  .bookmark;
+              var bookmark =
+                  ready.bookmarkList.firstWhere((element) => element.bookmark.key == widget.bookmarkKey).bookmark;
 
               _updateState(bookmark);
 
@@ -251,8 +241,7 @@ class _ViewBookmarkState extends State<ViewBookmark> {
                 ),
                 floatingActionButton: FloatingActionButton(
                   onPressed: () {
-                    context.navigate<void>(
-                        (context) => EditBookmark(bookmark: bookmark));
+                    context.navigate<void>((context) => EditBookmark(bookmark: bookmark));
                   },
                   tooltip: LocaleKeys.edit.tr(),
                   child: Icon(Icons.edit),

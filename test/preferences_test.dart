@@ -18,8 +18,7 @@ void main() {
   final intPreference = Preference('int', 7);
 
   group('Test settings store', () {
-    final settingsStore =
-        gi.get<PreferenceStore>(instanceName: mockSettingsStoreName);
+    final settingsStore = gi.get<PreferenceStore>(instanceName: mockSettingsStoreName);
     test('Set preferences', () async {
       await settingsStore.open();
       expect(await settingsStore.insert(stringPreference), isTrue);
@@ -55,13 +54,11 @@ void main() {
     test('Test updated filter data', () async {
       var map = FilterData().toJson();
       var random = Random();
-      var newMap = map.map<String, dynamic>((key, dynamic _) =>
-          MapEntry<String, dynamic>(key, random.nextBool()));
+      var newMap = map.map<String, dynamic>((key, dynamic _) => MapEntry<String, dynamic>(key, random.nextBool()));
 
       await settingsStore.open();
 
-      newMap.entries.forEach((prefMap) =>
-          settingsStore.upsert(Preference(prefMap.key, prefMap.value)));
+      newMap.entries.forEach((prefMap) => settingsStore.upsert(Preference(prefMap.key, prefMap.value)));
 
       // After settings preloading change to this.
       /*var updateResult = newMap.entries.map((prefMap) =>
@@ -75,8 +72,7 @@ void main() {
     });
 
     test('Invalid operations', () {
-      expect(
-          settingsStore.insertAuto(stringPreference), throwsUnsupportedError);
+      expect(settingsStore.insertAuto(stringPreference), throwsUnsupportedError);
     });
   });
 }

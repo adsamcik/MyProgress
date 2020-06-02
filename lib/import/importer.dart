@@ -11,8 +11,7 @@ class Importer {
     var _importers = [JSONDataHandler()];
     var fileTypes = _importers
         .expand((e) => e.importExtensions)
-        .map((e) => FileTypeFilterGroup(
-            label: e.toUpperCase(), fileExtensions: [e.toLowerCase()]))
+        .map((e) => FileTypeFilterGroup(label: e.toUpperCase(), fileExtensions: [e.toLowerCase()]))
         .toList();
 
     var result = await showOpenPanel(
@@ -30,12 +29,11 @@ class Importer {
         if (ext.isEmpty) return;
 
         ext = ext.substring(1);
-        var importer = _importers
-            .firstWhere((importer) => importer.importExtensions.contains(ext));
+        var importer = _importers.firstWhere((importer) => importer.importExtensions.contains(ext));
         if (importer != null) {
           var data = await importer.import(File(path));
-          await await dataStore.transactionClosed((storage) async => await data
-              .map((element) async => await storage.insertAuto(element)));
+          await await dataStore.transactionClosed(
+              (storage) async => await data.map((element) async => await storage.insertAuto(element)));
         } else {
           // todo report error
         }

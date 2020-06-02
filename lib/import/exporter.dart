@@ -11,15 +11,13 @@ class Exporter {
     var _exporters = [JSONDataHandler()];
     var fileTypes = _exporters
         .expand((e) => e.exportExtensions)
-        .map((e) => FileTypeFilterGroup(
-            label: e.toUpperCase(), fileExtensions: [e.toLowerCase()]))
+        .map((e) => FileTypeFilterGroup(label: e.toUpperCase(), fileExtensions: [e.toLowerCase()]))
         .toList();
 
     var result = await showSavePanel(
         allowedFileTypes: fileTypes,
         confirmButtonText: 'Export',
-        suggestedFileName:
-            'progress_data.${fileTypes.first.fileExtensions.first}');
+        suggestedFileName: 'progress_data.${fileTypes.first.fileExtensions.first}');
 
     if (!result.canceled && result.paths.isNotEmpty) {
       await Future.forEach(result.paths, (String path) async {
@@ -29,8 +27,7 @@ class Exporter {
         if (ext.isEmpty) return;
 
         ext = ext.substring(1);
-        var exporter =
-            _exporters.firstWhere((e) => e.exportExtensions.contains(ext));
+        var exporter = _exporters.firstWhere((e) => e.exportExtensions.contains(ext));
         if (exporter != null) {
           var dataStore = GetIt.instance.get<DataStore>();
           await dataStore.open();

@@ -5,8 +5,7 @@ import 'package:MarkMyProgress/data/storage/abstraction/storage_subscribable.dar
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
-class SembastDataSource<Key, Value extends Storable<Key>>
-    extends DataSource<Key, Value> {
+class SembastDataSource<Key, Value extends Storable<Key>> extends DataSource<Key, Value> {
   final String _connectionString;
   final StorageMapper<Value, Map<String, dynamic>> _mapper;
 
@@ -30,11 +29,9 @@ class SembastDataSource<Key, Value extends Storable<Key>>
     _databaseClient = null;
   }
 
-  Value _mapDatabaseToInstance(dynamic value) =>
-      _mapper.fromDatabase(value as Map<String, dynamic>);
+  Value _mapDatabaseToInstance(dynamic value) => _mapper.fromDatabase(value as Map<String, dynamic>);
 
-  Map<String, dynamic> _mapInstanceToDatabase(Value value) =>
-      _mapper.toDatabase(value);
+  Map<String, dynamic> _mapInstanceToDatabase(Value value) => _mapper.toDatabase(value);
 
   @override
   Stream<Value> getAll() {
@@ -53,8 +50,7 @@ class SembastDataSource<Key, Value extends Storable<Key>>
         .asStream()
         .map(
           (list) => list.map(
-            (dynamic element) =>
-                element != null ? _mapDatabaseToInstance(element) : null,
+            (dynamic element) => element != null ? _mapDatabaseToInstance(element) : null,
           ),
         )
         .expand((element) => element.cast());
@@ -84,8 +80,7 @@ class SembastDataSource<Key, Value extends Storable<Key>>
 
   @override
   Future<Key> insertAuto(Value value) async {
-    var key =
-        await _store.add(_databaseClient, _mapInstanceToDatabase(value)) as Key;
+    var key = await _store.add(_databaseClient, _mapInstanceToDatabase(value)) as Key;
     value.key = key;
     return key;
   }
@@ -94,9 +89,7 @@ class SembastDataSource<Key, Value extends Storable<Key>>
   Future<bool> insert(Value value) async {
     assert(value.key != null, 'Key cannot be null');
     try {
-      dynamic resultKey = await _store
-          .record(value.key)
-          .add(_databaseClient, _mapInstanceToDatabase(value));
+      dynamic resultKey = await _store.record(value.key).add(_databaseClient, _mapInstanceToDatabase(value));
       return resultKey != null;
     } on Error catch (_, trace) {
       print(trace);
@@ -107,10 +100,7 @@ class SembastDataSource<Key, Value extends Storable<Key>>
   @override
   Future<bool> update(Value value) async {
     try {
-      return await _store
-              .record(value.key)
-              .update(_databaseClient, _mapInstanceToDatabase(value)) !=
-          null;
+      return await _store.record(value.key).update(_databaseClient, _mapInstanceToDatabase(value)) != null;
     } on Error catch (_, trace) {
       print(trace);
       return false;
@@ -119,8 +109,7 @@ class SembastDataSource<Key, Value extends Storable<Key>>
 
   @override
   Future<bool> delete(Key key) async {
-    var deletedCount = await _store.delete(_databaseClient,
-        finder: Finder(filter: Filter.byKey(key)));
+    var deletedCount = await _store.delete(_databaseClient, finder: Finder(filter: Filter.byKey(key)));
     assert(deletedCount <= 1);
     return deletedCount == 1;
   }
@@ -129,8 +118,7 @@ class SembastDataSource<Key, Value extends Storable<Key>>
   Future<bool> deleteWithValue(Value value) async {
     var databaseValue = _mapInstanceToDatabase(value);
     dynamic key = await _store.findKey(_databaseClient,
-        finder: Finder(
-            filter: Filter.custom((record) => record.value == databaseValue)));
+        finder: Finder(filter: Filter.custom((record) => record.value == databaseValue)));
     if (key != null) {
       return await delete(key as Key);
     } else {
@@ -139,13 +127,11 @@ class SembastDataSource<Key, Value extends Storable<Key>>
   }
 
   @override
-  Future<Result> transaction<Result>(
-      Result Function(DataSource<Key, Value> storage) transactionFunc) async {
+  Future<Result> transaction<Result>(Result Function(DataSource<Key, Value> storage) transactionFunc) async {
     var database = _databaseClient;
     if (database is Database) {
       return await database.transaction((transaction) {
-        var transactionDataSource =
-            SembastDataSource<Key, Value>(_connectionString, _mapper);
+        var transactionDataSource = SembastDataSource<Key, Value>(_connectionString, _mapper);
         try {
           transactionDataSource._openWithClient(transaction);
           return transactionFunc(transactionDataSource);
@@ -163,8 +149,7 @@ class SembastDataSource<Key, Value extends Storable<Key>>
     var record = _store.record(value.key);
 
     var exists = await record.exists(_databaseClient);
-    await record.put(_databaseClient, _mapInstanceToDatabase(value),
-        merge: true);
+    await record.put(_databaseClient, _mapInstanceToDatabase(value), merge: true);
     return exists ? StorageEvent.updated : StorageEvent.inserted;
   }
 }
