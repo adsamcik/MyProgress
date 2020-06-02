@@ -1,5 +1,6 @@
 import 'package:MarkMyProgress/data/bookmark/bloc/bloc.dart';
 import 'package:MarkMyProgress/data/preference/bloc/bloc.dart';
+import 'package:MarkMyProgress/misc/platform.dart';
 import 'package:MarkMyProgress/pages/list_bookmark.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,7 +11,7 @@ import 'package:get_it/get_it.dart';
 import 'di_setup.dart';
 
 Future<void> main() async {
-  await setupProductionDependencyInjection();
+  await setupProductionDependencyInjection(inPlace: AppPlatform.isDesktop);
   runApp(MyApp());
 }
 
