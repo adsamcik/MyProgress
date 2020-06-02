@@ -54,8 +54,6 @@ Future<Rational> showProgressBottomSheet(BuildContext context, PersistentBookmar
         var childrenValues = {
           bookmark.progressIncrement,
           Rational.fromInt(1),
-          Rational.fromInt(1, 2),
-          Rational.fromInt(1, 10),
           bookmark.progress.floor() + Rational.one - bookmark.progress,
         }.map<Widget>((e) => createButton(
             icon: AppIcons.plus_squared,
