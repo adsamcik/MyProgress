@@ -51,7 +51,7 @@ dependencies:
 
   # Native
   path: ^1.7.0
-  path_provider: ^1.6.9
+  path_provider: ^1.6.10
   path_provider_fde:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
@@ -85,7 +85,7 @@ dev_dependencies:
   intl: ^0.16.1
 
   # Dependency injection
-  injectable_generator: ^0.4.0
+  injectable_generator: ^0.4.1
 
   # Code generators
   freezed: ^0.10.9
@@ -93,7 +93,7 @@ dev_dependencies:
 
   # flutter pub run build_runner build (or watch)
   build_runner: ^1.10.0
-  package_info: ^0.4.0+18
+  package_info: ^0.4.1
 
   # Used by tests. Not required to use `json_serializable`.
   build_verify: ^1.1.1
