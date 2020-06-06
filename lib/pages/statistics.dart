@@ -1,9 +1,11 @@
 import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
 import 'package:MarkMyProgress/data/bookmark/database/data_store.dart';
+import 'package:MarkMyProgress/data/runtime/pair.dart';
 import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
+import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/generated/locale_keys.g.dart';
-import 'package:charts_flutter/flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -50,7 +52,7 @@ class _StatisticsState extends State<Statistics> {
                   return SingleChildScrollView(
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Text(LocaleKeys.statistics_item_count.plural(_activelyReading)),
-                    StatisticsChart(data.data),
+                    LastMonthChart(data.data),
                   ]));
                 }
                 return Container();
@@ -59,17 +61,17 @@ class _StatisticsState extends State<Statistics> {
   }
 }
 
-class StatisticsChart extends StatefulWidget {
+class LastMonthChart extends StatefulWidget {
   final List<PersistentBookmark> _bookmarks;
 
-  StatisticsChart(this._bookmarks);
+  LastMonthChart(this._bookmarks);
 
   @override
-  State<StatefulWidget> createState() => _StatisticsChartState();
+  State<StatefulWidget> createState() => _LastMonthChartState();
 }
 
-class _StatisticsChartState extends State<StatisticsChart> {
-  List<TimeSeriesCount> _dailyReadingData;
+class _LastMonthChartState extends State<LastMonthChart> {
+  List<Pair<Duration, int>> _dailyReadingData;
 
   @override
   void initState() {
@@ -86,8 +88,10 @@ class _StatisticsChartState extends State<StatisticsChart> {
       });
     });
 
-    var minDate = dailyReading.keys.fold<DateTime>(
-        DateTime.now(), (previousDate, thisDate) => thisDate.isBefore(previousDate) ? thisDate : previousDate);
+    var maxDate = DateTime.now();
+    var minDate = DateTime(maxDate.year, maxDate.month - 1, maxDate.day);
+
+    dailyReading.removeWhere((key, value) => key.isBefore(minDate));
 
     var now = DateTime.now();
     var nextDate = minDate.add(Duration(days: 1));
@@ -96,9 +100,9 @@ class _StatisticsChartState extends State<StatisticsChart> {
       nextDate = nextDate.add(Duration(days: 1));
     }
 
-    var data = dailyReading.entries.map((entry) => TimeSeriesCount(entry.key, entry.value)).toList();
+    var data = dailyReading.entries.map((entry) => Pair(entry.key.difference(maxDate), entry.value)).toList();
 
-    data.sort((a, b) => a.date.compareTo(b.date));
+    data.sort((a, b) => a.item1.compareTo(b.item1));
 
     // todo handle initial import values in a better way
     data.removeAt(0);
@@ -109,22 +113,78 @@ class _StatisticsChartState extends State<StatisticsChart> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 200,
-        child: TimeSeriesChart(
-          [
-            Series<TimeSeriesCount, DateTime>(
-                id: 'DailyReading',
-                data: _dailyReadingData,
-                domainFn: (TimeSeriesCount datum, int index) => datum.date,
-                measureFn: (TimeSeriesCount datum, int index) => datum.count),
-          ],
-        ));
+      height: 250,
+      child: Padding(padding: EdgeInsets.fromLTRB(0, 16, 16, 0), child: LineChart(mainData())),
+    );
   }
-}
 
-class TimeSeriesCount {
-  final DateTime date;
-  final int count;
+  List<Color> gradientColors = [
+    const Color(0xff23b6e6),
+    const Color(0xff02d39a),
+  ];
 
-  TimeSeriesCount(this.date, this.count);
+  LineChartData mainData() {
+    var now = DateTime.now();
+    return LineChartData(
+      gridData: FlGridData(
+        show: true,
+        drawVerticalLine: true,
+        getDrawingHorizontalLine: (value) {
+          return FlLine(
+            color: const Color(0xff37434d),
+            strokeWidth: 1,
+          );
+        },
+        getDrawingVerticalLine: (value) {
+          return FlLine(
+            color: const Color(0xff37434d),
+            strokeWidth: 1,
+          );
+        },
+      ),
+      titlesData: FlTitlesData(
+        show: true,
+        bottomTitles: SideTitles(
+          showTitles: true,
+          reservedSize: 22,
+          interval: 7,
+          textStyle: const TextStyle(color: Color(0xff68737d), fontWeight: FontWeight.bold, fontSize: 16),
+          getTitles: (value) {
+            return now.subtract(Duration(days: value.toInt())).toMonthString();
+          },
+          margin: 8,
+        ),
+        leftTitles: SideTitles(
+          showTitles: true,
+          textStyle: const TextStyle(
+            color: Color(0xff67727d),
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+          getTitles: (value) {
+            return value.toStringAsFixed(0);
+          },
+          reservedSize: 28,
+          margin: 12,
+        ),
+      ),
+      borderData: FlBorderData(show: true, border: Border.all(color: const Color(0xff37434d), width: 1)),
+      lineBarsData: [
+        LineChartBarData(
+          spots: _dailyReadingData.map((e) => FlSpot(e.item1.inDays.toDouble(), e.item2.toDouble())).toList(),
+          isCurved: false,
+          colors: gradientColors,
+          barWidth: 5,
+          isStrokeCapRound: false,
+          dotData: FlDotData(
+            show: false,
+          ),
+          belowBarData: BarAreaData(
+            show: true,
+            colors: gradientColors.map((color) => color.withOpacity(0.3)).toList(),
+          ),
+        ),
+      ],
+    );
+  }
 }
