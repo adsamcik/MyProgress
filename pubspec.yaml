@@ -56,19 +56,19 @@ dependencies:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
       path: plugins/flutter_plugins/path_provider_fde
-      ref: f1694f9dc00b3d02b2bb21913ab6f74c668885f1
+      ref: bae67ae551328695f76cd9923a7c9ea27075eba1
 
   url_launcher: ^5.4.10
   url_launcher_fde:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
       path: plugins/flutter_plugins/url_launcher_fde
-      ref: f1694f9dc00b3d02b2bb21913ab6f74c668885f1
+      ref: bae67ae551328695f76cd9923a7c9ea27075eba1
 
   file_chooser:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
-      ref: f1694f9dc00b3d02b2bb21913ab6f74c668885f1
+      ref: bae67ae551328695f76cd9923a7c9ea27075eba1
       path: plugins/file_chooser
 
   easy_localization:
