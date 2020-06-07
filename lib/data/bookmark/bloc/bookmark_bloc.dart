@@ -18,6 +18,8 @@ import 'bookmark_bloc_event.dart';
 import 'bookmark_bloc_state.dart';
 
 class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
+  static const double filterThreshold = 0.8;
+
   final DataStore dataStore;
   final PreferenceStore settingsStore;
 
@@ -166,7 +168,7 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
     if (strippedFilter.isNotEmpty) {
       var matchList = filterList
           .map((e) => Pair(e.bestMatch(strippedFilter), e))
-          .where((element) => element.item1.match > 0)
+          .where((element) => element.item1.match > filterThreshold)
           .toList();
 
       matchList.sort((a, b) {

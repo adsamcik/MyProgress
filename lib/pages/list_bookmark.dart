@@ -84,13 +84,19 @@ class _BookmarkListState extends State<BookmarkList> {
                           var lastProgressDate = bookmark.lastProgress.date == Date.invalid
                               ? ''
                               : bookmark.lastProgress.date.toDateString();
+
+                          const minOpacity = 0.5;
+                          var opacityDouble =
+                              ((item.match - BookmarkBloc.filterThreshold) / (1 - BookmarkBloc.filterThreshold));
+                          var opacity = minOpacity + opacityDouble * (1 - minOpacity);
+
                           return InkWell(
                               onTap: () => _showProgressSheet(bookmark),
                               onLongPress: () => _viewDetail(bookmark),
                               child: Padding(
                                   padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                                   child: Opacity(
-                                    opacity: item.match,
+                                    opacity: opacity,
                                     child: Row(children: [
                                       ConstrainedBox(
                                           constraints: BoxConstraints.tightForFinite(width: 90),
