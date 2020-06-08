@@ -55,16 +55,21 @@ Future<Rational> showProgressBottomSheet(BuildContext context, PersistentBookmar
           bookmark.progressIncrement,
           Rational.fromInt(1),
           bookmark.progress.floor() + Rational.one - bookmark.progress,
-        }.map<Widget>((e) => createButton(
-            icon: AppIcons.plus_squared,
-            child: Text(e.toDecimalString()),
-            onPressed: () {
-              streamInput.add(result + e);
-            }));
+        }.toList();
+        childrenValues.sort();
+
+        var tileArray = childrenValues
+            .map<ListTile>((e) => createButton(
+                icon: AppIcons.plus_squared,
+                child: Text(e.toDecimalString()),
+                onPressed: () {
+                  streamInput.add(result + e);
+                }))
+            .toList();
 
         return Column(
           children: [
-            Column(children: childrenValues.toList()),
+            Column(children: tileArray),
             Padding(
               padding: EdgeInsets.all(16),
               child: numberFieldStream,
