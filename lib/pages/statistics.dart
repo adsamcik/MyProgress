@@ -8,6 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:rational/rational.dart';
 
 class Statistics extends StatefulWidget {
   Statistics({Key key}) : super(key: key);
@@ -71,41 +72,40 @@ class LastMonthChart extends StatefulWidget {
 }
 
 class _LastMonthChartState extends State<LastMonthChart> {
-  List<Pair<Duration, int>> _dailyReadingData;
+  List<Pair<Duration, Rational>> _dailyReadingData;
 
   @override
   void initState() {
     super.initState();
 
-    var dailyReading = <DateTime, int>{};
-    widget._bookmarks.forEach((bookmark) {
-      bookmark.history.forEach((record) {
-        if (dailyReading.containsKey(record.date)) {
-          dailyReading[record.date] += 1;
-        } else {
-          dailyReading[record.date] = 1;
-        }
-      });
-    });
-
+    var dailyReading = <DateTime, Rational>{};
     var maxDate = DateTime.now();
     var minDate = DateTime(maxDate.year, maxDate.month - 1, maxDate.day);
 
-    dailyReading.removeWhere((key, value) => key.isBefore(minDate));
+    widget._bookmarks.forEach((bookmark) {
+      var lastValue = Rational.zero;
+      bookmark.history.where((element) => element.date.isAfter(minDate)).forEach((record) {
+        var diff = record.value - lastValue;
+        if (dailyReading.containsKey(record.date)) {
+          dailyReading[record.date] += diff;
+        } else {
+          dailyReading[record.date] = diff;
+        }
+        lastValue = record.value;
+      });
+    });
 
     var now = DateTime.now();
-    var nextDate = minDate.add(Duration(days: 1));
+    const dayDuration = Duration(days: 1);
+    var nextDate = minDate.add(dayDuration);
     while (nextDate.isBefore(now)) {
-      dailyReading.putIfAbsent(nextDate, () => 0);
-      nextDate = nextDate.add(Duration(days: 1));
+      dailyReading.putIfAbsent(nextDate, () => Rational.zero);
+      nextDate = nextDate.add(dayDuration);
     }
 
     var data = dailyReading.entries.map((entry) => Pair(entry.key.difference(maxDate), entry.value)).toList();
 
     data.sort((a, b) => a.item1.compareTo(b.item1));
-
-    // todo handle initial import values in a better way
-    data.removeAt(0);
 
     _dailyReadingData = data;
   }
@@ -114,7 +114,11 @@ class _LastMonthChartState extends State<LastMonthChart> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 250,
-      child: Padding(padding: EdgeInsets.fromLTRB(0, 16, 16, 0), child: LineChart(mainData())),
+      width: MediaQuery.of(context).size.width,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(0, 16, 16, 0),
+        child: LineChart(mainData()),
+      ),
     );
   }
 
@@ -175,10 +179,8 @@ class _LastMonthChartState extends State<LastMonthChart> {
           isCurved: false,
           colors: gradientColors,
           barWidth: 5,
-          isStrokeCapRound: false,
-          dotData: FlDotData(
-            show: false,
-          ),
+          isStrokeCapRound: true,
+          dotData: FlDotData(show: false),
           belowBarData: BarAreaData(
             show: true,
             colors: gradientColors.map((color) => color.withOpacity(0.3)).toList(),
