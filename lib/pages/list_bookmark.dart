@@ -52,6 +52,44 @@ class _BookmarkListState extends State<BookmarkList> {
     }
   }
 
+  Widget _buildBookmarkButtons(PersistentBookmark bookmark) {
+    const buttonSpacing = 16;
+    const approxFirstButtonSize = 76;
+    const approxButtonSize = approxFirstButtonSize + buttonSpacing;
+    const requiredSpace = 7 * 38;
+    var width = MediaQuery.of(context).size.width;
+    var leftButtonSpace = width - requiredSpace;
+
+    if (leftButtonSpace < approxFirstButtonSize) return SizedBox();
+
+    var buttons = <Widget>[];
+
+    buttons.add(OutlineButton(
+        child: Text('+ ${bookmark.progressIncrement.toDecimalString()}'),
+        onPressed: () => context.bloc<BookmarkBloc>().add(BookmarkBlocEvent.incrementProgress(bookmark: bookmark))));
+
+    leftButtonSpace -= approxFirstButtonSize;
+
+    if (leftButtonSpace >= approxButtonSize &&
+        bookmark is WebBookmark &&
+        ((bookmark as WebBookmark).webAddress ?? '').isNotEmpty) {
+      buttons.add(SizedBox(width: 16));
+      buttons.add(OutlineButton(
+          child: Text(LocaleKeys.web).tr(),
+          onPressed: () {
+            // can launch is not implemented on Windows
+            //canLaunch(webBookmark.webAddress).then((value) {
+            //if (value) {
+            launch((bookmark as WebBookmark).webAddress);
+            //}
+            //});
+          }));
+      leftButtonSpace -= approxButtonSize;
+    }
+
+    return Row(children: buttons);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,23 +165,7 @@ class _BookmarkListState extends State<BookmarkList> {
                                                     overflow: TextOverflow.ellipsis,
                                                   )))),
                                       SizedBox(width: 16),
-                                      if (bookmark is WebBookmark &&
-                                          ((bookmark as WebBookmark).webAddress ?? '').isNotEmpty)
-                                        OutlineButton(
-                                            child: Text(LocaleKeys.web).tr(),
-                                            onPressed: () {
-                                              // can launch is not implemented on Windows
-                                              //canLaunch(webBookmark.webAddress).then((value) {
-                                              //if (value) {
-                                              launch((bookmark as WebBookmark).webAddress);
-                                              //}
-                                              //});
-                                            }),
-                                      OutlineButton(
-                                          child: Text('+ ${bookmark.progressIncrement.toDecimalString()}'),
-                                          onPressed: () => context
-                                              .bloc<BookmarkBloc>()
-                                              .add(BookmarkBlocEvent.incrementProgress(bookmark: bookmark))),
+                                      _buildBookmarkButtons(bookmark),
                                     ]),
                                   )));
                         },
