@@ -88,6 +88,7 @@ Future<Rational> showProgressBottomSheet(BuildContext context, PersistentBookmar
                 ),
               ],
             ),
+            Divider(),
             createButton(
               icon: AppIcons.book,
               child: Text(LocaleKeys.show_details.tr()),
