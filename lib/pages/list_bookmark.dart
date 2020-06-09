@@ -87,7 +87,7 @@ class _BookmarkListState extends State<BookmarkList> {
       leftButtonSpace -= approxButtonSize;
     }
 
-    return Row(children: buttons);
+    return Row(children: buttons.reversed.toList());
   }
 
   @override
