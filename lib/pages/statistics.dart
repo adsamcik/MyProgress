@@ -1,14 +1,13 @@
 import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
 import 'package:MarkMyProgress/data/bookmark/database/data_store.dart';
-import 'package:MarkMyProgress/data/runtime/pair.dart';
-import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
+import 'package:MarkMyProgress/data/statistics/statistic_data.dart';
+import 'package:MarkMyProgress/data/statistics/statistic_provider.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:rational/rational.dart';
 
 class Statistics extends StatefulWidget {
   Statistics({Key key}) : super(key: key);
@@ -18,25 +17,27 @@ class Statistics extends StatefulWidget {
 }
 
 class _StatisticsState extends State<Statistics> {
-  int _activelyReading = 0;
+  StatisticProvider _provider;
 
   Future<List<PersistentBookmark>> _loadDatabaseData() async {
     var store = GetIt.instance.get<DataStore>();
     await store.open();
     var records = await store.getAll().toList();
     await store.close();
-    _recalculateData(records);
     return records;
   }
 
-  void _recalculateData(List<PersistentBookmark> list) {
-    _activelyReading = list.fold<int>(0, (previousValue, element) {
-      if (!element.abandoned && (element.ongoing || element.progress < element.maxProgress)) {
-        return previousValue + 1;
-      } else {
-        return previousValue;
-      }
-    });
+  Widget _loadingWidget() {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  List<Widget> _statisticChildren(StatisticData data) {
+    return [
+      Text(LocaleKeys.statistics_item_count.plural(data.active)),
+      LastMonthChart(data),
+    ];
   }
 
   @override
@@ -50,66 +51,39 @@ class _StatisticsState extends State<Statistics> {
               future: _loadDatabaseData(),
               builder: (context, data) {
                 if (data.hasData) {
+                  _provider = StatisticProvider(data.data);
                   return SingleChildScrollView(
-                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text(LocaleKeys.statistics_item_count.plural(_activelyReading)),
-                    LastMonthChart(data.data),
-                  ]));
+                      child: FutureBuilder(
+                    future: _provider.generate(),
+                    builder: (BuildContext context, AsyncSnapshot<StatisticData> snapshot) {
+                      if (snapshot.hasData) {
+                        return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start, children: _statisticChildren(snapshot.data));
+                      } else if (snapshot.hasError) {
+                        print(snapshot.error);
+                        return Text('error');
+                      } else {
+                        return _loadingWidget();
+                      }
+                    },
+                  ));
                 }
-                return Container();
+                return _loadingWidget();
               },
             )));
   }
 }
 
 class LastMonthChart extends StatefulWidget {
-  final List<PersistentBookmark> _bookmarks;
+  final StatisticData _data;
 
-  LastMonthChart(this._bookmarks);
+  LastMonthChart(this._data);
 
   @override
   State<StatefulWidget> createState() => _LastMonthChartState();
 }
 
 class _LastMonthChartState extends State<LastMonthChart> {
-  List<Pair<Duration, Rational>> _dailyReadingData;
-
-  @override
-  void initState() {
-    super.initState();
-
-    var dailyReading = <DateTime, Rational>{};
-    var maxDate = DateTime.now();
-    var minDate = DateTime(maxDate.year, maxDate.month - 1, maxDate.day);
-
-    widget._bookmarks.forEach((bookmark) {
-      var lastValue = Rational.zero;
-      bookmark.history.where((element) => element.date.isAfter(minDate)).forEach((record) {
-        var diff = record.value - lastValue;
-        if (dailyReading.containsKey(record.date)) {
-          dailyReading[record.date] += diff;
-        } else {
-          dailyReading[record.date] = diff;
-        }
-        lastValue = record.value;
-      });
-    });
-
-    var now = DateTime.now();
-    const dayDuration = Duration(days: 1);
-    var nextDate = minDate.add(dayDuration);
-    while (nextDate.isBefore(now)) {
-      dailyReading.putIfAbsent(nextDate, () => Rational.zero);
-      nextDate = nextDate.add(dayDuration);
-    }
-
-    var data = dailyReading.entries.map((entry) => Pair(entry.key.difference(maxDate), entry.value)).toList();
-
-    data.sort((a, b) => a.item1.compareTo(b.item1));
-
-    _dailyReadingData = data;
-  }
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -175,7 +149,7 @@ class _LastMonthChartState extends State<LastMonthChart> {
       borderData: FlBorderData(show: true, border: Border.all(color: const Color(0xff37434d), width: 1)),
       lineBarsData: [
         LineChartBarData(
-          spots: _dailyReadingData.map((e) => FlSpot(e.item1.inDays.toDouble(), e.item2.toDouble())).toList(),
+          spots: widget._data.dailyProgress.map((e) => FlSpot(e.item1.inDays.toDouble(), e.item2.toDouble())).toList(),
           isCurved: false,
           colors: gradientColors,
           barWidth: 5,
