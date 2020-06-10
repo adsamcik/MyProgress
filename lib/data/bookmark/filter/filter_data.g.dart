@@ -15,8 +15,7 @@ _$_FilterData _$_$_FilterDataFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_FilterDataToJson(_$_FilterData instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$_$_FilterDataToJson(_$_FilterData instance) => <String, dynamic>{
       'abandoned': instance.abandoned,
       'ongoing': instance.ongoing,
       'finished': instance.finished,

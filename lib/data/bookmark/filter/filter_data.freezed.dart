@@ -15,11 +15,7 @@ FilterData _$FilterDataFromJson(Map<String, dynamic> json) {
 class _$FilterDataTearOff {
   const _$FilterDataTearOff();
 
-  _FilterData call(
-      {bool abandoned = false,
-      bool ongoing = true,
-      bool finished = false,
-      bool ended = true}) {
+  _FilterData call({bool abandoned = false, bool ongoing = true, bool finished = false, bool ended = true}) {
     return _FilterData(
       abandoned: abandoned,
       ongoing: ongoing,
@@ -43,9 +39,7 @@ mixin _$FilterData {
 }
 
 abstract class $FilterDataCopyWith<$Res> {
-  factory $FilterDataCopyWith(
-          FilterData value, $Res Function(FilterData) then) =
-      _$FilterDataCopyWithImpl<$Res>;
+  factory $FilterDataCopyWith(FilterData value, $Res Function(FilterData) then) = _$FilterDataCopyWithImpl<$Res>;
   $Res call({bool abandoned, bool ongoing, bool finished, bool ended});
 }
 
@@ -73,17 +67,13 @@ class _$FilterDataCopyWithImpl<$Res> implements $FilterDataCopyWith<$Res> {
 }
 
 abstract class _$FilterDataCopyWith<$Res> implements $FilterDataCopyWith<$Res> {
-  factory _$FilterDataCopyWith(
-          _FilterData value, $Res Function(_FilterData) then) =
-      __$FilterDataCopyWithImpl<$Res>;
+  factory _$FilterDataCopyWith(_FilterData value, $Res Function(_FilterData) then) = __$FilterDataCopyWithImpl<$Res>;
   @override
   $Res call({bool abandoned, bool ongoing, bool finished, bool ended});
 }
 
-class __$FilterDataCopyWithImpl<$Res> extends _$FilterDataCopyWithImpl<$Res>
-    implements _$FilterDataCopyWith<$Res> {
-  __$FilterDataCopyWithImpl(
-      _FilterData _value, $Res Function(_FilterData) _then)
+class __$FilterDataCopyWithImpl<$Res> extends _$FilterDataCopyWithImpl<$Res> implements _$FilterDataCopyWith<$Res> {
+  __$FilterDataCopyWithImpl(_FilterData _value, $Res Function(_FilterData) _then)
       : super(_value, (v) => _then(v as _FilterData));
 
   @override
@@ -107,18 +97,13 @@ class __$FilterDataCopyWithImpl<$Res> extends _$FilterDataCopyWithImpl<$Res>
 
 @JsonSerializable()
 class _$_FilterData implements _FilterData {
-  _$_FilterData(
-      {this.abandoned = false,
-      this.ongoing = true,
-      this.finished = false,
-      this.ended = true})
+  _$_FilterData({this.abandoned = false, this.ongoing = true, this.finished = false, this.ended = true})
       : assert(abandoned != null),
         assert(ongoing != null),
         assert(finished != null),
         assert(ended != null);
 
-  factory _$_FilterData.fromJson(Map<String, dynamic> json) =>
-      _$_$_FilterDataFromJson(json);
+  factory _$_FilterData.fromJson(Map<String, dynamic> json) => _$_$_FilterDataFromJson(json);
 
   @JsonKey(defaultValue: false)
   @override
@@ -143,16 +128,10 @@ class _$_FilterData implements _FilterData {
     return identical(this, other) ||
         (other is _FilterData &&
             (identical(other.abandoned, abandoned) ||
-                const DeepCollectionEquality()
-                    .equals(other.abandoned, abandoned)) &&
-            (identical(other.ongoing, ongoing) ||
-                const DeepCollectionEquality()
-                    .equals(other.ongoing, ongoing)) &&
-            (identical(other.finished, finished) ||
-                const DeepCollectionEquality()
-                    .equals(other.finished, finished)) &&
-            (identical(other.ended, ended) ||
-                const DeepCollectionEquality().equals(other.ended, ended)));
+                const DeepCollectionEquality().equals(other.abandoned, abandoned)) &&
+            (identical(other.ongoing, ongoing) || const DeepCollectionEquality().equals(other.ongoing, ongoing)) &&
+            (identical(other.finished, finished) || const DeepCollectionEquality().equals(other.finished, finished)) &&
+            (identical(other.ended, ended) || const DeepCollectionEquality().equals(other.ended, ended)));
   }
 
   @override
@@ -164,8 +143,7 @@ class _$_FilterData implements _FilterData {
       const DeepCollectionEquality().hash(ended);
 
   @override
-  _$FilterDataCopyWith<_FilterData> get copyWith =>
-      __$FilterDataCopyWithImpl<_FilterData>(this, _$identity);
+  _$FilterDataCopyWith<_FilterData> get copyWith => __$FilterDataCopyWithImpl<_FilterData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -174,14 +152,9 @@ class _$_FilterData implements _FilterData {
 }
 
 abstract class _FilterData implements FilterData {
-  factory _FilterData(
-      {bool abandoned,
-      bool ongoing,
-      bool finished,
-      bool ended}) = _$_FilterData;
+  factory _FilterData({bool abandoned, bool ongoing, bool finished, bool ended}) = _$_FilterData;
 
-  factory _FilterData.fromJson(Map<String, dynamic> json) =
-      _$_FilterData.fromJson;
+  factory _FilterData.fromJson(Map<String, dynamic> json) = _$_FilterData.fromJson;
 
   @override
   bool get abandoned;

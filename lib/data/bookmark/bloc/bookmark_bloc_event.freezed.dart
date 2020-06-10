@@ -92,13 +92,11 @@ mixin _$BookmarkBlocEvent {
 }
 
 abstract class $BookmarkBlocEventCopyWith<$Res> {
-  factory $BookmarkBlocEventCopyWith(
-          BookmarkBlocEvent value, $Res Function(BookmarkBlocEvent) then) =
+  factory $BookmarkBlocEventCopyWith(BookmarkBlocEvent value, $Res Function(BookmarkBlocEvent) then) =
       _$BookmarkBlocEventCopyWithImpl<$Res>;
 }
 
-class _$BookmarkBlocEventCopyWithImpl<$Res>
-    implements $BookmarkBlocEventCopyWith<$Res> {
+class _$BookmarkBlocEventCopyWithImpl<$Res> implements $BookmarkBlocEventCopyWith<$Res> {
   _$BookmarkBlocEventCopyWithImpl(this._value, this._then);
 
   final BookmarkBlocEvent _value;
@@ -107,14 +105,11 @@ class _$BookmarkBlocEventCopyWithImpl<$Res>
 }
 
 abstract class $LoadCopyWith<$Res> {
-  factory $LoadCopyWith(Load value, $Res Function(Load) then) =
-      _$LoadCopyWithImpl<$Res>;
+  factory $LoadCopyWith(Load value, $Res Function(Load) then) = _$LoadCopyWithImpl<$Res>;
 }
 
-class _$LoadCopyWithImpl<$Res> extends _$BookmarkBlocEventCopyWithImpl<$Res>
-    implements $LoadCopyWith<$Res> {
-  _$LoadCopyWithImpl(Load _value, $Res Function(Load) _then)
-      : super(_value, (v) => _then(v as Load));
+class _$LoadCopyWithImpl<$Res> extends _$BookmarkBlocEventCopyWithImpl<$Res> implements $LoadCopyWith<$Res> {
+  _$LoadCopyWithImpl(Load _value, $Res Function(Load) _then) : super(_value, (v) => _then(v as Load));
 
   @override
   Load get _value => super._value as Load;
@@ -216,17 +211,13 @@ abstract class Load implements BookmarkBlocEvent {
 }
 
 abstract class $AddBookmarkCopyWith<$Res> {
-  factory $AddBookmarkCopyWith(
-          AddBookmark value, $Res Function(AddBookmark) then) =
-      _$AddBookmarkCopyWithImpl<$Res>;
+  factory $AddBookmarkCopyWith(AddBookmark value, $Res Function(AddBookmark) then) = _$AddBookmarkCopyWithImpl<$Res>;
   $Res call({PersistentBookmark bookmark});
 }
 
-class _$AddBookmarkCopyWithImpl<$Res>
-    extends _$BookmarkBlocEventCopyWithImpl<$Res>
+class _$AddBookmarkCopyWithImpl<$Res> extends _$BookmarkBlocEventCopyWithImpl<$Res>
     implements $AddBookmarkCopyWith<$Res> {
-  _$AddBookmarkCopyWithImpl(
-      AddBookmark _value, $Res Function(AddBookmark) _then)
+  _$AddBookmarkCopyWithImpl(AddBookmark _value, $Res Function(AddBookmark) _then)
       : super(_value, (v) => _then(v as AddBookmark));
 
   @override
@@ -237,9 +228,7 @@ class _$AddBookmarkCopyWithImpl<$Res>
     Object bookmark = freezed,
   }) {
     return _then(AddBookmark(
-      bookmark: bookmark == freezed
-          ? _value.bookmark
-          : bookmark as PersistentBookmark,
+      bookmark: bookmark == freezed ? _value.bookmark : bookmark as PersistentBookmark,
     ));
   }
 }
@@ -259,18 +248,14 @@ class _$AddBookmark implements AddBookmark {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is AddBookmark &&
-            (identical(other.bookmark, bookmark) ||
-                const DeepCollectionEquality()
-                    .equals(other.bookmark, bookmark)));
+            (identical(other.bookmark, bookmark) || const DeepCollectionEquality().equals(other.bookmark, bookmark)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(bookmark);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(bookmark);
 
   @override
-  $AddBookmarkCopyWith<AddBookmark> get copyWith =>
-      _$AddBookmarkCopyWithImpl<AddBookmark>(this, _$identity);
+  $AddBookmarkCopyWith<AddBookmark> get copyWith => _$AddBookmarkCopyWithImpl<AddBookmark>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -348,25 +333,21 @@ class _$AddBookmark implements AddBookmark {
 }
 
 abstract class AddBookmark implements BookmarkBlocEvent {
-  const factory AddBookmark({@required PersistentBookmark bookmark}) =
-      _$AddBookmark;
+  const factory AddBookmark({@required PersistentBookmark bookmark}) = _$AddBookmark;
 
   PersistentBookmark get bookmark;
   $AddBookmarkCopyWith<AddBookmark> get copyWith;
 }
 
 abstract class $RemoveBookmarkCopyWith<$Res> {
-  factory $RemoveBookmarkCopyWith(
-          RemoveBookmark value, $Res Function(RemoveBookmark) then) =
+  factory $RemoveBookmarkCopyWith(RemoveBookmark value, $Res Function(RemoveBookmark) then) =
       _$RemoveBookmarkCopyWithImpl<$Res>;
   $Res call({PersistentBookmark bookmark});
 }
 
-class _$RemoveBookmarkCopyWithImpl<$Res>
-    extends _$BookmarkBlocEventCopyWithImpl<$Res>
+class _$RemoveBookmarkCopyWithImpl<$Res> extends _$BookmarkBlocEventCopyWithImpl<$Res>
     implements $RemoveBookmarkCopyWith<$Res> {
-  _$RemoveBookmarkCopyWithImpl(
-      RemoveBookmark _value, $Res Function(RemoveBookmark) _then)
+  _$RemoveBookmarkCopyWithImpl(RemoveBookmark _value, $Res Function(RemoveBookmark) _then)
       : super(_value, (v) => _then(v as RemoveBookmark));
 
   @override
@@ -377,9 +358,7 @@ class _$RemoveBookmarkCopyWithImpl<$Res>
     Object bookmark = freezed,
   }) {
     return _then(RemoveBookmark(
-      bookmark: bookmark == freezed
-          ? _value.bookmark
-          : bookmark as PersistentBookmark,
+      bookmark: bookmark == freezed ? _value.bookmark : bookmark as PersistentBookmark,
     ));
   }
 }
@@ -399,14 +378,11 @@ class _$RemoveBookmark implements RemoveBookmark {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is RemoveBookmark &&
-            (identical(other.bookmark, bookmark) ||
-                const DeepCollectionEquality()
-                    .equals(other.bookmark, bookmark)));
+            (identical(other.bookmark, bookmark) || const DeepCollectionEquality().equals(other.bookmark, bookmark)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(bookmark);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(bookmark);
 
   @override
   $RemoveBookmarkCopyWith<RemoveBookmark> get copyWith =>
@@ -488,25 +464,21 @@ class _$RemoveBookmark implements RemoveBookmark {
 }
 
 abstract class RemoveBookmark implements BookmarkBlocEvent {
-  const factory RemoveBookmark({@required PersistentBookmark bookmark}) =
-      _$RemoveBookmark;
+  const factory RemoveBookmark({@required PersistentBookmark bookmark}) = _$RemoveBookmark;
 
   PersistentBookmark get bookmark;
   $RemoveBookmarkCopyWith<RemoveBookmark> get copyWith;
 }
 
 abstract class $IncrementProgressCopyWith<$Res> {
-  factory $IncrementProgressCopyWith(
-          IncrementProgress value, $Res Function(IncrementProgress) then) =
+  factory $IncrementProgressCopyWith(IncrementProgress value, $Res Function(IncrementProgress) then) =
       _$IncrementProgressCopyWithImpl<$Res>;
   $Res call({PersistentBookmark bookmark});
 }
 
-class _$IncrementProgressCopyWithImpl<$Res>
-    extends _$BookmarkBlocEventCopyWithImpl<$Res>
+class _$IncrementProgressCopyWithImpl<$Res> extends _$BookmarkBlocEventCopyWithImpl<$Res>
     implements $IncrementProgressCopyWith<$Res> {
-  _$IncrementProgressCopyWithImpl(
-      IncrementProgress _value, $Res Function(IncrementProgress) _then)
+  _$IncrementProgressCopyWithImpl(IncrementProgress _value, $Res Function(IncrementProgress) _then)
       : super(_value, (v) => _then(v as IncrementProgress));
 
   @override
@@ -517,16 +489,13 @@ class _$IncrementProgressCopyWithImpl<$Res>
     Object bookmark = freezed,
   }) {
     return _then(IncrementProgress(
-      bookmark: bookmark == freezed
-          ? _value.bookmark
-          : bookmark as PersistentBookmark,
+      bookmark: bookmark == freezed ? _value.bookmark : bookmark as PersistentBookmark,
     ));
   }
 }
 
 class _$IncrementProgress implements IncrementProgress {
-  const _$IncrementProgress({@required this.bookmark})
-      : assert(bookmark != null);
+  const _$IncrementProgress({@required this.bookmark}) : assert(bookmark != null);
 
   @override
   final PersistentBookmark bookmark;
@@ -540,14 +509,11 @@ class _$IncrementProgress implements IncrementProgress {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is IncrementProgress &&
-            (identical(other.bookmark, bookmark) ||
-                const DeepCollectionEquality()
-                    .equals(other.bookmark, bookmark)));
+            (identical(other.bookmark, bookmark) || const DeepCollectionEquality().equals(other.bookmark, bookmark)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(bookmark);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(bookmark);
 
   @override
   $IncrementProgressCopyWith<IncrementProgress> get copyWith =>
@@ -629,25 +595,21 @@ class _$IncrementProgress implements IncrementProgress {
 }
 
 abstract class IncrementProgress implements BookmarkBlocEvent {
-  const factory IncrementProgress({@required PersistentBookmark bookmark}) =
-      _$IncrementProgress;
+  const factory IncrementProgress({@required PersistentBookmark bookmark}) = _$IncrementProgress;
 
   PersistentBookmark get bookmark;
   $IncrementProgressCopyWith<IncrementProgress> get copyWith;
 }
 
 abstract class $UpdateFilterQueryCopyWith<$Res> {
-  factory $UpdateFilterQueryCopyWith(
-          UpdateFilterQuery value, $Res Function(UpdateFilterQuery) then) =
+  factory $UpdateFilterQueryCopyWith(UpdateFilterQuery value, $Res Function(UpdateFilterQuery) then) =
       _$UpdateFilterQueryCopyWithImpl<$Res>;
   $Res call({String query});
 }
 
-class _$UpdateFilterQueryCopyWithImpl<$Res>
-    extends _$BookmarkBlocEventCopyWithImpl<$Res>
+class _$UpdateFilterQueryCopyWithImpl<$Res> extends _$BookmarkBlocEventCopyWithImpl<$Res>
     implements $UpdateFilterQueryCopyWith<$Res> {
-  _$UpdateFilterQueryCopyWithImpl(
-      UpdateFilterQuery _value, $Res Function(UpdateFilterQuery) _then)
+  _$UpdateFilterQueryCopyWithImpl(UpdateFilterQuery _value, $Res Function(UpdateFilterQuery) _then)
       : super(_value, (v) => _then(v as UpdateFilterQuery));
 
   @override
@@ -678,13 +640,11 @@ class _$UpdateFilterQuery implements UpdateFilterQuery {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is UpdateFilterQuery &&
-            (identical(other.query, query) ||
-                const DeepCollectionEquality().equals(other.query, query)));
+            (identical(other.query, query) || const DeepCollectionEquality().equals(other.query, query)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(query);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(query);
 
   @override
   $UpdateFilterQueryCopyWith<UpdateFilterQuery> get copyWith =>
@@ -766,27 +726,23 @@ class _$UpdateFilterQuery implements UpdateFilterQuery {
 }
 
 abstract class UpdateFilterQuery implements BookmarkBlocEvent {
-  const factory UpdateFilterQuery({@required String query}) =
-      _$UpdateFilterQuery;
+  const factory UpdateFilterQuery({@required String query}) = _$UpdateFilterQuery;
 
   String get query;
   $UpdateFilterQueryCopyWith<UpdateFilterQuery> get copyWith;
 }
 
 abstract class $UpdateFilterDataCopyWith<$Res> {
-  factory $UpdateFilterDataCopyWith(
-          UpdateFilterData value, $Res Function(UpdateFilterData) then) =
+  factory $UpdateFilterDataCopyWith(UpdateFilterData value, $Res Function(UpdateFilterData) then) =
       _$UpdateFilterDataCopyWithImpl<$Res>;
   $Res call({FilterData data});
 
   $FilterDataCopyWith<$Res> get data;
 }
 
-class _$UpdateFilterDataCopyWithImpl<$Res>
-    extends _$BookmarkBlocEventCopyWithImpl<$Res>
+class _$UpdateFilterDataCopyWithImpl<$Res> extends _$BookmarkBlocEventCopyWithImpl<$Res>
     implements $UpdateFilterDataCopyWith<$Res> {
-  _$UpdateFilterDataCopyWithImpl(
-      UpdateFilterData _value, $Res Function(UpdateFilterData) _then)
+  _$UpdateFilterDataCopyWithImpl(UpdateFilterData _value, $Res Function(UpdateFilterData) _then)
       : super(_value, (v) => _then(v as UpdateFilterData));
 
   @override
@@ -827,13 +783,11 @@ class _$UpdateFilterData implements UpdateFilterData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is UpdateFilterData &&
-            (identical(other.data, data) ||
-                const DeepCollectionEquality().equals(other.data, data)));
+            (identical(other.data, data) || const DeepCollectionEquality().equals(other.data, data)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(data);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(data);
 
   @override
   $UpdateFilterDataCopyWith<UpdateFilterData> get copyWith =>
@@ -915,8 +869,7 @@ class _$UpdateFilterData implements UpdateFilterData {
 }
 
 abstract class UpdateFilterData implements BookmarkBlocEvent {
-  const factory UpdateFilterData({@required FilterData data}) =
-      _$UpdateFilterData;
+  const factory UpdateFilterData({@required FilterData data}) = _$UpdateFilterData;
 
   FilterData get data;
   $UpdateFilterDataCopyWith<UpdateFilterData> get copyWith;
