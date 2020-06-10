@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
 import 'package:MarkMyProgress/data/bookmark/database/data_store.dart';
+import 'package:MarkMyProgress/data/runtime/pair.dart';
 import 'package:MarkMyProgress/data/statistics/statistic_data.dart';
 import 'package:MarkMyProgress/data/statistics/statistic_provider.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
@@ -8,6 +11,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:rational/rational.dart';
 
 class Statistics extends StatefulWidget {
   Statistics({Key key}) : super(key: key);
@@ -36,7 +40,14 @@ class _StatisticsState extends State<Statistics> {
   List<Widget> _statisticChildren(StatisticData data) {
     return [
       Text(LocaleKeys.statistics_item_count.plural(data.active)),
-      LastMonthChart(data),
+      LastMonthChart(
+        data.monthlyProgress,
+        interval: 30.42,
+      ),
+      LastMonthChart(
+        data.dailyProgress,
+        interval: 7,
+      ),
     ];
   }
 
@@ -60,8 +71,7 @@ class _StatisticsState extends State<Statistics> {
                         return Column(
                             crossAxisAlignment: CrossAxisAlignment.start, children: _statisticChildren(snapshot.data));
                       } else if (snapshot.hasError) {
-                        print(snapshot.error);
-                        return Text('error');
+                        throw snapshot.error;
                       } else {
                         return _loadingWidget();
                       }
@@ -75,9 +85,10 @@ class _StatisticsState extends State<Statistics> {
 }
 
 class LastMonthChart extends StatefulWidget {
-  final StatisticData _data;
+  final List<Pair<Duration, Rational>> _data;
+  final double interval;
 
-  LastMonthChart(this._data);
+  LastMonthChart(this._data, {this.interval});
 
   @override
   State<StatefulWidget> createState() => _LastMonthChartState();
@@ -125,7 +136,7 @@ class _LastMonthChartState extends State<LastMonthChart> {
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 22,
-          interval: 7,
+          interval: widget.interval,
           textStyle: const TextStyle(color: Color(0xff68737d), fontWeight: FontWeight.bold, fontSize: 16),
           getTitles: (value) {
             return now.subtract(Duration(days: value.toInt())).toMonthString();
@@ -139,17 +150,20 @@ class _LastMonthChartState extends State<LastMonthChart> {
             fontWeight: FontWeight.bold,
             fontSize: 15,
           ),
+          interval:
+              widget._data.fold<double>(0.0, (previousValue, element) => max(previousValue, element.item2.toDouble())) /
+                  10.0,
           getTitles: (value) {
             return value.toStringAsFixed(0);
           },
-          reservedSize: 28,
-          margin: 12,
+          reservedSize: 36,
+          margin: 16,
         ),
       ),
       borderData: FlBorderData(show: true, border: Border.all(color: const Color(0xff37434d), width: 1)),
       lineBarsData: [
         LineChartBarData(
-          spots: widget._data.dailyProgress.map((e) => FlSpot(e.item1.inDays.toDouble(), e.item2.toDouble())).toList(),
+          spots: widget._data.map((e) => FlSpot(e.item1.inDays.toDouble(), e.item2.toDouble())).toList(),
           isCurved: false,
           colors: gradientColors,
           barWidth: 5,

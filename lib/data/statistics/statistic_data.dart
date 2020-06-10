@@ -8,6 +8,7 @@ part 'statistic_data.freezed.dart';
 abstract class StatisticData with _$StatisticData {
   factory StatisticData({
     List<Pair<Duration, Rational>> dailyProgress,
+    List<Pair<Duration, Rational>> monthlyProgress,
     int active,
   }) = _StatisticData;
 }
@@ -22,4 +23,7 @@ class MutableStatisticData implements _StatisticData {
   @override
   _$StatisticDataCopyWith<_StatisticData> get copyWith =>
       __$StatisticDataCopyWithImpl<_StatisticData>(this, _$identity);
+
+  @override
+  List<Pair<Duration, Rational>> monthlyProgress;
 }

@@ -7,6 +7,7 @@ import 'package:rational/rational.dart';
 
 class StatisticProvider {
   final List<Bookmark> _bookmarks;
+  List<List<GenericProgress>> _diffProgress;
 
   StatisticData _statisticData;
 
@@ -14,32 +15,67 @@ class StatisticProvider {
 
   StatisticProvider(this._bookmarks);
 
+  List<List<GenericProgress>> _generateDiffProgress() {
+    var result = <List<GenericProgress>>[];
+    for (var i = 0; i < _bookmarks.length; i++) {
+      var lastValue = Rational.zero;
+      result.add(_bookmarks[i].history.map((record) {
+        var diff = record.value - lastValue;
+        lastValue = record.value;
+        return GenericProgress(record.date, diff);
+      }).toList());
+    }
+    return result;
+  }
+
+  Future<void> _generateMonthlyProgress(MutableStatisticData data) async {
+    var dailyReading = <DateTime, Rational>{};
+    var maxDate = DateTime.now();
+    var minDate = DateTime(maxDate.year - 1, maxDate.month, maxDate.day);
+
+    _diffProgress.forEach((record) {
+      record.where((element) => element.date.isAfter(minDate)).forEach((record) {
+        var date = DateTime(record.date.year, record.date.month);
+        if (dailyReading.containsKey(date)) {
+          dailyReading[date] += record.value;
+        } else {
+          dailyReading[date] = record.value;
+        }
+      });
+    });
+
+    var now = DateTime.now();
+    var nextDate = minDate;
+    while (nextDate.isBefore(now)) {
+      dailyReading.putIfAbsent(nextDate, () => Rational.zero);
+      nextDate = DateTime(nextDate.year, nextDate.month + 1);
+    }
+
+    var result = dailyReading.entries.map((entry) => Pair(entry.key.difference(maxDate), entry.value)).toList();
+
+    result.sort((a, b) => a.item1.compareTo(b.item1));
+
+    data.monthlyProgress = result;
+  }
+
   Future<void> _generateDailyProgress(MutableStatisticData data) async {
     var dailyReading = <DateTime, Rational>{};
     var maxDate = DateTime.now();
     var minDate = DateTime(maxDate.year, maxDate.month - 1, maxDate.day);
 
-    _bookmarks.forEach((bookmark) {
-      var lastValue = Rational.zero;
-      bookmark.history
-          .map((record) {
-            var diff = record.value - lastValue;
-            lastValue = record.value;
-            return GenericProgress(record.date, diff);
-          })
-          .where((element) => element.date.isAfter(minDate))
-          .forEach((record) {
-            if (dailyReading.containsKey(record.date)) {
-              dailyReading[record.date] += record.value;
-            } else {
-              dailyReading[record.date] = record.value;
-            }
-          });
+    _diffProgress.forEach((record) {
+      record.where((element) => element.date.isAfter(minDate)).forEach((record) {
+        if (dailyReading.containsKey(record.date)) {
+          dailyReading[record.date] += record.value;
+        } else {
+          dailyReading[record.date] = record.value;
+        }
+      });
     });
 
     var now = DateTime.now();
     const dayDuration = Duration(days: 1);
-    var nextDate = minDate.add(dayDuration);
+    var nextDate = DateTime(minDate.year, minDate.month, minDate.day);
     while (nextDate.isBefore(now)) {
       dailyReading.putIfAbsent(nextDate, () => Rational.zero);
       nextDate = nextDate.add(dayDuration);
@@ -64,9 +100,15 @@ class StatisticProvider {
 
   Future<StatisticData> generate() async {
     var futures = <Future<void>>[];
+
     var result = MutableStatisticData();
-    futures.add(_generateDailyProgress(result));
+
     futures.add(_generateActiveCount(result));
+
+    _diffProgress = _generateDiffProgress();
+
+    futures.add(_generateMonthlyProgress(result));
+    futures.add(_generateDailyProgress(result));
 
     await Future.wait(futures);
 
