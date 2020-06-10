@@ -43,10 +43,12 @@ class _StatisticsState extends State<Statistics> {
       LastMonthChart(
         data.monthlyProgress,
         interval: 30.42,
+        dateTimeFormat: (dateTime) => dateTime.toYearMonthString(),
       ),
       LastMonthChart(
         data.dailyProgress,
         interval: 7,
+        dateTimeFormat: (dateTime) => dateTime.toMonthString(),
       ),
     ];
   }
@@ -87,8 +89,9 @@ class _StatisticsState extends State<Statistics> {
 class LastMonthChart extends StatefulWidget {
   final List<Pair<Duration, Rational>> _data;
   final double interval;
+  final String Function(DateTime dateTime) dateTimeFormat;
 
-  LastMonthChart(this._data, {this.interval});
+  LastMonthChart(this._data, {this.interval, this.dateTimeFormat});
 
   @override
   State<StatefulWidget> createState() => _LastMonthChartState();
@@ -139,7 +142,7 @@ class _LastMonthChartState extends State<LastMonthChart> {
           interval: widget.interval,
           textStyle: const TextStyle(color: Color(0xff68737d), fontWeight: FontWeight.bold, fontSize: 16),
           getTitles: (value) {
-            return now.subtract(Duration(days: value.toInt())).toMonthString();
+            return widget.dateTimeFormat(now.add(Duration(days: value.toInt())));
           },
           margin: 8,
         ),

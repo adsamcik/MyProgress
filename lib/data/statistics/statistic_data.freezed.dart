@@ -13,9 +13,7 @@ class _$StatisticDataTearOff {
   const _$StatisticDataTearOff();
 
   _StatisticData call(
-      {List<Pair<Duration, Rational>> dailyProgress,
-      List<Pair<Duration, Rational>> monthlyProgress,
-      int active}) {
+      {List<Pair<Duration, Rational>> dailyProgress, List<Pair<Duration, Rational>> monthlyProgress, int active}) {
     return _StatisticData(
       dailyProgress: dailyProgress,
       monthlyProgress: monthlyProgress,
@@ -36,17 +34,12 @@ mixin _$StatisticData {
 }
 
 abstract class $StatisticDataCopyWith<$Res> {
-  factory $StatisticDataCopyWith(
-          StatisticData value, $Res Function(StatisticData) then) =
+  factory $StatisticDataCopyWith(StatisticData value, $Res Function(StatisticData) then) =
       _$StatisticDataCopyWithImpl<$Res>;
-  $Res call(
-      {List<Pair<Duration, Rational>> dailyProgress,
-      List<Pair<Duration, Rational>> monthlyProgress,
-      int active});
+  $Res call({List<Pair<Duration, Rational>> dailyProgress, List<Pair<Duration, Rational>> monthlyProgress, int active});
 }
 
-class _$StatisticDataCopyWithImpl<$Res>
-    implements $StatisticDataCopyWith<$Res> {
+class _$StatisticDataCopyWithImpl<$Res> implements $StatisticDataCopyWith<$Res> {
   _$StatisticDataCopyWithImpl(this._value, this._then);
 
   final StatisticData _value;
@@ -60,34 +53,24 @@ class _$StatisticDataCopyWithImpl<$Res>
     Object active = freezed,
   }) {
     return _then(_value.copyWith(
-      dailyProgress: dailyProgress == freezed
-          ? _value.dailyProgress
-          : dailyProgress as List<Pair<Duration, Rational>>,
-      monthlyProgress: monthlyProgress == freezed
-          ? _value.monthlyProgress
-          : monthlyProgress as List<Pair<Duration, Rational>>,
+      dailyProgress: dailyProgress == freezed ? _value.dailyProgress : dailyProgress as List<Pair<Duration, Rational>>,
+      monthlyProgress:
+          monthlyProgress == freezed ? _value.monthlyProgress : monthlyProgress as List<Pair<Duration, Rational>>,
       active: active == freezed ? _value.active : active as int,
     ));
   }
 }
 
-abstract class _$StatisticDataCopyWith<$Res>
-    implements $StatisticDataCopyWith<$Res> {
-  factory _$StatisticDataCopyWith(
-          _StatisticData value, $Res Function(_StatisticData) then) =
+abstract class _$StatisticDataCopyWith<$Res> implements $StatisticDataCopyWith<$Res> {
+  factory _$StatisticDataCopyWith(_StatisticData value, $Res Function(_StatisticData) then) =
       __$StatisticDataCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {List<Pair<Duration, Rational>> dailyProgress,
-      List<Pair<Duration, Rational>> monthlyProgress,
-      int active});
+  $Res call({List<Pair<Duration, Rational>> dailyProgress, List<Pair<Duration, Rational>> monthlyProgress, int active});
 }
 
-class __$StatisticDataCopyWithImpl<$Res>
-    extends _$StatisticDataCopyWithImpl<$Res>
+class __$StatisticDataCopyWithImpl<$Res> extends _$StatisticDataCopyWithImpl<$Res>
     implements _$StatisticDataCopyWith<$Res> {
-  __$StatisticDataCopyWithImpl(
-      _StatisticData _value, $Res Function(_StatisticData) _then)
+  __$StatisticDataCopyWithImpl(_StatisticData _value, $Res Function(_StatisticData) _then)
       : super(_value, (v) => _then(v as _StatisticData));
 
   @override
@@ -100,12 +83,9 @@ class __$StatisticDataCopyWithImpl<$Res>
     Object active = freezed,
   }) {
     return _then(_StatisticData(
-      dailyProgress: dailyProgress == freezed
-          ? _value.dailyProgress
-          : dailyProgress as List<Pair<Duration, Rational>>,
-      monthlyProgress: monthlyProgress == freezed
-          ? _value.monthlyProgress
-          : monthlyProgress as List<Pair<Duration, Rational>>,
+      dailyProgress: dailyProgress == freezed ? _value.dailyProgress : dailyProgress as List<Pair<Duration, Rational>>,
+      monthlyProgress:
+          monthlyProgress == freezed ? _value.monthlyProgress : monthlyProgress as List<Pair<Duration, Rational>>,
       active: active == freezed ? _value.active : active as int,
     ));
   }
@@ -131,13 +111,10 @@ class _$_StatisticData implements _StatisticData {
     return identical(this, other) ||
         (other is _StatisticData &&
             (identical(other.dailyProgress, dailyProgress) ||
-                const DeepCollectionEquality()
-                    .equals(other.dailyProgress, dailyProgress)) &&
+                const DeepCollectionEquality().equals(other.dailyProgress, dailyProgress)) &&
             (identical(other.monthlyProgress, monthlyProgress) ||
-                const DeepCollectionEquality()
-                    .equals(other.monthlyProgress, monthlyProgress)) &&
-            (identical(other.active, active) ||
-                const DeepCollectionEquality().equals(other.active, active)));
+                const DeepCollectionEquality().equals(other.monthlyProgress, monthlyProgress)) &&
+            (identical(other.active, active) || const DeepCollectionEquality().equals(other.active, active)));
   }
 
   @override
