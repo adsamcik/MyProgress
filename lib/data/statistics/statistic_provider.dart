@@ -1,4 +1,5 @@
 import 'package:MarkMyProgress/data/bookmark/abstract/bookmark.dart';
+import 'package:MarkMyProgress/data/bookmark/instance/generic_progress.dart';
 import 'package:MarkMyProgress/data/runtime/pair.dart';
 import 'package:MarkMyProgress/data/statistics/statistic_data.dart';
 import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
@@ -20,15 +21,20 @@ class StatisticProvider {
 
     _bookmarks.forEach((bookmark) {
       var lastValue = Rational.zero;
-      bookmark.history.where((element) => element.date.isAfter(minDate)).forEach((record) {
-        var diff = record.value - lastValue;
-        if (dailyReading.containsKey(record.date)) {
-          dailyReading[record.date] += diff;
-        } else {
-          dailyReading[record.date] = diff;
-        }
-        lastValue = record.value;
-      });
+      bookmark.history
+          .map((record) {
+            var diff = record.value - lastValue;
+            lastValue = record.value;
+            return GenericProgress(record.date, diff);
+          })
+          .where((element) => element.date.isAfter(minDate))
+          .forEach((record) {
+            if (dailyReading.containsKey(record.date)) {
+              dailyReading[record.date] += record.value;
+            } else {
+              dailyReading[record.date] = record.value;
+            }
+          });
     });
 
     var now = DateTime.now();
