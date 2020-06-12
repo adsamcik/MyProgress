@@ -33,10 +33,6 @@
   "show_details": "Show details",
   "statistics": "Statistics",
   "statistics_active_item_title": "Active bookmarks",
-  "statistics_active_item_value": {
-    "one": "{} record",
-    "other": "{} records"
-  },
   "statistics_avg_day_last_month_title": "Average progress in last 30 days",
   "statistics_daily_month_title": "Daily progress for the last month",
   "statistics_monthly_year_title": "Monthly progress for the last year",

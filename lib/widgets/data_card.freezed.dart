@@ -93,7 +93,7 @@ class __$CardRowImplCopyWithImpl<$Res> extends _$CardRowCopyWithImpl<$Res> imple
 }
 
 class _$_CardRowImpl with DiagnosticableTreeMixin implements _CardRowImpl {
-  _$_CardRowImpl({@required this.title, @required this.value, this.icon, this.onTap})
+  const _$_CardRowImpl({@required this.title, @required this.value, this.icon, this.onTap})
       : assert(title != null),
         assert(value != null);
 
@@ -145,7 +145,7 @@ class _$_CardRowImpl with DiagnosticableTreeMixin implements _CardRowImpl {
 }
 
 abstract class _CardRowImpl implements CardRow {
-  factory _CardRowImpl({@required String title, @required String value, IconData icon, void Function() onTap}) =
+  const factory _CardRowImpl({@required String title, @required String value, IconData icon, void Function() onTap}) =
       _$_CardRowImpl;
 
   @override

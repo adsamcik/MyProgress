@@ -59,7 +59,7 @@ class _StatisticsState extends State<Statistics> {
         rows: [
           CardRow(
             title: LocaleKeys.statistics_active_item_title.tr(),
-            value: LocaleKeys.statistics_active_item_value.plural(data.active),
+            value: data.active.toString(),
           ),
           CardRow(
             title: LocaleKeys.statistics_avg_day_last_month_title.tr(),

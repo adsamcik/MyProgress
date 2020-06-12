@@ -8,7 +8,6 @@ import 'package:rational/rational.dart';
 class StatisticProvider {
   final List<Bookmark> _bookmarks;
   List<List<GenericProgress>> _diffProgress;
-  List<Bookmark> _last30Days;
 
   StatisticData _statisticData;
 

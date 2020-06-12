@@ -52,7 +52,7 @@ class _DataCardState extends State<DataCard> {
 
 @freezed
 abstract class CardRow with _$CardRow {
-  factory CardRow({
+  const factory CardRow({
     @required String title,
     @required String value,
     IconData icon,
