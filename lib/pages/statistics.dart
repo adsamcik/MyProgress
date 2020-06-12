@@ -7,6 +7,7 @@ import 'package:MarkMyProgress/data/statistics/statistic_data.dart';
 import 'package:MarkMyProgress/data/statistics/statistic_provider.dart';
 import 'package:MarkMyProgress/extensions/date_extensions.dart';
 import 'package:MarkMyProgress/generated/locale_keys.g.dart';
+import 'package:MarkMyProgress/widgets/data_card.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -37,18 +38,50 @@ class _StatisticsState extends State<Statistics> {
     );
   }
 
+  Widget _chart({@required String titleKey, @required Widget chart}) => Card(
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Text(
+                titleKey.tr(),
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              chart,
+            ],
+          ),
+        ),
+      );
+
   List<Widget> _statisticChildren(StatisticData data) {
     return [
-      Text(LocaleKeys.statistics_item_count.plural(data.active)),
-      LastMonthChart(
-        data.monthlyProgress,
-        interval: 30.42,
-        dateTimeFormat: (dateTime) => dateTime.toYearMonthString(),
+      DataCard(
+        rows: [
+          CardRow(
+            title: LocaleKeys.statistics_active_item_title.tr(),
+            value: LocaleKeys.statistics_active_item_value.plural(data.active),
+          ),
+          CardRow(
+            title: LocaleKeys.statistics_avg_day_last_month_title.tr(),
+            value: data.avgPerDayLast30Days.toDecimalString(),
+          ),
+        ],
       ),
-      LastMonthChart(
-        data.dailyProgress,
-        interval: 7,
-        dateTimeFormat: (dateTime) => dateTime.toMonthString(),
+      _chart(
+        titleKey: LocaleKeys.statistics_daily_month_title,
+        chart: LastMonthChart(
+          data.monthlyProgress,
+          interval: 30.42,
+          dateTimeFormat: (dateTime) => dateTime.toYearMonthString(),
+        ),
+      ),
+      _chart(
+        titleKey: LocaleKeys.statistics_monthly_year_title,
+        chart: LastMonthChart(
+          data.dailyProgress,
+          interval: 7,
+          dateTimeFormat: (dateTime) => dateTime.toMonthString(),
+        ),
       ),
     ];
   }

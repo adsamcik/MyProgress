@@ -34,7 +34,11 @@ abstract class LocaleKeys {
   static const settings = 'settings';
   static const show_details = 'show_details';
   static const statistics = 'statistics';
-  static const statistics_item_count = 'statistics_item_count';
+  static const statistics_active_item_title = 'statistics_active_item_title';
+  static const statistics_active_item_value = 'statistics_active_item_value';
+  static const statistics_avg_day_last_month_title = 'statistics_avg_day_last_month_title';
+  static const statistics_daily_month_title = 'statistics_daily_month_title';
+  static const statistics_monthly_year_title = 'statistics_monthly_year_title';
   static const web = 'web';
   static const web_address = 'web_address';
 }

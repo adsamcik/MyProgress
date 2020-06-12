@@ -10,6 +10,7 @@ abstract class StatisticData with _$StatisticData {
     List<Pair<Duration, Rational>> dailyProgress,
     List<Pair<Duration, Rational>> monthlyProgress,
     int active,
+    Rational avgPerDayLast30Days,
   }) = _StatisticData;
 }
 
@@ -26,4 +27,7 @@ class MutableStatisticData implements _StatisticData {
 
   @override
   List<Pair<Duration, Rational>> monthlyProgress;
+
+  @override
+  Rational avgPerDayLast30Days;
 }

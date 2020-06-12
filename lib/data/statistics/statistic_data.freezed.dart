@@ -13,11 +13,15 @@ class _$StatisticDataTearOff {
   const _$StatisticDataTearOff();
 
   _StatisticData call(
-      {List<Pair<Duration, Rational>> dailyProgress, List<Pair<Duration, Rational>> monthlyProgress, int active}) {
+      {List<Pair<Duration, Rational>> dailyProgress,
+      List<Pair<Duration, Rational>> monthlyProgress,
+      int active,
+      Rational avgPerDayLast30Days}) {
     return _StatisticData(
       dailyProgress: dailyProgress,
       monthlyProgress: monthlyProgress,
       active: active,
+      avgPerDayLast30Days: avgPerDayLast30Days,
     );
   }
 }
@@ -29,6 +33,7 @@ mixin _$StatisticData {
   List<Pair<Duration, Rational>> get dailyProgress;
   List<Pair<Duration, Rational>> get monthlyProgress;
   int get active;
+  Rational get avgPerDayLast30Days;
 
   $StatisticDataCopyWith<StatisticData> get copyWith;
 }
@@ -36,7 +41,11 @@ mixin _$StatisticData {
 abstract class $StatisticDataCopyWith<$Res> {
   factory $StatisticDataCopyWith(StatisticData value, $Res Function(StatisticData) then) =
       _$StatisticDataCopyWithImpl<$Res>;
-  $Res call({List<Pair<Duration, Rational>> dailyProgress, List<Pair<Duration, Rational>> monthlyProgress, int active});
+  $Res call(
+      {List<Pair<Duration, Rational>> dailyProgress,
+      List<Pair<Duration, Rational>> monthlyProgress,
+      int active,
+      Rational avgPerDayLast30Days});
 }
 
 class _$StatisticDataCopyWithImpl<$Res> implements $StatisticDataCopyWith<$Res> {
@@ -51,12 +60,15 @@ class _$StatisticDataCopyWithImpl<$Res> implements $StatisticDataCopyWith<$Res> 
     Object dailyProgress = freezed,
     Object monthlyProgress = freezed,
     Object active = freezed,
+    Object avgPerDayLast30Days = freezed,
   }) {
     return _then(_value.copyWith(
       dailyProgress: dailyProgress == freezed ? _value.dailyProgress : dailyProgress as List<Pair<Duration, Rational>>,
       monthlyProgress:
           monthlyProgress == freezed ? _value.monthlyProgress : monthlyProgress as List<Pair<Duration, Rational>>,
       active: active == freezed ? _value.active : active as int,
+      avgPerDayLast30Days:
+          avgPerDayLast30Days == freezed ? _value.avgPerDayLast30Days : avgPerDayLast30Days as Rational,
     ));
   }
 }
@@ -65,7 +77,11 @@ abstract class _$StatisticDataCopyWith<$Res> implements $StatisticDataCopyWith<$
   factory _$StatisticDataCopyWith(_StatisticData value, $Res Function(_StatisticData) then) =
       __$StatisticDataCopyWithImpl<$Res>;
   @override
-  $Res call({List<Pair<Duration, Rational>> dailyProgress, List<Pair<Duration, Rational>> monthlyProgress, int active});
+  $Res call(
+      {List<Pair<Duration, Rational>> dailyProgress,
+      List<Pair<Duration, Rational>> monthlyProgress,
+      int active,
+      Rational avgPerDayLast30Days});
 }
 
 class __$StatisticDataCopyWithImpl<$Res> extends _$StatisticDataCopyWithImpl<$Res>
@@ -81,18 +97,21 @@ class __$StatisticDataCopyWithImpl<$Res> extends _$StatisticDataCopyWithImpl<$Re
     Object dailyProgress = freezed,
     Object monthlyProgress = freezed,
     Object active = freezed,
+    Object avgPerDayLast30Days = freezed,
   }) {
     return _then(_StatisticData(
       dailyProgress: dailyProgress == freezed ? _value.dailyProgress : dailyProgress as List<Pair<Duration, Rational>>,
       monthlyProgress:
           monthlyProgress == freezed ? _value.monthlyProgress : monthlyProgress as List<Pair<Duration, Rational>>,
       active: active == freezed ? _value.active : active as int,
+      avgPerDayLast30Days:
+          avgPerDayLast30Days == freezed ? _value.avgPerDayLast30Days : avgPerDayLast30Days as Rational,
     ));
   }
 }
 
 class _$_StatisticData implements _StatisticData {
-  _$_StatisticData({this.dailyProgress, this.monthlyProgress, this.active});
+  _$_StatisticData({this.dailyProgress, this.monthlyProgress, this.active, this.avgPerDayLast30Days});
 
   @override
   final List<Pair<Duration, Rational>> dailyProgress;
@@ -100,10 +119,12 @@ class _$_StatisticData implements _StatisticData {
   final List<Pair<Duration, Rational>> monthlyProgress;
   @override
   final int active;
+  @override
+  final Rational avgPerDayLast30Days;
 
   @override
   String toString() {
-    return 'StatisticData(dailyProgress: $dailyProgress, monthlyProgress: $monthlyProgress, active: $active)';
+    return 'StatisticData(dailyProgress: $dailyProgress, monthlyProgress: $monthlyProgress, active: $active, avgPerDayLast30Days: $avgPerDayLast30Days)';
   }
 
   @override
@@ -114,7 +135,9 @@ class _$_StatisticData implements _StatisticData {
                 const DeepCollectionEquality().equals(other.dailyProgress, dailyProgress)) &&
             (identical(other.monthlyProgress, monthlyProgress) ||
                 const DeepCollectionEquality().equals(other.monthlyProgress, monthlyProgress)) &&
-            (identical(other.active, active) || const DeepCollectionEquality().equals(other.active, active)));
+            (identical(other.active, active) || const DeepCollectionEquality().equals(other.active, active)) &&
+            (identical(other.avgPerDayLast30Days, avgPerDayLast30Days) ||
+                const DeepCollectionEquality().equals(other.avgPerDayLast30Days, avgPerDayLast30Days)));
   }
 
   @override
@@ -122,7 +145,8 @@ class _$_StatisticData implements _StatisticData {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(dailyProgress) ^
       const DeepCollectionEquality().hash(monthlyProgress) ^
-      const DeepCollectionEquality().hash(active);
+      const DeepCollectionEquality().hash(active) ^
+      const DeepCollectionEquality().hash(avgPerDayLast30Days);
 
   @override
   _$StatisticDataCopyWith<_StatisticData> get copyWith =>
@@ -133,7 +157,8 @@ abstract class _StatisticData implements StatisticData {
   factory _StatisticData(
       {List<Pair<Duration, Rational>> dailyProgress,
       List<Pair<Duration, Rational>> monthlyProgress,
-      int active}) = _$_StatisticData;
+      int active,
+      Rational avgPerDayLast30Days}) = _$_StatisticData;
 
   @override
   List<Pair<Duration, Rational>> get dailyProgress;
@@ -141,6 +166,8 @@ abstract class _StatisticData implements StatisticData {
   List<Pair<Duration, Rational>> get monthlyProgress;
   @override
   int get active;
+  @override
+  Rational get avgPerDayLast30Days;
   @override
   _$StatisticDataCopyWith<_StatisticData> get copyWith;
 }

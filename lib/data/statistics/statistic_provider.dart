@@ -8,6 +8,7 @@ import 'package:rational/rational.dart';
 class StatisticProvider {
   final List<Bookmark> _bookmarks;
   List<List<GenericProgress>> _diffProgress;
+  List<Bookmark> _last30Days;
 
   StatisticData _statisticData;
 
@@ -98,19 +99,27 @@ class StatisticProvider {
     });
   }
 
+  Future<void> _generateAvgPerDayLast30Days(MutableStatisticData data) async {
+    var avg =
+        data.dailyProgress.fold<Rational>(Rational.zero, (previousValue, element) => previousValue + element.item2);
+
+    data.avgPerDayLast30Days = avg / Rational.fromInt(data.dailyProgress.length);
+  }
+
   Future<StatisticData> generate() async {
-    var futures = <Future<void>>[];
-
     var result = MutableStatisticData();
-
-    futures.add(_generateActiveCount(result));
 
     _diffProgress = _generateDiffProgress();
 
-    futures.add(_generateMonthlyProgress(result));
-    futures.add(_generateDailyProgress(result));
+    await Future.wait([
+      _generateActiveCount(result),
+      _generateMonthlyProgress(result),
+      _generateDailyProgress(result),
+    ]);
 
-    await Future.wait(futures);
+    await Future.wait([
+      _generateAvgPerDayLast30Days(result),
+    ]);
 
     _statisticData = result.copyWith();
     return statisticData;
