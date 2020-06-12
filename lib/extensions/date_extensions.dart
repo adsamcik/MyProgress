@@ -21,4 +21,6 @@ extension Date on DateTime {
   String toMonthString() => DateFormat.MMMd(Intl.getCurrentLocale()).format(this);
 
   String toYearMonthString() => DateFormat.yMMM(Intl.getCurrentLocale()).format(this);
+
+  String toWeekdayString() => DateFormat.EEEE(Intl.getCurrentLocale()).format(this);
 }

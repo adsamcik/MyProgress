@@ -36,6 +36,7 @@
   "statistics_avg_day_last_month_title": "Average progress in last 30 days",
   "statistics_daily_month_title": "Daily progress for the last month",
   "statistics_monthly_year_title": "Monthly progress for the last year",
+  "statistics_weekday_title": "Progress on each day of the week (last 3 months)",
   "web": "Web",
   "web_address": "Web address"
 }

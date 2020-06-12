@@ -58,6 +58,32 @@ class StatisticProvider {
     data.monthlyProgress = result;
   }
 
+  Future<void> _generateDayOfWeekLast90days(MutableStatisticData data) async {
+    const dayOfWeekCount = 7;
+    var dayCountList = List<Rational>(dayOfWeekCount);
+    for (var i = 0; i < dayOfWeekCount; i++) {
+      dayCountList[i] = Rational.zero;
+    }
+
+    var today = DateTime.now();
+    var minDate = DateTime(today.year, today.month - 3, today.day);
+
+    _diffProgress.forEach((record) {
+      record.where((element) => element.date.isAfter(minDate)).forEach((record) {
+        dayCountList[record.date.weekday - 1] += record.value;
+      });
+    });
+
+    var result = List<Pair<Duration, Rational>>(dayOfWeekCount);
+    for (var i = 0; i < dayOfWeekCount; i++) {
+      result[i] = Pair(Duration(days: 8 - today.weekday + i), dayCountList[i]);
+    }
+
+    result.sort((a, b) => a.item1.compareTo(b.item1));
+
+    data.dayOfWeekProgress = result;
+  }
+
   Future<void> _generateDailyProgress(MutableStatisticData data) async {
     var dailyReading = <DateTime, Rational>{};
     var maxDate = DateTime.now();
@@ -114,6 +140,7 @@ class StatisticProvider {
       _generateActiveCount(result),
       _generateMonthlyProgress(result),
       _generateDailyProgress(result),
+      _generateDayOfWeekLast90days(result),
     ]);
 
     await Future.wait([

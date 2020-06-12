@@ -9,6 +9,7 @@ abstract class StatisticData with _$StatisticData {
   factory StatisticData({
     List<Pair<Duration, Rational>> dailyProgress,
     List<Pair<Duration, Rational>> monthlyProgress,
+    List<Pair<Duration, Rational>> dayOfWeekProgress,
     int active,
     Rational avgPerDayLast30Days,
   }) = _StatisticData;
@@ -30,4 +31,7 @@ class MutableStatisticData implements _StatisticData {
 
   @override
   Rational avgPerDayLast30Days;
+
+  @override
+  List<Pair<Duration, Rational>> dayOfWeekProgress;
 }
