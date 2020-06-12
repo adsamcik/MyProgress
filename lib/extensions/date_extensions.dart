@@ -19,8 +19,11 @@ extension Date on DateTime {
   String toDateString() => DateFormat.yMMMd(Intl.getCurrentLocale()).format(this);
 
   String toMonthString() => DateFormat.MMMd(Intl.getCurrentLocale()).format(this);
+  String toShortMonthString() => DateFormat.Md(Intl.getCurrentLocale()).format(this);
 
   String toYearMonthString() => DateFormat.yMMM(Intl.getCurrentLocale()).format(this);
+  String toShortYearMonthString() => DateFormat.yM(Intl.getCurrentLocale()).format(this);
 
   String toWeekdayString() => DateFormat.EEEE(Intl.getCurrentLocale()).format(this);
+  String toShortWeekdayString() => DateFormat.E(Intl.getCurrentLocale()).format(this);
 }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -50,6 +52,11 @@ class _StatisticsState extends State<Statistics> {
       );
 
   List<Widget> _statisticChildren(StatisticData data) {
+    const minWidth = 32 * 20;
+    var width = MediaQuery.of(context).size.width;
+
+    var useLong = width >= minWidth;
+
     return [
       DataCard(
         rows: [
@@ -68,7 +75,7 @@ class _StatisticsState extends State<Statistics> {
         chart: StatisticDurationChart(
           data.dayOfWeekProgress,
           interval: 1,
-          dateTimeFormat: (dateTime) => dateTime.toWeekdayString(),
+          dateTimeFormat: (dateTime) => useLong ? dateTime.toWeekdayString() : dateTime.toShortWeekdayString(),
         ),
       ),
       _chart(
@@ -76,15 +83,15 @@ class _StatisticsState extends State<Statistics> {
         chart: StatisticDurationChart(
           data.dailyProgress,
           interval: 7,
-          dateTimeFormat: (dateTime) => dateTime.toMonthString(),
+          dateTimeFormat: (dateTime) => useLong ? dateTime.toMonthString() : dateTime.toShortMonthString(),
         ),
       ),
       _chart(
         titleKey: LocaleKeys.statistics_monthly_year_title,
         chart: StatisticDurationChart(
           data.monthlyProgress,
-          interval: 30.42,
-          dateTimeFormat: (dateTime) => dateTime.toYearMonthString(),
+          interval: 30.42 / min(width / (32 * 40), 1),
+          dateTimeFormat: (dateTime) => useLong ? dateTime.toYearMonthString() : dateTime.toShortYearMonthString(),
         ),
       ),
     ];
