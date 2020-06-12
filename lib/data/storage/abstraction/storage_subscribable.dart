@@ -1,4 +1,4 @@
-import 'package:MarkMyProgress/data/storage/abstraction/storable.dart';
+import 'package:markmyprogress/data/storage/abstraction/storable.dart';
 
 abstract class SubscriptionStorage<Value extends Storable<dynamic>> {
   // todo replace function with typedef once implemented in dart

@@ -1,6 +1,6 @@
-import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
-import 'package:MarkMyProgress/data/bookmark/filter/filter_data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:markmyprogress/data/bookmark/abstract/persistent_bookmark.dart';
+import 'package:markmyprogress/data/bookmark/filter/filter_data.dart';
 
 part 'bookmark_bloc_event.freezed.dart';
 

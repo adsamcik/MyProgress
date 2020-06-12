@@ -1,5 +1,5 @@
-import 'package:MarkMyProgress/data/bookmark/filter/filter_data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:markmyprogress/data/bookmark/filter/filter_data.dart';
 
 part 'preference_bloc_event.freezed.dart';
 

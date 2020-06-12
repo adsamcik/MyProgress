@@ -1,15 +1,15 @@
-import 'package:MarkMyProgress/constants/Patterns.dart';
-import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
-import 'package:MarkMyProgress/data/bookmark/abstract/web_bookmark.dart';
-import 'package:MarkMyProgress/data/bookmark/bloc/bloc.dart';
-import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
-import 'package:MarkMyProgress/extensions/string_extensions.dart';
-import 'package:MarkMyProgress/generated/locale_keys.g.dart';
-import 'package:MarkMyProgress/input/reg_ex_input_formatter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
+import 'package:markmyprogress/constants/Patterns.dart';
+import 'package:markmyprogress/data/bookmark/abstract/persistent_bookmark.dart';
+import 'package:markmyprogress/data/bookmark/abstract/web_bookmark.dart';
+import 'package:markmyprogress/data/bookmark/bloc/bloc.dart';
+import 'package:markmyprogress/extensions/bookmark_extensions.dart';
+import 'package:markmyprogress/extensions/string_extensions.dart';
+import 'package:markmyprogress/generated/locale_keys.g.dart';
+import 'package:markmyprogress/input/reg_ex_input_formatter.dart';
 import 'package:rational/rational.dart';
 
 class EditBookmark extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'dart:core';
 
-import 'package:MarkMyProgress/data/runtime/searchable_variable.dart';
+import 'package:markmyprogress/data/runtime/searchable_variable.dart';
 import 'package:rational/rational.dart';
 
 import 'progress.dart';

@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:MarkMyProgress/misc/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:markmyprogress/misc/get.dart';
 
 class LinearLabelProgressIndicator extends ProgressIndicator {
   final double minHeight;

@@ -1,6 +1,6 @@
-import 'package:MarkMyProgress/data/bookmark/abstract/bookmark.dart';
-import 'package:MarkMyProgress/data/bookmark/abstract/progress.dart';
-import 'package:MarkMyProgress/data/bookmark/instance/no_progress.dart';
+import 'package:markmyprogress/data/bookmark/abstract/bookmark.dart';
+import 'package:markmyprogress/data/bookmark/abstract/progress.dart';
+import 'package:markmyprogress/data/bookmark/instance/no_progress.dart';
 import 'package:rational/rational.dart';
 
 /// <summary>

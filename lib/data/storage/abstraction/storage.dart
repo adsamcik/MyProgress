@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:MarkMyProgress/data/storage/abstraction/data_source.dart';
-import 'package:MarkMyProgress/data/storage/abstraction/storage_subscribable.dart';
+import 'package:markmyprogress/data/storage/abstraction/data_source.dart';
+import 'package:markmyprogress/data/storage/abstraction/storage_subscribable.dart';
 
 import 'storable.dart';
 

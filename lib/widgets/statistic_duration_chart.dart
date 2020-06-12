@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:MarkMyProgress/data/runtime/pair.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/widgets.dart';
+import 'package:markmyprogress/data/runtime/pair.dart';
 import 'package:rational/rational.dart';
 
 class StatisticDurationChart extends StatefulWidget {

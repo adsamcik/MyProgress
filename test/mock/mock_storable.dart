@@ -1,4 +1,4 @@
-import 'package:MarkMyProgress/data/storage/abstraction/storable.dart';
+import 'package:markmyprogress/data/storage/abstraction/storable.dart';
 import 'package:flutter/foundation.dart';
 
 class MockStorable implements Storable<String> {

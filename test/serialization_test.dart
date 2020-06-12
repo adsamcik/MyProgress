@@ -1,6 +1,6 @@
-import 'package:MarkMyProgress/data/bookmark/instance/generic_bookmark.dart';
-import 'package:MarkMyProgress/data/preference/database/preference.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:markmyprogress/data/bookmark/instance/generic_bookmark.dart';
+import 'package:markmyprogress/data/preference/database/preference.dart';
 import 'package:rational/rational.dart';
 
 void _genericBookmarkSerializationTest() {

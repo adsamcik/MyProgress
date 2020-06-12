@@ -1,14 +1,14 @@
-import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
-import 'package:MarkMyProgress/data/bookmark/database/data_store.dart';
-import 'package:MarkMyProgress/data/statistics/statistic_data.dart';
-import 'package:MarkMyProgress/data/statistics/statistic_provider.dart';
-import 'package:MarkMyProgress/extensions/date_extensions.dart';
-import 'package:MarkMyProgress/generated/locale_keys.g.dart';
-import 'package:MarkMyProgress/widgets/data_card.dart';
-import 'package:MarkMyProgress/widgets/statistic_duration_chart.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:markmyprogress/data/bookmark/abstract/persistent_bookmark.dart';
+import 'package:markmyprogress/data/bookmark/database/data_store.dart';
+import 'package:markmyprogress/data/statistics/statistic_data.dart';
+import 'package:markmyprogress/data/statistics/statistic_provider.dart';
+import 'package:markmyprogress/extensions/date_extensions.dart';
+import 'package:markmyprogress/generated/locale_keys.g.dart';
+import 'package:markmyprogress/widgets/data_card.dart';
+import 'package:markmyprogress/widgets/statistic_duration_chart.dart';
 
 class Statistics extends StatefulWidget {
   Statistics({Key key}) : super(key: key);

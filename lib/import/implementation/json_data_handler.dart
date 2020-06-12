@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
-import 'package:MarkMyProgress/data/bookmark/instance/generic_bookmark.dart';
-import 'package:MarkMyProgress/import/abstract/data_exporter.dart';
-import 'package:MarkMyProgress/import/abstract/data_importer.dart';
+import 'package:markmyprogress/data/bookmark/abstract/persistent_bookmark.dart';
+import 'package:markmyprogress/data/bookmark/instance/generic_bookmark.dart';
+import 'package:markmyprogress/import/abstract/data_exporter.dart';
+import 'package:markmyprogress/import/abstract/data_importer.dart';
 
 /// <summary>
 ///     JSON data handler providing JSON import and export for IBookmark.

@@ -1,7 +1,7 @@
-import 'package:MarkMyProgress/data/storage/abstraction/data_source.dart';
-import 'package:MarkMyProgress/data/storage/abstraction/storable.dart';
-import 'package:MarkMyProgress/data/storage/abstraction/storage_mapper.dart';
-import 'package:MarkMyProgress/data/storage/abstraction/storage_subscribable.dart';
+import 'package:markmyprogress/data/storage/abstraction/data_source.dart';
+import 'package:markmyprogress/data/storage/abstraction/storable.dart';
+import 'package:markmyprogress/data/storage/abstraction/storage_mapper.dart';
+import 'package:markmyprogress/data/storage/abstraction/storage_subscribable.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 

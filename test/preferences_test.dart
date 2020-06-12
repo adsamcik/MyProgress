@@ -1,10 +1,10 @@
 import 'dart:math';
 
-import 'package:MarkMyProgress/data/bookmark/filter/filter_data.dart';
-import 'package:MarkMyProgress/data/preference/database/preference.dart';
-import 'package:MarkMyProgress/data/preference/database/preference_store.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
+import 'package:markmyprogress/data/bookmark/filter/filter_data.dart';
+import 'package:markmyprogress/data/preference/database/preference.dart';
+import 'package:markmyprogress/data/preference/database/preference_store.dart';
 
 import 'di_setup.dart';
 

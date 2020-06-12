@@ -1,10 +1,10 @@
 import 'dart:math';
 
-import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
-import 'package:MarkMyProgress/data/runtime/match_result.dart';
-import 'package:MarkMyProgress/data/runtime/searchable_variable.dart';
-import 'package:MarkMyProgress/extensions/string_extensions.dart';
 import 'package:edit_distance/edit_distance.dart';
+import 'package:markmyprogress/data/bookmark/abstract/persistent_bookmark.dart';
+import 'package:markmyprogress/data/runtime/match_result.dart';
+import 'package:markmyprogress/data/runtime/searchable_variable.dart';
+import 'package:markmyprogress/extensions/string_extensions.dart';
 
 class SearchableBookmark {
   final PersistentBookmark bookmark;

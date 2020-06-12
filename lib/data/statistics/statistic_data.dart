@@ -1,5 +1,5 @@
-import 'package:MarkMyProgress/data/runtime/pair.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:markmyprogress/data/runtime/pair.dart';
 import 'package:rational/rational.dart';
 
 part 'statistic_data.freezed.dart';

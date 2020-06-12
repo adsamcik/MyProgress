@@ -1,8 +1,8 @@
 import 'dart:core';
 
-import 'package:MarkMyProgress/data/bookmark/abstract/progress.dart';
-import 'package:MarkMyProgress/misc/rational.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:markmyprogress/data/bookmark/abstract/progress.dart';
+import 'package:markmyprogress/misc/rational.dart';
 import 'package:rational/rational.dart';
 
 part 'generic_progress.freezed.dart';

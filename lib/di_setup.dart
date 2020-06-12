@@ -1,10 +1,10 @@
-import 'package:MarkMyProgress/data/bookmark/bloc/bookmark_bloc.dart';
-import 'package:MarkMyProgress/data/bookmark/database/bookmark_mapper.dart';
-import 'package:MarkMyProgress/data/preference/bloc/bloc.dart';
-import 'package:MarkMyProgress/data/preference/database/preference_mapper.dart';
-import 'package:MarkMyProgress/data/storage/implementation/sembast_data_source.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
+import 'package:markmyprogress/data/bookmark/bloc/bookmark_bloc.dart';
+import 'package:markmyprogress/data/bookmark/database/bookmark_mapper.dart';
+import 'package:markmyprogress/data/preference/bloc/bloc.dart';
+import 'package:markmyprogress/data/preference/database/preference_mapper.dart';
+import 'package:markmyprogress/data/storage/implementation/sembast_data_source.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 

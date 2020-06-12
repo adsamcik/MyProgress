@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:MarkMyProgress/data/bookmark/filter/filter_data.dart';
-import 'package:MarkMyProgress/data/preference/database/preference.dart';
-import 'package:MarkMyProgress/data/storage/abstraction/data_source.dart';
-import 'package:MarkMyProgress/data/storage/abstraction/subscribable_storage.dart';
+import 'package:markmyprogress/data/bookmark/filter/filter_data.dart';
+import 'package:markmyprogress/data/preference/database/preference.dart';
+import 'package:markmyprogress/data/storage/abstraction/data_source.dart';
+import 'package:markmyprogress/data/storage/abstraction/subscribable_storage.dart';
 
 class PreferenceStore extends SubscribableStorage<String, Preference> {
   PreferenceStore(DataSource<String, Preference> dataSource) : super(dataSource);

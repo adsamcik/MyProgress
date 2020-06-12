@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:MarkMyProgress/data/bookmark/abstract/persistent_bookmark.dart';
-import 'package:MarkMyProgress/extensions/bookmark_extensions.dart';
-import 'package:MarkMyProgress/extensions/context_extensions.dart';
-import 'package:MarkMyProgress/generated/locale_keys.g.dart';
-import 'package:MarkMyProgress/input/reg_ex_input_formatter.dart';
-import 'package:MarkMyProgress/misc/app_icons.dart';
-import 'package:MarkMyProgress/pages/view_bookmark.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:markmyprogress/data/bookmark/abstract/persistent_bookmark.dart';
+import 'package:markmyprogress/extensions/bookmark_extensions.dart';
+import 'package:markmyprogress/extensions/context_extensions.dart';
+import 'package:markmyprogress/generated/locale_keys.g.dart';
+import 'package:markmyprogress/input/reg_ex_input_formatter.dart';
+import 'package:markmyprogress/misc/app_icons.dart';
+import 'package:markmyprogress/pages/view_bookmark.dart';
 import 'package:rational/rational.dart';
 
 Future<Rational> showProgressBottomSheet(BuildContext context, PersistentBookmark bookmark) {
