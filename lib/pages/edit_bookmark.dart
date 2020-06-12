@@ -40,7 +40,7 @@ class _EditBookmarkState extends State<EditBookmark> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(bookmark.title.isNullOrEmpty ? LocaleKeys.new_bookmark : bookmark.title),
+        title: Text(bookmark.title.isNullOrEmpty ? LocaleKeys.new_bookmark.tr() : bookmark.title),
       ),
       body: SafeArea(
           minimum: EdgeInsets.all(16.0),
