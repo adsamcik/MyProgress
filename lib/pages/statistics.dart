@@ -70,17 +70,17 @@ class _StatisticsState extends State<Statistics> {
       _chart(
         titleKey: LocaleKeys.statistics_daily_month_title,
         chart: LastMonthChart(
-          data.monthlyProgress,
-          interval: 30.42,
-          dateTimeFormat: (dateTime) => dateTime.toYearMonthString(),
+          data.dailyProgress,
+          interval: 7,
+          dateTimeFormat: (dateTime) => dateTime.toMonthString(),
         ),
       ),
       _chart(
         titleKey: LocaleKeys.statistics_monthly_year_title,
         chart: LastMonthChart(
-          data.dailyProgress,
-          interval: 7,
-          dateTimeFormat: (dateTime) => dateTime.toMonthString(),
+          data.monthlyProgress,
+          interval: 30.42,
+          dateTimeFormat: (dateTime) => dateTime.toYearMonthString(),
         ),
       ),
     ];
