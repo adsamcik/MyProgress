@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:get_it/get_it.dart';
 import 'package:markmyprogress/data/bookmark/abstract/persistent_bookmark.dart';
 import 'package:markmyprogress/data/bookmark/abstract/progress.dart';
 import 'package:markmyprogress/data/bookmark/abstract/web_bookmark.dart';
@@ -51,6 +53,7 @@ class _ViewBookmarkState extends State<ViewBookmark> {
   final List<_ItemData> _generalDataList = [];
   final List<_HistoryData> _historyDataList = [];
   bool _isCompleteHistory = false;
+  bool _isDeleted = false;
 
   void _updateState(PersistentBookmark bookmark) {
     _generalDataList.clear();
@@ -89,6 +92,11 @@ class _ViewBookmarkState extends State<ViewBookmark> {
     _isCompleteHistory = _historyDataList.length == bookmark.history.length;
   }
 
+  void _delete(PersistentBookmark bookmark) {
+    _isDeleted = true;
+    GetIt.instance.get<BookmarkBloc>().add(BookmarkBlocEvent.removeBookmark(bookmark: bookmark));
+  }
+
   Widget _buildRowWrapper(Iterable<Widget> children, [void Function() onTap]) => InkWell(
       onTap: onTap,
       child: Padding(
@@ -99,13 +107,13 @@ class _ViewBookmarkState extends State<ViewBookmark> {
 
   IconData _selectIcon(double value) {
     if (value < 0.2) {
-      return AppIcons.progress_0;
+      return AppIcons.progress_none;
     } else if (value < 0.4) {
-      return AppIcons.progress_1;
+      return AppIcons.progress_third;
     } else if (value < 0.9) {
-      return AppIcons.progress_2;
+      return AppIcons.progress_two_thirds;
     } else {
-      return AppIcons.progress_3;
+      return AppIcons.progress_done;
     }
   }
 
@@ -120,7 +128,8 @@ class _ViewBookmarkState extends State<ViewBookmark> {
         null,
       ),
       _buildRowWrapper(
-        _buildIconValueRow(AppIcons.progress_3, LocaleKeys.max_progress.tr(), bookmark.maxProgress.toDecimalString()),
+        _buildIconValueRow(
+            AppIcons.progress_done, LocaleKeys.max_progress.tr(), bookmark.maxProgress.toDecimalString()),
         null,
       ),
       if (!(lastProgress is NoProgress))
@@ -201,6 +210,10 @@ class _ViewBookmarkState extends State<ViewBookmark> {
     return BlocBuilder<BookmarkBloc, BookmarkBlocState>(
         builder: (BuildContext context, state) => state.maybeMap(
             ready: (ready) {
+              if (_isDeleted) {
+                return Container();
+              }
+
               var bookmark =
                   ready.bookmarkList.firstWhere((element) => element.bookmark.key == widget.bookmarkKey).bookmark;
 
@@ -209,6 +222,18 @@ class _ViewBookmarkState extends State<ViewBookmark> {
               return Scaffold(
                 appBar: AppBar(
                   title: Text(bookmark.title),
+                  actions: [
+                    IconButton(
+                      icon: Icon(AppIcons.trash),
+                      onPressed: () {
+                        _delete(bookmark);
+                        Navigator.pop(context);
+                      },
+                    ),
+                    SizedBox.fromSize(
+                      size: Size.fromWidth(16),
+                    ),
+                  ],
                 ),
                 body: SingleChildScrollView(
                   child: SafeArea(

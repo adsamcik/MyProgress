@@ -14,6 +14,10 @@
 ///         Author:    Google
 ///         License:   Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
 ///         Homepage:  https://design.google.com/icons/
+/// * Elusive, Copyright (C) 2013 by Aristeides Stathopoulos
+///         Author:    Aristeides Stathopoulos
+///         License:   SIL (http://scripts.sil.org/OFL)
+///         Homepage:  http://aristeides.com/
 ///
 import 'package:flutter/widgets.dart';
 
@@ -23,10 +27,10 @@ class AppIcons {
   static const _kFontFam = 'AppIcons';
   static const String _kFontPkg = null;
 
-  static const IconData progress_3 = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData progress_0 = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData progress_1 = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData progress_2 = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData progress_done = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData progress_none = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData progress_third = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData progress_two_thirds = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData calendar = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData web = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData language = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -39,4 +43,5 @@ class AppIcons {
   static const IconData cancel_squared = IconData(0xe80e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData title = IconData(0xe80f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData book = IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData trash = IconData(0xe811, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
