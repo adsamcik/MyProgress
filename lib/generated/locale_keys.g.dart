@@ -1,12 +1,16 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-abstract class LocaleKeys {
+abstract class  LocaleKeys {
   static const about = 'about';
   static const add_bookmark = 'add_bookmark';
   static const app_name = 'app_name';
   static const cancel = 'cancel';
   static const current_progress = 'current_progress';
   static const date = 'date';
+  static const dialog_cancel = 'dialog_cancel';
+  static const dialog_delete_confirm = 'dialog_delete_confirm';
+  static const dialog_delete_description = 'dialog_delete_description';
+  static const dialog_delete_title = 'dialog_delete_title';
   static const edit = 'edit';
   static const edit_error_all_titles_empty = 'edit_error_all_titles_empty';
   static const edit_error_invalid_web = 'edit_error_invalid_web';
@@ -41,4 +45,5 @@ abstract class LocaleKeys {
   static const statistics_weekday_title = 'statistics_weekday_title';
   static const web = 'web';
   static const web_address = 'web_address';
+
 }

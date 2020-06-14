@@ -226,8 +226,31 @@ class _ViewBookmarkState extends State<ViewBookmark> {
                     IconButton(
                       icon: Icon(AppIcons.trash),
                       onPressed: () {
-                        _delete(bookmark);
-                        Navigator.popUntil(context, ModalRoute.withName('/'));
+                        showDialog<void>(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: Text(LocaleKeys.dialog_delete_title.tr(args: [bookmark.title])),
+                                  content: Text(LocaleKeys.dialog_delete_description.tr(args: [bookmark.title])),
+                                  actions: [
+                                    FlatButton(
+                                      onPressed: () => Navigator.of(context).pop(),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(16),
+                                        child: Text(LocaleKeys.dialog_cancel.tr()),
+                                      ),
+                                    ),
+                                    FlatButton(
+                                      onPressed: () {
+                                        _delete(bookmark);
+                                        Navigator.popUntil(context, ModalRoute.withName('/'));
+                                      },
+                                      child: Padding(
+                                        padding: EdgeInsets.all(16),
+                                        child: Text(LocaleKeys.dialog_delete_confirm.tr()),
+                                      ),
+                                    ),
+                                  ],
+                                ));
                       },
                     ),
                     SizedBox.fromSize(
