@@ -55,12 +55,16 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
     );
   }
 
+  void _sortData(List<SearchableBookmark> list) {
+    list.sort((a, b) => a.bookmark.title.toLowerCase().compareTo(b.bookmark.title.toLowerCase()));
+  }
+
   Stream<BookmarkBlocState> _mapLoad(Load event) async* {
     var dataList = await await dataStore
         .transactionClosed((dataStore) => dataStore.getAll().map((e) => SearchableBookmark(e)).toList());
     var filterData = await settingsStore.transactionClosed((settingsStore) => settingsStore.getFilterData());
 
-    dataList.sort((a, b) => a.bookmark.title.toLowerCase().compareTo(b.bookmark.title.toLowerCase()));
+    _sortData(dataList);
 
     var filterRuntimeData = FilterRuntimeData(filterData);
     var filterList = _updateFilter(filterRuntimeData, dataList);
@@ -78,8 +82,10 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
           return dataStore.transactionClosed<dynamic>((transaction) {
             if (event.bookmark.key == null) {
               ready.bookmarkList.add(SearchableBookmark(event.bookmark));
+              _sortData(ready.bookmarkList);
               return transaction.insertAuto(event.bookmark);
             } else {
+              _sortData(ready.bookmarkList);
               return transaction.update(event.bookmark);
             }
           }).then((dynamic value) {
