@@ -5,7 +5,7 @@ version: 2020.1.0
 publish_to: 'none'
 
 environment:
-  sdk: ">=2.9.0-5.0.dev <3.0.0"
+  sdk: ">=2.9.0-14.0.dev <3.0.0"
 
 dependencies:
   flutter:
@@ -18,7 +18,7 @@ dependencies:
 
   fl_chart: ^0.10.0
 
-  freezed_annotation: ^0.7.1
+  freezed_annotation: ^0.11.0
   meta: ^1.1.8
 
   # Functions and types
@@ -30,7 +30,7 @@ dependencies:
   csv: ^4.0.3
 
   # Bloc
-  flutter_bloc: ^4.0.0
+  flutter_bloc: ^4.0.1
   bloc: ^4.0.0
 
   # Dependency injection
@@ -75,7 +75,7 @@ dev_dependencies:
   injectable_generator: ^0.4.1
 
   # Code generators
-  freezed: ^0.10.9
+  freezed: ^0.11.0
   json_serializable: ^3.3.0
 
   # flutter pub run build_runner build (or watch)
@@ -84,7 +84,7 @@ dev_dependencies:
 
   # Used by tests. Not required to use `json_serializable`.
   build_verify: ^1.1.1
-  test: ^1.14.6
+  test: ^1.14.7
 
 flutter:
   uses-material-design: true
