@@ -227,7 +227,7 @@ class _ViewBookmarkState extends State<ViewBookmark> {
                       icon: Icon(AppIcons.trash),
                       onPressed: () {
                         _delete(bookmark);
-                        Navigator.pop(context);
+                        Navigator.popUntil(context, ModalRoute.withName('/'));
                       },
                     ),
                     SizedBox.fromSize(
