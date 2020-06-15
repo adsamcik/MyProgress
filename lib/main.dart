@@ -47,12 +47,12 @@ class MyMaterialApp extends StatelessWidget {
         locale: context.locale,
         theme: ThemeData(
           brightness: Brightness.dark,
-          accentColor: Colors.red,
+          accentColor: const Color.fromARGB(255, 191, 63, 63),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         darkTheme: ThemeData(
           brightness: Brightness.dark,
-          primarySwatch: Colors.red,
+          accentColor: const Color.fromARGB(255, 191, 63, 63),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: BookmarkList(),
