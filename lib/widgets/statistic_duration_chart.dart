@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/widgets.dart';
+import 'package:markmyprogress/constants/numbers.dart';
 import 'package:markmyprogress/data/runtime/pair.dart';
+import 'package:markmyprogress/extensions/numbers.dart';
 import 'package:rational/rational.dart';
 
 class StatisticDurationChart extends StatefulWidget {
@@ -77,7 +79,7 @@ class _StatisticDurationChartState extends State<StatisticDurationChart> {
               widget._data.fold<double>(0.0, (previousValue, element) => max(previousValue, element.item2.toDouble())) /
                   10.0,
           getTitles: (value) {
-            return value.toStringAsFixed(0);
+            return value.toStringAsPrecision(standardPrecision);
           },
           reservedSize: 36,
           margin: 16,
@@ -86,7 +88,9 @@ class _StatisticDurationChartState extends State<StatisticDurationChart> {
       borderData: FlBorderData(show: true, border: Border.all(color: const Color(0xff37434d), width: 1)),
       lineBarsData: [
         LineChartBarData(
-          spots: widget._data.map((e) => FlSpot(e.item1.inDays.toDouble(), e.item2.toDouble())).toList(),
+          spots: widget._data
+              .map((e) => FlSpot(e.item1.inDays.toDouble(), e.item2.toDouble().toPrecision(standardPrecision)))
+              .toList(),
           isCurved: false,
           colors: gradientColors,
           barWidth: 5,

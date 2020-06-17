@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:markmyprogress/constants/numbers.dart';
 import 'package:markmyprogress/data/bookmark/abstract/persistent_bookmark.dart';
 import 'package:markmyprogress/data/bookmark/database/data_store.dart';
 import 'package:markmyprogress/data/statistics/statistic_data.dart';
@@ -66,7 +67,7 @@ class _StatisticsState extends State<Statistics> {
           ),
           CardRow(
             title: LocaleKeys.statistics_avg_day_last_month_title.tr(),
-            value: data.avgPerDayLast30Days.toDecimalString(),
+            value: data.avgPerDayLast30Days.toStringAsPrecision(standardPrecision),
           ),
         ],
       ),
