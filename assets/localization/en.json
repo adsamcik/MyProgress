@@ -36,6 +36,7 @@
   "settings": "Settings",
   "show_details": "Show details",
   "statistics": "Statistics",
+  "statistics_no_data": "You have no bookmarks",
   "statistics_active_item_title": "Active bookmarks",
   "statistics_avg_day_last_month_title": "Average progress in last 30 days",
   "statistics_daily_month_title": "Daily progress for the last month",

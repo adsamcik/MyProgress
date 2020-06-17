@@ -38,6 +38,7 @@ abstract class LocaleKeys {
   static const settings = 'settings';
   static const show_details = 'show_details';
   static const statistics = 'statistics';
+  static const statistics_no_data = 'statistics_no_data';
   static const statistics_active_item_title = 'statistics_active_item_title';
   static const statistics_avg_day_last_month_title = 'statistics_avg_day_last_month_title';
   static const statistics_daily_month_title = 'statistics_daily_month_title';

@@ -108,6 +108,8 @@ class _StatisticsState extends State<Statistics> {
               future: _loadDatabaseData(),
               builder: (context, data) {
                 if (data.hasData) {
+                  if (data.data.isEmpty) return Text(LocaleKeys.statistics_no_data.tr());
+
                   _provider = StatisticProvider(data.data);
                   return SingleChildScrollView(
                       child: FutureBuilder(
