@@ -2,8 +2,8 @@ import 'package:markmyprogress/data/bookmark/abstract/bookmark.dart';
 import 'package:markmyprogress/data/bookmark/instance/generic_progress.dart';
 import 'package:markmyprogress/data/runtime/pair.dart';
 import 'package:markmyprogress/data/statistics/statistic_data.dart';
-import 'package:markmyprogress/extensions/bookmark_extensions.dart';
-import 'package:markmyprogress/extensions/duration_extensions.dart';
+import 'package:markmyprogress/extensions/bookmark.dart';
+import 'package:markmyprogress/extensions/duration.dart';
 import 'package:rational/rational.dart';
 
 class StatisticProvider {

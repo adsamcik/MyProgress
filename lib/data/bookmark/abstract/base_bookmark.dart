@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:markmyprogress/extensions/bookmark_extensions.dart';
-import 'package:markmyprogress/extensions/string_extensions.dart';
+import 'package:markmyprogress/extensions/bookmark.dart';
+import 'package:markmyprogress/extensions/string.dart';
 import 'package:markmyprogress/misc/rational.dart';
 import 'package:rational/rational.dart';
 

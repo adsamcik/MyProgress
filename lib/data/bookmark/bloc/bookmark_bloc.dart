@@ -11,8 +11,8 @@ import 'package:markmyprogress/data/preference/database/preference_store.dart';
 import 'package:markmyprogress/data/runtime/pair.dart';
 import 'package:markmyprogress/data/runtime/search_result.dart';
 import 'package:markmyprogress/data/storage/abstraction/storage_subscribable.dart';
-import 'package:markmyprogress/extensions/bookmark_extensions.dart';
-import 'package:markmyprogress/extensions/string_extensions.dart';
+import 'package:markmyprogress/extensions/bookmark.dart';
+import 'package:markmyprogress/extensions/string.dart';
 
 import 'bookmark_bloc_event.dart';
 import 'bookmark_bloc_state.dart';

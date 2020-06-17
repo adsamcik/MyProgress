@@ -8,7 +8,7 @@ import 'package:markmyprogress/data/bookmark/abstract/persistent_bookmark.dart';
 import 'package:markmyprogress/data/bookmark/database/data_store.dart';
 import 'package:markmyprogress/data/statistics/statistic_data.dart';
 import 'package:markmyprogress/data/statistics/statistic_provider.dart';
-import 'package:markmyprogress/extensions/date_extensions.dart';
+import 'package:markmyprogress/extensions/date.dart';
 import 'package:markmyprogress/generated/locale_keys.g.dart';
 import 'package:markmyprogress/widgets/data_card.dart';
 import 'package:markmyprogress/widgets/statistic_duration_chart.dart';
