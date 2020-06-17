@@ -12,7 +12,7 @@ import 'package:markmyprogress/data/bookmark/instance/generic_bookmark.dart';
 import 'package:markmyprogress/extensions/bookmark_extensions.dart';
 import 'package:markmyprogress/extensions/context_extensions.dart';
 import 'package:markmyprogress/extensions/date_extensions.dart';
-import 'package:markmyprogress/extensions/numbers.dart';
+import 'package:markmyprogress/extensions/number_extensions.dart';
 import 'package:markmyprogress/generated/locale_keys.g.dart';
 import 'package:markmyprogress/misc/app_icons.dart';
 import 'package:markmyprogress/misc/get.dart';
