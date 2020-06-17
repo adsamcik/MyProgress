@@ -3,6 +3,7 @@ import 'package:markmyprogress/data/bookmark/instance/generic_progress.dart';
 import 'package:markmyprogress/data/runtime/pair.dart';
 import 'package:markmyprogress/data/statistics/statistic_data.dart';
 import 'package:markmyprogress/extensions/bookmark_extensions.dart';
+import 'package:markmyprogress/extensions/duration_extensions.dart';
 import 'package:rational/rational.dart';
 
 class StatisticProvider {
@@ -75,8 +76,11 @@ class StatisticProvider {
     });
 
     var result = List<Pair<Duration, Rational>>(dayOfWeekCount);
+    var duration = today.difference(minDate);
     for (var i = 0; i < dayOfWeekCount; i++) {
-      result[i] = Pair(Duration(days: 8 - today.weekday + i), dayCountList[i]);
+      var weekDay = 8 - today.weekday + i;
+      var dayCount = Rational.fromInt(duration.countDays(minDate, weekDay));
+      result[i] = Pair(Duration(days: weekDay), dayCountList[i] / dayCount);
     }
 
     result.sort((a, b) => a.item1.compareTo(b.item1));
