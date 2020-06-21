@@ -1,6 +1,6 @@
-import 'package:markmyprogress/data/bookmark/abstract/persistent_bookmark.dart';
-import 'package:markmyprogress/data/bookmark/instance/generic_bookmark.dart';
-import 'package:markmyprogress/data/storage/abstraction/storage_mapper.dart';
+import 'package:myprogress/data/bookmark/abstract/persistent_bookmark.dart';
+import 'package:myprogress/data/bookmark/instance/generic_bookmark.dart';
+import 'package:myprogress/data/storage/abstraction/storage_mapper.dart';
 
 class BookmarkMapper implements StorageMapper<PersistentBookmark, Map<String, dynamic>> {
   @override

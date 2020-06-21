@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:markmyprogress/data/storage/abstraction/storable.dart';
+import 'package:myprogress/data/storage/abstraction/storable.dart';
 
 part 'preference.g.dart';
 

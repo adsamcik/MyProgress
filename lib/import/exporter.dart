@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:file_chooser/file_chooser.dart';
 import 'package:get_it/get_it.dart';
-import 'package:markmyprogress/data/bookmark/database/data_store.dart';
-import 'package:markmyprogress/import/implementation/json_data_handler.dart';
+import 'package:myprogress/data/bookmark/database/data_store.dart';
+import 'package:myprogress/import/implementation/json_data_handler.dart';
 import 'package:path/path.dart';
 
 class Exporter {

@@ -1,5 +1,5 @@
-import 'package:markmyprogress/data/storage/abstraction/storable.dart';
-import 'package:markmyprogress/data/storage/abstraction/storage_subscribable.dart';
+import 'package:myprogress/data/storage/abstraction/storable.dart';
+import 'package:myprogress/data/storage/abstraction/storage_subscribable.dart';
 
 abstract class DataSource<Key, Value extends Storable<Key>> {
   /// True if data source is open

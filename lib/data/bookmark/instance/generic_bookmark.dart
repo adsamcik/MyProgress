@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:markmyprogress/data/bookmark/abstract/base_bookmark.dart';
-import 'package:markmyprogress/data/bookmark/abstract/progress.dart';
-import 'package:markmyprogress/data/bookmark/abstract/web_bookmark.dart';
-import 'package:markmyprogress/data/runtime/searchable_variable.dart';
-import 'package:markmyprogress/extensions/date.dart';
-import 'package:markmyprogress/extensions/string.dart';
-import 'package:markmyprogress/misc/rational.dart';
+import 'package:myprogress/data/bookmark/abstract/base_bookmark.dart';
+import 'package:myprogress/data/bookmark/abstract/progress.dart';
+import 'package:myprogress/data/bookmark/abstract/web_bookmark.dart';
+import 'package:myprogress/data/runtime/searchable_variable.dart';
+import 'package:myprogress/extensions/date.dart';
+import 'package:myprogress/extensions/string.dart';
+import 'package:myprogress/misc/rational.dart';
 import 'package:rational/rational.dart';
 
 import 'generic_progress.dart';

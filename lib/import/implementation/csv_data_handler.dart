@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:csv/csv.dart';
-import 'package:markmyprogress/data/bookmark/abstract/persistent_bookmark.dart';
-import 'package:markmyprogress/import/abstract/data_exporter.dart';
-import 'package:markmyprogress/import/abstract/data_importer.dart';
+import 'package:myprogress/data/bookmark/abstract/persistent_bookmark.dart';
+import 'package:myprogress/import/abstract/data_exporter.dart';
+import 'package:myprogress/import/abstract/data_importer.dart';
 import 'package:path/path.dart';
 
 /// <summary>

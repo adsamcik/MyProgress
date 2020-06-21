@@ -147,7 +147,7 @@ packages:
       name: collection
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.14.12"
+    version: "1.14.13"
   convert:
     dependency: transitive
     description:
@@ -238,11 +238,11 @@ packages:
     dependency: "direct main"
     description:
       path: "plugins/file_chooser"
-      ref: bae67ae551328695f76cd9923a7c9ea27075eba1
-      resolved-ref: bae67ae551328695f76cd9923a7c9ea27075eba1
+      ref: b0794faf2c000576515aee56ca6bb5bee64cece4
+      resolved-ref: b0794faf2c000576515aee56ca6bb5bee64cece4
       url: "https://github.com/google/flutter-desktop-embedding.git"
     source: git
-    version: "0.1.0"
+    version: "0.2.0"
   fixnum:
     dependency: transitive
     description:
@@ -290,7 +290,7 @@ packages:
       name: freezed
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.11.0"
+    version: "0.11.2"
   freezed_annotation:
     dependency: "direct main"
     description:
@@ -409,7 +409,7 @@ packages:
       name: matcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.6"
+    version: "0.12.8"
   meta:
     dependency: "direct main"
     description:
@@ -424,13 +424,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.6+3"
-  multi_server_socket:
-    dependency: transitive
-    description:
-      name: multi_server_socket
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.2"
   nested:
     dependency: transitive
     description:
@@ -500,13 +493,13 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.10"
+    version: "1.6.11"
   path_provider_fde:
     dependency: "direct main"
     description:
       path: "plugins/flutter_plugins/path_provider_fde"
-      ref: bae67ae551328695f76cd9923a7c9ea27075eba1
-      resolved-ref: bae67ae551328695f76cd9923a7c9ea27075eba1
+      ref: b0794faf2c000576515aee56ca6bb5bee64cece4
+      resolved-ref: b0794faf2c000576515aee56ca6bb5bee64cece4
       url: "https://github.com/google/flutter-desktop-embedding.git"
     source: git
     version: "0.0.1"
@@ -614,7 +607,7 @@ packages:
       name: sembast
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.4+3"
+    version: "2.4.5"
   shelf:
     dependency: transitive
     description:
@@ -724,21 +717,21 @@ packages:
       name: test
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.14.7"
+    version: "1.15.1"
   test_api:
     dependency: transitive
     description:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.16"
+    version: "0.2.17"
   test_core:
     dependency: transitive
     description:
       name: test_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.7"
+    version: "0.3.9"
   timing:
     dependency: transitive
     description:
@@ -759,16 +752,16 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.4.10"
+    version: "5.4.11"
   url_launcher_fde:
     dependency: "direct main"
     description:
       path: "plugins/flutter_plugins/url_launcher_fde"
-      ref: bae67ae551328695f76cd9923a7c9ea27075eba1
-      resolved-ref: bae67ae551328695f76cd9923a7c9ea27075eba1
+      ref: b0794faf2c000576515aee56ca6bb5bee64cece4
+      resolved-ref: b0794faf2c000576515aee56ca6bb5bee64cece4
       url: "https://github.com/google/flutter-desktop-embedding.git"
     source: git
-    version: "0.0.1"
+    version: "0.1.0"
   url_launcher_macos:
     dependency: transitive
     description:

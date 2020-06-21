@@ -1,5 +1,5 @@
-import 'package:markmyprogress/data/bookmark/database/data_store.dart';
-import 'package:markmyprogress/data/preference/database/preference_store.dart';
+import 'package:myprogress/data/bookmark/database/data_store.dart';
+import 'package:myprogress/data/preference/database/preference_store.dart';
 import 'package:get_it/get_it.dart';
 
 import 'mock/mock_data_source.dart';

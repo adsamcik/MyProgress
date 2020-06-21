@@ -1,5 +1,5 @@
 ﻿import 'package:json_annotation/json_annotation.dart';
-import 'package:markmyprogress/misc/rational.dart';
+import 'package:myprogress/misc/rational.dart';
 import 'package:rational/rational.dart';
 
 /// <summary>

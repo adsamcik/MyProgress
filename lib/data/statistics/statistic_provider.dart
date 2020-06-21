@@ -1,9 +1,9 @@
-import 'package:markmyprogress/data/bookmark/abstract/bookmark.dart';
-import 'package:markmyprogress/data/bookmark/instance/generic_progress.dart';
-import 'package:markmyprogress/data/runtime/pair.dart';
-import 'package:markmyprogress/data/statistics/statistic_data.dart';
-import 'package:markmyprogress/extensions/bookmark.dart';
-import 'package:markmyprogress/extensions/duration.dart';
+import 'package:myprogress/data/bookmark/abstract/bookmark.dart';
+import 'package:myprogress/data/bookmark/instance/generic_progress.dart';
+import 'package:myprogress/data/runtime/pair.dart';
+import 'package:myprogress/data/statistics/statistic_data.dart';
+import 'package:myprogress/extensions/bookmark.dart';
+import 'package:myprogress/extensions/duration.dart';
 import 'package:rational/rational.dart';
 
 class StatisticProvider {

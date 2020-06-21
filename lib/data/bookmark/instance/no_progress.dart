@@ -1,5 +1,5 @@
-import 'package:markmyprogress/data/bookmark/abstract/progress.dart';
-import 'package:markmyprogress/extensions/date.dart';
+import 'package:myprogress/data/bookmark/abstract/progress.dart';
+import 'package:myprogress/extensions/date.dart';
 import 'package:rational/rational.dart';
 
 class NoProgress implements Progress {

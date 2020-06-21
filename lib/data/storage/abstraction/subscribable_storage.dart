@@ -1,7 +1,7 @@
-import 'package:markmyprogress/data/storage/abstraction/data_source.dart';
-import 'package:markmyprogress/data/storage/abstraction/storable.dart';
-import 'package:markmyprogress/data/storage/abstraction/storage.dart';
-import 'package:markmyprogress/data/storage/abstraction/storage_subscribable.dart';
+import 'package:myprogress/data/storage/abstraction/data_source.dart';
+import 'package:myprogress/data/storage/abstraction/storable.dart';
+import 'package:myprogress/data/storage/abstraction/storage.dart';
+import 'package:myprogress/data/storage/abstraction/storage_subscribable.dart';
 import 'package:meta/meta.dart';
 
 abstract class SubscribableStorage<Key, Value extends Storable<Key>> extends Storage<Key, Value>

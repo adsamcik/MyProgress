@@ -1,6 +1,6 @@
-import 'package:markmyprogress/data/storage/abstraction/data_source.dart';
-import 'package:markmyprogress/data/storage/abstraction/storable.dart';
-import 'package:markmyprogress/data/storage/abstraction/storage_subscribable.dart';
+import 'package:myprogress/data/storage/abstraction/data_source.dart';
+import 'package:myprogress/data/storage/abstraction/storable.dart';
+import 'package:myprogress/data/storage/abstraction/storage_subscribable.dart';
 
 class MockIntDataSource<Value extends Storable<int>> extends MockDataSource<int, Value> {
   int _lastKey = -1;

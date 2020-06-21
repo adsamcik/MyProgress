@@ -1,6 +1,6 @@
 ﻿import 'dart:io';
 
-import 'package:markmyprogress/data/bookmark/abstract/persistent_bookmark.dart';
+import 'package:myprogress/data/bookmark/abstract/persistent_bookmark.dart';
 
 /// <summary>
 ///     Interface for data exporting.

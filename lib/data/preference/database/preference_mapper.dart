@@ -1,5 +1,5 @@
-import 'package:markmyprogress/data/preference/database/preference.dart';
-import 'package:markmyprogress/data/storage/abstraction/storage_mapper.dart';
+import 'package:myprogress/data/preference/database/preference.dart';
+import 'package:myprogress/data/storage/abstraction/storage_mapper.dart';
 
 class PreferenceMapper implements StorageMapper<Preference, Map<String, dynamic>> {
   @override

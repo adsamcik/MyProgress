@@ -2,11 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:markmyprogress/data/preference/bloc/bloc.dart';
-import 'package:markmyprogress/generated/locale_keys.g.dart';
-import 'package:markmyprogress/import/exporter.dart';
-import 'package:markmyprogress/import/importer.dart';
-import 'package:markmyprogress/misc/get.dart';
+import 'package:myprogress/data/preference/bloc/bloc.dart';
+import 'package:myprogress/generated/locale_keys.g.dart';
+import 'package:myprogress/import/exporter.dart';
+import 'package:myprogress/import/importer.dart';
+import 'package:myprogress/misc/get.dart';
 
 class Settings extends StatefulWidget {
   Settings({Key key}) : super(key: key);

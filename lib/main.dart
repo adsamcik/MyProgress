@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:markmyprogress/data/bookmark/bloc/bloc.dart';
-import 'package:markmyprogress/data/preference/bloc/bloc.dart';
-import 'package:markmyprogress/misc/platform.dart';
-import 'package:markmyprogress/pages/list_bookmark.dart';
+import 'package:myprogress/data/bookmark/bloc/bloc.dart';
+import 'package:myprogress/data/preference/bloc/bloc.dart';
+import 'package:myprogress/misc/platform.dart';
+import 'package:myprogress/pages/list_bookmark.dart';
 
 import 'di_setup.dart';
 

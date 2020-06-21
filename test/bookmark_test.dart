@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
-import 'package:markmyprogress/data/bookmark/abstract/persistent_bookmark.dart';
-import 'package:markmyprogress/data/bookmark/database/data_store.dart';
-import 'package:markmyprogress/data/bookmark/instance/generic_bookmark.dart';
-import 'package:markmyprogress/data/bookmark/instance/generic_progress.dart';
-import 'package:markmyprogress/di_setup.dart';
-import 'package:markmyprogress/extensions/bookmark.dart';
-import 'package:markmyprogress/extensions/date.dart';
+import 'package:myprogress/data/bookmark/abstract/persistent_bookmark.dart';
+import 'package:myprogress/data/bookmark/database/data_store.dart';
+import 'package:myprogress/data/bookmark/instance/generic_bookmark.dart';
+import 'package:myprogress/data/bookmark/instance/generic_progress.dart';
+import 'package:myprogress/di_setup.dart';
+import 'package:myprogress/extensions/bookmark.dart';
+import 'package:myprogress/extensions/date.dart';
 import 'package:rational/rational.dart';
 
 import 'di_setup.dart';

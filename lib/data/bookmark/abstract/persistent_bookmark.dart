@@ -1,4 +1,4 @@
-import 'package:markmyprogress/data/storage/abstraction/storable.dart';
+import 'package:myprogress/data/storage/abstraction/storable.dart';
 
 import 'bookmark.dart';
 

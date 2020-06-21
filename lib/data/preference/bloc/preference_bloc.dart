@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
-import 'package:markmyprogress/data/bookmark/filter/filter_data.dart';
-import 'package:markmyprogress/data/preference/bloc/preference_bloc_event.dart';
-import 'package:markmyprogress/data/preference/bloc/preference_bloc_state.dart';
-import 'package:markmyprogress/data/preference/database/preference.dart';
-import 'package:markmyprogress/data/preference/database/preference_store.dart';
-import 'package:markmyprogress/extensions/map.dart';
+import 'package:myprogress/data/bookmark/filter/filter_data.dart';
+import 'package:myprogress/data/preference/bloc/preference_bloc_event.dart';
+import 'package:myprogress/data/preference/bloc/preference_bloc_state.dart';
+import 'package:myprogress/data/preference/database/preference.dart';
+import 'package:myprogress/data/preference/database/preference_store.dart';
+import 'package:myprogress/extensions/map.dart';
 
 class PreferenceBloc extends Bloc<PreferenceBlocEvent, PreferenceBlocState> {
   final PreferenceStore settingsStore;

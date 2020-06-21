@@ -5,9 +5,9 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:markmyprogress/data/storage/abstraction/storable.dart';
-import 'package:markmyprogress/data/storage/abstraction/storage.dart';
-import 'package:markmyprogress/data/storage/abstraction/storage_subscribable.dart';
+import 'package:myprogress/data/storage/abstraction/storable.dart';
+import 'package:myprogress/data/storage/abstraction/storage.dart';
+import 'package:myprogress/data/storage/abstraction/storage_subscribable.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'mock/mock_data_source.dart';
