@@ -80,9 +80,9 @@ class _StatisticDurationChartState extends State<StatisticDurationChart> {
                   10.0,
               1),
           getTitles: (value) {
-            return value.toStringAsPrecision(standardPrecision);
+            return value.toPrecision(standardPrecision).toString();
           },
-          reservedSize: 36,
+          reservedSize: 54,
           margin: 16,
         ),
       ),
