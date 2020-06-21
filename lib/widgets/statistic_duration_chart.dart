@@ -75,9 +75,10 @@ class _StatisticDurationChartState extends State<StatisticDurationChart> {
             fontWeight: FontWeight.bold,
             fontSize: 15,
           ),
-          interval:
+          interval: max(
               widget._data.fold<double>(0.0, (previousValue, element) => max(previousValue, element.item2.toDouble())) /
                   10.0,
+              1),
           getTitles: (value) {
             return value.toStringAsPrecision(standardPrecision);
           },
