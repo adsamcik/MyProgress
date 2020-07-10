@@ -11,12 +11,12 @@ dependencies:
   flutter:
     sdk: flutter
 
-  sembast: ^2.4.5
+  sembast: ^2.4.7+4
 
   fl_chart: ^0.10.1
 
   freezed_annotation: ^0.11.0
-  meta: ^1.1.8
+  meta: ^1.2.2
 
   # Functions and types
   rational: ^0.3.8
@@ -27,8 +27,8 @@ dependencies:
   csv: ^4.0.3
 
   # Bloc
-  flutter_bloc: ^4.0.1
-  bloc: ^4.0.0
+  flutter_bloc: ^5.0.1
+  bloc: ^5.0.1
 
   # Dependency injection
   get_it: ^4.0.2
@@ -40,20 +40,20 @@ dependencies:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
       path: plugins/flutter_plugins/path_provider_fde
-      ref: b0794faf2c000576515aee56ca6bb5bee64cece4
+      ref: 955da3da17a0dfcf32ae00bd65fadd7af294cb86
 
-  url_launcher: ^5.4.11
+  url_launcher: ^5.5.0
   url_launcher_fde:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
       path: plugins/flutter_plugins/url_launcher_fde
-      ref: b0794faf2c000576515aee56ca6bb5bee64cece4
+      ref: 955da3da17a0dfcf32ae00bd65fadd7af294cb86
 
   file_chooser:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
       path: plugins/file_chooser
-      ref: b0794faf2c000576515aee56ca6bb5bee64cece4
+      ref: 955da3da17a0dfcf32ae00bd65fadd7af294cb86
 
   easy_localization:
     git:
@@ -65,7 +65,7 @@ dev_dependencies:
     sdk: flutter
 
 
-  pedantic: ^1.9.0
+  pedantic: ^1.9.2
   intl: ^0.16.1
 
   # Dependency injection
@@ -81,7 +81,7 @@ dev_dependencies:
 
   # Used by tests. Not required to use `json_serializable`.
   build_verify: ^1.1.1
-  test: ^1.15.1
+  test: ^1.15.2
 
 flutter:
   uses-material-design: true
