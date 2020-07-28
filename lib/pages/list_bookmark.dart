@@ -108,6 +108,7 @@ class _BookmarkListState extends State<BookmarkList> {
                           color: Get.theme(context).dividerColor,
                           height: 0,
                         ),
+                        itemCount: searchList.length,
                         itemBuilder: (context, index) {
                           var item = searchList[index];
                           var bookmark = item.value;
@@ -169,7 +170,6 @@ class _BookmarkListState extends State<BookmarkList> {
                                     ]),
                                   )));
                         },
-                        itemCount: filteredBookmarkList.length,
                       ));
                 },
                 orElse: () => Container(),

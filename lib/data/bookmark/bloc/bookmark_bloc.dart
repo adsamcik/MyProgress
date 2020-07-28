@@ -88,11 +88,7 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
               return transaction.update(event.bookmark);
             }
           }).then((dynamic value) {
-            var filterList = _updateFilter(ready.filterData, ready.bookmarkList);
-            return ready.copyWith(
-              version: ready.version + 1,
-              filteredBookmarkList: filterList,
-            );
+            return _reFilter(ready, ready.filterData);
           });
         },
         orElse: () => state);
@@ -106,6 +102,7 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
               .then((dynamic value) {
             currentState.bookmarkList.removeWhere((element) => element.bookmark == event.bookmark);
             currentState.filteredBookmarkList.removeWhere((element) => element.bookmark == event.bookmark);
+            currentState.searchedBookmarkList.removeWhere((element) => element.value == event.bookmark);
             return currentState.copyWith(version: currentState.version + 1);
           });
         },
@@ -117,6 +114,10 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
         ready: (currentState) {
           event.bookmark.incrementProgress();
           return _updateBookmark(event.bookmark).then((dynamic value) {
+            if (_isFiltered(currentState.filterData.filterData, event.bookmark)) {
+              currentState.filteredBookmarkList.removeWhere((element) => element.bookmark == event.bookmark);
+              currentState.searchedBookmarkList.removeWhere((element) => element.value == event.bookmark);
+            }
             return currentState.copyWith(version: currentState.version + 1);
           });
         },
@@ -173,29 +174,26 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
     }
   }
 
+  bool _isFiltered(FilterData filterData, PersistentBookmark bookmark) {
+    if (!filterData.ended && !bookmark.ongoing) {
+      return true;
+    } else if (!filterData.abandoned && bookmark.abandoned) {
+      return true;
+    } else if (!filterData.finished && (!bookmark.ongoing && bookmark.progress == bookmark.maxProgress)) {
+      return true;
+    } else if (!filterData.ongoing && bookmark.ongoing) {
+      return true;
+    } else if (!filterData.maxProgress && bookmark.progress == bookmark.maxProgress) {
+      return true;
+    } else if (!filterData.noProgress && bookmark.history.isEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   List<SearchableBookmark> _updateFilter(FilterRuntimeData filterRuntimeData, Iterable<SearchableBookmark> bookmarks) {
-    var filterList = bookmarks;
-
-    var filterData = filterRuntimeData.filterData;
-
-    if (!filterData.abandoned) {
-      filterList = filterList.where((readable) => !readable.bookmark.abandoned);
-    }
-
-    if (!filterData.ended) {
-      filterList = filterList.where((readable) => readable.bookmark.ongoing);
-    }
-
-    if (!filterData.finished) {
-      filterList = filterList
-          .where((readable) => readable.bookmark.ongoing || readable.bookmark.progress < readable.bookmark.maxProgress);
-    }
-
-    if (!filterData.ongoing) {
-      filterList = filterList.where((readable) => !readable.bookmark.ongoing);
-    }
-
-    return filterList.toList(growable: false);
+    return bookmarks.where((element) => !_isFiltered(filterRuntimeData.filterData, element.bookmark)).toList();
   }
 
   BookmarkBlocState _reFilterQuery(Ready state, FilterRuntimeData newRuntimeData) {

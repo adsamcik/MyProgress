@@ -12,6 +12,8 @@ _$_FilterData _$_$_FilterDataFromJson(Map<String, dynamic> json) {
     ongoing: json['ongoing'] as bool ?? true,
     finished: json['finished'] as bool ?? false,
     ended: json['ended'] as bool ?? true,
+    maxProgress: json['maxProgress'] as bool ?? true,
+    noProgress: json['noProgress'] as bool ?? true,
   );
 }
 
@@ -21,4 +23,6 @@ Map<String, dynamic> _$_$_FilterDataToJson(_$_FilterData instance) =>
       'ongoing': instance.ongoing,
       'finished': instance.finished,
       'ended': instance.ended,
+      'maxProgress': instance.maxProgress,
+      'noProgress': instance.noProgress,
     };

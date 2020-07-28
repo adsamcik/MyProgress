@@ -29,6 +29,9 @@ class _SettingsState extends State<Settings> {
     const BookmarkFilterEntry('ongoing', LocaleKeys.filter_ongoing, tooltip: LocaleKeys.filter_ongoing_desc),
     const BookmarkFilterEntry('ended', LocaleKeys.filter_ended, tooltip: LocaleKeys.filter_ended_desc),
     const BookmarkFilterEntry('finished', LocaleKeys.filter_finished, tooltip: LocaleKeys.filter_finished_desc),
+    const BookmarkFilterEntry('noProgress', LocaleKeys.filter_no_progress, tooltip: LocaleKeys.filter_no_progress_desc),
+    const BookmarkFilterEntry('maxProgress', LocaleKeys.filter_max_progress,
+        tooltip: LocaleKeys.filter_max_progress_desc),
   ];
 
   @override

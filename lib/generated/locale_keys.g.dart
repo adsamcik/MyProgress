@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-abstract class LocaleKeys {
+abstract class  LocaleKeys {
   static const about = 'about';
   static const add_bookmark = 'add_bookmark';
   static const app_name = 'app_name';
@@ -25,6 +25,10 @@ abstract class LocaleKeys {
   static const filter_finished_desc = 'filter_finished_desc';
   static const filter_ongoing = 'filter_ongoing';
   static const filter_ongoing_desc = 'filter_ongoing_desc';
+  static const filter_no_progress = 'filter_no_progress';
+  static const filter_no_progress_desc = 'filter_no_progress_desc';
+  static const filter_max_progress = 'filter_max_progress';
+  static const filter_max_progress_desc = 'filter_max_progress_desc';
   static const import = 'import';
   static const increment_value = 'increment_value';
   static const last_progress = 'last_progress';
@@ -46,4 +50,5 @@ abstract class LocaleKeys {
   static const statistics_weekday_title = 'statistics_weekday_title';
   static const web = 'web';
   static const web_address = 'web_address';
+
 }

@@ -20,12 +20,16 @@ class _$FilterDataTearOff {
       {bool abandoned = false,
       bool ongoing = true,
       bool finished = false,
-      bool ended = true}) {
+      bool ended = true,
+      bool maxProgress = true,
+      bool noProgress = true}) {
     return _FilterData(
       abandoned: abandoned,
       ongoing: ongoing,
       finished: finished,
       ended: ended,
+      maxProgress: maxProgress,
+      noProgress: noProgress,
     );
   }
 }
@@ -38,6 +42,8 @@ mixin _$FilterData {
   bool get ongoing;
   bool get finished;
   bool get ended;
+  bool get maxProgress;
+  bool get noProgress;
 
   Map<String, dynamic> toJson();
   $FilterDataCopyWith<FilterData> get copyWith;
@@ -47,7 +53,13 @@ abstract class $FilterDataCopyWith<$Res> {
   factory $FilterDataCopyWith(
           FilterData value, $Res Function(FilterData) then) =
       _$FilterDataCopyWithImpl<$Res>;
-  $Res call({bool abandoned, bool ongoing, bool finished, bool ended});
+  $Res call(
+      {bool abandoned,
+      bool ongoing,
+      bool finished,
+      bool ended,
+      bool maxProgress,
+      bool noProgress});
 }
 
 class _$FilterDataCopyWithImpl<$Res> implements $FilterDataCopyWith<$Res> {
@@ -63,12 +75,18 @@ class _$FilterDataCopyWithImpl<$Res> implements $FilterDataCopyWith<$Res> {
     Object ongoing = freezed,
     Object finished = freezed,
     Object ended = freezed,
+    Object maxProgress = freezed,
+    Object noProgress = freezed,
   }) {
     return _then(_value.copyWith(
       abandoned: abandoned == freezed ? _value.abandoned : abandoned as bool,
       ongoing: ongoing == freezed ? _value.ongoing : ongoing as bool,
       finished: finished == freezed ? _value.finished : finished as bool,
       ended: ended == freezed ? _value.ended : ended as bool,
+      maxProgress:
+          maxProgress == freezed ? _value.maxProgress : maxProgress as bool,
+      noProgress:
+          noProgress == freezed ? _value.noProgress : noProgress as bool,
     ));
   }
 }
@@ -78,7 +96,13 @@ abstract class _$FilterDataCopyWith<$Res> implements $FilterDataCopyWith<$Res> {
           _FilterData value, $Res Function(_FilterData) then) =
       __$FilterDataCopyWithImpl<$Res>;
   @override
-  $Res call({bool abandoned, bool ongoing, bool finished, bool ended});
+  $Res call(
+      {bool abandoned,
+      bool ongoing,
+      bool finished,
+      bool ended,
+      bool maxProgress,
+      bool noProgress});
 }
 
 class __$FilterDataCopyWithImpl<$Res> extends _$FilterDataCopyWithImpl<$Res>
@@ -96,12 +120,18 @@ class __$FilterDataCopyWithImpl<$Res> extends _$FilterDataCopyWithImpl<$Res>
     Object ongoing = freezed,
     Object finished = freezed,
     Object ended = freezed,
+    Object maxProgress = freezed,
+    Object noProgress = freezed,
   }) {
     return _then(_FilterData(
       abandoned: abandoned == freezed ? _value.abandoned : abandoned as bool,
       ongoing: ongoing == freezed ? _value.ongoing : ongoing as bool,
       finished: finished == freezed ? _value.finished : finished as bool,
       ended: ended == freezed ? _value.ended : ended as bool,
+      maxProgress:
+          maxProgress == freezed ? _value.maxProgress : maxProgress as bool,
+      noProgress:
+          noProgress == freezed ? _value.noProgress : noProgress as bool,
     ));
   }
 }
@@ -112,11 +142,15 @@ class _$_FilterData implements _FilterData {
       {this.abandoned = false,
       this.ongoing = true,
       this.finished = false,
-      this.ended = true})
+      this.ended = true,
+      this.maxProgress = true,
+      this.noProgress = true})
       : assert(abandoned != null),
         assert(ongoing != null),
         assert(finished != null),
-        assert(ended != null);
+        assert(ended != null),
+        assert(maxProgress != null),
+        assert(noProgress != null);
 
   factory _$_FilterData.fromJson(Map<String, dynamic> json) =>
       _$_$_FilterDataFromJson(json);
@@ -133,10 +167,16 @@ class _$_FilterData implements _FilterData {
   @JsonKey(defaultValue: true)
   @override
   final bool ended;
+  @JsonKey(defaultValue: true)
+  @override
+  final bool maxProgress;
+  @JsonKey(defaultValue: true)
+  @override
+  final bool noProgress;
 
   @override
   String toString() {
-    return 'FilterData(abandoned: $abandoned, ongoing: $ongoing, finished: $finished, ended: $ended)';
+    return 'FilterData(abandoned: $abandoned, ongoing: $ongoing, finished: $finished, ended: $ended, maxProgress: $maxProgress, noProgress: $noProgress)';
   }
 
   @override
@@ -153,7 +193,13 @@ class _$_FilterData implements _FilterData {
                 const DeepCollectionEquality()
                     .equals(other.finished, finished)) &&
             (identical(other.ended, ended) ||
-                const DeepCollectionEquality().equals(other.ended, ended)));
+                const DeepCollectionEquality().equals(other.ended, ended)) &&
+            (identical(other.maxProgress, maxProgress) ||
+                const DeepCollectionEquality()
+                    .equals(other.maxProgress, maxProgress)) &&
+            (identical(other.noProgress, noProgress) ||
+                const DeepCollectionEquality()
+                    .equals(other.noProgress, noProgress)));
   }
 
   @override
@@ -162,7 +208,9 @@ class _$_FilterData implements _FilterData {
       const DeepCollectionEquality().hash(abandoned) ^
       const DeepCollectionEquality().hash(ongoing) ^
       const DeepCollectionEquality().hash(finished) ^
-      const DeepCollectionEquality().hash(ended);
+      const DeepCollectionEquality().hash(ended) ^
+      const DeepCollectionEquality().hash(maxProgress) ^
+      const DeepCollectionEquality().hash(noProgress);
 
   @override
   _$FilterDataCopyWith<_FilterData> get copyWith =>
@@ -179,7 +227,9 @@ abstract class _FilterData implements FilterData {
       {bool abandoned,
       bool ongoing,
       bool finished,
-      bool ended}) = _$_FilterData;
+      bool ended,
+      bool maxProgress,
+      bool noProgress}) = _$_FilterData;
 
   factory _FilterData.fromJson(Map<String, dynamic> json) =
       _$_FilterData.fromJson;
@@ -192,6 +242,10 @@ abstract class _FilterData implements FilterData {
   bool get finished;
   @override
   bool get ended;
+  @override
+  bool get maxProgress;
+  @override
+  bool get noProgress;
   @override
   _$FilterDataCopyWith<_FilterData> get copyWith;
 }

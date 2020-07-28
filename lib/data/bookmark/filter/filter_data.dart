@@ -10,6 +10,8 @@ abstract class FilterData with _$FilterData {
     @Default(true) bool ongoing,
     @Default(false) bool finished,
     @Default(true) bool ended,
+    @Default(true) bool maxProgress,
+    @Default(true) bool noProgress,
   }) = _FilterData;
 
   factory FilterData.fromJson(Map<String, dynamic> json) => _$FilterDataFromJson(json);
