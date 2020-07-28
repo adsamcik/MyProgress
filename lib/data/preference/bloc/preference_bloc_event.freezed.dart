@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named
+// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
 part of 'preference_bloc_event.dart';
 
@@ -12,10 +12,12 @@ T _$identity<T>(T value) => value;
 class _$PreferenceBlocEventTearOff {
   const _$PreferenceBlocEventTearOff();
 
+// ignore: unused_element
   LoadPreferences load() {
     return const LoadPreferences();
   }
 
+// ignore: unused_element
   SetPreference setPreference({@required String key, @required dynamic value}) {
     return SetPreference(
       key: key,
@@ -23,6 +25,7 @@ class _$PreferenceBlocEventTearOff {
     );
   }
 
+// ignore: unused_element
   UpdateFilterData updateFilterData({@required FilterData data}) {
     return UpdateFilterData(
       data: data,
@@ -63,11 +66,13 @@ mixin _$PreferenceBlocEvent {
 }
 
 abstract class $PreferenceBlocEventCopyWith<$Res> {
-  factory $PreferenceBlocEventCopyWith(PreferenceBlocEvent value, $Res Function(PreferenceBlocEvent) then) =
+  factory $PreferenceBlocEventCopyWith(
+          PreferenceBlocEvent value, $Res Function(PreferenceBlocEvent) then) =
       _$PreferenceBlocEventCopyWithImpl<$Res>;
 }
 
-class _$PreferenceBlocEventCopyWithImpl<$Res> implements $PreferenceBlocEventCopyWith<$Res> {
+class _$PreferenceBlocEventCopyWithImpl<$Res>
+    implements $PreferenceBlocEventCopyWith<$Res> {
   _$PreferenceBlocEventCopyWithImpl(this._value, this._then);
 
   final PreferenceBlocEvent _value;
@@ -76,13 +81,16 @@ class _$PreferenceBlocEventCopyWithImpl<$Res> implements $PreferenceBlocEventCop
 }
 
 abstract class $LoadPreferencesCopyWith<$Res> {
-  factory $LoadPreferencesCopyWith(LoadPreferences value, $Res Function(LoadPreferences) then) =
+  factory $LoadPreferencesCopyWith(
+          LoadPreferences value, $Res Function(LoadPreferences) then) =
       _$LoadPreferencesCopyWithImpl<$Res>;
 }
 
-class _$LoadPreferencesCopyWithImpl<$Res> extends _$PreferenceBlocEventCopyWithImpl<$Res>
+class _$LoadPreferencesCopyWithImpl<$Res>
+    extends _$PreferenceBlocEventCopyWithImpl<$Res>
     implements $LoadPreferencesCopyWith<$Res> {
-  _$LoadPreferencesCopyWithImpl(LoadPreferences _value, $Res Function(LoadPreferences) _then)
+  _$LoadPreferencesCopyWithImpl(
+      LoadPreferences _value, $Res Function(LoadPreferences) _then)
       : super(_value, (v) => _then(v as LoadPreferences));
 
   @override
@@ -167,14 +175,17 @@ abstract class LoadPreferences implements PreferenceBlocEvent {
 }
 
 abstract class $SetPreferenceCopyWith<$Res> {
-  factory $SetPreferenceCopyWith(SetPreference value, $Res Function(SetPreference) then) =
+  factory $SetPreferenceCopyWith(
+          SetPreference value, $Res Function(SetPreference) then) =
       _$SetPreferenceCopyWithImpl<$Res>;
   $Res call({String key, dynamic value});
 }
 
-class _$SetPreferenceCopyWithImpl<$Res> extends _$PreferenceBlocEventCopyWithImpl<$Res>
+class _$SetPreferenceCopyWithImpl<$Res>
+    extends _$PreferenceBlocEventCopyWithImpl<$Res>
     implements $SetPreferenceCopyWith<$Res> {
-  _$SetPreferenceCopyWithImpl(SetPreference _value, $Res Function(SetPreference) _then)
+  _$SetPreferenceCopyWithImpl(
+      SetPreference _value, $Res Function(SetPreference) _then)
       : super(_value, (v) => _then(v as SetPreference));
 
   @override
@@ -211,16 +222,21 @@ class _$SetPreference implements SetPreference {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is SetPreference &&
-            (identical(other.key, key) || const DeepCollectionEquality().equals(other.key, key)) &&
-            (identical(other.value, value) || const DeepCollectionEquality().equals(other.value, value)));
+            (identical(other.key, key) ||
+                const DeepCollectionEquality().equals(other.key, key)) &&
+            (identical(other.value, value) ||
+                const DeepCollectionEquality().equals(other.value, value)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(key) ^ const DeepCollectionEquality().hash(value);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(key) ^
+      const DeepCollectionEquality().hash(value);
 
   @override
-  $SetPreferenceCopyWith<SetPreference> get copyWith => _$SetPreferenceCopyWithImpl<SetPreference>(this, _$identity);
+  $SetPreferenceCopyWith<SetPreference> get copyWith =>
+      _$SetPreferenceCopyWithImpl<SetPreference>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -280,7 +296,8 @@ class _$SetPreference implements SetPreference {
 }
 
 abstract class SetPreference implements PreferenceBlocEvent {
-  const factory SetPreference({@required String key, @required dynamic value}) = _$SetPreference;
+  const factory SetPreference({@required String key, @required dynamic value}) =
+      _$SetPreference;
 
   String get key;
   dynamic get value;
@@ -288,16 +305,19 @@ abstract class SetPreference implements PreferenceBlocEvent {
 }
 
 abstract class $UpdateFilterDataCopyWith<$Res> {
-  factory $UpdateFilterDataCopyWith(UpdateFilterData value, $Res Function(UpdateFilterData) then) =
+  factory $UpdateFilterDataCopyWith(
+          UpdateFilterData value, $Res Function(UpdateFilterData) then) =
       _$UpdateFilterDataCopyWithImpl<$Res>;
   $Res call({FilterData data});
 
   $FilterDataCopyWith<$Res> get data;
 }
 
-class _$UpdateFilterDataCopyWithImpl<$Res> extends _$PreferenceBlocEventCopyWithImpl<$Res>
+class _$UpdateFilterDataCopyWithImpl<$Res>
+    extends _$PreferenceBlocEventCopyWithImpl<$Res>
     implements $UpdateFilterDataCopyWith<$Res> {
-  _$UpdateFilterDataCopyWithImpl(UpdateFilterData _value, $Res Function(UpdateFilterData) _then)
+  _$UpdateFilterDataCopyWithImpl(
+      UpdateFilterData _value, $Res Function(UpdateFilterData) _then)
       : super(_value, (v) => _then(v as UpdateFilterData));
 
   @override
@@ -338,11 +358,13 @@ class _$UpdateFilterData implements UpdateFilterData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is UpdateFilterData &&
-            (identical(other.data, data) || const DeepCollectionEquality().equals(other.data, data)));
+            (identical(other.data, data) ||
+                const DeepCollectionEquality().equals(other.data, data)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(data);
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(data);
 
   @override
   $UpdateFilterDataCopyWith<UpdateFilterData> get copyWith =>
@@ -406,7 +428,8 @@ class _$UpdateFilterData implements UpdateFilterData {
 }
 
 abstract class UpdateFilterData implements PreferenceBlocEvent {
-  const factory UpdateFilterData({@required FilterData data}) = _$UpdateFilterData;
+  const factory UpdateFilterData({@required FilterData data}) =
+      _$UpdateFilterData;
 
   FilterData get data;
   $UpdateFilterDataCopyWith<UpdateFilterData> get copyWith;

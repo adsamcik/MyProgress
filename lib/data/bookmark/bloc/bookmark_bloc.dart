@@ -23,7 +23,7 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
   final DataStore dataStore;
   final PreferenceStore settingsStore;
 
-  BookmarkBloc({@required this.dataStore, @required this.settingsStore}) {
+  BookmarkBloc({@required this.dataStore, @required this.settingsStore}) : super(BookmarkBlocState.notReady()) {
     settingsStore.subscribeToDataChanges(_onSettingsChanged);
   }
 
@@ -32,9 +32,6 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
     await super.close();
     await dataStore.close();
   }
-
-  @override
-  BookmarkBlocState get initialState => BookmarkBlocState.notReady();
 
   void _onSettingsChanged(StorageEvent event, Iterable<Preference> preferences) {
     var json = FilterData().toJson();
@@ -68,10 +65,12 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
 
     var filterRuntimeData = FilterRuntimeData(filterData);
     var filterList = _updateFilter(filterRuntimeData, dataList);
+    var searchResult = _updateFilterQuery(filterRuntimeData, filterList);
     yield BookmarkBlocState.ready(
       version: 0,
       bookmarkList: dataList,
       filteredBookmarkList: filterList,
+      searchedBookmarkList: searchResult,
       filterData: filterRuntimeData,
     );
   }
@@ -106,7 +105,7 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
               .transactionClosed<dynamic>((dataStore) => dataStore.delete(event.bookmark.key))
               .then((dynamic value) {
             currentState.bookmarkList.removeWhere((element) => element.bookmark == event.bookmark);
-            currentState.filteredBookmarkList.removeWhere((element) => element.value == event.bookmark);
+            currentState.filteredBookmarkList.removeWhere((element) => element.bookmark == event.bookmark);
             return currentState.copyWith(version: currentState.version + 1);
           });
         },
@@ -146,8 +145,35 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
     return await dataStore.transactionClosed<dynamic>((dataStore) => dataStore.update(bookmark));
   }
 
-  List<SearchResult<PersistentBookmark>> _updateFilter(
+  List<SearchResult<PersistentBookmark>> _updateFilterQuery(
       FilterRuntimeData filterRuntimeData, Iterable<SearchableBookmark> bookmarks) {
+    var strippedFilter = StringExtensions.stripString(filterRuntimeData.query);
+
+    if (strippedFilter.isNotEmpty) {
+      var matchList = bookmarks
+          .map((e) => Pair(e.bestMatch(strippedFilter), e))
+          .where((element) => element.item1.match > filterThreshold)
+          .toList();
+
+      matchList.sort((a, b) {
+        var aValue = a.item1.match * a.item1.priority;
+        var bValue = b.item1.match * b.item1.priority;
+        if (aValue > bValue) {
+          return -1;
+        } else if (aValue < bValue) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+
+      return matchList.map((e) => SearchResult(e.item2.bookmark, e.item1.match)).toList();
+    } else {
+      return bookmarks.map((e) => SearchResult(e.bookmark, 1.0)).toList();
+    }
+  }
+
+  List<SearchableBookmark> _updateFilter(FilterRuntimeData filterRuntimeData, Iterable<SearchableBookmark> bookmarks) {
     var filterList = bookmarks;
 
     var filterData = filterRuntimeData.filterData;
@@ -169,39 +195,26 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
       filterList = filterList.where((readable) => !readable.bookmark.ongoing);
     }
 
-    var strippedFilter = StringExtensions.stripString(filterRuntimeData.query);
+    return filterList.toList(growable: false);
+  }
 
-    if (strippedFilter.isNotEmpty) {
-      var matchList = filterList
-          .map((e) => Pair(e.bestMatch(strippedFilter), e))
-          .where((element) => element.item1.match > filterThreshold)
-          .toList();
-
-      matchList.sort((a, b) {
-        var aValue = a.item1.match * a.item1.priority;
-        var bValue = b.item1.match * b.item1.priority;
-        if (aValue > bValue) {
-          return -1;
-        } else if (aValue < bValue) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-
-      filterList = matchList.map((e) => e.item2).toList();
-      return matchList.map((e) => SearchResult(e.item2.bookmark, e.item1.match)).toList();
-    } else {
-      return filterList.map((e) => SearchResult(e.bookmark, 1.0)).toList();
-    }
+  BookmarkBlocState _reFilterQuery(Ready state, FilterRuntimeData newRuntimeData) {
+    var newFilter = _updateFilterQuery(newRuntimeData, state.filteredBookmarkList);
+    return state.copyWith(
+      version: state.version + 1,
+      filterData: newRuntimeData,
+      searchedBookmarkList: newFilter,
+    );
   }
 
   BookmarkBlocState _reFilter(Ready state, FilterRuntimeData newRuntimeData) {
     var newFilter = _updateFilter(newRuntimeData, state.bookmarkList);
+    var newQuery = _updateFilterQuery(newRuntimeData, newFilter);
     return state.copyWith(
       version: state.version + 1,
       filterData: newRuntimeData,
       filteredBookmarkList: newFilter,
+      searchedBookmarkList: newQuery,
     );
   }
 }

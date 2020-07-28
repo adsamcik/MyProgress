@@ -9,10 +9,7 @@ import 'package:myprogress/extensions/map.dart';
 class PreferenceBloc extends Bloc<PreferenceBlocEvent, PreferenceBlocState> {
   final PreferenceStore settingsStore;
 
-  PreferenceBloc(this.settingsStore);
-
-  @override
-  PreferenceBlocState get initialState => PreferenceBlocState.notReady();
+  PreferenceBloc(this.settingsStore) : super(PreferenceBlocState.notReady());
 
   @override
   Stream<PreferenceBlocState> mapEventToState(PreferenceBlocEvent event) => event.map(

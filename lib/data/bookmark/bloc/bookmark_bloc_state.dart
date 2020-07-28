@@ -13,7 +13,8 @@ abstract class BookmarkBlocState with _$BookmarkBlocState {
   const factory BookmarkBlocState.ready({
     @required int version,
     @required List<SearchableBookmark> bookmarkList,
-    @required List<ISearchResult<PersistentBookmark>> filteredBookmarkList,
+    @required List<SearchableBookmark> filteredBookmarkList,
+    @required List<ISearchResult<PersistentBookmark>> searchedBookmarkList,
     @required FilterRuntimeData filterData,
   }) = Ready;
 }

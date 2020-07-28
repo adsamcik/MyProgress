@@ -99,7 +99,7 @@ class _BookmarkListState extends State<BookmarkList> {
           BlocBuilder<BookmarkBloc, BookmarkBlocState>(
             builder: (context, state) {
               return state.maybeWhen(
-                ready: (version, bookmarkList, filteredBookmarkList, filterData) {
+                ready: (version, bookmarkList, filteredBookmarkList, searchList, filterData) {
                   return Scrollbar(
                       controller: ScrollController(initialScrollOffset: 0),
                       child: ListView.separated(
@@ -109,7 +109,7 @@ class _BookmarkListState extends State<BookmarkList> {
                           height: 0,
                         ),
                         itemBuilder: (context, index) {
-                          var item = filteredBookmarkList[index];
+                          var item = searchList[index];
                           var bookmark = item.value;
 
                           String title;
