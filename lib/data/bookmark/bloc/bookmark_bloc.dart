@@ -13,6 +13,7 @@ import 'package:myprogress/data/runtime/search_result.dart';
 import 'package:myprogress/data/storage/abstraction/storage_subscribable.dart';
 import 'package:myprogress/extensions/bookmark.dart';
 import 'package:myprogress/extensions/string.dart';
+import 'package:rational/rational.dart';
 
 import 'bookmark_bloc_event.dart';
 import 'bookmark_bloc_state.dart';
@@ -128,7 +129,7 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
     yield await state.maybeMap(
         ready: (ready) {
           var filterData = ready.filterData.copyWith(query: event.query.toLowerCase());
-          return _reFilter(ready, filterData);
+          return _reFilterQuery(ready, filterData);
         },
         orElse: () => state);
   }
@@ -185,7 +186,7 @@ class BookmarkBloc extends Bloc<BookmarkBlocEvent, BookmarkBlocState> {
       return true;
     } else if (!filterData.maxProgress && bookmark.progress == bookmark.maxProgress) {
       return true;
-    } else if (!filterData.noProgress && bookmark.history.isEmpty) {
+    } else if (!filterData.noProgress && (bookmark.history.isEmpty || bookmark.history.last.value == Rational.zero)) {
       return true;
     } else {
       return false;
