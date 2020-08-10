@@ -42,22 +42,14 @@ mixin _$BookmarkBlocState {
   Result when<Result extends Object>({
     @required Result notReady(),
     @required
-        Result ready(
-            int version,
-            List<SearchableBookmark> bookmarkList,
-            List<SearchableBookmark> filteredBookmarkList,
-            List<ISearchResult<PersistentBookmark>> searchedBookmarkList,
-            FilterRuntimeData filterData),
+        Result ready(int version, List<SearchableBookmark> bookmarkList, List<SearchableBookmark> filteredBookmarkList,
+            List<ISearchResult<PersistentBookmark>> searchedBookmarkList, FilterRuntimeData filterData),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result notReady(),
-    Result ready(
-        int version,
-        List<SearchableBookmark> bookmarkList,
-        List<SearchableBookmark> filteredBookmarkList,
-        List<ISearchResult<PersistentBookmark>> searchedBookmarkList,
-        FilterRuntimeData filterData),
+    Result ready(int version, List<SearchableBookmark> bookmarkList, List<SearchableBookmark> filteredBookmarkList,
+        List<ISearchResult<PersistentBookmark>> searchedBookmarkList, FilterRuntimeData filterData),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -74,13 +66,11 @@ mixin _$BookmarkBlocState {
 }
 
 abstract class $BookmarkBlocStateCopyWith<$Res> {
-  factory $BookmarkBlocStateCopyWith(
-          BookmarkBlocState value, $Res Function(BookmarkBlocState) then) =
+  factory $BookmarkBlocStateCopyWith(BookmarkBlocState value, $Res Function(BookmarkBlocState) then) =
       _$BookmarkBlocStateCopyWithImpl<$Res>;
 }
 
-class _$BookmarkBlocStateCopyWithImpl<$Res>
-    implements $BookmarkBlocStateCopyWith<$Res> {
+class _$BookmarkBlocStateCopyWithImpl<$Res> implements $BookmarkBlocStateCopyWith<$Res> {
   _$BookmarkBlocStateCopyWithImpl(this._value, this._then);
 
   final BookmarkBlocState _value;
@@ -89,14 +79,11 @@ class _$BookmarkBlocStateCopyWithImpl<$Res>
 }
 
 abstract class $NotReadyCopyWith<$Res> {
-  factory $NotReadyCopyWith(NotReady value, $Res Function(NotReady) then) =
-      _$NotReadyCopyWithImpl<$Res>;
+  factory $NotReadyCopyWith(NotReady value, $Res Function(NotReady) then) = _$NotReadyCopyWithImpl<$Res>;
 }
 
-class _$NotReadyCopyWithImpl<$Res> extends _$BookmarkBlocStateCopyWithImpl<$Res>
-    implements $NotReadyCopyWith<$Res> {
-  _$NotReadyCopyWithImpl(NotReady _value, $Res Function(NotReady) _then)
-      : super(_value, (v) => _then(v as NotReady));
+class _$NotReadyCopyWithImpl<$Res> extends _$BookmarkBlocStateCopyWithImpl<$Res> implements $NotReadyCopyWith<$Res> {
+  _$NotReadyCopyWithImpl(NotReady _value, $Res Function(NotReady) _then) : super(_value, (v) => _then(v as NotReady));
 
   @override
   NotReady get _value => super._value as NotReady;
@@ -123,12 +110,8 @@ class _$NotReady implements NotReady {
   Result when<Result extends Object>({
     @required Result notReady(),
     @required
-        Result ready(
-            int version,
-            List<SearchableBookmark> bookmarkList,
-            List<SearchableBookmark> filteredBookmarkList,
-            List<ISearchResult<PersistentBookmark>> searchedBookmarkList,
-            FilterRuntimeData filterData),
+        Result ready(int version, List<SearchableBookmark> bookmarkList, List<SearchableBookmark> filteredBookmarkList,
+            List<ISearchResult<PersistentBookmark>> searchedBookmarkList, FilterRuntimeData filterData),
   }) {
     assert(notReady != null);
     assert(ready != null);
@@ -139,12 +122,8 @@ class _$NotReady implements NotReady {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result notReady(),
-    Result ready(
-        int version,
-        List<SearchableBookmark> bookmarkList,
-        List<SearchableBookmark> filteredBookmarkList,
-        List<ISearchResult<PersistentBookmark>> searchedBookmarkList,
-        FilterRuntimeData filterData),
+    Result ready(int version, List<SearchableBookmark> bookmarkList, List<SearchableBookmark> filteredBookmarkList,
+        List<ISearchResult<PersistentBookmark>> searchedBookmarkList, FilterRuntimeData filterData),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -185,8 +164,7 @@ abstract class NotReady implements BookmarkBlocState {
 }
 
 abstract class $ReadyCopyWith<$Res> {
-  factory $ReadyCopyWith(Ready value, $Res Function(Ready) then) =
-      _$ReadyCopyWithImpl<$Res>;
+  factory $ReadyCopyWith(Ready value, $Res Function(Ready) then) = _$ReadyCopyWithImpl<$Res>;
   $Res call(
       {int version,
       List<SearchableBookmark> bookmarkList,
@@ -197,10 +175,8 @@ abstract class $ReadyCopyWith<$Res> {
   $FilterRuntimeDataCopyWith<$Res> get filterData;
 }
 
-class _$ReadyCopyWithImpl<$Res> extends _$BookmarkBlocStateCopyWithImpl<$Res>
-    implements $ReadyCopyWith<$Res> {
-  _$ReadyCopyWithImpl(Ready _value, $Res Function(Ready) _then)
-      : super(_value, (v) => _then(v as Ready));
+class _$ReadyCopyWithImpl<$Res> extends _$BookmarkBlocStateCopyWithImpl<$Res> implements $ReadyCopyWith<$Res> {
+  _$ReadyCopyWithImpl(Ready _value, $Res Function(Ready) _then) : super(_value, (v) => _then(v as Ready));
 
   @override
   Ready get _value => super._value as Ready;
@@ -215,18 +191,14 @@ class _$ReadyCopyWithImpl<$Res> extends _$BookmarkBlocStateCopyWithImpl<$Res>
   }) {
     return _then(Ready(
       version: version == freezed ? _value.version : version as int,
-      bookmarkList: bookmarkList == freezed
-          ? _value.bookmarkList
-          : bookmarkList as List<SearchableBookmark>,
+      bookmarkList: bookmarkList == freezed ? _value.bookmarkList : bookmarkList as List<SearchableBookmark>,
       filteredBookmarkList: filteredBookmarkList == freezed
           ? _value.filteredBookmarkList
           : filteredBookmarkList as List<SearchableBookmark>,
       searchedBookmarkList: searchedBookmarkList == freezed
           ? _value.searchedBookmarkList
           : searchedBookmarkList as List<ISearchResult<PersistentBookmark>>,
-      filterData: filterData == freezed
-          ? _value.filterData
-          : filterData as FilterRuntimeData,
+      filterData: filterData == freezed ? _value.filterData : filterData as FilterRuntimeData,
     ));
   }
 
@@ -274,21 +246,15 @@ class _$Ready implements Ready {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is Ready &&
-            (identical(other.version, version) ||
-                const DeepCollectionEquality()
-                    .equals(other.version, version)) &&
+            (identical(other.version, version) || const DeepCollectionEquality().equals(other.version, version)) &&
             (identical(other.bookmarkList, bookmarkList) ||
-                const DeepCollectionEquality()
-                    .equals(other.bookmarkList, bookmarkList)) &&
+                const DeepCollectionEquality().equals(other.bookmarkList, bookmarkList)) &&
             (identical(other.filteredBookmarkList, filteredBookmarkList) ||
-                const DeepCollectionEquality().equals(
-                    other.filteredBookmarkList, filteredBookmarkList)) &&
+                const DeepCollectionEquality().equals(other.filteredBookmarkList, filteredBookmarkList)) &&
             (identical(other.searchedBookmarkList, searchedBookmarkList) ||
-                const DeepCollectionEquality().equals(
-                    other.searchedBookmarkList, searchedBookmarkList)) &&
+                const DeepCollectionEquality().equals(other.searchedBookmarkList, searchedBookmarkList)) &&
             (identical(other.filterData, filterData) ||
-                const DeepCollectionEquality()
-                    .equals(other.filterData, filterData)));
+                const DeepCollectionEquality().equals(other.filterData, filterData)));
   }
 
   @override
@@ -301,43 +267,32 @@ class _$Ready implements Ready {
       const DeepCollectionEquality().hash(filterData);
 
   @override
-  $ReadyCopyWith<Ready> get copyWith =>
-      _$ReadyCopyWithImpl<Ready>(this, _$identity);
+  $ReadyCopyWith<Ready> get copyWith => _$ReadyCopyWithImpl<Ready>(this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result notReady(),
     @required
-        Result ready(
-            int version,
-            List<SearchableBookmark> bookmarkList,
-            List<SearchableBookmark> filteredBookmarkList,
-            List<ISearchResult<PersistentBookmark>> searchedBookmarkList,
-            FilterRuntimeData filterData),
+        Result ready(int version, List<SearchableBookmark> bookmarkList, List<SearchableBookmark> filteredBookmarkList,
+            List<ISearchResult<PersistentBookmark>> searchedBookmarkList, FilterRuntimeData filterData),
   }) {
     assert(notReady != null);
     assert(ready != null);
-    return ready(version, bookmarkList, filteredBookmarkList,
-        searchedBookmarkList, filterData);
+    return ready(version, bookmarkList, filteredBookmarkList, searchedBookmarkList, filterData);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result notReady(),
-    Result ready(
-        int version,
-        List<SearchableBookmark> bookmarkList,
-        List<SearchableBookmark> filteredBookmarkList,
-        List<ISearchResult<PersistentBookmark>> searchedBookmarkList,
-        FilterRuntimeData filterData),
+    Result ready(int version, List<SearchableBookmark> bookmarkList, List<SearchableBookmark> filteredBookmarkList,
+        List<ISearchResult<PersistentBookmark>> searchedBookmarkList, FilterRuntimeData filterData),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (ready != null) {
-      return ready(version, bookmarkList, filteredBookmarkList,
-          searchedBookmarkList, filterData);
+      return ready(version, bookmarkList, filteredBookmarkList, searchedBookmarkList, filterData);
     }
     return orElse();
   }

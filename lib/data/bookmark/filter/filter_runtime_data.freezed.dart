@@ -32,16 +32,14 @@ mixin _$FilterRuntimeData {
 }
 
 abstract class $FilterRuntimeDataCopyWith<$Res> {
-  factory $FilterRuntimeDataCopyWith(
-          FilterRuntimeData value, $Res Function(FilterRuntimeData) then) =
+  factory $FilterRuntimeDataCopyWith(FilterRuntimeData value, $Res Function(FilterRuntimeData) then) =
       _$FilterRuntimeDataCopyWithImpl<$Res>;
   $Res call({FilterData filterData, String query});
 
   $FilterDataCopyWith<$Res> get filterData;
 }
 
-class _$FilterRuntimeDataCopyWithImpl<$Res>
-    implements $FilterRuntimeDataCopyWith<$Res> {
+class _$FilterRuntimeDataCopyWithImpl<$Res> implements $FilterRuntimeDataCopyWith<$Res> {
   _$FilterRuntimeDataCopyWithImpl(this._value, this._then);
 
   final FilterRuntimeData _value;
@@ -54,8 +52,7 @@ class _$FilterRuntimeDataCopyWithImpl<$Res>
     Object query = freezed,
   }) {
     return _then(_value.copyWith(
-      filterData:
-          filterData == freezed ? _value.filterData : filterData as FilterData,
+      filterData: filterData == freezed ? _value.filterData : filterData as FilterData,
       query: query == freezed ? _value.query : query as String,
     ));
   }
@@ -71,10 +68,8 @@ class _$FilterRuntimeDataCopyWithImpl<$Res>
   }
 }
 
-abstract class _$FilterRuntimeDataCopyWith<$Res>
-    implements $FilterRuntimeDataCopyWith<$Res> {
-  factory _$FilterRuntimeDataCopyWith(
-          _FilterRuntimeData value, $Res Function(_FilterRuntimeData) then) =
+abstract class _$FilterRuntimeDataCopyWith<$Res> implements $FilterRuntimeDataCopyWith<$Res> {
+  factory _$FilterRuntimeDataCopyWith(_FilterRuntimeData value, $Res Function(_FilterRuntimeData) then) =
       __$FilterRuntimeDataCopyWithImpl<$Res>;
   @override
   $Res call({FilterData filterData, String query});
@@ -83,11 +78,9 @@ abstract class _$FilterRuntimeDataCopyWith<$Res>
   $FilterDataCopyWith<$Res> get filterData;
 }
 
-class __$FilterRuntimeDataCopyWithImpl<$Res>
-    extends _$FilterRuntimeDataCopyWithImpl<$Res>
+class __$FilterRuntimeDataCopyWithImpl<$Res> extends _$FilterRuntimeDataCopyWithImpl<$Res>
     implements _$FilterRuntimeDataCopyWith<$Res> {
-  __$FilterRuntimeDataCopyWithImpl(
-      _FilterRuntimeData _value, $Res Function(_FilterRuntimeData) _then)
+  __$FilterRuntimeDataCopyWithImpl(_FilterRuntimeData _value, $Res Function(_FilterRuntimeData) _then)
       : super(_value, (v) => _then(v as _FilterRuntimeData));
 
   @override
@@ -126,10 +119,8 @@ class _$_FilterRuntimeData implements _FilterRuntimeData {
     return identical(this, other) ||
         (other is _FilterRuntimeData &&
             (identical(other.filterData, filterData) ||
-                const DeepCollectionEquality()
-                    .equals(other.filterData, filterData)) &&
-            (identical(other.query, query) ||
-                const DeepCollectionEquality().equals(other.query, query)));
+                const DeepCollectionEquality().equals(other.filterData, filterData)) &&
+            (identical(other.query, query) || const DeepCollectionEquality().equals(other.query, query)));
   }
 
   @override
@@ -144,8 +135,7 @@ class _$_FilterRuntimeData implements _FilterRuntimeData {
 }
 
 abstract class _FilterRuntimeData implements FilterRuntimeData {
-  factory _FilterRuntimeData(FilterData filterData, {String query}) =
-      _$_FilterRuntimeData;
+  factory _FilterRuntimeData(FilterData filterData, {String query}) = _$_FilterRuntimeData;
 
   @override
   FilterData get filterData;

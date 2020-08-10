@@ -13,8 +13,7 @@ Preference _$PreferenceFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$PreferenceToJson(Preference instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PreferenceToJson(Preference instance) => <String, dynamic>{
       'key': instance.key,
       'value': instance.value,
     };

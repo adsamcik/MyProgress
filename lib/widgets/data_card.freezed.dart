@@ -13,11 +13,7 @@ class _$CardRowTearOff {
   const _$CardRowTearOff();
 
 // ignore: unused_element
-  _CardRowImpl call(
-      {@required String title,
-      @required String value,
-      IconData icon,
-      void Function() onTap}) {
+  _CardRowImpl call({@required String title, @required String value, IconData icon, void Function() onTap}) {
     return _CardRowImpl(
       title: title,
       value: value,
@@ -40,8 +36,7 @@ mixin _$CardRow {
 }
 
 abstract class $CardRowCopyWith<$Res> {
-  factory $CardRowCopyWith(CardRow value, $Res Function(CardRow) then) =
-      _$CardRowCopyWithImpl<$Res>;
+  factory $CardRowCopyWith(CardRow value, $Res Function(CardRow) then) = _$CardRowCopyWithImpl<$Res>;
   $Res call({String title, String value, IconData icon, void Function() onTap});
 }
 
@@ -69,17 +64,14 @@ class _$CardRowCopyWithImpl<$Res> implements $CardRowCopyWith<$Res> {
 }
 
 abstract class _$CardRowImplCopyWith<$Res> implements $CardRowCopyWith<$Res> {
-  factory _$CardRowImplCopyWith(
-          _CardRowImpl value, $Res Function(_CardRowImpl) then) =
+  factory _$CardRowImplCopyWith(_CardRowImpl value, $Res Function(_CardRowImpl) then) =
       __$CardRowImplCopyWithImpl<$Res>;
   @override
   $Res call({String title, String value, IconData icon, void Function() onTap});
 }
 
-class __$CardRowImplCopyWithImpl<$Res> extends _$CardRowCopyWithImpl<$Res>
-    implements _$CardRowImplCopyWith<$Res> {
-  __$CardRowImplCopyWithImpl(
-      _CardRowImpl _value, $Res Function(_CardRowImpl) _then)
+class __$CardRowImplCopyWithImpl<$Res> extends _$CardRowCopyWithImpl<$Res> implements _$CardRowImplCopyWith<$Res> {
+  __$CardRowImplCopyWithImpl(_CardRowImpl _value, $Res Function(_CardRowImpl) _then)
       : super(_value, (v) => _then(v as _CardRowImpl));
 
   @override
@@ -102,8 +94,7 @@ class __$CardRowImplCopyWithImpl<$Res> extends _$CardRowCopyWithImpl<$Res>
 }
 
 class _$_CardRowImpl with DiagnosticableTreeMixin implements _CardRowImpl {
-  const _$_CardRowImpl(
-      {@required this.title, @required this.value, this.icon, this.onTap})
+  const _$_CardRowImpl({@required this.title, @required this.value, this.icon, this.onTap})
       : assert(title != null),
         assert(value != null);
 
@@ -136,14 +127,10 @@ class _$_CardRowImpl with DiagnosticableTreeMixin implements _CardRowImpl {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _CardRowImpl &&
-            (identical(other.title, title) ||
-                const DeepCollectionEquality().equals(other.title, title)) &&
-            (identical(other.value, value) ||
-                const DeepCollectionEquality().equals(other.value, value)) &&
-            (identical(other.icon, icon) ||
-                const DeepCollectionEquality().equals(other.icon, icon)) &&
-            (identical(other.onTap, onTap) ||
-                const DeepCollectionEquality().equals(other.onTap, onTap)));
+            (identical(other.title, title) || const DeepCollectionEquality().equals(other.title, title)) &&
+            (identical(other.value, value) || const DeepCollectionEquality().equals(other.value, value)) &&
+            (identical(other.icon, icon) || const DeepCollectionEquality().equals(other.icon, icon)) &&
+            (identical(other.onTap, onTap) || const DeepCollectionEquality().equals(other.onTap, onTap)));
   }
 
   @override
@@ -155,16 +142,12 @@ class _$_CardRowImpl with DiagnosticableTreeMixin implements _CardRowImpl {
       const DeepCollectionEquality().hash(onTap);
 
   @override
-  _$CardRowImplCopyWith<_CardRowImpl> get copyWith =>
-      __$CardRowImplCopyWithImpl<_CardRowImpl>(this, _$identity);
+  _$CardRowImplCopyWith<_CardRowImpl> get copyWith => __$CardRowImplCopyWithImpl<_CardRowImpl>(this, _$identity);
 }
 
 abstract class _CardRowImpl implements CardRow {
-  const factory _CardRowImpl(
-      {@required String title,
-      @required String value,
-      IconData icon,
-      void Function() onTap}) = _$_CardRowImpl;
+  const factory _CardRowImpl({@required String title, @required String value, IconData icon, void Function() onTap}) =
+      _$_CardRowImpl;
 
   @override
   String get title;

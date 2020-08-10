@@ -43,8 +43,7 @@ mixin _$StatisticData {
 }
 
 abstract class $StatisticDataCopyWith<$Res> {
-  factory $StatisticDataCopyWith(
-          StatisticData value, $Res Function(StatisticData) then) =
+  factory $StatisticDataCopyWith(StatisticData value, $Res Function(StatisticData) then) =
       _$StatisticDataCopyWithImpl<$Res>;
   $Res call(
       {List<Pair<Duration, Rational>> dailyProgress,
@@ -54,8 +53,7 @@ abstract class $StatisticDataCopyWith<$Res> {
       Rational avgPerDayLast30Days});
 }
 
-class _$StatisticDataCopyWithImpl<$Res>
-    implements $StatisticDataCopyWith<$Res> {
+class _$StatisticDataCopyWithImpl<$Res> implements $StatisticDataCopyWith<$Res> {
   _$StatisticDataCopyWithImpl(this._value, this._then);
 
   final StatisticData _value;
@@ -71,27 +69,20 @@ class _$StatisticDataCopyWithImpl<$Res>
     Object avgPerDayLast30Days = freezed,
   }) {
     return _then(_value.copyWith(
-      dailyProgress: dailyProgress == freezed
-          ? _value.dailyProgress
-          : dailyProgress as List<Pair<Duration, Rational>>,
-      monthlyProgress: monthlyProgress == freezed
-          ? _value.monthlyProgress
-          : monthlyProgress as List<Pair<Duration, Rational>>,
-      dayOfWeekProgress: dayOfWeekProgress == freezed
-          ? _value.dayOfWeekProgress
-          : dayOfWeekProgress as List<Pair<Duration, Rational>>,
+      dailyProgress: dailyProgress == freezed ? _value.dailyProgress : dailyProgress as List<Pair<Duration, Rational>>,
+      monthlyProgress:
+          monthlyProgress == freezed ? _value.monthlyProgress : monthlyProgress as List<Pair<Duration, Rational>>,
+      dayOfWeekProgress:
+          dayOfWeekProgress == freezed ? _value.dayOfWeekProgress : dayOfWeekProgress as List<Pair<Duration, Rational>>,
       active: active == freezed ? _value.active : active as int,
-      avgPerDayLast30Days: avgPerDayLast30Days == freezed
-          ? _value.avgPerDayLast30Days
-          : avgPerDayLast30Days as Rational,
+      avgPerDayLast30Days:
+          avgPerDayLast30Days == freezed ? _value.avgPerDayLast30Days : avgPerDayLast30Days as Rational,
     ));
   }
 }
 
-abstract class _$StatisticDataCopyWith<$Res>
-    implements $StatisticDataCopyWith<$Res> {
-  factory _$StatisticDataCopyWith(
-          _StatisticData value, $Res Function(_StatisticData) then) =
+abstract class _$StatisticDataCopyWith<$Res> implements $StatisticDataCopyWith<$Res> {
+  factory _$StatisticDataCopyWith(_StatisticData value, $Res Function(_StatisticData) then) =
       __$StatisticDataCopyWithImpl<$Res>;
   @override
   $Res call(
@@ -102,11 +93,9 @@ abstract class _$StatisticDataCopyWith<$Res>
       Rational avgPerDayLast30Days});
 }
 
-class __$StatisticDataCopyWithImpl<$Res>
-    extends _$StatisticDataCopyWithImpl<$Res>
+class __$StatisticDataCopyWithImpl<$Res> extends _$StatisticDataCopyWithImpl<$Res>
     implements _$StatisticDataCopyWith<$Res> {
-  __$StatisticDataCopyWithImpl(
-      _StatisticData _value, $Res Function(_StatisticData) _then)
+  __$StatisticDataCopyWithImpl(_StatisticData _value, $Res Function(_StatisticData) _then)
       : super(_value, (v) => _then(v as _StatisticData));
 
   @override
@@ -121,30 +110,21 @@ class __$StatisticDataCopyWithImpl<$Res>
     Object avgPerDayLast30Days = freezed,
   }) {
     return _then(_StatisticData(
-      dailyProgress: dailyProgress == freezed
-          ? _value.dailyProgress
-          : dailyProgress as List<Pair<Duration, Rational>>,
-      monthlyProgress: monthlyProgress == freezed
-          ? _value.monthlyProgress
-          : monthlyProgress as List<Pair<Duration, Rational>>,
-      dayOfWeekProgress: dayOfWeekProgress == freezed
-          ? _value.dayOfWeekProgress
-          : dayOfWeekProgress as List<Pair<Duration, Rational>>,
+      dailyProgress: dailyProgress == freezed ? _value.dailyProgress : dailyProgress as List<Pair<Duration, Rational>>,
+      monthlyProgress:
+          monthlyProgress == freezed ? _value.monthlyProgress : monthlyProgress as List<Pair<Duration, Rational>>,
+      dayOfWeekProgress:
+          dayOfWeekProgress == freezed ? _value.dayOfWeekProgress : dayOfWeekProgress as List<Pair<Duration, Rational>>,
       active: active == freezed ? _value.active : active as int,
-      avgPerDayLast30Days: avgPerDayLast30Days == freezed
-          ? _value.avgPerDayLast30Days
-          : avgPerDayLast30Days as Rational,
+      avgPerDayLast30Days:
+          avgPerDayLast30Days == freezed ? _value.avgPerDayLast30Days : avgPerDayLast30Days as Rational,
     ));
   }
 }
 
 class _$_StatisticData implements _StatisticData {
   _$_StatisticData(
-      {this.dailyProgress,
-      this.monthlyProgress,
-      this.dayOfWeekProgress,
-      this.active,
-      this.avgPerDayLast30Days});
+      {this.dailyProgress, this.monthlyProgress, this.dayOfWeekProgress, this.active, this.avgPerDayLast30Days});
 
   @override
   final List<Pair<Duration, Rational>> dailyProgress;
@@ -167,19 +147,14 @@ class _$_StatisticData implements _StatisticData {
     return identical(this, other) ||
         (other is _StatisticData &&
             (identical(other.dailyProgress, dailyProgress) ||
-                const DeepCollectionEquality()
-                    .equals(other.dailyProgress, dailyProgress)) &&
+                const DeepCollectionEquality().equals(other.dailyProgress, dailyProgress)) &&
             (identical(other.monthlyProgress, monthlyProgress) ||
-                const DeepCollectionEquality()
-                    .equals(other.monthlyProgress, monthlyProgress)) &&
+                const DeepCollectionEquality().equals(other.monthlyProgress, monthlyProgress)) &&
             (identical(other.dayOfWeekProgress, dayOfWeekProgress) ||
-                const DeepCollectionEquality()
-                    .equals(other.dayOfWeekProgress, dayOfWeekProgress)) &&
-            (identical(other.active, active) ||
-                const DeepCollectionEquality().equals(other.active, active)) &&
+                const DeepCollectionEquality().equals(other.dayOfWeekProgress, dayOfWeekProgress)) &&
+            (identical(other.active, active) || const DeepCollectionEquality().equals(other.active, active)) &&
             (identical(other.avgPerDayLast30Days, avgPerDayLast30Days) ||
-                const DeepCollectionEquality()
-                    .equals(other.avgPerDayLast30Days, avgPerDayLast30Days)));
+                const DeepCollectionEquality().equals(other.avgPerDayLast30Days, avgPerDayLast30Days)));
   }
 
   @override

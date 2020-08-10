@@ -16,11 +16,8 @@ class _$GenericProgressTearOff {
   const _$GenericProgressTearOff();
 
 // ignore: unused_element
-  _GenericProgress call(
-      @JsonKey(required: true)
-          DateTime date,
-      @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson)
-          Rational value) {
+  _GenericProgress call(@JsonKey(required: true) DateTime date,
+      @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson) Rational value) {
     return _GenericProgress(
       date,
       value,
@@ -42,18 +39,14 @@ mixin _$GenericProgress {
 }
 
 abstract class $GenericProgressCopyWith<$Res> {
-  factory $GenericProgressCopyWith(
-          GenericProgress value, $Res Function(GenericProgress) then) =
+  factory $GenericProgressCopyWith(GenericProgress value, $Res Function(GenericProgress) then) =
       _$GenericProgressCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(required: true)
-          DateTime date,
-      @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson)
-          Rational value});
+      {@JsonKey(required: true) DateTime date,
+      @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson) Rational value});
 }
 
-class _$GenericProgressCopyWithImpl<$Res>
-    implements $GenericProgressCopyWith<$Res> {
+class _$GenericProgressCopyWithImpl<$Res> implements $GenericProgressCopyWith<$Res> {
   _$GenericProgressCopyWithImpl(this._value, this._then);
 
   final GenericProgress _value;
@@ -72,24 +65,18 @@ class _$GenericProgressCopyWithImpl<$Res>
   }
 }
 
-abstract class _$GenericProgressCopyWith<$Res>
-    implements $GenericProgressCopyWith<$Res> {
-  factory _$GenericProgressCopyWith(
-          _GenericProgress value, $Res Function(_GenericProgress) then) =
+abstract class _$GenericProgressCopyWith<$Res> implements $GenericProgressCopyWith<$Res> {
+  factory _$GenericProgressCopyWith(_GenericProgress value, $Res Function(_GenericProgress) then) =
       __$GenericProgressCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(required: true)
-          DateTime date,
-      @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson)
-          Rational value});
+      {@JsonKey(required: true) DateTime date,
+      @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson) Rational value});
 }
 
-class __$GenericProgressCopyWithImpl<$Res>
-    extends _$GenericProgressCopyWithImpl<$Res>
+class __$GenericProgressCopyWithImpl<$Res> extends _$GenericProgressCopyWithImpl<$Res>
     implements _$GenericProgressCopyWith<$Res> {
-  __$GenericProgressCopyWithImpl(
-      _GenericProgress _value, $Res Function(_GenericProgress) _then)
+  __$GenericProgressCopyWithImpl(_GenericProgress _value, $Res Function(_GenericProgress) _then)
       : super(_value, (v) => _then(v as _GenericProgress));
 
   @override
@@ -109,16 +96,12 @@ class __$GenericProgressCopyWithImpl<$Res>
 
 @JsonSerializable()
 class _$_GenericProgress implements _GenericProgress {
-  _$_GenericProgress(
-      @JsonKey(required: true)
-          this.date,
-      @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson)
-          this.value)
+  _$_GenericProgress(@JsonKey(required: true) this.date,
+      @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson) this.value)
       : assert(date != null),
         assert(value != null);
 
-  factory _$_GenericProgress.fromJson(Map<String, dynamic> json) =>
-      _$_$_GenericProgressFromJson(json);
+  factory _$_GenericProgress.fromJson(Map<String, dynamic> json) => _$_$_GenericProgressFromJson(json);
 
   @override
   @JsonKey(required: true)
@@ -136,17 +119,13 @@ class _$_GenericProgress implements _GenericProgress {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _GenericProgress &&
-            (identical(other.date, date) ||
-                const DeepCollectionEquality().equals(other.date, date)) &&
-            (identical(other.value, value) ||
-                const DeepCollectionEquality().equals(other.value, value)));
+            (identical(other.date, date) || const DeepCollectionEquality().equals(other.date, date)) &&
+            (identical(other.value, value) || const DeepCollectionEquality().equals(other.value, value)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(date) ^
-      const DeepCollectionEquality().hash(value);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(date) ^ const DeepCollectionEquality().hash(value);
 
   @override
   _$GenericProgressCopyWith<_GenericProgress> get copyWith =>
@@ -159,14 +138,10 @@ class _$_GenericProgress implements _GenericProgress {
 }
 
 abstract class _GenericProgress implements GenericProgress {
-  factory _GenericProgress(
-      @JsonKey(required: true)
-          DateTime date,
-      @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson)
-          Rational value) = _$_GenericProgress;
+  factory _GenericProgress(@JsonKey(required: true) DateTime date,
+      @JsonKey(required: true, fromJson: rationalFromJson, toJson: rationalToJson) Rational value) = _$_GenericProgress;
 
-  factory _GenericProgress.fromJson(Map<String, dynamic> json) =
-      _$_GenericProgress.fromJson;
+  factory _GenericProgress.fromJson(Map<String, dynamic> json) = _$_GenericProgress.fromJson;
 
   @override
   @JsonKey(required: true)
