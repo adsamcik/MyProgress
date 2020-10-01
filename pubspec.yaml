@@ -11,43 +11,33 @@ dependencies:
   flutter:
     sdk: flutter
 
-  sembast: ^2.4.7+6
+  sembast: ^2.4.7+7
 
-  fl_chart: ^0.11.0
+  fl_chart: ^0.11.1
 
-  freezed_annotation: ^0.11.0+1
-  meta: ^1.2.2
+  freezed_annotation: ^0.12.0
+  meta: ^1.2.3
 
   # Functions and types
   rational: ^0.3.8
   edit_distance: ^0.4.1
 
   # Serialization
-  json_annotation: ^3.0.1
+  json_annotation: ^3.1.0
   csv: ^4.0.3
 
   # Bloc
-  flutter_bloc: ^6.0.1
-  bloc: ^6.0.1
+  flutter_bloc: ^6.0.5
+  bloc: ^6.0.3
 
   # Dependency injection
-  get_it: ^4.0.4
+  get_it: ^5.0.1
 
   # Native
   path: ^1.7.0
-  path_provider: ^1.6.11
-  path_provider_fde:
-    git:
-      url: https://github.com/google/flutter-desktop-embedding.git
-      path: plugins/flutter_plugins/path_provider_fde
-      ref: 9e9b68b67c2a2c0b82eed2224f709aff2ccbab7c
+  path_provider: ^1.6.18
 
-  url_launcher: ^5.5.0
-  url_launcher_fde:
-    git:
-      url: https://github.com/google/flutter-desktop-embedding.git
-      path: plugins/flutter_plugins/url_launcher_fde
-      ref: 9e9b68b67c2a2c0b82eed2224f709aff2ccbab7c
+  url_launcher: ^5.7.2
 
   file_chooser:
     git:
@@ -71,12 +61,12 @@ dev_dependencies:
   injectable_generator: ^1.0.4
 
   # Code generators
-  freezed: ^0.11.5
-  json_serializable: ^3.3.0
+  freezed: ^0.12.1
+  json_serializable: ^3.5.0
 
   # flutter pub run build_runner build (or watch)
-  build_runner: ^1.10.2
-  package_info: ^0.4.1
+  build_runner: ^1.10.3
+  package_info: ^0.4.3
 
   # Used by tests. Not required to use `json_serializable`.
   build_verify: ^1.1.1
