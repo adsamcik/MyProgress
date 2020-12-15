@@ -62,7 +62,9 @@ class _StatisticDurationChartState extends State<StatisticDurationChart> {
           showTitles: true,
           reservedSize: 22,
           interval: widget.interval,
-          textStyle: const TextStyle(color: Color(0xff68737d), fontWeight: FontWeight.bold, fontSize: 16),
+          getTextStyles: (value) {
+            return const TextStyle(color: Color(0xff68737d), fontWeight: FontWeight.bold, fontSize: 16);
+          },
           getTitles: (value) {
             return widget.dateTimeFormat(now.add(Duration(days: value.toInt())));
           },
@@ -70,11 +72,13 @@ class _StatisticDurationChartState extends State<StatisticDurationChart> {
         ),
         leftTitles: SideTitles(
           showTitles: true,
-          textStyle: const TextStyle(
-            color: Color(0xff67727d),
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-          ),
+          getTextStyles: (value) {
+            return const TextStyle(
+              color: Color(0xff67727d),
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            );
+          },
           interval: max(
               widget._data.fold<double>(0.0, (previousValue, element) => max(previousValue, element.item2.toDouble())) /
                   10.0,

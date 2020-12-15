@@ -52,8 +52,9 @@ class _SettingsState extends State<Settings> {
           child: BlocBuilder<PreferenceBloc, PreferenceBlocState>(
             builder: (context, state) => state.map(
               notReady: (state) => Container(),
-              ready: (ready) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              ready: (ready) => Wrap(
+                direction: Axis.vertical,
+                spacing: 16.0,
                 children: [
                   Text(
                     LocaleKeys.filter.tr(),
@@ -68,13 +69,14 @@ class _SettingsState extends State<Settings> {
                                   tooltip: filter.tooltip,
                                   selected: ready.preferences[filter.key] as bool,
                                   onSelected: (bool value) => context
-                                      .bloc<PreferenceBloc>()
+                                      .watch<PreferenceBloc>()
                                       .add(PreferenceBlocEvent.setPreference(key: filter.key, value: value))),
                             ))
                         .toList(),
                   ),
                   OutlineButton(
                       child: Text(LocaleKeys.about.tr()),
+                      padding: const EdgeInsets.all(16.0),
                       onPressed: () async {
                         // Windows not yet supported
                         //var packageInfo = await PackageInfo.fromPlatform();
@@ -84,11 +86,13 @@ class _SettingsState extends State<Settings> {
                   Wrap(spacing: 16, children: [
                     OutlineButton(
                         child: Text(LocaleKeys.import.tr()),
+                        padding: const EdgeInsets.all(16.0),
                         onPressed: () async {
                           await Importer.import();
                         }),
                     OutlineButton(
                         child: Text(LocaleKeys.export.tr()),
+                        padding: const EdgeInsets.all(16.0),
                         onPressed: () async {
                           await Exporter.export();
                         })
