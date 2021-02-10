@@ -11,9 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  sembast: ^2.4.8
+  sembast: ^2.4.9
 
-  fl_chart: ^0.12.1
+  fl_chart: ^0.12.2
 
   freezed_annotation: ^0.12.0
   meta: ^1.2.4
@@ -27,15 +27,15 @@ dependencies:
   csv: ^4.1.0
 
   # Bloc
-  flutter_bloc: ^6.1.1
+  flutter_bloc: ^6.1.2
   bloc: ^6.1.1
 
   # Dependency injection
-  get_it: ^5.0.3
+  get_it: ^5.0.6
 
   # Native
   path: ^1.7.0
-  path_provider: ^1.6.24
+  path_provider: ^1.6.27
 
   url_launcher: ^5.7.10
 
@@ -57,15 +57,15 @@ dev_dependencies:
   pedantic: ^1.9.2
 
   # Dependency injection
-  injectable_generator: ^1.0.6
+  injectable_generator: ^1.0.7
 
   # Code generators
-  freezed: ^0.12.6
+  freezed: ^0.12.7
   json_serializable: ^3.5.1
 
   # flutter pub run build_runner build (or watch)
-  build_runner: ^1.10.9
-  package_info: ^0.4.3+2
+  build_runner: ^1.11.1
+  package_info: ^0.4.3+4
 
   # Used by tests. Not required to use `json_serializable`.
   build_verify: ^1.1.1

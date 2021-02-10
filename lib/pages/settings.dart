@@ -74,9 +74,9 @@ class _SettingsState extends State<Settings> {
                             ))
                         .toList(),
                   ),
-                  OutlineButton(
+                  OutlinedButton(
                       child: Text(LocaleKeys.about.tr()),
-                      padding: const EdgeInsets.all(16.0),
+                      style: ButtonStyle(padding: MaterialStateProperty.all(EdgeInsets.all(16.0))),
                       onPressed: () async {
                         // Windows not yet supported
                         //var packageInfo = await PackageInfo.fromPlatform();
@@ -84,15 +84,15 @@ class _SettingsState extends State<Settings> {
                         showAboutDialog(context: context, applicationName: LocaleKeys.app_name.tr());
                       }),
                   Wrap(spacing: 16, children: [
-                    OutlineButton(
+                    OutlinedButton(
                         child: Text(LocaleKeys.import.tr()),
-                        padding: const EdgeInsets.all(16.0),
+                        style: ButtonStyle(padding: MaterialStateProperty.all(EdgeInsets.all(16.0))),
                         onPressed: () async {
                           await Importer.import();
                         }),
-                    OutlineButton(
+                    OutlinedButton(
                         child: Text(LocaleKeys.export.tr()),
-                        padding: const EdgeInsets.all(16.0),
+                        style: ButtonStyle(padding: MaterialStateProperty.all(EdgeInsets.all(16.0))),
                         onPressed: () async {
                           await Exporter.export();
                         })
